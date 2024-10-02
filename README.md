@@ -1,5 +1,5 @@
 # SNU SWPP (Fall 2024) Team 10 Project Repository
-### 👋 About Us
+### 👋 About Us - editted in feature/2
 | Name | Github ID                                      | Email                   |
 |------|------------------------------------------------|-------------------------|
 | 최민준 | [@m-joon-ixix](https://github.com/m-joon-ixix) | minjoonchoi08@gmail.com |
