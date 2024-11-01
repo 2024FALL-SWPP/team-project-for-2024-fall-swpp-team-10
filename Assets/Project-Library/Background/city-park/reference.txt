@@ -1,1 +1,5 @@
+<원본 Asset 링크>
 https://sketchfab.com/3d-models/city-park-at-sunset-ec70492df60b4d42b37b7219b7b2149e
+
+<원본에서 직접 수정한 사항>
+보스 스테이지의 니즈에 따라, 가운데에 있는 분수대를 제거하였음
