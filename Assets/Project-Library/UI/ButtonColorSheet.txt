@@ -1,0 +1,6 @@
+Button Color Sheet
+Normal  	#FFFEDC
+Highlighted	#FFFFBA
+Pressed		#E2E2A1
+Selected	#E2E2A1
+Disabled	#D4D4BF
