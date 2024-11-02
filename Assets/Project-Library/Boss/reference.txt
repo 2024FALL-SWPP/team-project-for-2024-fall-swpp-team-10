@@ -1,0 +1,5 @@
+Retrieved mouth model and rig from:
+Simple Mouth Rig
+	https://joeycarlino.gumroad.com/l/ZlySP?layout=profile
+
+Animations, modeling apart from mouth all created
