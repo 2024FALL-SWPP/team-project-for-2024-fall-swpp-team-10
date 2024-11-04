@@ -1,0 +1,2 @@
+asset 출처: https://sketchfab.com/3d-models/school-hallway-395a9d99085e4876a3b253bd8c8d34c8
+수정 사항: 열려 있는 문들 제거 및 벽 메꾸기
