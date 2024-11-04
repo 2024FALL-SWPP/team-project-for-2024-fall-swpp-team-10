@@ -1,0 +1,6 @@
+<원본 Asset 링크>
+건물 https://skfb.ly/oPO8T
+길 https://skfb.ly/6TonV 
+
+<원본에서 직접 수정한 사항>
+위치 및 크기 수정, 여러개 붙여서 길게 배치
