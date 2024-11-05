@@ -18,7 +18,7 @@ public class InfiniteBackground : MonoBehaviour
         transform.Translate(Vector3.back * speed * Time.deltaTime);
         if (transform.position.z < -240)
         {
-            transform.Translate(transform.position.x, transform.position.y, 480);
+            transform.Translate(transform.position.x, transform.position.y, 720);
         }
     }
 }
