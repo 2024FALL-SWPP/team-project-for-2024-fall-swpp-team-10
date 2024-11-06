@@ -1,0 +1,11 @@
+Model Information:
+* title:	Boppin' Ariados
+* source:	https://sketchfab.com/3d-models/boppin-ariados-d3d9fed0764743a8a4c7b884f801812d
+* author:	zcythe (https://sketchfab.com/zcythe)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Boppin' Ariados" (https://sketchfab.com/3d-models/boppin-ariados-d3d9fed0764743a8a4c7b884f801812d) by zcythe (https://sketchfab.com/zcythe) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

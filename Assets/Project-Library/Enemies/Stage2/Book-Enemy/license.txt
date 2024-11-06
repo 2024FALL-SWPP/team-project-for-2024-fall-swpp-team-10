@@ -1,0 +1,11 @@
+Model Information:
+* title:	Babbling Book
+* source:	https://sketchfab.com/3d-models/babbling-book-9a893631d9f84912878ec3c52edd7a4d
+* author:	HK_Arts (https://sketchfab.com/hk.arts)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Babbling Book" (https://sketchfab.com/3d-models/babbling-book-9a893631d9f84912878ec3c52edd7a4d) by HK_Arts (https://sketchfab.com/hk.arts) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
