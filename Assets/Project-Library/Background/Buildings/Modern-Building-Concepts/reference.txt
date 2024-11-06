@@ -1,0 +1,5 @@
+<원본 Asset 링크>
+https://sketchfab.com/3d-models/modern-building-concepts-aa1982336e9742669a5b0549dbb76cbc
+
+<원본에서 직접 수정한 사항>
+원본 Asset에는 여러 종류의 빌딩들이 섞여있었는데, 각 종류의 빌딩을 Unity에서 Component로 사용하기 위해 빌딩 종류마다 별개의 fbx 파일로 분리하였음.

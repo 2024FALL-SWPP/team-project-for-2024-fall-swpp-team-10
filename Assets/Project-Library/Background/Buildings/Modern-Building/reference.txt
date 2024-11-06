@@ -1,0 +1,5 @@
+<원본 Asset 링크>
+https://sketchfab.com/3d-models/modern-building-002-7cd50fe9c4544c8d8dba573f597f95a6
+
+<원본에서 직접 수정한 사항>
+보스 스테이지 1에서 공원 외부에 둘 것이므로, 바닥에 깔려있는 타일을 제거하고 건물 형체만 남겨두었음
