@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     string playerName;
 
     public GameObject[] heart = new GameObject[3];
+    private int stage;
     private int characterint;
     private int score = 0;
 
@@ -51,14 +52,20 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Load Scene with Player Name: " + playerName + "\n(First Undo Comment in GameManager > loadStageSelection() )");
     }
 
-    public void LoadCharacterSelection(int stage)
+    public void LoadCharacterSelection(int _stage)
     {
-        SceneManager.LoadScene("Stage" + stage + "CharacterSelectionScene");
+        stage = _stage;  // register the selected stage number
+        SceneManager.LoadScene("Stage" + _stage + "CharacterSelectionScene");
     }
 
-    public void LoadMainStage(int stage)
+    public void LoadMainStage(int _stage)
     {
-        SceneManager.LoadScene("MainStage" + stage + "Scene");
+        SceneManager.LoadScene("MainStage" + _stage + "Scene");
+    }
+
+    public int GetStage()
+    {
+        return stage;
     }
 
     public int GetCharacterInt()
