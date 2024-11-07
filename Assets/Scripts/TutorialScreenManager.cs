@@ -5,30 +5,50 @@ using UnityEngine.UI;
 
 public class TutorialScreenManager : MonoBehaviour
 {
-    public Image[] tutorialPages;  // °¢ ÆäÀÌÁö¸¦ Image·Î º¯°æ
+    public GameObject[] tutorialPageGameObjects;  // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Imageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Button previousButton;
     public Button nextButton;
+    public GameObject backgroundGameObject;
 
     private int currentPage = 0;
 
     void Start()
     {
+        SetBackgroundImage();
+        SetTutorialImages();
+
         UpdateTutorialPage();
         previousButton.onClick.AddListener(GoToPreviousPage);
         nextButton.onClick.AddListener(GoToNextPage);
     }
 
+    void SetBackgroundImage()
+    {
+        Image image = backgroundGameObject.GetComponent<Image>();
+        image.sprite = Resources.Load<Sprite>("Stage" + GameManager.inst.GetStage() + "Background");
+    }
+
+    void SetTutorialImages()
+    {
+        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
+        {
+            // example of tutorial file name: Stage1Tutorial2.png ("second image of Stage 1 Tutorial")
+            string tutorialFilename = "Stage" + GameManager.inst.GetStage() + "Tutorial" + (i + 1);
+            tutorialPageGameObjects[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(tutorialFilename);
+        }
+    }
+
     void UpdateTutorialPage()
     {
-        // ¸ðµç ÆäÀÌÁö ºñÈ°¼ºÈ­
-        for (int i = 0; i < tutorialPages.Length; i++)
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
         {
-            tutorialPages[i].gameObject.SetActive(i == currentPage);
+            tutorialPageGameObjects[i].SetActive(i == currentPage);
         }
 
-        // ÇöÀç ÆäÀÌÁö È°¼ºÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         previousButton.interactable = currentPage > 0;
-        nextButton.interactable = currentPage < tutorialPages.Length - 1;
+        nextButton.interactable = currentPage < tutorialPageGameObjects.Length - 1;
     }
 
     public void GoToPreviousPage()
@@ -42,7 +62,7 @@ public class TutorialScreenManager : MonoBehaviour
 
     public void GoToNextPage()
     {
-        if (currentPage < tutorialPages.Length - 1)
+        if (currentPage < tutorialPageGameObjects.Length - 1)
         {
             currentPage++;
             UpdateTutorialPage();
