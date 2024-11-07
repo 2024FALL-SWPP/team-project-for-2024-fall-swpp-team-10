@@ -12,6 +12,10 @@ public class PlayerControl : MonoBehaviour
     private Vector3 initialPosition; // Initial world position of the player
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
+    public float projectileSpeed = 10.0f; // Speed of laser
+    public GameObject projectilePrefab; // Laser prefab
+    public Transform chestPoint; // Laser is instantiated at the chest of the character
+
     void Start()
     {
         // Set the initial position as the center of the grid (1,1)
@@ -49,6 +53,35 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(SmoothMove());
             }
         }
+
+        // Fire Laser
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            FireLaser();
+        }
+    }
+
+    void FireLaser()
+    {
+        // Create the projectile at the chest point
+        GameObject projectile = Instantiate(projectilePrefab, chestPoint.position, Quaternion.identity);
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+
+
+        if (projectileRb != null)
+        {
+            projectileRb.velocity = Vector3.forward * projectileSpeed;
+        }
+
+        // Add trail effect or particle system
+        TrailRenderer trail = projectile.GetComponent<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.time = 0.2f; // Duration of trail
+        }
+
+        // Destroy the projectile after some time
+        Destroy(projectile, 2f);
     }
 
     IEnumerator SmoothMove()
