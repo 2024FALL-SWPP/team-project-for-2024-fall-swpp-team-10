@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TutorialScreenManager : MonoBehaviour
 {
-    public GameObject[] tutorialPageGameObjects;  // �� �������� Image�� ����
+    public GameObject[] tutorialPageGameObjects;
     public Button previousButton;
     public Button nextButton;
-    public GameObject backgroundGameObject;
 
     private int currentPage = 0;
+    public Sprite[] stageBackgrounds;
+    public GameObject background;
+
+    private Image backgroundImage;
 
     void Start()
     {
-        SetBackgroundImage();
         SetTutorialImages();
 
         UpdateTutorialPage();
@@ -22,10 +25,18 @@ public class TutorialScreenManager : MonoBehaviour
         nextButton.onClick.AddListener(GoToNextPage);
     }
 
-    void SetBackgroundImage()
+    private void OnEnable()
     {
-        Image image = backgroundGameObject.GetComponent<Image>();
-        image.sprite = Resources.Load<Sprite>("Stage" + GameManager.inst.GetStage() + "Background");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        backgroundImage = background.GetComponent<Image>();
+        backgroundImage.sprite = stageBackgrounds[GameManager.inst.GetStage() - 1];
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void SetTutorialImages()
@@ -40,13 +51,11 @@ public class TutorialScreenManager : MonoBehaviour
 
     void UpdateTutorialPage()
     {
-        // ��� ������ ��Ȱ��ȭ
         for (int i = 0; i < tutorialPageGameObjects.Length; i++)
         {
             tutorialPageGameObjects[i].SetActive(i == currentPage);
         }
 
-        // ���� ������ Ȱ��ȭ
         previousButton.interactable = currentPage > 0;
         nextButton.interactable = currentPage < tutorialPageGameObjects.Length - 1;
     }

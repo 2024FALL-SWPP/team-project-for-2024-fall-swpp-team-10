@@ -1,8 +1,11 @@
-enum Character
+namespace EnumManager
 {
-    Danielle,
-    Haerin,
-    Hanni,
-    Hyein,
-    Minji
+    public enum Character
+    {
+        Danielle,
+        Haerin,
+        Hanni,
+        Hyein,
+        Minji
+    }
 }

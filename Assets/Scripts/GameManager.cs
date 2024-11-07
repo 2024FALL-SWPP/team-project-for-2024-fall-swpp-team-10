@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using EnumManager;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager inst;
     string playerName;
 
-    public GameObject[] heart = new GameObject[3];
+    private int life = 3;
     private int stage;
-    private int characterint;
+    private Character character;
     private int score = 0;
 
 
@@ -52,28 +53,46 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Load Scene with Player Name: " + playerName + "\n(First Undo Comment in GameManager > loadStageSelection() )");
     }
 
-    public void LoadCharacterSelection(int _stage)
+    public void LoadCharacterSelection()
     {
-        stage = _stage;  // register the selected stage number
-        SceneManager.LoadScene("Stage" + _stage + "CharacterSelectionScene");
+        SceneManager.LoadScene("CharacterSelectionScene");
     }
 
-    public void LoadMainStage(int _stage)
+    public void LoadMainStage()
     {
-        SceneManager.LoadScene("MainStage" + _stage + "Scene");
+        SceneManager.LoadScene("MainStage" + stage + "Scene");
     }
 
     public int GetStage()
     {
         return stage;
     }
-
-    public int GetCharacterInt()
+    public void SetStage(int _stage)
     {
-        return characterint;
+        stage = _stage;
     }
-    public void SetCharacterInt(int character)
+
+    public Character GetCharacter()
     {
-        characterint = character;
+        return character;
+    }
+    public void SetCharacter(Character _character)
+    {
+        character = _character;
+    }
+
+    public int GetLife()
+    {
+        return life;
+    }
+    public void RemoveLife()
+    {
+        if (life > 0)
+            life--;
+    }
+    public void AddLife()
+    {
+        if (life < 3)
+            life++;
     }
 }

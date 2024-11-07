@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using EnumManager;
 
 public class MainManager : MonoBehaviour
 {
     public GameObject[] characters;
     public GameObject[] characterUI;
+    public GameObject[] hearts;
 
     public GameObject pause;
-    public GameObject game;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +22,7 @@ public class MainManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pause.SetActive(true);
-            game.SetActive(false);
-            Time.timeScale = 0;
+            Pause();
         }
     }
 
@@ -34,8 +33,8 @@ public class MainManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        characters[GameManager.inst.GetCharacterInt()].SetActive(true);
-        characterUI[GameManager.inst.GetCharacterInt()].SetActive(true);
+        characters[(int)GameManager.inst.GetCharacter()].SetActive(true);
+        characterUI[(int)GameManager.inst.GetCharacter()].SetActive(true);
         Time.timeScale = 1;
     }
 
@@ -44,10 +43,15 @@ public class MainManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    public void Pause()
+    {
+        pause.SetActive(true);
+        Time.timeScale = 0;
+    }
+
     public void Resume()
     {
         pause.SetActive(false);
-        game.SetActive(true);
         Time.timeScale = 1;
     }
 }
