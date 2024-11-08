@@ -117,6 +117,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb5324c32aac46d780857bfd6933939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trailTime: 0.4
+  startWidth: 0.3
+  endWidth: 0
+  minVertexDistance: 0.1
+  startColor: {r: 0, g: 1, b: 0, a: 1}
+  endColor: {r: 0, g: 1, b: 0, a: 0}
+  materialColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!96 &-408690865650833369
 TrailRenderer:
   serializedVersion: 2

@@ -1334,7 +1334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929826646}
   m_Layer: 0
-  m_Name: ChestPoint
+  m_Name: projectileSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2275,7 +2275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -39.949997, y: -39.949997}
+  m_AnchoredPosition: {x: -39.94995, y: -39.950012}
   m_SizeDelta: {x: 79.899994, y: 79.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1492206854
@@ -2726,7 +2726,7 @@ MonoBehaviour:
   moveSpeed: 5
   projectileSpeed: 10
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
-  chestPoint: {fileID: 929826646}
+  projectileSpawnPoint: {fileID: 929826646}
 --- !u!4 &1699910874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}

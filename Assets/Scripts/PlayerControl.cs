@@ -14,8 +14,8 @@ public class PlayerControl : MonoBehaviour
 
     public float projectileSpeed = 10.0f; // Speed of laser
     public GameObject projectilePrefab; // Laser prefab
-    public Transform chestPoint; // Laser is instantiated at the chest of the character
-
+    public Transform projectileSpawnPoint; // Laser is instantiated at the chest of the character
+    public float projectileDurationTime = 2f;
     void Start()
     {
         // Set the initial position as the center of the grid (1,1)
@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Fire Laser
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             FireLaser();
         }
@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour
     void FireLaser()
     {
         // Create the projectile at the chest point
-        GameObject projectile = Instantiate(projectilePrefab, chestPoint.position, Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
 
@@ -73,15 +73,8 @@ public class PlayerControl : MonoBehaviour
             projectileRb.velocity = Vector3.forward * projectileSpeed;
         }
 
-        // Add trail effect or particle system
-        TrailRenderer trail = projectile.GetComponent<TrailRenderer>();
-        if (trail != null)
-        {
-            trail.time = 0.2f; // Duration of trail
-        }
-
         // Destroy the projectile after some time
-        Destroy(projectile, 2f);
+        Destroy(projectile, projectileDurationTime);
     }
 
     IEnumerator SmoothMove()
