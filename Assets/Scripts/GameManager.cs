@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager inst;
     private string playerName;
 
-    private int life = 3;
+    private int life;
     private int maxLife = 3;
     private int stage;
     private Character character;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        life = maxLife;
     }
 
     // Update is called once per frame
