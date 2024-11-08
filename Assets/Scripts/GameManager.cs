@@ -9,9 +9,10 @@ using EnumManager;
 public class GameManager : MonoBehaviour
 {
     public static GameManager inst;
-    string playerName;
+    private string playerName;
 
     private int life = 3;
+    private int maxLife = 3;
     private int stage;
     private Character character;
     private int score = 0;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadStageSelection()
     {
-        // playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
+        playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
         SceneManager.LoadScene("StageSelectionScene");
         // Debug.Log("Load Scene with Player Name: " + playerName + "\n(First Undo Comment in GameManager > loadStageSelection() )");
     }
@@ -92,7 +93,7 @@ public class GameManager : MonoBehaviour
     }
     public void AddLife()
     {
-        if (life < 3)
+        if (life < maxLife)
             life++;
     }
 }
