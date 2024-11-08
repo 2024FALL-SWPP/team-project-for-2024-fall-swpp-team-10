@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EnumManager;
 
 public class ButtonHandler : MonoBehaviour
 {
@@ -28,15 +29,16 @@ public class ButtonHandler : MonoBehaviour
 
     public void LoadCharacterSelection(int stage)
     {
-        GameManager.inst.LoadCharacterSelection(stage);
+        GameManager.inst.SetStage(stage);
+        GameManager.inst.LoadCharacterSelection();
     }
 
     public void LoadMainStageCharacter(int character)
     {
-        GameManager.inst.SetCharacterInt(character);
+        GameManager.inst.SetCharacter((Character)character);
     }
-    public void LoadMainStageStage(int stage)
+    public void LoadMainStage()
     {
-        GameManager.inst.LoadMainStage(stage);
+        GameManager.inst.LoadMainStage();
     }
 }
