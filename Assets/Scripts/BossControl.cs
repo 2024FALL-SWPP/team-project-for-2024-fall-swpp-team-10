@@ -9,6 +9,7 @@ public class BossControl : MonoBehaviour
     Color[] myColors = new Color[] { Color.white, Color.red, Color.gray };
 
     [SerializeField] Transform bossPos;
+    [SerializeField] Transform carrotSpawnOffset;
 
     [SerializeField] GameObject carrotPf;
     [SerializeField] Transform carrotTargetPos;
@@ -33,6 +34,7 @@ public class BossControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bossPos.LookAt(carrotTargetPos.position + Vector3.up * (bossPos.position.y - carrotTargetPos.position.y));
         // Generate new boss target position once in close enough proximity
         if (Mathf.Abs(bossHorizontalPos - bossPos.position.x) < 0.1)
         {
@@ -55,7 +57,7 @@ public class BossControl : MonoBehaviour
     // Shoot one carrot
     public void ShootProjectile()
     {
-        Vector3 carrotSpawnPos = bossPos.position + new Vector3(0, 1.6f, -0.4f);
+        Vector3 carrotSpawnPos = carrotSpawnOffset.position; //bossPos.position + new Vector3(0, 1.6f, -0.4f);
 
         Vector3 orientation = carrotTargetPos.position - carrotSpawnPos;
         GameObject projectile = Instantiate(carrotPf, carrotSpawnPos, Quaternion.Euler(orientation));
