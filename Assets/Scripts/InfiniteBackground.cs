@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InfiniteBackground : MonoBehaviour
 {
-    private float speed = 30.0f;
+    private float speed = 10.0f;
 
     // Start is called before the first frame update
     void Start()
