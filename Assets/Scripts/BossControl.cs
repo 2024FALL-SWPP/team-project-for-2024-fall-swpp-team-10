@@ -6,7 +6,7 @@ public class BossControl : MonoBehaviour
 {
     public Animator animator;
     int col;
-    Color[] myColors = new Color[] { Color.white, Color.red, Color.gray };
+    Color[] myColors = { Color.white, Color.red, Color.gray };
 
     [SerializeField] Transform bossPos;
     [SerializeField] Transform carrotSpawnOffset;
