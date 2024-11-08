@@ -33,7 +33,7 @@ public class ButtonHandler : MonoBehaviour
         GameManager.inst.LoadCharacterSelection();
     }
 
-    public void LoadMainStageCharacter(int character)
+    public void SetCharacter(int character)
     {
         GameManager.inst.SetCharacter((Character)character);
     }

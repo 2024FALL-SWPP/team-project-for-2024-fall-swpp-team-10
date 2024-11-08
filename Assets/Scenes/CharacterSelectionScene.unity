@@ -385,7 +385,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 671602077}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainStageCharacter
+        m_MethodName: SetCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 671602077}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainStageCharacter
+        m_MethodName: SetCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1463,7 +1463,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 671602077}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainStageCharacter
+        m_MethodName: SetCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2467,7 +2467,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 671602077}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainStageCharacter
+        m_MethodName: SetCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4248,7 +4248,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 671602077}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainStageCharacter
+        m_MethodName: SetCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
