@@ -14,8 +14,8 @@ public class PlayerControl : MonoBehaviour
 
     public float projectileSpeed = 10.0f; // Speed of laser
     public GameObject projectilePrefab; // Laser prefab
-    public Transform projectileSpawnPoint; // Laser is instantiated at the chest of the character
-    public float projectileDurationTime = 2f;
+    public Transform projectileSpawnPoint; // Laser is instantiated at this point
+
     void Start()
     {
         // Set the initial position as the center of the grid (1,1)
@@ -63,7 +63,7 @@ public class PlayerControl : MonoBehaviour
 
     void FireLaser()
     {
-        // Create the projectile at the chest point
+        // Create the projectile at the preassigned point
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
@@ -72,9 +72,6 @@ public class PlayerControl : MonoBehaviour
         {
             projectileRb.velocity = Vector3.forward * projectileSpeed;
         }
-
-        // Destroy the projectile after some time
-        Destroy(projectile, projectileDurationTime);
     }
 
     IEnumerator SmoothMove()

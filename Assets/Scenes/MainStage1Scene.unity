@@ -1334,7 +1334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929826646}
   m_Layer: 0
-  m_Name: projectileSpawnPoint
+  m_Name: ProjectileSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2727,6 +2727,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 929826646}
+  projectileDurationTime: 2
 --- !u!4 &1699910874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}

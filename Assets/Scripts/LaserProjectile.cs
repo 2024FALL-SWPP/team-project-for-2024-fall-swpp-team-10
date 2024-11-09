@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
+    public float projectileDurationTime = 2f;
     private TrailRenderer trail;
 
     [Header("Trail Settings")]
@@ -43,5 +44,8 @@ public class LaserProjectile : MonoBehaviour
             trail.material = new Material(Shader.Find("Sprites/Default"));
             trail.material.SetColor("_Color", materialColor);
         }
+
+        // Destroy the projectile after some time
+        Destroy(gameObject, projectileDurationTime);
     }
 }
