@@ -122,5 +122,10 @@ public class PlayerControl : MonoBehaviour
         {
             GameManager.inst.RemoveLife();
         }
+        else if (other.gameObject.CompareTag("Heart"))
+        {
+            GameManager.inst.AddLife();
+            Destroy(other.gameObject);
+        }
     }
 }
