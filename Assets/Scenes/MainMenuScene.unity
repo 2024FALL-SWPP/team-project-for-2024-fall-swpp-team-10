@@ -1297,8 +1297,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2141034185}
-        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 2131643266}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadStageSelection
         m_Mode: 1
         m_Arguments:
@@ -1389,10 +1389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19ad06774dd347ae85f768223667c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heart:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &2131643267
 Transform:
   m_ObjectHideFlags: 0

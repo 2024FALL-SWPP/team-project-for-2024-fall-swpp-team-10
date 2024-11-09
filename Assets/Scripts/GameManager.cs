@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void LoadMainMenu()
@@ -49,9 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadStageSelection()
     {
-        playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
         SceneManager.LoadScene("StageSelectionScene");
-        // Debug.Log("Load Scene with Player Name: " + playerName + "\n(First Undo Comment in GameManager > loadStageSelection() )");
     }
 
     public void LoadCharacterSelection()
@@ -62,6 +60,15 @@ public class GameManager : MonoBehaviour
     public void LoadMainStage()
     {
         SceneManager.LoadScene("MainStage" + stage + "Scene");
+    }
+
+    public string GetPlayerName()
+    {
+        return playerName;
+    }
+    public void SetPlayerName(string _playerName)
+    {
+        playerName = _playerName;
     }
 
     public int GetStage()

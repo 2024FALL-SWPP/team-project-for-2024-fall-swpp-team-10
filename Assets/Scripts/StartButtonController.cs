@@ -17,6 +17,7 @@ public class StartButtonController : MonoBehaviour
     {
         btnStart = gameObject.GetComponent<Button>();
         playerName.onValueChanged.AddListener(delegate { ValidatePlayerName(); });
+        btnStart.onClick.AddListener(SetPlayerName);
         validPrev = "";
     }
 
@@ -29,10 +30,15 @@ public class StartButtonController : MonoBehaviour
     {
         playerName.text = playerName.text.Trim().ToUpper();
         //playerName.text = playerName.text.ToUpper();
-        btnStart.interactable = (playerName.text != "" && Regex.IsMatch(playerName.text, @"^[a-zA-Z0-9]{1,13}$"));
+        btnStart.interactable = playerName.text != "" && Regex.IsMatch(playerName.text, @"^[a-zA-Z0-9]{1,13}$");
         if (!btnStart.interactable && playerName.text != "")
             playerName.text = validPrev;
         else
             validPrev = playerName.text;
+    }
+
+    public void SetPlayerName()
+    {
+        GameManager.inst.SetPlayerName(GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text);
     }
 }
