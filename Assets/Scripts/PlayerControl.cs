@@ -12,6 +12,10 @@ public class PlayerControl : MonoBehaviour
     private Vector3 initialPosition; // Initial world position of the player
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
+    public float projectileSpeed = 10.0f; // Speed of laser
+    public GameObject projectilePrefab; // Laser prefab
+    public Transform projectileSpawnPoint; // Laser is instantiated at this point
+
     void Start()
     {
         // Set the initial position as the center of the grid (1,1)
@@ -48,6 +52,25 @@ public class PlayerControl : MonoBehaviour
                 currentGridPosition.y--;
                 StartCoroutine(SmoothMove());
             }
+        }
+
+        // Fire Laser
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FireLaser();
+        }
+    }
+
+    void FireLaser()
+    {
+        // Create the projectile at the preassigned point
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+
+
+        if (projectileRb != null)
+        {
+            projectileRb.velocity = Vector3.forward * projectileSpeed;
         }
     }
 
