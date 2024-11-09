@@ -383,7 +383,7 @@ MonoBehaviour:
   player: {fileID: 1431771570}
   offset: {x: 0, y: 3, z: -5}
   followSpeed: 5
-  pitch: 20
+  pitch: 30
 --- !u!4 &709343200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9187272b595114c30a93c2cd5853a108, type: 3}
