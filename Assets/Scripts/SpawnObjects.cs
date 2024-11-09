@@ -25,9 +25,9 @@ public class SpawnObjects : MonoBehaviour
     {
         while (true)
         {
-            int spawnRandom = Random.Range(0, 1000) % objects.Length;
-            int xRandom = Random.Range(0, 1000) % 3 - 1;
-            int yRandom = Random.Range(0, 1000) % 3 - 1;
+            int spawnRandom = Random.Range(0, objects.Length);
+            int xRandom = Random.Range(0, 3) - 1;
+            int yRandom = Random.Range(0, 3) - 1;
 
             Vector3 spawnPosition = new Vector3(xRandom, yRandom, 0);
             GameObject spawnedObject = objects[spawnRandom];

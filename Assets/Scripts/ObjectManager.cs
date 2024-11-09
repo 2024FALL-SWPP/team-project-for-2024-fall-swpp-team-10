@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-    private float speed = 20.0f;
+    private float speed = 22.0f;
     private float rotationSpeed = 500.0f;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class ObjectManager : MonoBehaviour
     {
         transform.Translate(new Vector3(0, 0, -1) * speed * Time.deltaTime, Space.World);
 
-        if (!gameObject.CompareTag("Enemy") && !gameObject.CompareTag("Obstacle"))
+        if (!gameObject.CompareTag("Enemy") && !gameObject.CompareTag("Obstacle")) //if it is item or coin
         {
             transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0), Space.World);
         }
