@@ -65,6 +65,7 @@ public class PlayerControl : MonoBehaviour
     {
         // Create the projectile at the preassigned point
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
 
