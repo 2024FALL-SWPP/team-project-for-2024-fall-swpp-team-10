@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    public float gridSpacing = 1.0f; // Distance between grid positions
-    public Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
+    private float gridSpacing = 1.0f; // Distance between grid positions
+    private Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
     public float moveSpeed = 10f; // Speed of movement between grid positions
 
     private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
@@ -18,9 +18,9 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        // Set the initial position as the center of the grid (1,1)
-        initialPosition = transform.position;
-        currentGridPosition = new Vector2Int(1, 1); // Start at the center logically
+        // Set the initial position as the down of the grid (1,0)
+        initialPosition = transform.position - Vector3.down;
+        currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
     }
 
     void Update()
