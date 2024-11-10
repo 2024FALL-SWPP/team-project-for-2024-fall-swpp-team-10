@@ -24,6 +24,11 @@ public class MainManager : MonoBehaviour
         {
             Pause();
         }
+
+        for (int i = 0; i < GameManager.inst.GetLife(); i++)
+            hearts[i].SetActive(true);
+        for (int j = 2; j >= GameManager.inst.GetLife(); j--)
+            hearts[j].SetActive(false);
     }
 
     private void OnEnable()

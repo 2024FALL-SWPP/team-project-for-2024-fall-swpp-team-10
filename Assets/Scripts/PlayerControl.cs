@@ -115,4 +115,12 @@ public class PlayerControl : MonoBehaviour
             0
         );
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
+        {
+            GameManager.inst.RemoveLife();
+        }
+    }
 }
