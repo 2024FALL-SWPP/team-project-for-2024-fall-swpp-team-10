@@ -221,6 +221,6 @@ MonoBehaviour:
   startWidth: 0.3
   endWidth: 0
   minVertexDistance: 0.1
-  startColor: {r: 0.7294118, g: 0, b: 1, a: 1}
-  endColor: {r: 0.7294118, g: 0, b: 1, a: 0}
-  materialColor: {r: 0.7294118, g: 0, b: 1, a: 1}
+  startColor: {r: 0.49805027, g: 0.009611944, b: 0.6792453, a: 1}
+  endColor: {r: 0.5019608, g: 0.011764706, b: 0.68235296, a: 0}
+  materialColor: {r: 0.5019608, g: 0.011764706, b: 0.68235296, a: 1}
