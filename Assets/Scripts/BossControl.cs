@@ -9,6 +9,7 @@ public class BossControl : MonoBehaviour
 
     // Color related variables
     [SerializeField] Color bossStartColor;
+    [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
 
     bool bossDead = false;
@@ -40,7 +41,7 @@ public class BossControl : MonoBehaviour
         // Set up boss color
         myColorDict = new Dictionary<Color, Color>()
         {
-            {Color.red, new Color(203f / 255f, 83f / 255f, 83f / 255f, 1)},
+            {Color.red, myColorRed},
             {Color.black, Color.gray }
         };
         ChangeColor(bossStartColor);
@@ -115,13 +116,13 @@ public class BossControl : MonoBehaviour
     // Start shoot interval
     public void StartShootInterval()
     {
-        InvokeRepeating("ShootProjectile", 0f, (carrotDelayTime > 1f) ? carrotDelayTime : 1f) ; // Appropriate delay time based on testing: 1f ~ 1.6f
+        InvokeRepeating("ShootProjectile", 0f, Mathf.Max(carrotDelayTime, 1f)); // Appropriate delay time based on testing: 1f ~ 1.6f
     }
 
     // Change color function to keep
     public void ChangeColor(Color bossColorKey)
     {
-        Color bossColorValue = (myColorDict.ContainsKey(bossColorKey)) ? myColorDict[bossColorKey] : bossColorKey; // If dict contains key, extract value. Otherwise, pass color as is.
+        Color bossColorValue = (myColorDict.GetValueOrDefault(bossColorKey, bossColorKey)); // If dict contains key, extract value. Otherwise, pass color as is.
         ChangeColorHelper(gameObject.transform, bossColorValue); // Actual color (value) passed as parameter
     }
 
