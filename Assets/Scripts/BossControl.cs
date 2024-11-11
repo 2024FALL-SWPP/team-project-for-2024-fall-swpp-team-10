@@ -21,8 +21,6 @@ public class BossControl : MonoBehaviour
     [SerializeField] Transform carrotTargetPos;
     [SerializeField] float carrotDelayTime; // Time between each carrot throw
     [SerializeField] float carrotSpeed;
-    [SerializeField] int carrotNum; // Number of carrots to throw in one shooting interval
-    int carrotCount;
 
     // Boss movement variables
     [SerializeField] float bossHorizontalRange; // x range of boss
@@ -39,8 +37,6 @@ public class BossControl : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        carrotCount = 0;
-
         // Set up boss color
         myColorDict = new Dictionary<Color, Color>()
         {
@@ -80,13 +76,22 @@ public class BossControl : MonoBehaviour
 
         }
         // Finish condition for one shooting interval
-        if (carrotCount == carrotNum || bossDead)
+        if (bossDead)
             StopShooting();
     }
 
     // Shoot one carrot
     public void ShootProjectile()
     {
+        StartCoroutine("ShootProjectileCoroutine");
+    }
+
+    IEnumerator ShootProjectileCoroutine()
+    {
+        animator.SetBool("mouthOpen_b", true);
+
+        yield return new WaitForSeconds(0.2f);
+
         Vector3 carrotSpawnPos = carrotSpawnOffset.position;
 
         Vector3 orientation = carrotTargetPos.position - carrotSpawnPos;
@@ -95,22 +100,22 @@ public class BossControl : MonoBehaviour
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
         projectileRb.velocity = orientation.normalized * carrotSpeed;
 
-        carrotCount += 1;
+        yield return new WaitForSeconds(0.5f);
+
+        animator.SetBool("mouthOpen_b", false);
     }
 
     // Stop shooting and close mouth
     public void StopShooting()
     {
         CancelInvoke("ShootProjectile");
-        carrotCount = 0;
         animator.SetBool("mouthOpen_b", false);
     }
 
     // Start shoot interval
     public void StartShootInterval()
     {
-        animator.SetBool("mouthOpen_b", true);
-        InvokeRepeating("ShootProjectile", 0.2f, carrotDelayTime);
+        InvokeRepeating("ShootProjectile", 0f, (carrotDelayTime > 1f) ? carrotDelayTime : 1f) ; // Appropriate delay time based on testing: 1f ~ 1.6f
     }
 
     // Change color function to keep
