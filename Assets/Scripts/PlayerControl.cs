@@ -18,7 +18,7 @@ public class PlayerControl : MonoBehaviour
     public Transform projectileSpawnPoint; // Laser is instantiated at this point
 
     private Renderer[] childRenderers;
-    private Color[] originColors = new Color[100];
+    private Color[] originColors;
     private int blinkCount = 3;
 
     void Awake()
@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
         childRenderers = GetComponentsInChildren<Renderer>();
+        originColors = new Color[childRenderers.Length];
         for (int i = 0; i < childRenderers.Length; i++)
             originColors[i] = childRenderers[i].material.color;
     }
@@ -66,12 +67,6 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FireLaser();
-        }
-
-        if (GameManager.inst.GetLife() <= 0)
-        {
-            isMoving = true;
-            transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
         }
     }
 
