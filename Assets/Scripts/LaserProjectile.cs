@@ -48,4 +48,17 @@ public class LaserProjectile : MonoBehaviour
         // Destroy the projectile after some time
         Destroy(gameObject, projectileDurationTime);
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

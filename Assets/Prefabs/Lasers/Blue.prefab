@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 259906215475197229}
   - component: {fileID: 8915841910569774204}
   - component: {fileID: -6941572519202085269}
+  - component: {fileID: -9097361708035074195}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9046865428104514395}
-  m_LocalRotation: {x: -0.6941109, y: -0.13494475, z: -0.13494475, w: 0.69411093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 2.0177658, z: 6.5709434}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
@@ -103,7 +104,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 118
   m_CollisionDetection: 0
 --- !u!96 &8915841910569774204
 TrailRenderer:
@@ -224,3 +225,16 @@ MonoBehaviour:
   startColor: {r: 0, g: 0, b: 1, a: 1}
   endColor: {r: 0, g: 0, b: 1, a: 0}
   materialColor: {r: 0, g: 0, b: 1, a: 1}
+--- !u!65 &-9097361708035074195
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9046865428104514395}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.019637749, y: 0.019864611, z: 0.01972992}
+  m_Center: {x: -0.0000066808425, y: 0.000013982877, z: -0.00002696598}

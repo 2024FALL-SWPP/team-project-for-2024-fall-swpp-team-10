@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -16,11 +17,19 @@ public class PlayerControl : MonoBehaviour
     public GameObject projectilePrefab; // Laser prefab
     public Transform projectileSpawnPoint; // Laser is instantiated at this point
 
-    void Start()
+    private Renderer[] childRenderers;
+    private Color[] originColors;
+    private int blinkCount = 3;
+
+    void Awake()
     {
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
+        childRenderers = GetComponentsInChildren<Renderer>();
+        originColors = new Color[childRenderers.Length];
+        for (int i = 0; i < childRenderers.Length; i++)
+            originColors[i] = childRenderers[i].material.color;
     }
 
     void Update()
@@ -64,8 +73,7 @@ public class PlayerControl : MonoBehaviour
     void FireLaser()
     {
         // Create the projectile at the preassigned point
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position + new Vector3(0, 0, 1f), Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
 
@@ -114,5 +122,40 @@ public class PlayerControl : MonoBehaviour
             (currentGridPosition.y - 1) * gridSpacing,
             0
         );
+    }
+
+    IEnumerator Blink()
+    {
+        for (int i = 0; i < blinkCount; i++)
+        {
+            foreach (Renderer renderer in childRenderers)
+            {
+                renderer.material.color = Color.red;
+            }
+            yield return new WaitForSeconds(0.2f);
+
+            for (int j = 0; j < childRenderers.Length; j++)
+                childRenderers[j].material.color = originColors[j];
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
+        {
+            GameManager.inst.RemoveLife();
+            StartCoroutine(Blink());
+        }
+        
+        if (other.gameObject.CompareTag("Heart"))
+        {
+            GameManager.inst.AddLife();
+        }
+
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
