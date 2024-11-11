@@ -67,13 +67,18 @@ public class PlayerControl : MonoBehaviour
         {
             FireLaser();
         }
+
+        if (GameManager.inst.GetLife() <= 0)
+        {
+            isMoving = true;
+            transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
+        }
     }
 
     void FireLaser()
     {
         // Create the projectile at the preassigned point
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position + new Vector3(0, 0, 1f), Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
 
