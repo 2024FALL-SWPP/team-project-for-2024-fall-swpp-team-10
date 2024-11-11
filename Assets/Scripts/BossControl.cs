@@ -8,14 +8,8 @@ public class BossControl : MonoBehaviour
     public Animator animator;
 
     // Color related variables
-    int col; // Testing purposes only
-    Color[] myColors = { Color.white, Color.red, Color.gray };
-    public enum BossColor
-    {
-        White,
-        Red,
-        Black
-    }
+    [SerializeField] Color bossStartColor;
+    Dictionary<Color, Color> myColorDict;
 
     bool bossDead = false;
 
@@ -38,26 +32,28 @@ public class BossControl : MonoBehaviour
     // Boss Death animation variables
     [SerializeField] ParticleSystem bossSmoke;
     [SerializeField] float bossReducedSize;
-    Dictionary<Transform, Vector3> bossComponentsPositions = new Dictionary<Transform, Vector3>();
-    Dictionary<Transform, Quaternion> bossComponentsRotations = new Dictionary<Transform, Quaternion>();
-
-    [SerializeField] BossColor bossStartColor;
+    // Initial positions and rotations for post death effect
+    Dictionary<Transform, Vector3> bossComponentsInitialPositions = new Dictionary<Transform, Vector3>();
+    Dictionary<Transform, Quaternion> bossComponentsInitialRotations = new Dictionary<Transform, Quaternion>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        col = 0; // Testing purposes only
         carrotCount = 0;
 
         // Set up boss color
-        ColorUtility.TryParseHtmlString("#CB5353", out myColors[1]);
+        myColorDict = new Dictionary<Color, Color>()
+        {
+            {Color.red, new Color(203f / 255f, 83f / 255f, 83f / 255f, 1)},
+            {Color.black, Color.gray }
+        };
         ChangeColor(bossStartColor);
 
         // Set up for boss death animation
         foreach (Transform childTransform in bossTransform)
         {
-            bossComponentsPositions[childTransform] = childTransform.position;
-            bossComponentsRotations[childTransform] = childTransform.rotation;
+            bossComponentsInitialPositions[childTransform] = childTransform.position;
+            bossComponentsInitialRotations[childTransform] = childTransform.rotation;
         }
     }
 
@@ -117,41 +113,26 @@ public class BossControl : MonoBehaviour
         InvokeRepeating("ShootProjectile", 0.2f, carrotDelayTime);
     }
 
-    // Change color testing purposes only
-    public void ChangeColorRandom()
-    {
-        col = (col + 1) % 3;
-        foreach (Transform childTransform in gameObject.transform)
-        {
-            GameObject child = childTransform.gameObject;
-            SkinnedMeshRenderer smr = child.GetComponent<SkinnedMeshRenderer>();
-            if (smr != null) smr.material.color = myColors[col];
-            MeshRenderer mr = child.GetComponent<MeshRenderer>();
-            if (mr != null) mr.material.color = myColors[col];
-        }
-    }
-
     // Change color function to keep
-    public void ChangeColor(BossColor bossColor)
+    public void ChangeColor(Color bossColorKey)
     {
-        ChangeColorHelper(gameObject.transform, bossColor);
+        Color bossColorValue = (myColorDict.ContainsKey(bossColorKey)) ? myColorDict[bossColorKey] : bossColorKey; // If dict contains key, extract value. Otherwise, pass color as is.
+        ChangeColorHelper(gameObject.transform, bossColorValue); // Actual color (value) passed as parameter
     }
 
     // Recursively change color of all children
-    public void ChangeColorHelper(Transform transform, BossColor bossColor)
+    public void ChangeColorHelper(Transform transform, Color bossColor)
     {
         foreach (Transform childTransform in transform)
         {
             GameObject child = childTransform.gameObject;
             SkinnedMeshRenderer smr = child.GetComponent<SkinnedMeshRenderer>();
-            if (smr != null) smr.material.color = myColors[(int)bossColor];
+            if (smr != null) smr.material.color = bossColor;
             MeshRenderer mr = child.GetComponent<MeshRenderer>();
-            if (mr != null) mr.material.color = myColors[(int)bossColor];
+            if (mr != null) mr.material.color = bossColor;
 
             if (childTransform.childCount > 0) ChangeColorHelper(childTransform, bossColor);
         }
-
-
     }
 
     public void BossDeath()
@@ -187,7 +168,7 @@ public class BossControl : MonoBehaviour
     void BossDeathTransform()
     {
         // Transform boss into small white rabbit
-        ChangeColor(BossColor.White);
+        ChangeColor(Color.white); // Pass the color key: Color.red or Color.black. Colors that are not defined as keys will be passed as is to the helper function.
         foreach (Transform childTransform in bossTransform)
         {
             GameObject child = childTransform.gameObject;
@@ -199,8 +180,8 @@ public class BossControl : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 rb.isKinematic = true;
             }
-            childTransform.position = bossComponentsPositions[childTransform];
-            childTransform.rotation = bossComponentsRotations[childTransform];
+            childTransform.position = bossComponentsInitialPositions[childTransform];
+            childTransform.rotation = bossComponentsInitialRotations[childTransform];
         }
         bossTransform.localScale = new Vector3(bossReducedSize, bossReducedSize, bossReducedSize);
     }

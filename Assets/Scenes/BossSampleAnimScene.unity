@@ -6425,6 +6425,22 @@ PrefabInstance:
       propertyPath: carrotTargetPos
       value: 
       objectReference: {fileID: 1112566255}
+    - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: bossStartColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: bossStartColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: bossStartColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: bossStartColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: m_Name
       value: Boss
