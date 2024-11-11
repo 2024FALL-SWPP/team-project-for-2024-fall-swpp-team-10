@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(playerName);
     }
 
     public void LoadMainMenu()
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetPlayerName()
     {
-        playerName = GameObject.FindWithTag("PlayerName").GetComponent<Text>().text;
+        playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
     }
 
     public int GetStage()

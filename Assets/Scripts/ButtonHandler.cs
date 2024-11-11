@@ -41,4 +41,9 @@ public class ButtonHandler : MonoBehaviour
     {
         GameManager.inst.LoadMainStage();
     }
+
+    public void SetPlayerName()
+    {
+        GameManager.inst.SetPlayerName();
+    }
 }
