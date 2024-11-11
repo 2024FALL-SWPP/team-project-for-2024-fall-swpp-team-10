@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using EnumManager;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LoadMainMenu()
@@ -66,9 +67,9 @@ public class GameManager : MonoBehaviour
     {
         return playerName;
     }
-    public void SetPlayerName(string _playerName)
+    public void SetPlayerName()
     {
-        playerName = _playerName;
+        playerName = GameObject.FindWithTag("PlayerName").GetComponent<Text>().text;
     }
 
     public int GetStage()

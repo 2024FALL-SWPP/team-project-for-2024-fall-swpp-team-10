@@ -17,7 +17,6 @@ public class StartButtonController : MonoBehaviour
     {
         btnStart = gameObject.GetComponent<Button>();
         playerName.onValueChanged.AddListener(delegate { ValidatePlayerName(); });
-        btnStart.onClick.AddListener(SetPlayerName);
         validPrev = "";
     }
 
@@ -35,10 +34,5 @@ public class StartButtonController : MonoBehaviour
             playerName.text = validPrev;
         else
             validPrev = playerName.text;
-    }
-
-    public void SetPlayerName()
-    {
-        GameManager.inst.SetPlayerName(GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text);
     }
 }
