@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using EnumManager;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -20,6 +21,8 @@ public class PlayerControl : MonoBehaviour
     private Renderer[] childRenderers;
     private Color[] originColors;
     private int blinkCount = 3;
+    private float invincibleLength = 10.0f;
+    private bool isInvincible = false;
 
     void Awake()
     {
@@ -150,17 +153,59 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    IEnumerator Invincible()
+    {
+        float currentTime = 0f;
+        isInvincible = true;
+        while (invincibleLength >= currentTime)
+        {
+            ChangeColor(Color.red);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.yellow);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.green);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.blue);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.magenta);
+            yield return new WaitForSeconds(0.1f);
+            currentTime += 0.5f;
+        }
+        for (int i = 0; i < childRenderers.Length; i++)
+            childRenderers[i].material.color = originColors[i];
+
+        isInvincible = false;
+    }
+
+    private void ChangeColor(Color _color)
+    {
+        foreach (Renderer renderer in childRenderers)
+        {
+            renderer.material.color = _color;
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
+            if (isInvincible)
+            {
+                Destroy(other.gameObject);
+                return;
+            }
             GameManager.inst.RemoveLife();
             StartCoroutine(Blink());
         }
-        
+
         if (other.gameObject.CompareTag("Heart"))
         {
             GameManager.inst.AddLife();
+        }
+
+        if (other.gameObject.CompareTag("Invincible"))
+        {
+            StartCoroutine(Invincible());
         }
 
         if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
