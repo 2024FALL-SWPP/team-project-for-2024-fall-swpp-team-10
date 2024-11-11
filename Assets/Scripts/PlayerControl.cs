@@ -147,9 +147,14 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.RemoveLife();
             StartCoroutine(Blink());
         }
-        else if (other.gameObject.CompareTag("Heart"))
+        
+        if (other.gameObject.CompareTag("Heart"))
         {
             GameManager.inst.AddLife();
+        }
+
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
+        {
             Destroy(other.gameObject);
         }
     }
