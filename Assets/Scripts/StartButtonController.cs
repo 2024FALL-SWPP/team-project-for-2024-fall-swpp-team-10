@@ -29,7 +29,7 @@ public class StartButtonController : MonoBehaviour
     {
         playerName.text = playerName.text.Trim().ToUpper();
         //playerName.text = playerName.text.ToUpper();
-        btnStart.interactable = (playerName.text != "" && Regex.IsMatch(playerName.text, @"^[a-zA-Z0-9]{1,13}$"));
+        btnStart.interactable = playerName.text != "" && Regex.IsMatch(playerName.text, @"^[a-zA-Z0-9]{1,13}$");
         if (!btnStart.interactable && playerName.text != "")
             playerName.text = validPrev;
         else

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using EnumManager;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,9 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadStageSelection()
     {
-        playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
         SceneManager.LoadScene("StageSelectionScene");
-        // Debug.Log("Load Scene with Player Name: " + playerName + "\n(First Undo Comment in GameManager > loadStageSelection() )");
     }
 
     public void LoadCharacterSelection()
@@ -62,6 +61,15 @@ public class GameManager : MonoBehaviour
     public void LoadMainStage()
     {
         SceneManager.LoadScene("MainStage" + stage + "Scene");
+    }
+
+    public string GetPlayerName()
+    {
+        return playerName;
+    }
+    public void SetPlayerName()
+    {
+        playerName = GameObject.FindWithTag("PlayerName").GetComponent<TextMeshProUGUI>().text;
     }
 
     public int GetStage()
