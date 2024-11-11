@@ -124,7 +124,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 185579822364805374}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &418192702357611984
 GameObject:
@@ -189,7 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 185579822364805374}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8738396610293437124
 MeshFilter:
@@ -304,9 +304,7 @@ Transform:
   m_Children:
   - {fileID: 9089278414269126752}
   - {fileID: 4876552306627590372}
-  - {fileID: 6423051341365687588}
   - {fileID: 5985919299896830209}
-  - {fileID: 5542633946247381208}
   - {fileID: 367596013244964437}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -345,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 367596013406301719}
-  bossPos: {fileID: 185579822364805374}
+  bossTransform: {fileID: 0}
   carrotSpawnOffset: {fileID: 367596013244964437}
   carrotPf: {fileID: 5649900439809378948, guid: 1eecc96bfe961436396ca41d4ed49458, type: 3}
   carrotTargetPos: {fileID: 0}
@@ -354,6 +352,9 @@ MonoBehaviour:
   carrotNum: 8
   bossHorizontalRange: 3
   bossHorizontalSpeed: 1
+  bossSmoke: {fileID: 0}
+  bossReducedSize: 0
+  bossStartColor: 0
 --- !u!1 &744464058311470165
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,13 +638,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4008446907142545685}
-  m_LocalRotation: {x: -0.7071068, y: 0.00000005338508, z: 0.00000005338508, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 99.99999, y: 99.99999, z: 99.99999}
+  m_LocalRotation: {x: -0, y: -0, z: -0.000000057660166, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 185579822364805374}
-  m_RootOrder: 2
+  m_Father: {fileID: 4876552306627590372}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4860998877908066995
 SkinnedMeshRenderer:
@@ -774,6 +775,7 @@ Transform:
   - {fileID: 1591184725506727710}
   - {fileID: 8249031662096210440}
   - {fileID: 2403514449669471377}
+  - {fileID: 6423051341365687588}
   m_Father: {fileID: 185579822364805374}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1023,13 +1025,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6359010672740277011}
-  m_LocalRotation: {x: -0.7071068, y: 0.00000005338508, z: 0.00000005338508, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 2.1960366, z: -0.10111782}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalRotation: {x: -0, y: -0, z: -0.000000057660166, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 185579822364805374}
-  m_RootOrder: 4
+  m_Father: {fileID: 9089278414269126752}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1878356303717070976
 SkinnedMeshRenderer:
@@ -1245,6 +1247,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3785564894491280290}
+  - {fileID: 5542633946247381208}
   m_Father: {fileID: 185579822364805374}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
