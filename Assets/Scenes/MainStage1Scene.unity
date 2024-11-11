@@ -553,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &402576484
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1027,11 +1027,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1055,7 +1055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_TagString
@@ -1525,6 +1525,7 @@ MonoBehaviour:
   - {fileID: 8639605196045675972, guid: b9f95d5eecb529a45b15110b266cf035, type: 3}
   - {fileID: 6693580597327897727, guid: 6cb94c266e6ab554489abe847f3afbfa, type: 3}
   - {fileID: 8812520863519996741, guid: 92afdb7901a9192418a5e4a1afa3b44f, type: 3}
+  - {fileID: 5469819106887244823, guid: 6c6dd5508f279f64e98d3b9e9dcbb736, type: 3}
   spawnInterval: 5
   minSpawnInterval: 3
 --- !u!4 &963564387

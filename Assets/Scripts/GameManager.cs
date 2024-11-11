@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private string playerName;
 
     private int life;
-    private int maxLife = 3;
+    public int maxLife = 3;
     private int stage;
     private Character character;
     private int score = 0;
