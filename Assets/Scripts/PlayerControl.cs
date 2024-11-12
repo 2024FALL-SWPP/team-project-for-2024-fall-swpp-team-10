@@ -206,9 +206,26 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Magnet()
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
-        yield return new WaitForSeconds(10f);
-        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        float coinSpeed = 50f;
+        float distance = 2f;
+
+        while (magnetDuration > 0)
+        {
+            magnetDuration -= Time.deltaTime;
+            GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+
+            foreach (GameObject coin in coins)
+            {
+                // Debug.Log(coins);
+                if (coin != null)
+                {
+                    if (coin.transform.position.z - transform.position.z < distance)
+                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
+                }
+            }
+
+            yield return null;
+        }
     }
 
     private void OnCollisionEnter(Collision other)
