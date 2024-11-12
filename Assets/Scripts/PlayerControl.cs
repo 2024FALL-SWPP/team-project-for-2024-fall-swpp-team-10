@@ -160,11 +160,13 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Invincible()
     {
-        invincibleLength = 10.0f;
+        invincibleLength = 10f;
+        if (isInvincible)
+            yield break;
         isInvincible = true;
         while (invincibleLength > 0)
         {
-            invincibleLength -= 0.5f;
+            invincibleLength -= 0.6f;
             ChangeColor(Color.red);
             yield return new WaitForSeconds(0.1f);
             ChangeColor(Color.yellow);
@@ -219,8 +221,6 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Invincible"))
         {
-            if (isInvincible)
-                StopCoroutine(Invincible());
             StartCoroutine(Invincible());
         }
 
