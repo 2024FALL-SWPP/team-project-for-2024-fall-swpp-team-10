@@ -206,8 +206,9 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Magnet()
     {
-        yield return new WaitForSeconds(1f);
         transform.localScale = new Vector3(1f, 1f, 1f);
+        yield return new WaitForSeconds(10f);
+        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
     }
 
     private void OnCollisionEnter(Collision other)
