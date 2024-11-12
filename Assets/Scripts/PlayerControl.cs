@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     private Renderer[] childRenderers;
     private Color[] originColors;
     private int blinkCount = 3;
-    private float invincibleLength = 10.0f;
+    private float invincibleLength;
     private bool isInvincible = false;
 
     void Awake()
@@ -29,8 +29,10 @@ public class PlayerControl : MonoBehaviour
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
+
         childRenderers = GetComponentsInChildren<Renderer>();
         originColors = new Color[childRenderers.Length];
+
         for (int i = 0; i < childRenderers.Length; i++)
             originColors[i] = childRenderers[i].material.color;
     }
@@ -139,26 +141,26 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Blink()
     {
+        isInvincible = true;
         for (int i = 0; i < blinkCount; i++)
         {
-            foreach (Renderer renderer in childRenderers)
-            {
-                renderer.material.color = Color.red;
-            }
+            ChangeColor(Color.red);
             yield return new WaitForSeconds(0.2f);
 
-            for (int j = 0; j < childRenderers.Length; j++)
-                childRenderers[j].material.color = originColors[j];
+            ChangeColorOriginal();
             yield return new WaitForSeconds(0.2f);
         }
+        isInvincible = false;
     }
 
     IEnumerator Invincible()
     {
-        float currentTime = 0f;
+        invincibleLength = 10.0f;
         isInvincible = true;
-        while (invincibleLength >= currentTime)
+        while (invincibleLength > 0)
         {
+            invincibleLength -= 0.5f;
+            Debug.Log(invincibleLength);
             ChangeColor(Color.red);
             yield return new WaitForSeconds(0.1f);
             ChangeColor(Color.yellow);
@@ -169,10 +171,8 @@ public class PlayerControl : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             ChangeColor(Color.magenta);
             yield return new WaitForSeconds(0.1f);
-            currentTime += 0.5f;
         }
-        for (int i = 0; i < childRenderers.Length; i++)
-            childRenderers[i].material.color = originColors[i];
+        ChangeColorOriginal();
 
         isInvincible = false;
     }
@@ -181,10 +181,15 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (Renderer renderer in childRenderers)
         {
-            renderer.material.color = _color;
+            foreach (Material material in renderer.sharedMaterials)
+                material.color = _color;
         }
     }
-
+    private void ChangeColorOriginal()
+    {
+        for (int i = 0; i < childRenderers.Length; i++)
+            childRenderers[i].material.color = originColors[i];
+    }
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
@@ -205,6 +210,8 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Invincible"))
         {
+            if (isInvincible)
+                StopCoroutine(Invincible());
             StartCoroutine(Invincible());
         }
 
