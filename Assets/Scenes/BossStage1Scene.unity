@@ -624,12 +624,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meteoritePrefab: {fileID: 3227589770988646094, guid: 4bec0b7fd33af18479addce8dda9958f, type: 3}
-  explosionPrefab: {fileID: 6013779645516723339, guid: 94e471274e8c35d47b8ee552339c9bde, type: 3}
+  explosionPrefab: {fileID: 8790651117040264230, guid: a1f4300a62d3cea4f835709e4394e922, type: 3}
   gridCellPrefab: {fileID: 4049657199444927572, guid: 56db6faffa0a9b24e917fc354ed85a5d, type: 3}
   areaMin: {x: -10, y: 0.5, z: -10}
   areaMax: {x: 10, y: 0.5, z: 10}
   warningDuration: 1
-  meteoriteHeight: 10
+  meteoriteHeight: 15
   bossHealth: 100
 --- !u!1 &1431771568 stripped
 GameObject:
