@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour
     public Transform projectileSpawnPoint; // Laser is instantiated at this point
 
     private Renderer[] childRenderers;
-    private Color[] originColors;
+    private Color[,] originColors;
     private int blinkCount = 3;
     private float invincibleLength;
     private bool isInvincible = false;
@@ -31,10 +31,15 @@ public class PlayerControl : MonoBehaviour
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
 
         childRenderers = GetComponentsInChildren<Renderer>();
-        originColors = new Color[childRenderers.Length];
+        originColors = new Color[childRenderers.Length, 2];
 
         for (int i = 0; i < childRenderers.Length; i++)
-            originColors[i] = childRenderers[i].material.color;
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
+            }
+        }
     }
 
     void Update()
@@ -160,7 +165,6 @@ public class PlayerControl : MonoBehaviour
         while (invincibleLength > 0)
         {
             invincibleLength -= 0.5f;
-            Debug.Log(invincibleLength);
             ChangeColor(Color.red);
             yield return new WaitForSeconds(0.1f);
             ChangeColor(Color.yellow);
@@ -188,7 +192,12 @@ public class PlayerControl : MonoBehaviour
     private void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
-            childRenderers[i].material.color = originColors[i];
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                childRenderers[i].sharedMaterials[j].color = originColors[i, j];
+            }
+        }
     }
     private void OnCollisionEnter(Collision other)
     {
