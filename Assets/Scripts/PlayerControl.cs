@@ -23,7 +23,8 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3;
     private float invincibleLength;
     private bool isInvincible = false;
-    private float magnetDuration = 10.0f;
+    private float magnetDuration;
+    private bool isMagnet = false;
 
     void Awake()
     {
@@ -206,8 +207,14 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Magnet()
     {
-        float coinSpeed = 50f;
+        float coinSpeed = 40f;
         float distance = 2f;
+        magnetDuration = 10f;
+
+        if (isMagnet)
+            yield break;
+
+        isMagnet = true;
 
         while (magnetDuration > 0)
         {
@@ -216,7 +223,6 @@ public class PlayerControl : MonoBehaviour
 
             foreach (GameObject coin in coins)
             {
-                // Debug.Log(coins);
                 if (coin != null)
                 {
                     if (coin.transform.position.z - transform.position.z < distance)
@@ -226,6 +232,7 @@ public class PlayerControl : MonoBehaviour
 
             yield return null;
         }
+        isMagnet = false;
     }
 
     private void OnCollisionEnter(Collision other)
