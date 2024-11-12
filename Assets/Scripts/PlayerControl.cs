@@ -23,6 +23,7 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3;
     private float invincibleLength;
     private bool isInvincible = false;
+    private float magnetDuration = 10.0f;
 
     void Awake()
     {
@@ -191,6 +192,7 @@ public class PlayerControl : MonoBehaviour
                 material.color = _color;
         }
     }
+
     private void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
@@ -201,6 +203,13 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+
+    IEnumerator Magnet()
+    {
+        yield return new WaitForSeconds(1f);
+        transform.localScale = new Vector3(1f, 1f, 1f);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
@@ -222,6 +231,11 @@ public class PlayerControl : MonoBehaviour
         if (other.gameObject.CompareTag("Invincible"))
         {
             StartCoroutine(Invincible());
+        }
+
+        if (other.gameObject.CompareTag("Magnet"))
+        {
+            StartCoroutine(Magnet());
         }
 
         if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
