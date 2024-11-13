@@ -7,7 +7,6 @@ public class BossAttackPattern : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject meteoritePrefab; // 운석 프리팹
-    public GameObject explosionPrefab; // 폭발 파티클 시스템 프리팹
     public GameObject gridCellPrefab; // 그리드 셀 프리팹
 
     [Header("Player Area")]
@@ -111,9 +110,10 @@ public class BossAttackPattern : MonoBehaviour
         };
         attackPatternsPerPhase.Add(phase1Patterns);
 
-        // Phase 2 패턴: 가운데 세로줄과 대각선 공격을 번갈아 실행 -> 패턴 1: 가운데 세로줄 전체 공격 / 패턴 2: 두 대각선 전체 공격
+        // Phase 2 패턴: 가운데 세로줄과 대각선 공격을 번갈아 실행 -> 패턴 1: 가운데 세로줄 전체 공격 / 패턴 2: 대각선 공격
         List<Vector3[]> phase2Patterns = new List<Vector3[]> {
-            new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] }
+            new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] },
+            new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2] }
         };
 
         attackPatternsPerPhase.Add(phase2Patterns);
@@ -124,8 +124,6 @@ public class BossAttackPattern : MonoBehaviour
             new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] },
             new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
             new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] }
-
-
         };
 
         attackPatternsPerPhase.Add(phase3Patterns);
@@ -244,10 +242,6 @@ public class BossAttackPattern : MonoBehaviour
 
         // Meteorite 스크립트 초기화
         MeteoriteControl meteoriteScript = meteorite.GetComponent<MeteoriteControl>();
-        if (meteoriteScript != null)
-        {
-            meteoriteScript.Initialize(areaMin.y, explosionPrefab);
-        }
         //isAttacking = false;
         yield return null;
     }
@@ -258,7 +252,7 @@ public class BossAttackPattern : MonoBehaviour
         // 여기서는 테스트를 위해 시간이 지남에 따라 감소시킵니다.
         if (bossHealth > 0)
         {
-            bossHealth -= Time.deltaTime * 2f; // 초당 5씩 감소
+            bossHealth -= Time.deltaTime * 2f; // ex)초당 2씩 감소
             if (bossHealth < 0f)
             {
                 bossHealth = 0;
