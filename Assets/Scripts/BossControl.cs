@@ -35,6 +35,15 @@ public class BossControl : MonoBehaviour
     Dictionary<Transform, Vector3> bossComponentsInitialPositions = new Dictionary<Transform, Vector3>();
     Dictionary<Transform, Quaternion> bossComponentsInitialRotations = new Dictionary<Transform, Quaternion>();
 
+    // Boss weak spot variables
+    //[SerializeField] MeshCollider bossMeshCollider;
+    [SerializeField] GameObject weakSpotPf;
+    Mesh bossMesh;
+    Camera mainCamera;
+    MeshFilter meshFilter;
+    LayerMask occlusionMask;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -52,6 +61,15 @@ public class BossControl : MonoBehaviour
             bossComponentsInitialPositions[childTransform] = childTransform.position;
             bossComponentsInitialRotations[childTransform] = childTransform.rotation;
         }
+
+        // Weak spot
+        //bossMeshCollider.enabled = true;
+        mainCamera = Camera.main;
+        meshFilter = gameObject.GetComponent<MeshFilter>();
+        bossMesh = meshFilter.mesh;
+        occlusionMask = gameObject.layer;
+
+        GetWeakSpots();
     }
 
     // Update is called once per frame
@@ -146,6 +164,7 @@ public class BossControl : MonoBehaviour
         if (!bossDead)
         {
             bossDead = true;
+            //bossMeshCollider.enabled = false;
 
             // Fall back effect
             foreach (Transform childTransform in bossTransform)
@@ -190,5 +209,79 @@ public class BossControl : MonoBehaviour
             childTransform.rotation = bossComponentsInitialRotations[childTransform];
         }
         bossTransform.localScale = new Vector3(bossReducedSize, bossReducedSize, bossReducedSize);
+    }
+
+    // Weak Spot
+    void GetWeakSpots()
+    {
+        // Get all vertices on boss mesh
+        List<Vector3> visibleVertices = new List<Vector3>();
+        Vector3[] vertices = bossMesh.vertices;
+
+        Bounds bounds = bossMesh.bounds;
+        Vector3 center = meshFilter.transform.TransformPoint(bounds.center);
+
+        float quarterHeight = bounds.size.y / 4;
+        float lowerY = center.y - quarterHeight;
+        float middleY = center.y;
+        float upperY = center.y + quarterHeight;
+
+        List<Vector3>[] regions = new List<Vector3>[8];
+        for (int i = 0; i < 8; i++) regions[i] = new List<Vector3>();
+
+        // Reduce vertices
+        foreach (Vector3 vertex in vertices)
+        {
+            Vector3 worldPos = meshFilter.transform.TransformPoint(vertex);
+            Vector3 viewportPos = mainCamera.WorldToViewportPoint(worldPos);
+
+            // Check if vertex is within the camera’s frustum
+            if (viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1 && viewportPos.z > 0)
+            {
+                // Perform an occlusion check
+                if (!Physics.Linecast(mainCamera.transform.position, worldPos, occlusionMask))
+                {
+                    int index = 0;
+
+                    // X-axis split: left or right
+                    if (worldPos.x > center.x) index += 1;
+
+                    // Y-axis split: bottom, lower middle, upper middle, or top
+                    if (worldPos.y > upperY) index += 6;        // Top region
+                    else if (worldPos.y > middleY) index += 4;  // Upper middle region
+                    else if (worldPos.y > lowerY) index += 2;   // Lower middle region
+                    // Bottom region does not need an additional offset
+
+                    //|----|----|
+                    //|  6 | 7  |
+                    //|----|----| upper y
+                    //| 4  |  5 |
+                    //|----|----| middle y
+                    //|  2 |  3 |
+                    //|----|----| lower y
+                    //| 0  |  1 |
+                    //|----|----|
+
+                    regions[index].Add(worldPos);
+                }
+            }
+        }
+
+        // Choose three random regions and select one random point from each
+        List<Vector3> selectedPoints = new List<Vector3>();
+        List<int> chosenIndices = new List<int>();
+
+        while (chosenIndices.Count < 3)
+        {
+            int randomIndex = Random.Range(0, 8);
+            if (!chosenIndices.Contains(randomIndex) && regions[randomIndex].Count > 0)
+            {
+                chosenIndices.Add(randomIndex);
+                Vector3 randomPoint = regions[randomIndex][Random.Range(0, regions[randomIndex].Count)];
+                selectedPoints.Add(randomPoint);
+                Instantiate(weakSpotPf, randomPoint, gameObject.transform.rotation, gameObject.transform);
+
+            }
+        }
     }
 }
