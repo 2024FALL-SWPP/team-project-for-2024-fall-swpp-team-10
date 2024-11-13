@@ -10,17 +10,20 @@ public class BossAttackPattern : MonoBehaviour
     public GameObject gridCellPrefab; // 그리드 셀 프리팹
 
     [Header("Player Area")]
-    //TODO: BossStagePlayer 스크립트의 constant와 일원화하기
-    public Vector3 areaMin = new Vector3(-10f, 0.5f, -10f); // 플레이어 이동 영역 최소값   
-    public Vector3 areaMax = new Vector3(10f, 0.5f, 10f);   // 플레이어 이동 영역 최대값
+    //TODO: BossStagePlayer 스크립트의 constant와 일원화하기?(그런데 일원화하면 영역 꼭짓점 부근에 서 있을 때 cell 안에 있는 것으로 인식되지 않음)
+    public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f); // 플레이어 이동 영역 최소값+0.2f   
+    public Vector3 areaMax = new Vector3(10f, 0.8f, 10f);   // 플레이어 이동 영역 최대값 +0.2f
 
     [Header("Attack Settings")]
     public float warningDuration = 1f; // 경고 시간
     public float meteoriteHeight = 15f; // 운석이 떨어지는 높이
     public float bossHealth = 100f; // 보스의 생명력
 
+    [Header("Player")]
+    public Transform playerTransform; // 플레이어의 Transform
+
     private int currentPhase = 0; // 현재 Phase
-    private int currentPatternIndex = 0; // 현재 패턴 인덱스
+    //private int currentPatternIndex = 0; // 현재 패턴 인덱스
     private List<List<Vector3[]>> attackPatternsPerPhase; // Phase별 공격 패턴
     private bool isAttacking = false;
 
@@ -40,6 +43,8 @@ public class BossAttackPattern : MonoBehaviour
         // 공격 시퀀스 시작
         StartCoroutine(AttackSequence());
     }
+
+
 
     // 그리드 셀 생성
     void InitializeGrid()
@@ -106,25 +111,42 @@ public class BossAttackPattern : MonoBehaviour
 
         // Phase 1 패턴: 중앙 그리드 공격
         List<Vector3[]> phase1Patterns = new List<Vector3[]> {
-            new Vector3[] { gridPositions[1, 1] }
+            new Vector3[] { gridPositions[0, 0] },
+            new Vector3[] { gridPositions[0, 1] },
+            new Vector3[] { gridPositions[0, 2] },
+            new Vector3[] { gridPositions[1, 0] },
+            new Vector3[] { gridPositions[1, 1] },
+            new Vector3[] { gridPositions[1, 2] },
+            new Vector3[] { gridPositions[2, 0] },
+            new Vector3[] { gridPositions[2, 1] },
+            new Vector3[] { gridPositions[2, 2] }
         };
         attackPatternsPerPhase.Add(phase1Patterns);
 
         // Phase 2 패턴: 가운데 세로줄과 대각선 공격을 번갈아 실행 -> 패턴 1: 가운데 세로줄 전체 공격 / 패턴 2: 대각선 공격
         List<Vector3[]> phase2Patterns = new List<Vector3[]> {
+            new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2] },
             new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2] }
+            new Vector3[] { gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
+            new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0] },
+            new Vector3[] { gridPositions[0, 1], gridPositions[1, 1], gridPositions[2, 1] },
+            new Vector3[] { gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
+            new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2] },
+            new Vector3[] { gridPositions[0, 2], gridPositions[1, 1], gridPositions[2, 0] }
         };
 
         attackPatternsPerPhase.Add(phase2Patterns);
 
         // Phase 3 패턴: 네 가지 패턴을 번갈아 실행 -> 패턴 1: 각 모서리 가운데 그리드 4개 공격 / 패턴 2: 두 대각선의 합집합이 되는 그리드 5개 공격 / 패턴 3: L자 모양의 5개 그리드 공격 / 패턴 4: 첫번째와 세번째 세로줄 그리드 6개 공격
-        List<Vector3[]> phase3Patterns = new List<Vector3[]> {
-            new Vector3[] { gridPositions[0, 1], gridPositions[1, 0], gridPositions[1, 2], gridPositions[2, 1] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] }
+        List<Vector3[]> phase3Patterns = new List<Vector3[]>{
+        new Vector3[] { gridPositions[0, 1], gridPositions[1, 0], gridPositions[1, 2], gridPositions[2, 1] },
+        new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] },
+        new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
+        new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
+        new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
+        new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] }
         };
+
 
         attackPatternsPerPhase.Add(phase3Patterns);
     }
@@ -145,7 +167,18 @@ public class BossAttackPattern : MonoBehaviour
             currentPhase = 2;
         }
     }
-
+    // 패턴 리스트를 랜덤하게 섞기
+    void ShufflePatterns(List<Vector3[]> patterns)
+    {
+        // 패턴 리스트를 랜덤하게 섞음
+        for (int i = 0; i < patterns.Count; i++)
+        {
+            Vector3[] temp = patterns[i];
+            int randomIndex = Random.Range(i, patterns.Count);
+            patterns[i] = patterns[randomIndex];
+            patterns[randomIndex] = temp;
+        }
+    }
     // 공격 시퀀스 실행
     IEnumerator AttackSequence()
     {
@@ -161,35 +194,91 @@ public class BossAttackPattern : MonoBehaviour
                 // 현재 Phase의 패턴 리스트 가져오기
                 List<Vector3[]> patterns = attackPatternsPerPhase[currentPhase];
 
-                // 현재 패턴 인덱스에 따른 패턴 선택
-                Vector3[] currentPattern = patterns[currentPatternIndex];
+                // 패턴 리스트를 랜덤하게 섞기
+                ShufflePatterns(patterns);
 
-                // 패턴 인덱스 업데이트 (다음 패턴을 위해)
-                currentPatternIndex = (currentPatternIndex + 1) % patterns.Count;
+                // 패턴 선택
+                Vector3[] selectedPattern = null;
 
-                // 공격할 그리드 셀 강조 (빨간색)
-                HighlightGridCells(currentPattern, Color.red);
-
-                // 경고 시간 대기
-                yield return new WaitForSeconds(warningDuration);
-
-                // 강조 해제 및 운석 공격 실행
-                ResetGridCells(currentPattern);
-
-                foreach (Vector3 attackPos in currentPattern)
+                foreach (Vector3[] pattern in patterns)
                 {
-                    StartCoroutine(ExecuteAttack(attackPos));
+                    // 패턴의 그리드 셀이 플레이어 위치를 포함하는지 확인
+                    if (IsPlayerInPattern(pattern))
+                    {
+                        selectedPattern = pattern;
+                        break;
+                    }
+                }
+                if (selectedPattern != null) 
+                { 
+                    // 공격할 그리드 셀 강조 (빨간색)
+                    HighlightGridCells(selectedPattern, Color.red);
+                    // 경고 시간 대기
+                    yield return new WaitForSeconds(warningDuration);
+
+                    // 강조 해제 및 운석 공격 실행
+                    ResetGridCells(selectedPattern);
+
+                    foreach (Vector3 attackPos in selectedPattern)
+                    {
+                        StartCoroutine(ExecuteAttack(attackPos));
+                    }
+
+                    // 다음 공격까지 대기 (조정 가능)
+                    yield return new WaitForSeconds(2f); // 예: 2초 대기
+                    isAttacking = false;
                 }
 
-                // 다음 공격까지 대기 (조정 가능)
-                yield return new WaitForSeconds(2f); // 예: 2초 대기
-                isAttacking = false;
+
+                
             }
 
             yield return null;
         }
 
         // 보스가 사망했을 때 처리 (필요 시 추가)
+    }
+
+    // 플레이어가 패턴에 포함되는지 확인하는 함수
+    bool IsPlayerInPattern(Vector3[] pattern)
+    {
+        foreach (Vector3 cellPosition in pattern)
+        {
+            GridCell cell = GetGridCellByPosition(cellPosition);
+            if (cell != null && IsPlayerInCell(cell))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    // 플레이어가 특정 그리드 셀에 있는지 확인하는 함수
+    bool IsPlayerInCell(GridCell cell)
+    {
+        // 그리드 셀의 경계 계산
+        Vector3 cellPosition = cell.transform.position;
+        Vector3 cellScale = cell.transform.localScale;
+
+        float halfSizeX = cellScale.x / 2f;
+        float halfSizeZ = cellScale.z / 2f;
+
+        float minX = cellPosition.x - halfSizeX;
+        float maxX = cellPosition.x + halfSizeX;
+        float minZ = cellPosition.z - halfSizeZ;
+        float maxZ = cellPosition.z + halfSizeZ;
+
+        Debug.Log(" MIN MAX: " + minX + " " + maxX + " " + minZ + " " + maxZ);
+
+        Vector3 playerPos = playerTransform.position;
+
+        // 플레이어의 위치가 그리드 셀의 경계 안에 있는지 확인
+        if (playerPos.x >=minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)
+        {
+            return true;
+        }
+        return false;
     }
 
     // 그리드 셀 강조 기능 함수
