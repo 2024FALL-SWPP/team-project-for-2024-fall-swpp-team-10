@@ -131,11 +131,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0bc621776399c4d9591a7bf4026c07f8, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc621776399c4d9591a7bf4026c07f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc621776399c4d9591a7bf4026c07f8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -143,7 +143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc621776399c4d9591a7bf4026c07f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -86
+      value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc621776399c4d9591a7bf4026c07f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 1413606429}
   - component: {fileID: 1413606428}
   - component: {fileID: 1413606427}
+  - component: {fileID: 1413606431}
   m_Layer: 0
   m_Name: VirtualBoss
   m_TagString: Untagged
@@ -603,13 +604,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413606426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04032, y: 4.53, z: 16.14}
+  m_LocalPosition: {x: 0, y: 4.53, z: 16}
   m_LocalScale: {x: 3.125, y: 8.445469, z: 2.9125}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413606431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413606426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54e869efdc43544bdd8b2d98c20581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meteoritePrefab: {fileID: 3227589770988646094, guid: 4bec0b7fd33af18479addce8dda9958f, type: 3}
+  gridCellPrefab: {fileID: 4049657199444927572, guid: 56db6faffa0a9b24e917fc354ed85a5d, type: 3}
+  areaMin: {x: -10, y: 0.5, z: -10}
+  areaMax: {x: 10, y: 0.5, z: 10}
+  warningDuration: 1
+  meteoriteHeight: 15
+  bossHealth: 100
 --- !u!1 &1431771568 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
@@ -652,7 +672,7 @@ MonoBehaviour:
   rotationSpeed: 5
   areaMin: {x: -10, y: 0.5, z: -10}
   areaMax: {x: 10, y: 0.5, z: 10}
-  minDistanceFromBoss: 2
+  minDistanceFromBoss: 5
   bossTransform: {fileID: 1413606430}
 --- !u!1001 &1495427503
 PrefabInstance:
@@ -683,11 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -834,12 +854,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 610223171}
-  - {fileID: 2089937115}
   - {fileID: 1401598992}
+  - {fileID: 709343200}
   - {fileID: 1317582890}
   - {fileID: 498154256}
-  - {fileID: 709343200}
   - {fileID: 1560733698}
+  - {fileID: 2089937115}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -909,11 +929,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0bedfd8f830ae49dc8fc250c12a9be2f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bedfd8f830ae49dc8fc250c12a9be2f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 189
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bedfd8f830ae49dc8fc250c12a9be2f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -921,7 +941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bedfd8f830ae49dc8fc250c12a9be2f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 77.7
+      value: -177
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bedfd8f830ae49dc8fc250c12a9be2f, type: 3}
       propertyPath: m_LocalRotation.w

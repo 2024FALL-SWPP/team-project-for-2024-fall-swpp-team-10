@@ -1,0 +1,2 @@
+metorite asset 출처: https://sketchfab.com/3d-models/meteorite-f649328ea80c426eb500477c6d6e4734
+particle effect 출처: hw3 package
