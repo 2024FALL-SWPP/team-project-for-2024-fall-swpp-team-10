@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using EnumManager;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -18,18 +19,27 @@ public class PlayerControl : MonoBehaviour
     public Transform projectileSpawnPoint; // Laser is instantiated at this point
 
     private Renderer[] childRenderers;
-    private Color[] originColors;
+    private Color[,] originColors;
     private int blinkCount = 3;
+    private float invincibleLength;
+    private bool isInvincible = false;
 
     void Awake()
     {
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
+
         childRenderers = GetComponentsInChildren<Renderer>();
-        originColors = new Color[childRenderers.Length];
+        originColors = new Color[childRenderers.Length, 2];
+
         for (int i = 0; i < childRenderers.Length; i++)
-            originColors[i] = childRenderers[i].material.color;
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
+            }
+        }
     }
 
     void Update()
@@ -136,31 +146,82 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Blink()
     {
+        isInvincible = true;
         for (int i = 0; i < blinkCount; i++)
         {
-            foreach (Renderer renderer in childRenderers)
-            {
-                renderer.material.color = Color.red;
-            }
+            ChangeColor(Color.red);
             yield return new WaitForSeconds(0.2f);
 
-            for (int j = 0; j < childRenderers.Length; j++)
-                childRenderers[j].material.color = originColors[j];
+            ChangeColorOriginal();
             yield return new WaitForSeconds(0.2f);
         }
+        isInvincible = false;
     }
 
+    IEnumerator Invincible()
+    {
+        invincibleLength = 10f;
+        if (isInvincible)
+            yield break;
+        isInvincible = true;
+        while (invincibleLength > 0)
+        {
+            invincibleLength -= 0.6f;
+            ChangeColor(Color.red);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.yellow);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.green);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.blue);
+            yield return new WaitForSeconds(0.1f);
+            ChangeColor(Color.magenta);
+            yield return new WaitForSeconds(0.1f);
+        }
+        ChangeColorOriginal();
+
+        isInvincible = false;
+    }
+
+    private void ChangeColor(Color _color)
+    {
+        foreach (Renderer renderer in childRenderers)
+        {
+            foreach (Material material in renderer.sharedMaterials)
+                material.color = _color;
+        }
+    }
+    private void ChangeColorOriginal()
+    {
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                childRenderers[i].sharedMaterials[j].color = originColors[i, j];
+            }
+        }
+    }
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
+            if (isInvincible)
+            {
+                Destroy(other.gameObject);
+                return;
+            }
             GameManager.inst.RemoveLife();
             StartCoroutine(Blink());
         }
-        
+
         if (other.gameObject.CompareTag("Heart"))
         {
             GameManager.inst.AddLife();
+        }
+
+        if (other.gameObject.CompareTag("Invincible"))
+        {
+            StartCoroutine(Invincible());
         }
 
         if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
