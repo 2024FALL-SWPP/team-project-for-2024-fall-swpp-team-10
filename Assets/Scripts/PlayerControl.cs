@@ -225,7 +225,7 @@ public class PlayerControl : MonoBehaviour
     {
         float coinSpeed = 40f;
         float distance = 1.4f;
-        magnetDuration = 10f;
+        magnetDuration = 5f;
 
         if (isMagnet)
             yield break;

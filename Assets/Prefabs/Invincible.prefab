@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4289426703656774972}
   - component: {fileID: 9143964412676551499}
   - component: {fileID: -6602309576304879693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Invincible
   m_TagString: Invincible
   m_Icon: {fileID: 0}
