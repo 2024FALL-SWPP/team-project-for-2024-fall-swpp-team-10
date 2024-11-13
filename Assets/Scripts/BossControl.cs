@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static BossControl;
 
 public class BossControl : MonoBehaviour
 {
@@ -279,9 +278,34 @@ public class BossControl : MonoBehaviour
                 chosenIndices.Add(randomIndex);
                 Vector3 randomPoint = regions[randomIndex][Random.Range(0, regions[randomIndex].Count)];
                 selectedPoints.Add(randomPoint);
-                Instantiate(weakSpotPf, randomPoint, gameObject.transform.rotation, gameObject.transform);
 
+                Vector3 localPoint = meshFilter.transform.InverseTransformPoint(randomPoint);
+                int closestVertexIndex = FindClosestVertexIndex(localPoint);
+
+                Vector3 normal = bossMesh.normals[closestVertexIndex];
+                Vector3 worldNormal = meshFilter.transform.TransformDirection(normal);
+
+                Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
             }
         }
+    }
+
+    int FindClosestVertexIndex(Vector3 point)
+    {
+        Vector3[] vertices = bossMesh.vertices;
+        int closestIndex = 0;
+        float minDistance = float.MaxValue;
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            float distance = Vector3.Distance(vertices[i], point);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return closestIndex;
     }
 }
