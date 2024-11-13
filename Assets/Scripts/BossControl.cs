@@ -41,7 +41,11 @@ public class BossControl : MonoBehaviour
     Camera mainCamera;
     MeshFilter meshFilter;
     LayerMask occlusionMask;
-
+    Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
+    Color WeakSpotCols0 = new (40f/255f, 1, 0, 156f/255f);
+    Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f);
+    Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);
+    Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);
 
     // Start is called before the first frame update
     void Awake()
@@ -68,6 +72,13 @@ public class BossControl : MonoBehaviour
         occlusionMask = gameObject.layer;
         meshCollider = gameObject.GetComponent<MeshCollider>();
         meshCollider.enabled = true;
+        WeakSpotStatCol = new Dictionary<int, Color>()
+        {
+            { 0, WeakSpotCols0 },
+            { 1, WeakSpotCols1 },
+            { 2, WeakSpotCols2 },
+            { 3, WeakSpotCols3 },
+        };
 
         GetWeakSpots();
     }
@@ -165,7 +176,7 @@ public class BossControl : MonoBehaviour
         {
             meshCollider.enabled = false;
             bossDead = true;
-            RemoveAllWeakSpots(); // Testing use only
+            RemoveAllWeakSpots();
 
             // Fall back effect
             foreach (Transform childTransform in bossTransform)
@@ -341,8 +352,44 @@ public class BossControl : MonoBehaviour
         }
     }
 
+    bool TransformWeakSpot(GameObject weakSpot)
+    {
+        SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
+        Color WeakSpotCol = sr.color;
 
-    // Testing only
+        int status = 0;
+
+        foreach (KeyValuePair<int, Color> statCol in WeakSpotStatCol)
+        {
+            if (statCol.Value == WeakSpotCol)
+            {
+                status = statCol.Key;
+                break;
+            }
+        }
+
+        if (status == 3) return false;
+        StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
+        return true;
+    }
+
+    IEnumerator gradualColorChange(SpriteRenderer sr, Color startCol, Color endCol)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.1f;
+
+        while (elapsedTime < duration)
+        {
+            sr.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        sr.color = endCol;
+    }
+
     void RemoveAllWeakSpots()
     {
         GameObject[] wss = GameObject.FindGameObjectsWithTag("WeakSpot");
@@ -350,10 +397,19 @@ public class BossControl : MonoBehaviour
         Debug.Log("Complete");
     }
 
+
     // Testing only
     public void NewWeakSpots()
     {
         RemoveAllWeakSpots();
         GetWeakSpots();
+    }
+
+    // Testing only
+    public void TransformWeakSpotHelper()
+    {
+        foreach (Transform child in transform)
+            if (child.gameObject.CompareTag("WeakSpot"))
+                if (TransformWeakSpot(child.gameObject)) return;
     }
 }
