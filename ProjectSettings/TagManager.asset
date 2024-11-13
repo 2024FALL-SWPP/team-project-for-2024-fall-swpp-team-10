@@ -12,6 +12,7 @@ TagManager:
   - Obstacle
   - Enemy
   - Invincible
+  - MagnetEffect
   layers:
   - Default
   - TransparentFX

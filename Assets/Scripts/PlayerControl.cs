@@ -23,6 +23,9 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3;
     private float invincibleLength;
     private bool isInvincible = false;
+    private float magnetDuration;
+    private bool isMagnet = false;
+    private GameObject magnet;
 
     void Awake()
     {
@@ -40,6 +43,8 @@ public class PlayerControl : MonoBehaviour
                 originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
             }
         }
+
+        magnet = GameObject.FindWithTag("MagnetEffect");
     }
 
     void Update()
@@ -88,6 +93,8 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        magnet.SetActive(isMagnet);
     }
 
     void FireLaser()
@@ -191,6 +198,7 @@ public class PlayerControl : MonoBehaviour
                 material.color = _color;
         }
     }
+
     private void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
@@ -201,6 +209,37 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+
+    IEnumerator Magnet()
+    {
+        float coinSpeed = 40f;
+        float distance = 1.4f;
+        magnetDuration = 10f;
+
+        if (isMagnet)
+            yield break;
+
+        isMagnet = true;
+
+        while (magnetDuration > 0)
+        {
+            magnetDuration -= Time.deltaTime;
+            GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+
+            foreach (GameObject coin in coins)
+            {
+                if (coin != null)
+                {
+                    if (Vector3.Distance(coin.transform.position, transform.position) < distance)
+                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
+                }
+            }
+
+            yield return null;
+        }
+        isMagnet = false;
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
@@ -222,6 +261,11 @@ public class PlayerControl : MonoBehaviour
         if (other.gameObject.CompareTag("Invincible"))
         {
             StartCoroutine(Invincible());
+        }
+
+        if (other.gameObject.CompareTag("Magnet"))
+        {
+            StartCoroutine(Magnet());
         }
 
         if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
