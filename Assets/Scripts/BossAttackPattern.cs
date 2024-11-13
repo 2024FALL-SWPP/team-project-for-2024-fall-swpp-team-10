@@ -240,9 +240,6 @@ public class BossAttackPattern : MonoBehaviour
         GameObject meteorite = Instantiate(meteoritePrefab, spawnPosition, Quaternion.identity);
         meteorite.transform.localScale = Vector3.one * meteoriteSize;
 
-        // Meteorite 스크립트 초기화
-        MeteoriteControl meteoriteScript = meteorite.GetComponent<MeteoriteControl>();
-        //isAttacking = false;
         yield return null;
     }
 
