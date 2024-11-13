@@ -8,6 +8,7 @@ public class SpawnObjects : MonoBehaviour
     public GameObject[] objects;
 
     public float spawnInterval = 2.0f;
+    public float reduceGap = 0.01f;
     public float minSpawnInterval = 0.3f;
 
     // Start is called before the first frame update
@@ -36,7 +37,7 @@ public class SpawnObjects : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
             if (spawnInterval >= minSpawnInterval)
             {
-                spawnInterval -= 0.01f;
+                spawnInterval -= reduceGap;
             }
         }
     }
