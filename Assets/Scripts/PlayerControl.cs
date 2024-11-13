@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     private bool isInvincible = false;
     private float magnetDuration;
     private bool isMagnet = false;
+    private GameObject magnet;
 
     void Awake()
     {
@@ -42,6 +43,8 @@ public class PlayerControl : MonoBehaviour
                 originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
             }
         }
+
+        magnet = GameObject.FindWithTag("MagnetEffect");
     }
 
     void Update()
@@ -90,6 +93,8 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        magnet.SetActive(isMagnet);
     }
 
     void FireLaser()
