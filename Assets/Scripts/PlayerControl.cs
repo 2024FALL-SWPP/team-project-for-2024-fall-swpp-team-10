@@ -241,7 +241,7 @@ public class PlayerControl : MonoBehaviour
             {
                 if (coin != null)
                 {
-                    if (Vector3.Distance(coin.transform.position, transform.position) < distance)
+                    if (Vector3.Distance(coin.transform.position, transform.position + new Vector3(0f, 0.25f, 0.2f)) < distance)
                         coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
                 }
             }
