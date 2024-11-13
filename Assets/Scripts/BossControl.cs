@@ -35,7 +35,7 @@ public class BossControl : MonoBehaviour
     Dictionary<Transform, Quaternion> bossComponentsInitialRotations = new Dictionary<Transform, Quaternion>();
 
     // Boss weak spot variables
-    //[SerializeField] MeshCollider bossMeshCollider;
+    MeshCollider meshCollider;
     [SerializeField] GameObject weakSpotPf;
     Mesh bossMesh;
     Camera mainCamera;
@@ -62,11 +62,12 @@ public class BossControl : MonoBehaviour
         }
 
         // Weak spot
-        //bossMeshCollider.enabled = true;
         mainCamera = Camera.main;
         meshFilter = gameObject.GetComponent<MeshFilter>();
         bossMesh = meshFilter.mesh;
         occlusionMask = gameObject.layer;
+        meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider.enabled = true;
 
         GetWeakSpots();
     }
@@ -162,8 +163,9 @@ public class BossControl : MonoBehaviour
     {
         if (!bossDead)
         {
+            meshCollider.enabled = false;
             bossDead = true;
-            //bossMeshCollider.enabled = false;
+            RemoveAllWeakSpots(); // Testing use only
 
             // Fall back effect
             foreach (Transform childTransform in bossTransform)
@@ -214,9 +216,9 @@ public class BossControl : MonoBehaviour
     void GetWeakSpots()
     {
         // Get all vertices on boss mesh
-        List<Vector3> visibleVertices = new List<Vector3>();
         Vector3[] vertices = bossMesh.vertices;
 
+        // Divide target region into 8 areas
         Bounds bounds = bossMesh.bounds;
         Vector3 center = meshFilter.transform.TransformPoint(bounds.center);
 
@@ -267,7 +269,6 @@ public class BossControl : MonoBehaviour
         }
 
         // Choose three random regions and select one random point from each
-        List<Vector3> selectedPoints = new List<Vector3>();
         List<int> chosenIndices = new List<int>();
 
         while (chosenIndices.Count < 3)
@@ -277,8 +278,8 @@ public class BossControl : MonoBehaviour
             {
                 chosenIndices.Add(randomIndex);
                 Vector3 randomPoint = regions[randomIndex][Random.Range(0, regions[randomIndex].Count)];
-                selectedPoints.Add(randomPoint);
 
+                // Make weak spot orientation match boss mesh
                 Vector3 localPoint = meshFilter.transform.InverseTransformPoint(randomPoint);
                 int closestVertexIndex = FindClosestVertexIndex(localPoint);
 
@@ -286,10 +287,12 @@ public class BossControl : MonoBehaviour
                 Vector3 worldNormal = meshFilter.transform.TransformDirection(normal);
 
                 Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
+
             }
         }
     }
 
+    // To find normal
     int FindClosestVertexIndex(Vector3 point)
     {
         Vector3[] vertices = bossMesh.vertices;
@@ -307,5 +310,32 @@ public class BossControl : MonoBehaviour
         }
 
         return closestIndex;
+    }
+
+    // Make sure weakspot is not buried under boss mesh
+    void AdjustWeakSpot(GameObject weakSpot)
+    {
+        Vector3 newPos = weakSpot.transform.localPosition;
+        newPos += Vector3.forward * 0.1f;
+        weakSpot.transform.localPosition = newPos;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // Make sure weakspot is not buried under boss mesh
+        if (collision.gameObject.CompareTag("WeakSpot"))
+        {
+            Debug.Log("Touching!");
+            AdjustWeakSpot(collision.gameObject);
+        }
+    }
+
+    void RemoveAllWeakSpots()
+    {
+        foreach (Transform wsTransform in transform)
+        {
+            GameObject ws = wsTransform.gameObject;
+            if (ws.CompareTag("WeakSpot")) Destroy(ws);
+        }
     }
 }
