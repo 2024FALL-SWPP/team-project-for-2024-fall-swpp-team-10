@@ -152,9 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - {fileID: 683890755977579402, guid: 40f882b1d75618744bc90f56336b1308, type: 3}
-  spawnInterval: 4.3
-  minSpawnInterval: 2
+  - {fileID: 624789609739533775, guid: 80bc38f390ac1744f8e89ba38929af32, type: 3}
+  spawnInterval: 1
+  reduceGap: 0
+  minSpawnInterval: 1
 --- !u!4 &2243683
 Transform:
   m_ObjectHideFlags: 0
@@ -1965,6 +1966,7 @@ MonoBehaviour:
   - {fileID: 8812520863519996741, guid: 92afdb7901a9192418a5e4a1afa3b44f, type: 3}
   - {fileID: 5469819106887244823, guid: 6c6dd5508f279f64e98d3b9e9dcbb736, type: 3}
   spawnInterval: 5.3
+  reduceGap: 0.01
   minSpawnInterval: 3
 --- !u!4 &963564387
 Transform:
@@ -4106,6 +4108,7 @@ MonoBehaviour:
   - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
   - {fileID: 7462247613009824198, guid: d8fe314455cde314ba17b4425734d115, type: 3}
   spawnInterval: 2.3
+  reduceGap: 0.01
   minSpawnInterval: 0.3
 --- !u!1 &1803629139
 GameObject:
