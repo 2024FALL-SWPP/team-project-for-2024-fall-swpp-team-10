@@ -208,7 +208,7 @@ public class PlayerControl : MonoBehaviour
     IEnumerator Magnet()
     {
         float coinSpeed = 40f;
-        float distance = 2f;
+        float distance = 1.4f;
         magnetDuration = 10f;
 
         if (isMagnet)
@@ -225,7 +225,7 @@ public class PlayerControl : MonoBehaviour
             {
                 if (coin != null)
                 {
-                    if (coin.transform.position.z - transform.position.z < distance)
+                    if (Vector3.Distance(coin.transform.position, transform.position) < distance)
                         coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
                 }
             }
