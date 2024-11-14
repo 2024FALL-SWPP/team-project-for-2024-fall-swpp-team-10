@@ -258,6 +258,7 @@ public class PlayerControl : MonoBehaviour
             if (isInvincible)
             {
                 Destroy(other.gameObject);
+                GameManager.inst.AddScore(1000);
                 return;
             }
             if (enemyCollisionSound != null)
@@ -265,6 +266,7 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
             GameManager.inst.RemoveLife();
+            GameManager.inst.AddScore(-1000);
             StartCoroutine(Blink());
         }
 
@@ -285,6 +287,7 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Coin"))
         {
+            GameManager.inst.AddScore(200);
             if (coinCollectSound != null)
             {
                 AudioSource.PlayClipAtPoint(coinCollectSound, transform.position, coinVolume);
