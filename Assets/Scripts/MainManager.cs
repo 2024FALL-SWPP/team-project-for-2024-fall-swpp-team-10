@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using EnumManager;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -12,11 +13,16 @@ public class MainManager : MonoBehaviour
 
     public GameObject pause;
     public GameObject gameOver;
+    public GameObject score;
+    private TextMeshProUGUI scoreText;
+
     private bool isGameOver = false;
     private MusicManager musicManager;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        StartCoroutine(AddScoreEverySecond());
+        scoreText = score.GetComponent<TextMeshProUGUI>();
         // DontDestroyOnLoad(gameObject);
         musicManager = FindObjectOfType<MusicManager>();
     }
@@ -28,6 +34,8 @@ public class MainManager : MonoBehaviour
         {
             Pause();
         }
+
+        scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
 
         for (int i = 0; i < GameManager.inst.maxLife; i++)
             hearts[i].SetActive(i < GameManager.inst.GetLife());
@@ -79,6 +87,15 @@ public class MainManager : MonoBehaviour
         if (musicManager != null)
         {
             musicManager.ResumeMusic();
+        }
+    }
+
+    private IEnumerator AddScoreEverySecond()
+    {
+        while (GameManager.inst.GetLife() > 0)
+        {
+            yield return new WaitForSeconds(1.0f);
+            GameManager.inst.AddScore(100);
         }
     }
 }

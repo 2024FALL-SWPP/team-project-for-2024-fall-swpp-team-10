@@ -3404,6 +3404,7 @@ MonoBehaviour:
   - {fileID: 798267248}
   pause: {fileID: 1292896941}
   gameOver: {fileID: 483812864}
+  score: {fileID: 1250928733}
 --- !u!114 &1694800667
 MonoBehaviour:
   m_ObjectHideFlags: 0
