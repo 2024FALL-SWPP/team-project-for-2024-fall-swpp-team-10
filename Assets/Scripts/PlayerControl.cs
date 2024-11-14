@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
     private Vector3 initialPosition; // Initial world position of the player
+    private Vector3 centerPosition;
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     public float projectileSpeed = 10.0f; // Speed of laser
@@ -38,6 +39,7 @@ public class PlayerControl : MonoBehaviour
     {
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
+        centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
 
         childRenderers = GetComponentsInChildren<Renderer>();
@@ -241,8 +243,8 @@ public class PlayerControl : MonoBehaviour
             {
                 if (coin != null)
                 {
-                    if (Vector3.Distance(coin.transform.position, transform.position + new Vector3(0f, 0.25f, 0.2f)) < distance)
-                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
+                    if (Vector3.Distance(coin.transform.position, centerPosition) < distance)
+                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
                 }
             }
 
