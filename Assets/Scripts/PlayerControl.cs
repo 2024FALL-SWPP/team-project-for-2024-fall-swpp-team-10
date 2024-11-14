@@ -39,7 +39,6 @@ public class PlayerControl : MonoBehaviour
     {
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
-        centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
 
         childRenderers = GetComponentsInChildren<Renderer>();
@@ -58,6 +57,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
         // Only allow new movement input if we're not currently moving
         if (!isMoving)
         {
