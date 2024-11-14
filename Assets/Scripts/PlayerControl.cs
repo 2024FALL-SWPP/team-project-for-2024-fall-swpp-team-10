@@ -30,8 +30,9 @@ public class PlayerControl : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
     [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
-    [SerializeField] private AudioClip laserFireSound;
-    [SerializeField] [Range(0f, 1f)] private float laserVolume = 0.7f;
+    [SerializeField] public AudioClip laserFireSound;
+    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
+    [SerializeField] public AudioClip enemyCollisionSound;
 
     void Awake()
     {
@@ -254,6 +255,10 @@ public class PlayerControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
+            if (enemyCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
+            }
             if (isInvincible)
             {
                 Destroy(other.gameObject);
