@@ -27,6 +27,10 @@ public class PlayerControl : MonoBehaviour
     private bool isMagnet = false;
     private GameObject magnet;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip coinCollectSound;
+    [SerializeField] [Range(0f, 1f)] private float coinVolume = 0.5f;
+
     void Awake()
     {
         // Set the initial position as the down of the grid (1,0)
@@ -266,6 +270,14 @@ public class PlayerControl : MonoBehaviour
         if (other.gameObject.CompareTag("Magnet"))
         {
             StartCoroutine(Magnet());
+        }
+
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            if (coinCollectSound != null)
+            {
+                AudioSource.PlayClipAtPoint(coinCollectSound, transform.position, coinVolume);
+            }
         }
 
         if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
