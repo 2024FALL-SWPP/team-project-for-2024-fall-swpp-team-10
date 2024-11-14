@@ -7,6 +7,7 @@ public class SpawnObjects : MonoBehaviour
 {
     public GameObject[] objects;
 
+    public float startSpawning = 0f;
     public float spawnInterval = 2.0f;
     public float reduceGap = 0.01f;
     public float minSpawnInterval = 0.3f;
@@ -24,6 +25,7 @@ public class SpawnObjects : MonoBehaviour
     }
     IEnumerator Spawn()
     {
+        yield return new WaitForSeconds(startSpawning);
         while (true)
         {
             int spawnRandom = Random.Range(0, objects.Length);

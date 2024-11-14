@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 624789609739533775, guid: 80bc38f390ac1744f8e89ba38929af32, type: 3}
+  startSpawning: 0
   spawnInterval: 1
   reduceGap: 0
   minSpawnInterval: 1
@@ -1983,6 +1984,7 @@ MonoBehaviour:
   - {fileID: 8639605196045675972, guid: b9f95d5eecb529a45b15110b266cf035, type: 3}
   - {fileID: 8639605196045675972, guid: b9f95d5eecb529a45b15110b266cf035, type: 3}
   - {fileID: 6693580597327897727, guid: 6cb94c266e6ab554489abe847f3afbfa, type: 3}
+  startSpawning: 10
   spawnInterval: 5.3
   reduceGap: 0.03
   minSpawnInterval: 3
@@ -4149,6 +4151,7 @@ MonoBehaviour:
   - {fileID: 6338332139874680244, guid: 40613e311b868a54099dbdbfb622ed52, type: 3}
   - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
   - {fileID: 7462247613009824198, guid: d8fe314455cde314ba17b4425734d115, type: 3}
+  startSpawning: 5
   spawnInterval: 2.3
   reduceGap: 0.02
   minSpawnInterval: 0.3
