@@ -266,7 +266,10 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
             GameManager.inst.RemoveLife();
-            GameManager.inst.AddScore(-1000);
+            if (other.gameObject.CompareTag("Enemy"))
+                GameManager.inst.AddScore(-1000);
+            else
+                GameManager.inst.AddScore(-500);
             StartCoroutine(Blink());
         }
 
