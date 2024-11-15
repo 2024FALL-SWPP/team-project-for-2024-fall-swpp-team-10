@@ -29,7 +29,10 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
+    [SerializeField] public AudioClip laserFireSound;
+    [SerializeField] public AudioClip enemyCollisionSound;
     [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
+    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
 
     void Awake()
     {
@@ -103,6 +106,10 @@ public class PlayerControl : MonoBehaviour
 
     void FireLaser()
     {
+        if (laserFireSound != null)
+        {
+            AudioSource.PlayClipAtPoint(laserFireSound, transform.position, laserVolume);
+        }
         // Create the projectile at the preassigned point
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position + new Vector3(0, 0, 1f), Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
@@ -252,6 +259,10 @@ public class PlayerControl : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 return;
+            }
+            if (enemyCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
             GameManager.inst.RemoveLife();
             StartCoroutine(Blink());
