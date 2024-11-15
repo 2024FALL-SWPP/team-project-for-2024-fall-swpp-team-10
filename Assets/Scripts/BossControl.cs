@@ -326,9 +326,7 @@ public class BossControl : MonoBehaviour
     // Make sure weakspot is not buried under boss mesh
     void AdjustWeakSpot(GameObject weakSpot)
     {
-        Vector3 newPos = weakSpot.transform.localPosition;
-        newPos += Vector3.forward * 0.1f;
-        weakSpot.transform.localPosition = newPos;
+        weakSpot.transform.localPosition += (Vector3.forward * 0.1f);
     }
 
     private void OnCollisionStay(Collision collision)
