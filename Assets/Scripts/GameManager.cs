@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     private int life;
     public int maxLife = 3;
-    private int stage;
+    private int stage = 1;
     private Character character;
     private int score = 0;
 
