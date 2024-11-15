@@ -5,7 +5,6 @@ public class MusicManager : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioClip backgroundMusic;
     [SerializeField][Range(0f, 1f)] private float musicVolume = 0.5f;
-    [SerializeField] private bool playOnAwake = true;
     [SerializeField] private bool loop = false;
 
     private AudioSource audioSource;
@@ -17,11 +16,8 @@ public class MusicManager : MonoBehaviour
         audioSource.clip = backgroundMusic;
         audioSource.volume = musicVolume;
         audioSource.loop = loop;
+        PlayMusic();
 
-        if (playOnAwake)
-        {
-            PlayMusic();
-        }
     }
 
     public void PlayMusic()
