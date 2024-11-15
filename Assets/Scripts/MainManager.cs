@@ -13,10 +13,12 @@ public class MainManager : MonoBehaviour
     public GameObject pause;
     public GameObject gameOver;
     private bool isGameOver = false;
+    private MusicManager musicManager;
     // Start is called before the first frame update
     void Start()
     {
         // DontDestroyOnLoad(gameObject);
+        musicManager = FindObjectOfType<MusicManager>();
     }
 
     // Update is called once per frame
@@ -35,6 +37,10 @@ public class MainManager : MonoBehaviour
             Time.timeScale = 0;
             gameOver.SetActive(true);
             isGameOver = true;
+            if (musicManager != null)
+            {
+                musicManager.StopMusic();
+            }
         }
     }
 
@@ -60,11 +66,19 @@ public class MainManager : MonoBehaviour
     {
         pause.SetActive(true);
         Time.timeScale = 0;
+        if (musicManager != null)
+        {
+            musicManager.PauseMusic();
+        }
     }
 
     public void Resume()
     {
         pause.SetActive(false);
         Time.timeScale = 1;
+        if (musicManager != null)
+        {
+            musicManager.ResumeMusic();
+        }
     }
 }
