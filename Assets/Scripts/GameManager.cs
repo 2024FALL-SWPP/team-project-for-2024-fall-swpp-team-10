@@ -104,4 +104,13 @@ public class GameManager : MonoBehaviour
         if (life < maxLife)
             life++;
     }
+
+    public void AddScore(int _score)
+    {
+        score += _score;
+    }
+    public int GetScore()
+    {
+        return score;
+    }
 }

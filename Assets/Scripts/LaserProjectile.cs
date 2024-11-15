@@ -54,6 +54,7 @@ public class LaserProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SetActive(false);
+            GameManager.inst.AddScore(1000);
             gameObject.SetActive(false);
         }
         if (other.gameObject.CompareTag("Obstacle"))
