@@ -248,35 +248,34 @@ public class BossControl : MonoBehaviour
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(worldPos);
 
             // Check if vertex is within the camera’s frustum
-            if (viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1 && viewportPos.z > 0)
-            {
-                // Perform an occlusion check
-                if (!Physics.Linecast(mainCamera.transform.position, worldPos, occlusionMask))
-                {
-                    int index = 0;
+            if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1 || viewportPos.z <= 0) continue;
 
-                    // X-axis split: left or right
-                    if (worldPos.x > center.x) index += 1;
+            // Perform an occlusion check
+            if (Physics.Linecast(mainCamera.transform.position, worldPos, occlusionMask)) continue;
+            
+            int index = 0;
 
-                    // Y-axis split: bottom, lower middle, upper middle, or top
-                    if (worldPos.y > upperY) index += 6;        // Top region
-                    else if (worldPos.y > middleY) index += 4;  // Upper middle region
-                    else if (worldPos.y > lowerY) index += 2;   // Lower middle region
-                    // Bottom region does not need an additional offset
+            // X-axis split: left or right
+            if (worldPos.x > center.x) index += 1;
 
-                    //|----|----|
-                    //|  6 | 7  |
-                    //|----|----| upper y
-                    //| 4  |  5 |
-                    //|----|----| middle y
-                    //|  2 |  3 |
-                    //|----|----| lower y
-                    //| 0  |  1 |
-                    //|----|----|
+            // Y-axis split: bottom, lower middle, upper middle, or top
+            if (worldPos.y > upperY) index += 6;        // Top region
+            else if (worldPos.y > middleY) index += 4;  // Upper middle region
+            else if (worldPos.y > lowerY) index += 2;   // Lower middle region
+            // Bottom region does not need an additional offset
 
-                    regions[index].Add(worldPos);
-                }
-            }
+            //|----|----|
+            //|  6 | 7  |
+            //|----|----| upper y
+            //| 4  |  5 |
+            //|----|----| middle y
+            //|  2 |  3 |
+            //|----|----| lower y
+            //| 0  |  1 |
+            //|----|----|
+
+            regions[index].Add(worldPos);
+            
         }
 
         // Choose three random regions and select one random point from each
