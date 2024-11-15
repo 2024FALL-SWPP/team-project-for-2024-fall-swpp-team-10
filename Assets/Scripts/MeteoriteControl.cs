@@ -24,7 +24,7 @@ public class MeteoriteControl : MonoBehaviour
 
     IEnumerator CheckLanding()
     {
-        while (transform.position.y >  0.5f)
+        while (transform.position.y >  2.5f)
         {
             yield return null;
         }
@@ -40,7 +40,7 @@ public class MeteoriteControl : MonoBehaviour
     {
         if (explosionPrefab != null)
         {
-            Vector3 offset = new Vector3(0, 0, 2.5f);
+            Vector3 offset = new Vector3(0, 1f, 2.5f);
             GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
             Destroy(explosion, 2f); // 2초 후 제거
         }
