@@ -42,10 +42,10 @@ public class BossControl : MonoBehaviour
     MeshFilter meshFilter;
     LayerMask occlusionMask;
     Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
-    Color WeakSpotCols0 = new (40f/255f, 1, 0, 156f/255f);
-    Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f);
-    Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);
-    Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);
+    Color WeakSpotCols0 = new (40f/255f, 1, 0, 156f/255f);  // Initial spot color
+    Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f); // Spot color on first hit
+    Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);         //      ''       second hit
+    Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);         //      ''       third hit = final color
 
     // Start is called before the first frame update
     void Awake()
