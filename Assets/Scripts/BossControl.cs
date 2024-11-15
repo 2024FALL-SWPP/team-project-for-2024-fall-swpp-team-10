@@ -1,39 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static BossControl;
 
 public class BossControl : MonoBehaviour
 {
     public Animator animator;
 
-    // Color related variables
+    [Header("Color related variables")]
     [SerializeField] Color bossStartColor;
     [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
 
-    bool bossDead = false;
 
-    [SerializeField] Transform bossTransform;
 
-    // Carrot Shooting variables
+    [Header("Carrot Shooting variables")]
     [SerializeField] Transform carrotSpawnOffset;
     [SerializeField] GameObject carrotPf;
     [SerializeField] Transform carrotTargetPos;
     [SerializeField] float carrotDelayTime; // Time between each carrot throw
     [SerializeField] float carrotSpeed;
 
-    // Boss movement variables
+    [Header("Boss movement variables")]
+    [SerializeField] Transform bossTransform;
     [SerializeField] float bossHorizontalRange; // x range of boss
     [SerializeField] float bossHorizontalSpeed;
+    bool bossDead = false;
     float bossHorizontalPos;    // Position boss is to move to
 
-    // Boss Death animation variables
+    [Header("Boss Death animation variables")]
     [SerializeField] ParticleSystem bossSmoke;
     [SerializeField] float bossReducedSize;
     // Initial positions and rotations for post death effect
     Dictionary<Transform, Vector3> bossComponentsInitialPositions = new Dictionary<Transform, Vector3>();
     Dictionary<Transform, Quaternion> bossComponentsInitialRotations = new Dictionary<Transform, Quaternion>();
+
+    [Header("Boss weak spot variables")]
+    [SerializeField] GameObject weakSpotPf;
+    MeshCollider meshCollider;
+    Mesh bossMesh;
+    Camera mainCamera;
+    MeshFilter meshFilter;
+    LayerMask occlusionMask;
+    Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
+    Color WeakSpotCols0 = new (40f/255f, 1, 0, 156f/255f);  // Initial spot color
+    Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f); // Spot color on first hit
+    Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);         //      ''       second hit
+    Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);         //      ''       third hit = final color
 
     // Start is called before the first frame update
     void Awake()
@@ -52,6 +64,23 @@ public class BossControl : MonoBehaviour
             bossComponentsInitialPositions[childTransform] = childTransform.position;
             bossComponentsInitialRotations[childTransform] = childTransform.rotation;
         }
+
+        // Weak spot
+        mainCamera = Camera.main;
+        meshFilter = gameObject.GetComponent<MeshFilter>();
+        bossMesh = meshFilter.mesh;
+        occlusionMask = gameObject.layer;
+        meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider.enabled = true;
+        WeakSpotStatCol = new Dictionary<int, Color>()
+        {
+            { 0, WeakSpotCols0 },
+            { 1, WeakSpotCols1 },
+            { 2, WeakSpotCols2 },
+            { 3, WeakSpotCols3 },
+        };
+
+        GetWeakSpots();
     }
 
     // Update is called once per frame
@@ -145,7 +174,9 @@ public class BossControl : MonoBehaviour
     {
         if (!bossDead)
         {
+            meshCollider.enabled = false;
             bossDead = true;
+            RemoveAllWeakSpots();
 
             // Fall back effect
             foreach (Transform childTransform in bossTransform)
@@ -190,5 +221,182 @@ public class BossControl : MonoBehaviour
             childTransform.rotation = bossComponentsInitialRotations[childTransform];
         }
         bossTransform.localScale = new Vector3(bossReducedSize, bossReducedSize, bossReducedSize);
+    }
+
+    // Weak Spot
+    void GetWeakSpots()
+    {
+        // Get all vertices on boss mesh
+        Vector3[] vertices = bossMesh.vertices;
+
+        // Divide target region into 8 areas
+        Bounds bounds = bossMesh.bounds;
+        Vector3 center = meshFilter.transform.TransformPoint(bounds.center);
+
+        float quarterHeight = bounds.size.y / 4;
+        float lowerY = center.y - quarterHeight;
+        float middleY = center.y;
+        float upperY = center.y + quarterHeight;
+
+        List<Vector3>[] regions = new List<Vector3>[8];
+        for (int i = 0; i < 8; i++) regions[i] = new List<Vector3>();
+
+        // Reduce vertices
+        foreach (Vector3 vertex in vertices)
+        {
+            Vector3 worldPos = meshFilter.transform.TransformPoint(vertex);
+            Vector3 viewportPos = mainCamera.WorldToViewportPoint(worldPos);
+
+            // Check if vertex is within the camera’s frustum
+            if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1 || viewportPos.z <= 0) continue;
+
+            // Perform an occlusion check
+            if (Physics.Linecast(mainCamera.transform.position, worldPos, occlusionMask)) continue;
+            
+            int index = 0;
+
+            // X-axis split: left or right
+            if (worldPos.x > center.x) index += 1;
+
+            // Y-axis split: bottom, lower middle, upper middle, or top
+            if (worldPos.y > upperY) index += 6;        // Top region
+            else if (worldPos.y > middleY) index += 4;  // Upper middle region
+            else if (worldPos.y > lowerY) index += 2;   // Lower middle region
+            // Bottom region does not need an additional offset
+
+            //|----|----|
+            //|  6 | 7  |
+            //|----|----| upper y
+            //| 4  |  5 |
+            //|----|----| middle y
+            //|  2 |  3 |
+            //|----|----| lower y
+            //| 0  |  1 |
+            //|----|----|
+
+            regions[index].Add(worldPos);
+            
+        }
+
+        // Choose three random regions and select one random point from each
+        List<int> chosenIndices = new List<int>();
+
+        while (chosenIndices.Count < 3)
+        {
+            int randomIndex = Random.Range(0, 8);
+
+            if (!chosenIndices.Contains(randomIndex) && regions[randomIndex].Count > 0)
+            {
+                chosenIndices.Add(randomIndex);
+                Vector3 randomPoint = regions[randomIndex][Random.Range(0, regions[randomIndex].Count)];
+
+                // Make weak spot orientation match boss mesh
+                Vector3 localPoint = meshFilter.transform.InverseTransformPoint(randomPoint);
+                int closestVertexIndex = FindClosestVertexIndex(localPoint);
+
+                Vector3 normal = bossMesh.normals[closestVertexIndex];
+                Vector3 worldNormal = meshFilter.transform.TransformDirection(normal);
+
+                Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
+
+            }
+        }
+    }
+
+    // To find normal
+    int FindClosestVertexIndex(Vector3 point)
+    {
+        Vector3[] vertices = bossMesh.vertices;
+        int closestIndex = 0;
+        float minDistance = float.MaxValue;
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            float distance = Vector3.Distance(vertices[i], point);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return closestIndex;
+    }
+
+    // Make sure weakspot is not buried under boss mesh
+    void AdjustWeakSpot(GameObject weakSpot)
+    {
+        weakSpot.transform.localPosition += (Vector3.forward * 0.1f);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // Make sure weakspot is not buried under boss mesh
+        if (collision.gameObject.CompareTag("WeakSpot"))
+        {
+            Debug.Log("Touching!");
+            AdjustWeakSpot(collision.gameObject);
+        }
+    }
+
+    bool TransformWeakSpot(GameObject weakSpot)
+    {
+        SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
+        Color WeakSpotCol = sr.color;
+
+        int status = 0;
+
+        foreach (KeyValuePair<int, Color> statCol in WeakSpotStatCol)
+        {
+            if (statCol.Value == WeakSpotCol)
+            {
+                status = statCol.Key;
+                break;
+            }
+        }
+
+        if (status == 3) return false;
+        StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
+        return true;
+    }
+
+    IEnumerator gradualColorChange(SpriteRenderer sr, Color startCol, Color endCol)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.1f;
+
+        while (elapsedTime < duration)
+        {
+            sr.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        sr.color = endCol;
+    }
+
+    void RemoveAllWeakSpots()
+    {
+        GameObject[] wss = GameObject.FindGameObjectsWithTag("WeakSpot");
+        foreach (GameObject ws in wss) Destroy(ws);
+        Debug.Log("Complete");
+    }
+
+
+    // Testing only
+    public void NewWeakSpots()
+    {
+        RemoveAllWeakSpots();
+        GetWeakSpots();
+    }
+
+    // Testing only
+    public void TransformWeakSpotHelper()
+    {
+        foreach (Transform child in transform)
+            if (child.gameObject.CompareTag("WeakSpot"))
+                if (TransformWeakSpot(child.gameObject)) return;
     }
 }

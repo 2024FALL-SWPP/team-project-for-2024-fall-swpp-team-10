@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - Invincible
   - MagnetEffect
+  - WeakSpot
   layers:
   - Default
   - TransparentFX
