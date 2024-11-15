@@ -6,37 +6,37 @@ public class BossControl : MonoBehaviour
 {
     public Animator animator;
 
-    // Color related variables
+    [Header("Color related variables")]
     [SerializeField] Color bossStartColor;
     [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
 
-    bool bossDead = false;
 
-    [SerializeField] Transform bossTransform;
 
-    // Carrot Shooting variables
+    [Header("Carrot Shooting variables")]
     [SerializeField] Transform carrotSpawnOffset;
     [SerializeField] GameObject carrotPf;
     [SerializeField] Transform carrotTargetPos;
     [SerializeField] float carrotDelayTime; // Time between each carrot throw
     [SerializeField] float carrotSpeed;
 
-    // Boss movement variables
+    [Header("Boss movement variables")]
+    [SerializeField] Transform bossTransform;
     [SerializeField] float bossHorizontalRange; // x range of boss
     [SerializeField] float bossHorizontalSpeed;
+    bool bossDead = false;
     float bossHorizontalPos;    // Position boss is to move to
 
-    // Boss Death animation variables
+    [Header("Boss Death animation variables")]
     [SerializeField] ParticleSystem bossSmoke;
     [SerializeField] float bossReducedSize;
     // Initial positions and rotations for post death effect
     Dictionary<Transform, Vector3> bossComponentsInitialPositions = new Dictionary<Transform, Vector3>();
     Dictionary<Transform, Quaternion> bossComponentsInitialRotations = new Dictionary<Transform, Quaternion>();
 
-    // Boss weak spot variables
-    MeshCollider meshCollider;
+    [Header("Boss weak spot variables")]
     [SerializeField] GameObject weakSpotPf;
+    MeshCollider meshCollider;
     Mesh bossMesh;
     Camera mainCamera;
     MeshFilter meshFilter;
