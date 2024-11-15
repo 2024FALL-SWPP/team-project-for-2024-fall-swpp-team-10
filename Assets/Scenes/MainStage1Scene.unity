@@ -410,7 +410,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 2471692}
-  coinCollectSound: {fileID: 8300000, guid: 8d500324209444e36b83ca4d277aefaf, type: 3}
+  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   coinVolume: 1
 --- !u!4 &111234844 stripped
 Transform:
@@ -1297,7 +1297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_TagString
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 186956375}
-  coinCollectSound: {fileID: 8300000, guid: 8d500324209444e36b83ca4d277aefaf, type: 3}
+  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   coinVolume: 1
 --- !u!4 &973557195 stripped
 Transform:
@@ -3212,7 +3212,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1043615632}
-  coinCollectSound: {fileID: 8300000, guid: 8d500324209444e36b83ca4d277aefaf, type: 3}
+  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   coinVolume: 1
 --- !u!4 &1625009819 stripped
 Transform:
@@ -3673,7 +3673,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 84019538}
-  coinCollectSound: {fileID: 8300000, guid: 8d500324209444e36b83ca4d277aefaf, type: 3}
+  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   coinVolume: 1
 --- !u!4 &1799102595 stripped
 Transform:

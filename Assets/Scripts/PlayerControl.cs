@@ -28,8 +28,8 @@ public class PlayerControl : MonoBehaviour
     private GameObject magnet;
 
     [Header("Audio Settings")]
-    [SerializeField] private AudioClip coinCollectSound;
-    [SerializeField] [Range(0f, 1f)] private float coinVolume = 0.5f;
+    [SerializeField] public AudioClip coinCollectSound;
+    [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
 
     void Awake()
     {
