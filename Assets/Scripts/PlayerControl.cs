@@ -258,7 +258,9 @@ public class PlayerControl : MonoBehaviour
             if (isInvincible)
             {
                 Destroy(other.gameObject);
-                GameManager.inst.AddScore(1000);
+                GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
+                if (other.gameObject.CompareTag("Enemy"))
+                    GameManager.inst.AddScore(500); //적이면 1000점 추가
                 return;
             }
             if (enemyCollisionSound != null)
