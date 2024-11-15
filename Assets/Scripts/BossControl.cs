@@ -280,12 +280,11 @@ public class BossControl : MonoBehaviour
 
         // Choose three random regions and select one random point from each
         List<int> chosenIndices = new List<int>();
-        int count = 0;
 
         while (chosenIndices.Count < 3)
         {
             int randomIndex = Random.Range(0, 8);
-            count += 1;
+
             if (!chosenIndices.Contains(randomIndex) && regions[randomIndex].Count > 0)
             {
                 chosenIndices.Add(randomIndex);
@@ -300,15 +299,6 @@ public class BossControl : MonoBehaviour
 
                 Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
 
-            }
-            else if (count == 8)
-            {
-                for (int i = 0; i < regions.Length; i++)
-                {
-                    Debug.Log($"Region {i} has {regions[i].Count} vertices.");
-                }
-                Debug.Log($"Final chosenIndices count: {chosenIndices.Count}");
-                break;
             }
         }
     }
