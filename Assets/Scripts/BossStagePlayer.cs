@@ -7,8 +7,8 @@ public class BossStagePlayer : MonoBehaviour
     public float rotationSpeed = 5f; // 회전 보간 속도
 
     [Header("Movement Constraints")]
-    public Vector3 areaMin = new Vector3(-9.8f, 0.8f, -9.8f);
-    public Vector3 areaMax = new Vector3(9.8f, 0.8f,9.8f);
+    public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
+    public Vector3 areaMax = new Vector3(10f, 0.8f,10f);
     public float minDistanceFromBoss = 2f; // 원점으로부터 최소 거리 설정
 
     [Header("Boss Settings")]
