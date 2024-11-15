@@ -412,7 +412,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 2471692}
   coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 0}
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &111234844 stripped
@@ -1985,7 +1985,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 186956375}
   coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 0}
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &973557195 stripped
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1043615632}
   coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 0}
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1625009819 stripped
@@ -3450,7 +3450,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 929826646}
   coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: a5d8182c36ed341918c4f3f93cf00e89, type: 3}
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1699910874 stripped
@@ -3687,7 +3687,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 84019538}
   coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 0}
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1799102595 stripped
