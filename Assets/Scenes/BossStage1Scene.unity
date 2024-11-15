@@ -671,8 +671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rotationSpeed: 5
-  areaMin: {x: -9.8, y: 0.8, z: -9.8}
-  areaMax: {x: 9.8, y: 0.8, z: 9.8}
+  areaMin: {x: -10, y: 0.8, z: -10}
+  areaMax: {x: 10, y: 0.8, z: 10}
   minDistanceFromBoss: 2
   bossTransform: {fileID: 1413606430}
 --- !u!1001 &1495427503
