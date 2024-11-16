@@ -65,7 +65,6 @@ public class BossAttackPattern : MonoBehaviour
 
                 // 그리드 셀 인스턴스 생성
                 GameObject cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
-                //cell.transform.rotation = Quaternion.Euler(90, 0, 0);
                 cell.transform.localScale = new Vector3(cellSizeX, 0.1f  ,cellSizeZ); // 셀 크기 조정
 
                 // GridCell 컴포넌트 할당
