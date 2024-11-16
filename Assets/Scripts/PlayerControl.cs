@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
     private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
     private GameObject magnetEffect; // 자석 아이템 적용 시 UI
+    private ParticleSystem deathParticle;
 
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
@@ -48,7 +49,8 @@ public class PlayerControl : MonoBehaviour
         {
             for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
             {
-                originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
+                if (childRenderers[i].sharedMaterials[j].HasProperty("_Color"))
+                    originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
             }
         }
 
@@ -56,6 +58,7 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
 
         magnetEffect = GameObject.FindWithTag("MagnetEffect");
+        deathParticle = GameObject.FindWithTag("DeathParticle").GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -267,6 +270,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            deathParticle.Play();
             if (isInvincible)
             {
                 Destroy(other.gameObject);
@@ -285,6 +289,7 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
+            deathParticle.Play();
             if (isInvincible)
             {
                 Destroy(other.gameObject);
