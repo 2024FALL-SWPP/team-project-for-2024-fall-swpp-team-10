@@ -69,6 +69,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("LeaderBoardScene");
     }
 
+    public void ResetStats()
+    {
+        life = maxLife;
+        score = 0;
+    }
+
     public string GetPlayerName()
     {
         return playerName;
