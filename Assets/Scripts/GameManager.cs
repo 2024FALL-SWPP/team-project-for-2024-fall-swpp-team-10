@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int stage = 1;
     private Character character;
     private int score = 0;
+    public Color[,] originColorSave = null;
 
 
     private void Awake()
@@ -40,7 +41,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (score <= 0)
+            score = 0;
     }
 
     public void LoadMainMenu()
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
     public void SetCharacter(Character _character)
     {
         character = _character;
+        originColorSave = null;
     }
 
     public int GetLife()
@@ -117,5 +120,9 @@ public class GameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+    public void SetScore(int _score)
+    {
+        score = _score;
     }
 }
