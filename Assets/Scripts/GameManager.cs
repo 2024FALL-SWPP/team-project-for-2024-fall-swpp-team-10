@@ -63,6 +63,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainStage" + stage + "Scene");
     }
 
+    public void LoadLeaderboard()
+    {
+        SceneManager.LoadScene("LeaderBoardScene");
+    }
+
     public string GetPlayerName()
     {
         return playerName;
