@@ -11,8 +11,8 @@ public class BossAttackPattern : MonoBehaviour
 
     [Header("Player Area")]
     //TODO: BossStagePlayer 스크립트의 constant와 일원화하기(주의!: 단순히 일원화하면 영역 꼭짓점 부근에 서 있을 때 cell 안에 있는 것으로 인식되지 않음)
-    public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f); // 플레이어 이동 영역 최소값
-    public Vector3 areaMax = new Vector3(10f, 0.8f, 10f);   // 플레이어 이동 영역 최대값
+    public Vector3 areaMin = new Vector3(-10f, 1.5f, -10f); // 플레이어 이동 영역 최소값
+    public Vector3 areaMax = new Vector3(10f, 1.5f, 10f);   // 플레이어 이동 영역 최대값
     private Vector3 offset = new Vector3(0.2f,0, 0.2f);
 
     [Header("Attack Settings")]
@@ -65,7 +65,7 @@ public class BossAttackPattern : MonoBehaviour
 
                 // 그리드 셀 인스턴스 생성
                 GameObject cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
-                cell.transform.localScale = new Vector3(cellSizeX, 0.1f, cellSizeZ); // 셀 크기 조정
+                cell.transform.localScale = new Vector3(cellSizeX, 0.1f  ,cellSizeZ); // 셀 크기 조정
 
                 // GridCell 컴포넌트 할당
                 GridCell gridCell = cell.GetComponent<GridCell>();

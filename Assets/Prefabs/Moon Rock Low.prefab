@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2846665734829257844}
   - component: {fileID: 4775774813234597603}
   - component: {fileID: 1467519350192284964}
-  - component: {fileID: -5043270778494928375}
+  - component: {fileID: 7375655881103720199}
   m_Layer: 0
   m_Name: Moon Rock Low
   m_TagString: Untagged
@@ -64,7 +64,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 7.5
   m_Center: {x: 0, y: 0, z: 5}
---- !u!114 &-5043270778494928375
+--- !u!114 &7375655881103720199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
