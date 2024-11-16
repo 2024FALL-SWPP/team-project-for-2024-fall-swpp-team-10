@@ -270,9 +270,9 @@ public class PlayerControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            deathParticle.Play();
             if (isInvincible)
             {
+                deathParticle.Play();
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
@@ -289,9 +289,9 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            deathParticle.Play();
             if (isInvincible)
             {
+                deathParticle.Play();
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
