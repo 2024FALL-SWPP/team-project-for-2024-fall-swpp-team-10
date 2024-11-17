@@ -62,6 +62,7 @@ public class MainManager : MonoBehaviour
         characters[(int)GameManager.inst.GetCharacter()].SetActive(true);
         characterUI[(int)GameManager.inst.GetCharacter()].SetActive(true);
         Time.timeScale = 1;
+        GameManager.inst.ResetStats();
         isGameOver = false;
 
         characters[(int)GameManager.inst.GetCharacter()].GetComponent<PlayerControl>().ChangeColorOriginal();

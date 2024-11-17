@@ -20,13 +20,11 @@ public class ButtonHandler : MonoBehaviour
     public void LoadMainMenu()
     {
         GameManager.inst.LoadMainMenu();  // GameManager의 메서드 호출
-        GameManager.inst.ResetStats();
     }
 
     public void LoadStageSelection()
     {
         GameManager.inst.LoadStageSelection();
-        GameManager.inst.ResetStats();
     }
 
     public void LoadCharacterSelection(int stage)
@@ -46,7 +44,6 @@ public class ButtonHandler : MonoBehaviour
     }
     public void LoadMainStage()
     {
-        GameManager.inst.ResetStats();
         GameManager.inst.LoadMainStage();
     }
 
