@@ -27,4 +27,13 @@ public class ObjectManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
+        {
+            if (transform.position.z > 10)
+                Destroy(gameObject);
+        }
+    }
 }

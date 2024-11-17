@@ -12,20 +12,21 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
     private Vector3 initialPosition; // Initial world position of the player
+    private Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     public float projectileSpeed = 10.0f; // Speed of laser
     public GameObject projectilePrefab; // Laser prefab
     public Transform projectileSpawnPoint; // Laser is instantiated at this point
 
-    private Renderer[] childRenderers;
-    private Color[,] originColors;
-    private int blinkCount = 3;
-    private float invincibleLength;
-    private bool isInvincible = false;
-    private float magnetDuration;
-    private bool isMagnet = false;
-    private GameObject magnet;
+    private Renderer[] childRenderers; //Renderer of characters
+    private Color[,] originColors; // Origin color of characters
+    private int blinkCount = 3; // 피격 시 깜빡이는 횟수
+    private float invincibleLength; // 무적 지속 시간
+    private bool isInvincible = false; // 무적 지속중인지 확인
+    private float magnetDuration; // 자석 지속 시간
+    private bool isMagnet = false; // 자석 지속중인지 확인
+    private GameObject magnetEffect; // 자석 아이템 적용 시 UI
 
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
@@ -51,7 +52,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        magnet = GameObject.FindWithTag("MagnetEffect");
+        magnetEffect = GameObject.FindWithTag("MagnetEffect");
     }
 
     void Update()
@@ -101,7 +102,7 @@ public class PlayerControl : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        magnet.SetActive(isMagnet);
+        magnetEffect.SetActive(isMagnet);
     }
 
     void FireLaser()
@@ -146,6 +147,9 @@ public class PlayerControl : MonoBehaviour
                 transform.position = endPosition;
             }
 
+            // 캐릭터 중앙 위치 수정
+            centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
+
             yield return null;
         }
 
@@ -162,6 +166,7 @@ public class PlayerControl : MonoBehaviour
         );
     }
 
+    // 피격 시 깜빡임
     IEnumerator Blink()
     {
         isInvincible = true;
@@ -176,6 +181,7 @@ public class PlayerControl : MonoBehaviour
         isInvincible = false;
     }
 
+    // 무적 아이템 효과
     IEnumerator Invincible()
     {
         invincibleLength = 10f;
@@ -201,6 +207,7 @@ public class PlayerControl : MonoBehaviour
         isInvincible = false;
     }
 
+    // 캐릭터 색 전체 변환
     private void ChangeColor(Color _color)
     {
         foreach (Renderer renderer in childRenderers)
@@ -210,6 +217,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    // 캐릭터 색 원래 색으로
     private void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
@@ -221,11 +229,12 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    // 자석 아이템 효과
     IEnumerator Magnet()
     {
         float coinSpeed = 40f;
         float distance = 1.4f;
-        magnetDuration = 10f;
+        magnetDuration = 5f;
 
         if (isMagnet)
             yield break;
@@ -241,8 +250,8 @@ public class PlayerControl : MonoBehaviour
             {
                 if (coin != null)
                 {
-                    if (Vector3.Distance(coin.transform.position, transform.position) < distance)
-                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, transform.position, coinSpeed * Time.deltaTime);
+                    if (Vector3.Distance(coin.transform.position, centerPosition) < distance)
+                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
                 }
             }
 
