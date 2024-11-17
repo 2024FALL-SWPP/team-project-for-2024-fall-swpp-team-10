@@ -966,6 +966,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   m_PrefabInstance: {fileID: 2039046443}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1163737299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1163737300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,7 +1316,7 @@ MonoBehaviour:
   areaMin: {x: -10, y: 2, z: -10}
   areaMax: {x: 10, y: 2, z: 10}
   minDistanceFromBoss: 2
-  bossTransform: {fileID: 1413606430}
+  bossTransform: {fileID: 1163737299}
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
