@@ -41,8 +41,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (score <= 0)
-            score = 0;
+
     }
 
     public void LoadMainMenu()
@@ -120,9 +119,5 @@ public class GameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
-    }
-    public void SetScore(int _score)
-    {
-        score = _score;
     }
 }

@@ -65,9 +65,6 @@ public class MainManager : MonoBehaviour
         isGameOver = false;
 
         characters[(int)GameManager.inst.GetCharacter()].GetComponent<PlayerControl>().ChangeColorOriginal();
-        while (GameManager.inst.GetLife() < GameManager.inst.maxLife)
-            GameManager.inst.AddLife();
-        GameManager.inst.SetScore(0);
     }
 
     private void OnDisable()
