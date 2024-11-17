@@ -273,6 +273,11 @@ public class PlayerControl : MonoBehaviour
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
             }
+            
+            if (enemyCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
+            }
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-1000);
             StartCoroutine(Blink());
@@ -286,6 +291,7 @@ public class PlayerControl : MonoBehaviour
                 GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
             }
+
             if (enemyCollisionSound != null)
             {
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
