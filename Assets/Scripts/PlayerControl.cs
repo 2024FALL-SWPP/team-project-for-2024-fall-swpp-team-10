@@ -27,8 +27,8 @@ public class PlayerControl : MonoBehaviour
     private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
     private GameObject magnetEffect; // 자석 아이템 적용 시 UI
-    private ParticleSystem hitParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
-    private ParticleSystem damageParticle; // 장애물이나 적에 부딪혔을 때
+    public ParticleSystem hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
+    public ParticleSystem damagedParticle; // 장애물이나 적에 부딪혔을 때
 
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
@@ -59,8 +59,6 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
 
         magnetEffect = GameObject.FindWithTag("MagnetEffect");
-        hitParticle = GameObject.FindWithTag("DeathParticle").GetComponent<ParticleSystem>(); // Tag 이름 수정이 안돼서..
-        damageParticle = GameObject.FindWithTag("DamagedParticle").GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -112,7 +110,8 @@ public class PlayerControl : MonoBehaviour
 
         magnetEffect.SetActive(isMagnet);
 
-        damageParticle.transform.position = transform.position; // centerposition으로 수정해야함
+        damagedParticle.transform.position = transform.position; // centerposition으로 수정해야함
+        hitOnInvincibleParticle.transform.position = transform.position; // centerposition으로 수정해야함
     }
 
     void FireLaser()
@@ -276,7 +275,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                hitParticle.Play();
+                hitOnInvincibleParticle.Play();
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
@@ -287,7 +286,7 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
 
-            damageParticle.Play();
+            damagedParticle.Play();
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-1000);
             StartCoroutine(Blink());
@@ -297,7 +296,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                hitParticle.Play();
+                hitOnInvincibleParticle.Play();
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
@@ -308,7 +307,7 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
 
-            damageParticle.Play();
+            damagedParticle.Play();
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-500);
             StartCoroutine(Blink());
