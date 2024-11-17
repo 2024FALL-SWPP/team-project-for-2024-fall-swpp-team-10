@@ -52,6 +52,9 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        if (GameManager.inst.originColorSave == null)
+            GameManager.inst.originColorSave = originColors;
+
         magnetEffect = GameObject.FindWithTag("MagnetEffect");
     }
 
@@ -218,13 +221,13 @@ public class PlayerControl : MonoBehaviour
     }
 
     // 캐릭터 색 원래 색으로
-    private void ChangeColorOriginal()
+    public void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
         {
             for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
             {
-                childRenderers[i].sharedMaterials[j].color = originColors[i, j];
+                childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
             }
         }
     }

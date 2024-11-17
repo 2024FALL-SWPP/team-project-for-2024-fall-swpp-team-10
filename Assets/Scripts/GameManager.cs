@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int stage = 1;
     private Character character;
     private int score = 0;
+    public Color[,] originColorSave = null;
 
 
     private void Awake()
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
     public void SetCharacter(Character _character)
     {
         character = _character;
+        originColorSave = null;
     }
 
     public int GetLife()
