@@ -29,7 +29,6 @@ public class LaserProjectile : MonoBehaviour
     void Awake()
     {
         trail = GetComponent<TrailRenderer>();
-        hitParticle = GameObject.FindWithTag("hitParticle").GetComponent<ParticleSystem>();
 
         if (trail != null)
         {
@@ -55,7 +54,6 @@ public class LaserProjectile : MonoBehaviour
 
     private void Update()
     {
-        hitParticle.transform.position = transform.position;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -65,6 +63,8 @@ public class LaserProjectile : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.inst.AddScore(1000);
             gameObject.SetActive(false);
+            hitParticle = GameObject.FindWithTag("hitParticle").GetComponent<ParticleSystem>();
+            hitParticle.transform.position = transform.position;
             hitParticle.Play();
         }
         if (other.gameObject.CompareTag("Obstacle"))
