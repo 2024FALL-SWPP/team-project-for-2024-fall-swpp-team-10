@@ -81,6 +81,8 @@ public class BossControl : MonoBehaviour
         };
 
         GetWeakSpots();
+
+        StartShootInterval();
     }
 
     // Update is called once per frame
