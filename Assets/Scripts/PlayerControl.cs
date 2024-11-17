@@ -138,9 +138,6 @@ public class PlayerControl : MonoBehaviour
             float distanceCovered = (Time.time - startTime) * moveSpeed;
             float fractionOfJourney = distanceCovered / journeyLength;
 
-            // 캐릭터 중앙 위치 수정
-            centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
-
             // Move the player using lerp
             transform.position = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
 
@@ -149,6 +146,9 @@ public class PlayerControl : MonoBehaviour
             {
                 transform.position = endPosition;
             }
+
+            // 캐릭터 중앙 위치 수정
+            centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
 
             yield return null;
         }
