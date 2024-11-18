@@ -27,6 +27,8 @@ public class PlayerControl : MonoBehaviour
     private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
     private GameObject magnetEffect; // 자석 아이템 적용 시 UI
+
+    [Header("Particle System")]
     public ParticleSystem hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
     public ParticleSystem damagedParticle; // 장애물이나 적에 부딪혔을 때
 
@@ -275,7 +277,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                hitOnInvincibleParticle.Play();
+                Instantiate(hitOnInvincibleParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
@@ -286,7 +288,7 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
 
-            damagedParticle.Play();
+            Instantiate(damagedParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-1000);
             StartCoroutine(Blink());
@@ -296,7 +298,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                hitOnInvincibleParticle.Play();
+                Instantiate(hitOnInvincibleParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
@@ -307,7 +309,7 @@ public class PlayerControl : MonoBehaviour
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
             }
 
-            damagedParticle.Play();
+            Instantiate(damagedParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-500);
             StartCoroutine(Blink());
