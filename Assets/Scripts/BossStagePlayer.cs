@@ -144,4 +144,13 @@ public class BossStagePlayer : MonoBehaviour
             rb.MoveRotation(lastRotation);
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.inst.RemoveLife();
+            Destroy(other.gameObject);
+        }
+    }
 }
