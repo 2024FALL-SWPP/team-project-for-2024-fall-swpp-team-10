@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2347168567541074527}
   m_Layer: 0
   m_Name: Explosion_Pink
-  m_TagString: hitOnInvincibleParticle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
