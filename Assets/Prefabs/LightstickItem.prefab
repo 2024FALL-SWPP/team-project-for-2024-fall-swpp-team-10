@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1974664364481341763}
   - component: {fileID: 4360502102025870729}
   m_Layer: 0
-  m_Name: leftLightstickItem
+  m_Name: LightstickItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -235,7 +235,7 @@ public class PlayerControl : MonoBehaviour
             centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
 
             // Update lightstick positions to maintain relative positioning
-            UpdateLightstickPositions(endPosition);
+            UpdateLightstickPositions(transform.position);
             yield return null;
         }
 
