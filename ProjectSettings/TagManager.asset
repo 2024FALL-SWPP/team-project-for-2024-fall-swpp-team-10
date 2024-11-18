@@ -14,7 +14,6 @@ TagManager:
   - Invincible
   - MagnetEffect
   - WeakSpot
-  - hitParticle
   layers:
   - Default
   - TransparentFX
