@@ -24,7 +24,7 @@ public class LaserProjectile : MonoBehaviour
     public Color materialColor = new Color(0f, 1f, 0f, 1f);  // Green
 
     [Header("Particle System")]
-    private ParticleSystem hitParticle;
+    public ParticleSystem hitParticle;
 
     void Awake()
     {
@@ -63,9 +63,7 @@ public class LaserProjectile : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.inst.AddScore(1000);
             gameObject.SetActive(false);
-            hitParticle = GameObject.FindWithTag("hitParticle").GetComponent<ParticleSystem>();
-            hitParticle.transform.position = transform.position;
-            hitParticle.Play();
+            Instantiate(hitParticle, transform.position, new Quaternion(0, 0, 0, 0));
         }
         if (other.gameObject.CompareTag("Obstacle"))
         {
