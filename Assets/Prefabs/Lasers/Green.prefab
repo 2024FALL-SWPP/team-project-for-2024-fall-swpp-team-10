@@ -126,7 +126,7 @@ MonoBehaviour:
   startColor: {r: 0, g: 1, b: 0, a: 1}
   endColor: {r: 0, g: 1, b: 0, a: 0}
   materialColor: {r: 0, g: 1, b: 0, a: 1}
-  hitParticle: {fileID: 8790651117026334594, guid: a1f4300a62d3cea4f835709e4394e922, type: 3}
+  hitParticle: {fileID: 6984943078359629718, guid: 90739c14d49b4a1478165d02dc050b6f, type: 3}
 --- !u!96 &-408690865650833369
 TrailRenderer:
   serializedVersion: 2
