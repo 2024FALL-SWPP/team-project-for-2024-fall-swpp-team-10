@@ -344,7 +344,6 @@ public class BossControl : MonoBehaviour
         // Make sure weakspot is not buried under boss mesh
         if (collision.gameObject.CompareTag("WeakSpot"))
         {
-            Debug.Log("Touching!");
             AdjustWeakSpot(collision.gameObject);
         }
     }
@@ -394,7 +393,6 @@ public class BossControl : MonoBehaviour
     {
         GameObject[] wss = GameObject.FindGameObjectsWithTag("WeakSpot");
         foreach (GameObject ws in wss) Destroy(ws);
-        Debug.Log("Complete");
     }
 
 

@@ -4,12 +4,12 @@ public class BossStagePlayer : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float speed = 10f;
-    public float rotationSpeed = 5f; // È¸Àü º¸°£ ¼Óµµ
+    public float rotationSpeed = 5f; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
 
     [Header("Movement Constraints")]
     public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
     public Vector3 areaMax = new Vector3(10f, 0.8f,10f);
-    public float minDistanceFromBoss = 2f; // ¿øÁ¡À¸·ÎºÎÅÍ ÃÖ¼Ò °Å¸® ¼³Á¤
+    public float minDistanceFromBoss = 2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     [Header("Boss Settings")]
     public Transform bossTransform;
@@ -18,6 +18,16 @@ public class BossStagePlayer : MonoBehaviour
     private const float initialPitch = 20f;
     private Quaternion lastRotation;
 
+    [Header("Projectile Settings")]
+    public float projectileSpeed = 10.0f;
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint;
+    private Camera mainCamera;
+
+    [Header("Audio Settings")]
+    [SerializeField] public AudioClip laserFireSound;
+    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,11 +35,12 @@ public class BossStagePlayer : MonoBehaviour
 
     private void Start()
     {
+        mainCamera = Camera.main;
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        // ÃÊ±â È¸Àü ÀúÀå
+        // ï¿½Ê±ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         lastRotation = Quaternion.Euler(initialPitch, 0f, 0f);
         rb.rotation = lastRotation;
     }
@@ -40,17 +51,26 @@ public class BossStagePlayer : MonoBehaviour
         RotatePlayer();
     }
 
+    private void Update()
+    {
+        // Fire Laser
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            FireLaser();
+        }
+    }
+
     private void MovePlayer()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal"); // ÁÂ¿ì ÀÌµ¿ ÀÔ·Â
-        float moveVertical = Input.GetAxis("Vertical");     // ÀüÈÄ ÀÌµ¿ ÀÔ·Â
+        float moveHorizontal = Input.GetAxis("Horizontal"); // ï¿½Â¿ï¿½ ï¿½Ìµï¿½ ï¿½Ô·ï¿½
+        float moveVertical = Input.GetAxis("Vertical");     // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ô·ï¿½
 
-        // º¸½ºÀÇ À§Ä¡ (º¸½º°¡ ¾øÀ¸¸é ¿øÁ¡ »ç¿ë)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
         Vector3 bossPosition = bossTransform != null ? bossTransform.position : Vector3.zero;
 
-        // ¹æÇâ º¤ÅÍ °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToBoss = bossPosition - rb.position;
-        directionToBoss.y = 0f; // ¼öÁ÷ ¹æÇâ ¹«½ÃÇÏ¿© ¼öÆò ¹æÇâ¸¸ °í·Á
+        directionToBoss.y = 0f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¸ ï¿½ï¿½ï¿½ï¿½
 
         Vector3 forwardDirection;
         Vector3 rightDirection;
@@ -58,34 +78,34 @@ public class BossStagePlayer : MonoBehaviour
         if (directionToBoss.sqrMagnitude > 0.0001f)
         {
             forwardDirection = directionToBoss.normalized;
-            rightDirection = Vector3.Cross(Vector3.up, forwardDirection).normalized; // ¿À¸¥ÂÊ ¹æÇâ °è»ê
+            rightDirection = Vector3.Cross(Vector3.up, forwardDirection).normalized; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ º¸½º¿Í °°Àº À§Ä¡¿¡ ÀÖÀ» °æ¿ì, ÀÓÀÇÀÇ ¹æÇâ ¼³Á¤
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             forwardDirection = Vector3.forward;
             rightDirection = Vector3.right;
         }
 
-        // ÀÌµ¿ º¤ÅÍ °è»ê
+        // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 movement = (forwardDirection * moveVertical + rightDirection * moveHorizontal) * speed * Time.fixedDeltaTime;
 
-        // »õ·Î¿î À§Ä¡ °è»ê
+        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
         Vector3 newPosition = rb.position + movement;
 
-        // ÀÌµ¿ ¿µ¿ª Á¦ÇÑ
+        // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         newPosition.x = Mathf.Clamp(newPosition.x, areaMin.x, areaMax.x);
         newPosition.z = Mathf.Clamp(newPosition.z, areaMin.z, areaMax.z);
-        newPosition.y = rb.position.y; // YÁÂÇ¥ °íÁ¤
+        newPosition.y = rb.position.y; // Yï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
 
-        // º¸½º·ÎºÎÅÍ ÃÖ¼Ò °Å¸® À¯Áö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3 offsetFromBoss = newPosition - bossPosition;
         float distanceFromBoss = offsetFromBoss.magnitude;
 
         if (distanceFromBoss < minDistanceFromBoss)
         {
-            // ÇÃ·¹ÀÌ¾î°¡ ÃÖ¼Ò °Å¸® ³»·Î µé¾î°¡·Á´Â °æ¿ì
-            // ¿òÁ÷ÀÓÀÌ º¸½º ¹æÇâÀÎÁö È®ÀÎ
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ö¼ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             Vector3 attemptedMovement = newPosition - rb.position;
             Vector3 toBoss = bossPosition - rb.position;
             toBoss.y = 0f;
@@ -94,15 +114,15 @@ public class BossStagePlayer : MonoBehaviour
 
             if (dot > 0f && moveVertical > 0f)
             {
-                // ¿òÁ÷ÀÓÀÌ º¸½º ¹æÇâÀ¸·Î ÇâÇÏ°í ÀÖ°í, ÀüÁø ÀÔ·ÂÀÎ °æ¿ì
-                // ¿òÁ÷ÀÓÀ» Ãë¼Ò (ÀÌµ¿ÇÏÁö ¾ÊÀ½)
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                 movement = Vector3.zero;
                 newPosition = rb.position;
             }
             else
             {
-                // ¿òÁ÷ÀÓÀÌ º¸½º¿¡¼­ ¸Ö¾îÁö´Â ¹æÇâÀÌ°Å³ª, ÀüÁø ÀÔ·ÂÀÌ ¾Æ´Ô
-                // ÃÖ¼Ò °Å¸®¸¦ À¯ÁöÇÏµµ·Ï À§Ä¡ Á¶Á¤
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½
+                // ï¿½Ö¼ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
                 offsetFromBoss = offsetFromBoss.normalized * minDistanceFromBoss;
                 newPosition = bossPosition + offsetFromBoss;
             }
@@ -113,35 +133,81 @@ public class BossStagePlayer : MonoBehaviour
 
     private void RotatePlayer()
     {
-        // º¸½ºÀÇ À§Ä¡ (º¸½º°¡ ¾øÀ¸¸é ¿øÁ¡ »ç¿ë)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
         Vector3 bossPosition = bossTransform != null ? bossTransform.position : Vector3.zero;
 
-        // ÇÃ·¹ÀÌ¾î°¡ Ç×»ó º¸½º¸¦ ¹Ù¶óº¸µµ·Ï È¸Àü °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToBoss = bossPosition - rb.position;
-        directionToBoss.y = 0f; // ¼öÁ÷ ¹æÇâ ¹«½ÃÇÏ¿© ¼öÆò È¸Àü¸¸ °í·Á
+        directionToBoss.y = 0f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (directionToBoss.sqrMagnitude > 0.0001f)
         {
             Quaternion lookRotation = Quaternion.LookRotation(directionToBoss);
 
-            // ÃÊ±â XÃà ±â¿ï±â(20µµ)¸¦ Àû¿ë
+            // ï¿½Ê±ï¿½ Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(20ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Quaternion pitchRotation = Quaternion.Euler(initialPitch, 0f, 0f);
 
             Quaternion targetRotation = lookRotation * pitchRotation;
 
-            // È¸ÀüÀ» ºÎµå·´°Ô º¸°£ÇÏ¿© ±Þ°ÝÇÑ È¸Àü º¯È­ ¹æÁö
+            // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Þ°ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
             Quaternion newRotation = Quaternion.Slerp(lastRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
 
             rb.MoveRotation(newRotation);
 
-            // ¸¶Áö¸· È¸Àü ¾÷µ¥ÀÌÆ®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             lastRotation = newRotation;
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ º¸½º¿Í °°Àº À§Ä¡¿¡ ÀÖÀ» °æ¿ì, È¸Àü º¯È­ ¾øÀ½
-            // ÀÌÀü È¸ÀüÀ» À¯Áö
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, È¸ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             rb.MoveRotation(lastRotation);
+        }
+    }
+
+    // Player Attack
+    void FireLaser()
+    {
+        if (laserFireSound != null)
+        {
+            AudioSource.PlayClipAtPoint(laserFireSound, transform.position, laserVolume);
+        }
+        // Center shot always fires
+        SpawnProjectile(projectileSpawnPoint.position);
+    }
+
+    void SpawnProjectile(Vector3 spawnPosition)
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 direction;
+
+        // Convert to a ray from the camera
+        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+
+        // Perform the raycast
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            // Get the hit point on the mesh
+            Vector3 targetPoint = hit.point;
+
+            // Calculate the direction from the spawn point to the target point
+            direction = (targetPoint - spawnPosition).normalized;
+        }
+        else
+        {
+            mousePosition.z = 16f; ; // Distance from camera to plane
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+            direction = (worldPoint - spawnPosition).normalized;
+            Debug.Log("Raycast did not hit any target.");
+        }
+            
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+
+        if (projectileRb != null)
+        {
+            projectileRb.velocity = direction * projectileSpeed;
+            Debug.Log(direction);
         }
     }
 }
