@@ -349,7 +349,7 @@ public class BossControl : MonoBehaviour
     }
 
     // Call to change color of weak spot on attack (collision between laser and weakspot)
-    bool TransformWeakSpot(GameObject weakSpot)
+    public void TransformWeakSpot(GameObject weakSpot)
     {
         SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
         Color WeakSpotCol = sr.color;
@@ -365,9 +365,9 @@ public class BossControl : MonoBehaviour
             }
         }
 
-        if (status == 3) return false;
+        if (status == 3) return;
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
-        return true;
+        return;
     }
 
     // Called by TransformWeakSpot()
@@ -403,11 +403,11 @@ public class BossControl : MonoBehaviour
         GetWeakSpots();
     }
 
-    // Testing only. Changes color of weakspots one by one.
-    public void TransformWeakSpotHelper()
-    {
-        foreach (Transform child in transform)
-            if (child.gameObject.CompareTag("WeakSpot"))
-                if (TransformWeakSpot(child.gameObject)) return;
-    }
+    //// Testing only. Changes color of weakspots one by one.
+    //public void TransformWeakSpotHelper()
+    //{
+    //    foreach (Transform child in transform)
+    //        if (child.gameObject.CompareTag("WeakSpot"))
+    //            if (TransformWeakSpot(child.gameObject)) return;
+    //}
 }

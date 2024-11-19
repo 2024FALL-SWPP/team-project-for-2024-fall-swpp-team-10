@@ -26,8 +26,12 @@ public class LaserProjectile : MonoBehaviour
     [Header("Particle System")]
     public ParticleSystem hitParticle;
 
+    private BossControl bossControl;
+
     void Awake()
     {
+        bossControl = GameObject.Find("Boss").GetComponent<BossControl>();
+
         trail = GetComponent<TrailRenderer>();
 
         if (trail != null)
@@ -68,6 +72,15 @@ public class LaserProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
         {
             gameObject.SetActive(false);
+        }
+        if (other.gameObject.CompareTag("WeakSpot")) // If weak spot hit, change the color
+        {
+            bossControl.TransformWeakSpot(other.gameObject);
+            gameObject.SetActive(false); // Turn off laser
+        }
+        else if (bossControl is not null)   // If boss stage active,
+        {
+            gameObject.SetActive(false);    // Remove laser on collision
         }
     }
 }

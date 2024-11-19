@@ -28,6 +28,7 @@ public class BossStagePlayer : MonoBehaviour
     [SerializeField] public AudioClip laserFireSound;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
