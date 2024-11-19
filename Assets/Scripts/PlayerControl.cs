@@ -57,7 +57,13 @@ public class PlayerControl : MonoBehaviour
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
 
         childRenderers = GetComponentsInChildren<Renderer>();
-        originColors = new Color[childRenderers.Length, 2];
+        
+        int maxSharedMaterialsLength = 0;
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
+        }
+        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
 
         for (int i = 0; i < childRenderers.Length; i++)
         {
