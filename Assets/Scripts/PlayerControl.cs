@@ -55,6 +55,7 @@ public class PlayerControl : MonoBehaviour
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
+        SyncCenterPosition();
 
         childRenderers = GetComponentsInChildren<Renderer>();
         
@@ -136,14 +137,19 @@ public class PlayerControl : MonoBehaviour
 
         magnetEffect.SetActive(isMagnet);
 
-        damagedParticle.transform.position = transform.position; // centerposition으로 수정해야함
-        hitOnInvincibleParticle.transform.position = transform.position; // centerposition으로 수정해야함
+        damagedParticle.transform.position = centerPosition;
+        hitOnInvincibleParticle.transform.position = centerPosition;
+    }
+
+    void SyncCenterPosition()
+    {
+        centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
     }
     void FireLaser()
     {
         if (laserFireSound != null)
         {
-            AudioSource.PlayClipAtPoint(laserFireSound, transform.position, laserVolume);
+            AudioSource.PlayClipAtPoint(laserFireSound, centerPosition, laserVolume);
         }
         // Center shot always fires
         SpawnProjectile(projectileSpawnPoint.position);
@@ -238,7 +244,7 @@ public class PlayerControl : MonoBehaviour
             }
 
             // 캐릭터 중앙 위치 수정
-            centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
+            SyncCenterPosition();
 
             // Update lightstick positions to maintain relative positioning
             UpdateLightstickPositions(transform.position);
@@ -365,7 +371,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                Instantiate(hitOnInvincibleParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
+                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
@@ -373,10 +379,10 @@ public class PlayerControl : MonoBehaviour
             
             if (enemyCollisionSound != null)
             {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
             }
 
-            Instantiate(damagedParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
+            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-1000);
             StartCoroutine(Blink());
@@ -386,7 +392,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isInvincible)
             {
-                Instantiate(hitOnInvincibleParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
+                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
                 Destroy(other.gameObject);
                 GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
@@ -394,10 +400,10 @@ public class PlayerControl : MonoBehaviour
 
             if (enemyCollisionSound != null)
             {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, coinVolume);
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
             }
 
-            Instantiate(damagedParticle, transform.position, new Quaternion(0, 0, 0, 0)); //centerposition으로 수정해야함
+            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
             GameManager.inst.RemoveLife();
             GameManager.inst.AddScore(-500);
             StartCoroutine(Blink());
@@ -423,7 +429,7 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.AddScore(200);
             if (coinCollectSound != null)
             {
-                AudioSource.PlayClipAtPoint(coinCollectSound, transform.position, coinVolume);
+                AudioSource.PlayClipAtPoint(coinCollectSound, centerPosition, coinVolume);
             }
         }
 
