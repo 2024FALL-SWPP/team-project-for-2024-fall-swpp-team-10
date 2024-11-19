@@ -225,6 +225,7 @@ MonoBehaviour:
   startColor: {r: 0.49805027, g: 0.009611944, b: 0.6792453, a: 1}
   endColor: {r: 0.5019608, g: 0.011764706, b: 0.68235296, a: 0}
   materialColor: {r: 0.5019608, g: 0.011764706, b: 0.68235296, a: 1}
+  hitParticle: {fileID: 625621707174889904, guid: ef43e5aef41c142fb85a7658a397dc75, type: 3}
 --- !u!65 &4179444013980043930
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -23,7 +23,10 @@ public class LaserProjectile : MonoBehaviour
     [Tooltip("Main color of the trail material")]
     public Color materialColor = new Color(0f, 1f, 0f, 1f);  // Green
 
-    void Start()
+    [Header("Particle System")]
+    public ParticleSystem hitParticle;
+
+    void Awake()
     {
         trail = GetComponent<TrailRenderer>();
 
@@ -49,6 +52,10 @@ public class LaserProjectile : MonoBehaviour
         Destroy(gameObject, projectileDurationTime);
     }
 
+    private void Update()
+    {
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -56,6 +63,7 @@ public class LaserProjectile : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.inst.AddScore(1000);
             gameObject.SetActive(false);
+            Instantiate(hitParticle, transform.position, new Quaternion(0, 0, 0, 0));
         }
         if (other.gameObject.CompareTag("Obstacle"))
         {
