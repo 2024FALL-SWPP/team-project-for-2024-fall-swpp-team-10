@@ -1246,6 +1246,11 @@ MonoBehaviour:
   areaMax: {x: 10, y: 2, z: 10}
   minDistanceFromBoss: 2
   bossTransform: {fileID: 1163737299}
+  projectileSpeed: 50
+  projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
+  projectileSpawnPoint: {fileID: 1431771570}
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1639,6 +1644,46 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8829451551789304537, guid: 8206b722d11501a449d6a278cca2adfa, type: 3}
   m_PrefabInstance: {fileID: 81859088}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1811903667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811903669}
+  - component: {fileID: 1811903668}
+  m_Layer: 0
+  m_Name: TargetPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!33 &1811903668
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811903667}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1811903669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811903667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8, z: 16}
+  m_LocalScale: {x: 60, y: 30, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873577567
 GameObject:
   m_ObjectHideFlags: 0
