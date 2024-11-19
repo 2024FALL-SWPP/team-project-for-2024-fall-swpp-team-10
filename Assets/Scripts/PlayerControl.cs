@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EnumManager;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -15,9 +16,11 @@ public class PlayerControl : MonoBehaviour
     private Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
-    public float projectileSpeed = 10.0f; // Speed of laser
-    public GameObject projectilePrefab; // Laser prefab
-    public Transform projectileSpawnPoint; // Laser is instantiated at this point
+    [Header("Projectile Settings")]
+    public float projectileSpeed = 10.0f;
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint;
+    private bool hasTripleShot = false;  // Flag for triple shot power-up
 
     private Renderer[] childRenderers; //Renderer of characters
     private Color[,] originColors; // Origin color of characters
@@ -27,6 +30,14 @@ public class PlayerControl : MonoBehaviour
     private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
     private GameObject magnetEffect; // 자석 아이템 적용 시 UI
+
+    [Header("Lightstick Settings")]
+    public GameObject leftLightstickPrefab;   // Assign in inspector
+    public GameObject rightLightstickPrefab;  // Assign in inspector
+    public float lightstickOffset = 1.0f;
+    public float lightStickDuration = 10.0f;
+    private float powerUpEndTime; // Track when the power-up should end
+    private Coroutine tripleShotCoroutine;
 
     [Header("Particle System")]
     public ParticleSystem hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
@@ -46,7 +57,13 @@ public class PlayerControl : MonoBehaviour
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
 
         childRenderers = GetComponentsInChildren<Renderer>();
-        originColors = new Color[childRenderers.Length, 2];
+        
+        int maxSharedMaterialsLength = 0;
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
+        }
+        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
 
         for (int i = 0; i < childRenderers.Length; i++)
         {
@@ -61,11 +78,17 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
 
         magnetEffect = GameObject.FindWithTag("MagnetEffect");
+
+        // Initialize lightsticks in disabled state
+        if (leftLightstickPrefab != null)
+            leftLightstickPrefab.SetActive(false);
+        if (rightLightstickPrefab != null)
+            rightLightstickPrefab.SetActive(false);
     }
 
     void Update()
     {
-        // Only allow new movement input if we're not currently moving
+        // Handle movement. Only allow new movement input if we're not currently moving
         if (!isMoving)
         {
             // Handle left movement
@@ -93,17 +116,18 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(SmoothMove());
             }
         }
-
         // Fire Laser
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FireLaser();
         }
 
+        // Handle death
         if (GameManager.inst.GetLife() <= 0)
         {
             isMoving = true;
             transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
+            DisableLightsticks();
         }
         if (transform.position.y < 0)
         {
@@ -115,21 +139,75 @@ public class PlayerControl : MonoBehaviour
         damagedParticle.transform.position = transform.position; // centerposition으로 수정해야함
         hitOnInvincibleParticle.transform.position = transform.position; // centerposition으로 수정해야함
     }
-
     void FireLaser()
     {
         if (laserFireSound != null)
         {
             AudioSource.PlayClipAtPoint(laserFireSound, transform.position, laserVolume);
         }
-        // Create the projectile at the preassigned point
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position + new Vector3(0, 0, 1f), Quaternion.identity);
-        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+        // Center shot always fires
+        SpawnProjectile(projectileSpawnPoint.position);
 
+        // Side shots if lightsticks are active
+        if (hasTripleShot)
+        {
+            if (leftLightstickPrefab != null && leftLightstickPrefab.activeSelf)
+            {
+                SpawnProjectile(leftLightstickPrefab.transform.position);
+            }
+            if (rightLightstickPrefab != null && rightLightstickPrefab.activeSelf)
+            {
+                SpawnProjectile(rightLightstickPrefab.transform.position);
+            }
+        }
+    }
+    void SpawnProjectile(Vector3 spawnPosition)
+    {
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition + new Vector3(0, 0, 1f), Quaternion.identity);
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
         if (projectileRb != null)
         {
             projectileRb.velocity = Vector3.forward * projectileSpeed;
+        }
+    }
+
+    private void UpdateLightstickPositions(Vector3 playerPosition)
+    {
+        if (!hasTripleShot) return;
+
+        float spawnHeight = projectileSpawnPoint.position.y;
+
+        // Update left lightstick
+        if (leftLightstickPrefab != null)
+        {
+            bool shouldBeActive = currentGridPosition.x > 0;
+            leftLightstickPrefab.SetActive(shouldBeActive);
+            if (shouldBeActive)
+            {
+                Vector3 leftPosition = new Vector3(
+                    playerPosition.x - lightstickOffset,
+                    spawnHeight,  // Use spawn point height
+                    playerPosition.z
+                );
+                leftLightstickPrefab.transform.position = leftPosition;
+            }
+        }
+
+        // Update right lightstick
+        if (rightLightstickPrefab != null)
+        {
+            bool shouldBeActive = currentGridPosition.x < gridSize.x - 1;
+            rightLightstickPrefab.SetActive(shouldBeActive);
+            if (shouldBeActive)
+            {
+                Vector3 rightPosition = new Vector3(
+                    playerPosition.x + lightstickOffset,
+                    spawnHeight,  // Use spawn point height
+                    playerPosition.z
+                );
+                rightLightstickPrefab.transform.position = rightPosition;
+            }
         }
     }
 
@@ -149,8 +227,9 @@ public class PlayerControl : MonoBehaviour
             float distanceCovered = (Time.time - startTime) * moveSpeed;
             float fractionOfJourney = distanceCovered / journeyLength;
 
-            // Move the player using lerp
-            transform.position = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
+            // Update player position
+            Vector3 newPosition = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
+            transform.position = newPosition;
 
             // If we're very close to the target, snap to it
             if (Vector3.Distance(transform.position, endPosition) < 0.01f)
@@ -161,12 +240,13 @@ public class PlayerControl : MonoBehaviour
             // 캐릭터 중앙 위치 수정
             centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
 
+            // Update lightstick positions to maintain relative positioning
+            UpdateLightstickPositions(transform.position);
             yield return null;
         }
 
         isMoving = false;
     }
-
     Vector3 CalculateTargetPosition()
     {
         // Calculate target position relative to the initial position
@@ -271,6 +351,14 @@ public class PlayerControl : MonoBehaviour
         isMagnet = false;
     }
 
+    void DisableLightsticks()
+    {
+        if (leftLightstickPrefab != null)
+            leftLightstickPrefab.SetActive(false);
+        if (rightLightstickPrefab != null)
+            rightLightstickPrefab.SetActive(false);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -339,9 +427,39 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) //if it is item or coin
+        if (other.gameObject.CompareTag("Lightstick"))
+        {
+            if (tripleShotCoroutine != null)
+            {
+                StopCoroutine(tripleShotCoroutine);
+                tripleShotCoroutine = null;
+            }
+
+            hasTripleShot = true;
+            powerUpEndTime = Time.time + lightStickDuration;
+
+            UpdateLightstickPositions(transform.position);
+            tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
+
+            Destroy(other.gameObject);
+        }
+
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) // if it is item or coin
         {
             Destroy(other.gameObject);
         }
+    }
+
+    IEnumerator TripleShotPowerUpTimer()
+    {
+
+        while (Time.time < powerUpEndTime)
+        {
+            float remainingTime = powerUpEndTime - Time.time;
+            yield return new WaitForSeconds(0.1f);
+        }
+        hasTripleShot = false;
+        DisableLightsticks();
+        tripleShotCoroutine = null;
     }
 }
