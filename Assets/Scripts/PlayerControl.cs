@@ -44,6 +44,7 @@ public class PlayerControl : MonoBehaviour
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
         currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
+        SyncCenterPosition();
 
         childRenderers = GetComponentsInChildren<Renderer>();
         originColors = new Color[childRenderers.Length, 2];
@@ -116,6 +117,11 @@ public class PlayerControl : MonoBehaviour
         hitOnInvincibleParticle.transform.position = transform.position; // centerposition으로 수정해야함
     }
 
+    void SyncCenterPosition()
+    {
+        centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
+    }
+
     void FireLaser()
     {
         if (laserFireSound != null)
@@ -159,7 +165,7 @@ public class PlayerControl : MonoBehaviour
             }
 
             // 캐릭터 중앙 위치 수정
-            centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
+            SyncCenterPosition();
 
             yield return null;
         }
