@@ -81,6 +81,10 @@ public class BossControl : MonoBehaviour
         };
 
         GetWeakSpots();
+
+        StartShootInterval();
+
+        //BossDeath(); // Used to test boss death in scene
     }
 
     // Update is called once per frame
@@ -170,6 +174,7 @@ public class BossControl : MonoBehaviour
         }
     }
 
+    // Call for boss death
     public void BossDeath()
     {
         if (!bossDead)
@@ -195,6 +200,7 @@ public class BossControl : MonoBehaviour
         }
     }
 
+    // Called by BossDeath()
     public void BossDeathHelper()
     {
         // Particle effect
@@ -202,6 +208,7 @@ public class BossControl : MonoBehaviour
         Invoke("BossDeathTransform", 0.5f);
     }
 
+    // Called by BossDeathHelper()
     void BossDeathTransform()
     {
         // Transform boss into small white rabbit
@@ -209,6 +216,9 @@ public class BossControl : MonoBehaviour
         foreach (Transform childTransform in bossTransform)
         {
             GameObject child = childTransform.gameObject;
+
+            if (child.CompareTag("WeakSpot")) continue;
+
             Rigidbody rb = child.GetComponent<Rigidbody>();
 
             // Restore positions
@@ -220,10 +230,10 @@ public class BossControl : MonoBehaviour
             childTransform.position = bossComponentsInitialPositions[childTransform];
             childTransform.rotation = bossComponentsInitialRotations[childTransform];
         }
-        bossTransform.localScale = new Vector3(bossReducedSize, bossReducedSize, bossReducedSize);
+        bossTransform.localScale *= bossReducedSize;
     }
 
-    // Weak Spot
+    // Create weak spots : Call at the start of each phase
     void GetWeakSpots()
     {
         // Get all vertices on boss mesh
@@ -303,7 +313,7 @@ public class BossControl : MonoBehaviour
         }
     }
 
-    // To find normal
+    // To find normal (Called by GetWeakSpots())
     int FindClosestVertexIndex(Vector3 point)
     {
         Vector3[] vertices = bossMesh.vertices;
@@ -323,7 +333,7 @@ public class BossControl : MonoBehaviour
         return closestIndex;
     }
 
-    // Make sure weakspot is not buried under boss mesh
+    // Make sure weakspot is not buried under boss mesh (Called on collision btwn boss and weak spot)
     void AdjustWeakSpot(GameObject weakSpot)
     {
         weakSpot.transform.localPosition += (Vector3.forward * 0.1f);
@@ -339,6 +349,7 @@ public class BossControl : MonoBehaviour
         }
     }
 
+    // Call to change color of weak spot on attack (collision between laser and weakspot)
     bool TransformWeakSpot(GameObject weakSpot)
     {
         SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
@@ -360,6 +371,7 @@ public class BossControl : MonoBehaviour
         return true;
     }
 
+    // Called by TransformWeakSpot()
     IEnumerator gradualColorChange(SpriteRenderer sr, Color startCol, Color endCol)
     {
         float elapsedTime = 0f;
@@ -377,6 +389,7 @@ public class BossControl : MonoBehaviour
         sr.color = endCol;
     }
 
+    // Called on boss death, call on phase change
     void RemoveAllWeakSpots()
     {
         GameObject[] wss = GameObject.FindGameObjectsWithTag("WeakSpot");
@@ -385,14 +398,14 @@ public class BossControl : MonoBehaviour
     }
 
 
-    // Testing only
+    // Testing only. Removes old and produces new weakspots.
     public void NewWeakSpots()
     {
         RemoveAllWeakSpots();
         GetWeakSpots();
     }
 
-    // Testing only
+    // Testing only. Changes color of weakspots one by one.
     public void TransformWeakSpotHelper()
     {
         foreach (Transform child in transform)
