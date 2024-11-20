@@ -45,10 +45,10 @@ public class LeaderBoardManager : MonoBehaviour
     {
         myScore.text = GameManager.inst.GetScore().ToString();
         myID.text = GameManager.inst.GetPlayerName();
-        Score_first_i = PlayerPrefs.GetInt("1st");
-        Score_second_i = PlayerPrefs.GetInt("2nd");
-        Score_third_i = PlayerPrefs.GetInt("3rd");
-        Score_now_i = PlayerPrefs.GetInt("Score");
+        // Score_first_i = PlayerPrefs.GetInt("1st");
+        // Score_second_i = PlayerPrefs.GetInt("2nd");
+        // Score_third_i = PlayerPrefs.GetInt("3rd");
+        // Score_now_i = PlayerPrefs.GetInt("Score");
     }
 
     void Rank()  //현재점수와 랭킹점수 비교 및 배치 함수
