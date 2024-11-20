@@ -11,8 +11,6 @@ public class BossControl : MonoBehaviour
     [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
 
-
-
     [Header("Carrot Shooting variables")]
     [SerializeField] Transform carrotSpawnOffset;
     [SerializeField] GameObject carrotPf;
@@ -46,6 +44,8 @@ public class BossControl : MonoBehaviour
     Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f); // Spot color on first hit
     Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);         //      ''       second hit
     Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);         //      ''       third hit = final color
+    int hitCount = 0;   // Number of total hits on weakspot
+    int phase = 1;      // Phase no
 
     // Start is called before the first frame update
     void Awake()
@@ -344,13 +344,12 @@ public class BossControl : MonoBehaviour
         // Make sure weakspot is not buried under boss mesh
         if (collision.gameObject.CompareTag("WeakSpot"))
         {
-            Debug.Log("Touching!");
             AdjustWeakSpot(collision.gameObject);
         }
     }
 
     // Call to change color of weak spot on attack (collision between laser and weakspot)
-    bool TransformWeakSpot(GameObject weakSpot)
+    public void TransformWeakSpot(GameObject weakSpot)
     {
         SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
         Color WeakSpotCol = sr.color;
@@ -366,9 +365,12 @@ public class BossControl : MonoBehaviour
             }
         }
 
-        if (status == 3) return false;
+        if (status == 3) return;
+        hitCount += 1;
+        if (hitCount % 9 == 0)
+            Invoke("NewWeakSpots", 0.1f);
+        phase = hitCount / 9 + 1;
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
-        return true;
     }
 
     // Called by TransformWeakSpot()
@@ -394,7 +396,6 @@ public class BossControl : MonoBehaviour
     {
         GameObject[] wss = GameObject.FindGameObjectsWithTag("WeakSpot");
         foreach (GameObject ws in wss) Destroy(ws);
-        Debug.Log("Complete");
     }
 
 
@@ -405,11 +406,11 @@ public class BossControl : MonoBehaviour
         GetWeakSpots();
     }
 
-    // Testing only. Changes color of weakspots one by one.
-    public void TransformWeakSpotHelper()
-    {
-        foreach (Transform child in transform)
-            if (child.gameObject.CompareTag("WeakSpot"))
-                if (TransformWeakSpot(child.gameObject)) return;
-    }
+    //// Testing only. Changes color of weakspots one by one.
+    //public void TransformWeakSpotHelper()
+    //{
+    //    foreach (Transform child in transform)
+    //        if (child.gameObject.CompareTag("WeakSpot"))
+    //            if (TransformWeakSpot(child.gameObject)) return;
+    //}
 }
