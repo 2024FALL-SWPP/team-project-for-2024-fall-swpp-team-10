@@ -783,6 +783,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myScoreText: {fileID: 2124904264}
   myIDText: {fileID: 2122839458}
+  rankIDText:
+  - {fileID: 242873484}
+  - {fileID: 645228647}
+  - {fileID: 1014771174}
+  - {fileID: 692507461}
+  - {fileID: 994947636}
+  rankScoreText:
+  - {fileID: 63083203}
+  - {fileID: 2075884011}
+  - {fileID: 599723567}
+  - {fileID: 2144080538}
+  - {fileID: 1248422455}
 --- !u!1 &520150840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,7 +5177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ranking
+  m_text: you
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}

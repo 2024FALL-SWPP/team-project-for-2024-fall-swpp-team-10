@@ -18,13 +18,12 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject[] rankScoreText = new GameObject[5];
     private TextMeshProUGUI[] rankScore = new TextMeshProUGUI[5]; //보이는 점수
 
-    private int[] savedRankScore = new int[7]; //저장된 점수
-    private string[] savedRankID = new string[7]; //저장된 ID
+    private int[] savedRankScore = new int[6]; //저장된 점수
+    private string[] savedRankID = new string[6]; //저장된 ID
 
     // Start is called before the first frame update
     void Awake()
     {
-        Rank();
         myScore = myScoreText.GetComponent<TextMeshProUGUI>();
         myID = myIDText.GetComponent<TextMeshProUGUI>();
         for (int i = 0; i < rankIDText.Length; i++)
@@ -32,52 +31,86 @@ public class LeaderBoardManager : MonoBehaviour
             rankID[i] = rankIDText[i].GetComponent<TextMeshProUGUI>();
             rankScore[i] = rankScoreText[i].GetComponent<TextMeshProUGUI>();
         }
-        RankSet();
+
+        ImportRank();
+        RankSort();
+        ShowRank();
+        RankSave();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        // 디버그용
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerPrefs.DeleteKey("1stScore");
+            PlayerPrefs.DeleteKey("1stID");
+            PlayerPrefs.DeleteKey("2ndScore");
+            PlayerPrefs.DeleteKey("2ndID");
+            PlayerPrefs.DeleteKey("3rdScore");
+            PlayerPrefs.DeleteKey("3rdID");
+            PlayerPrefs.DeleteKey("4thScore");
+            PlayerPrefs.DeleteKey("4thID");
+            PlayerPrefs.DeleteKey("5thScore");
+            PlayerPrefs.DeleteKey("5thID");
+        }
     }
 
-    void RankSet()  //랭킹 점수 불러오기
+    void ImportRank()   //랭킹 점수 불러오기
     {
+        savedRankScore[0] = PlayerPrefs.GetInt("1stScore");
+        savedRankID[0] = PlayerPrefs.GetString("1stID");
+        savedRankScore[1] = PlayerPrefs.GetInt("2ndScore");
+        savedRankID[1] = PlayerPrefs.GetString("2ndID");
+        savedRankScore[2] = PlayerPrefs.GetInt("3rdScore");
+        savedRankID[2] = PlayerPrefs.GetString("3rdID");
+        savedRankScore[3] = PlayerPrefs.GetInt("4thScore");
+        savedRankID[3] = PlayerPrefs.GetString("4thID");
+        savedRankScore[4] = PlayerPrefs.GetInt("5thScore");
+        savedRankID[4] = PlayerPrefs.GetString("5thID");
         myScore.text = GameManager.inst.GetScore().ToString();
         myID.text = GameManager.inst.GetPlayerName();
-        // Score_first_i = PlayerPrefs.GetInt("1st");
-        // Score_second_i = PlayerPrefs.GetInt("2nd");
-        // Score_third_i = PlayerPrefs.GetInt("3rd");
-        // Score_now_i = PlayerPrefs.GetInt("Score");
     }
 
-    void Rank()  //현재점수와 랭킹점수 비교 및 배치 함수
+    void RankSort()   //현재점수와 랭킹점수 비교 및 정렬
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < rankScore.Length; i++)
         {
             if (int.Parse(myScore.text) > savedRankScore[i]) //i+1등보다 점수가 높으면
             {
-                savedRankID[i + 2] = savedRankID[i + 1];
-                savedRankScore[i + 2] = savedRankScore[i + 1];
-                savedRankID[i + 1] = savedRankID[i];
-                savedRankScore[i + 1] = savedRankScore[i];
+                for (int j = rankScore.Length - 1; j >= i; j--)
+                {
+                    savedRankID[j + 1] = savedRankID[j];
+                    savedRankScore[j + 1] = savedRankScore[j];
+                }
                 savedRankID[i] = myID.text;
                 savedRankScore[i] = int.Parse(myScore.text);
+                break;
             }
         }
     }
 
-    void RankSave()   //종료전 랭킹 점수 저장
+    void ShowRank()   //화면에 랭킹 개시
     {
-        PlayerPrefs.SetInt("1st", savedRankScore[0]);
-        PlayerPrefs.SetString("1st", savedRankID[0]);
-        PlayerPrefs.SetInt("2nd", savedRankScore[0]);
-        PlayerPrefs.SetString("2nd", savedRankID[0]);
-        PlayerPrefs.SetInt("3rd", savedRankScore[0]);
-        PlayerPrefs.SetString("3rd", savedRankID[0]);
-        PlayerPrefs.SetInt("4th", savedRankScore[0]);
-        PlayerPrefs.SetString("4th", savedRankID[0]);
-        PlayerPrefs.SetInt("5th", savedRankScore[0]);
-        PlayerPrefs.SetString("5th", savedRankID[0]);
+        for (int i = 0; i < rankScore.Length; i++)
+        {
+            rankID[i].text = savedRankID[i];
+            rankScore[i].text = savedRankScore[i].ToString();
+        }
+    }
+
+    void RankSave()   //랭킹 점수 저장
+    {
+        PlayerPrefs.SetInt("1stScore", savedRankScore[0]);
+        PlayerPrefs.SetString("1stID", savedRankID[0]);
+        PlayerPrefs.SetInt("2ndScore", savedRankScore[1]);
+        PlayerPrefs.SetString("2ndID", savedRankID[1]);
+        PlayerPrefs.SetInt("3rdScore", savedRankScore[2]);
+        PlayerPrefs.SetString("3rdID", savedRankID[2]);
+        PlayerPrefs.SetInt("4thScore", savedRankScore[3]);
+        PlayerPrefs.SetString("4thID", savedRankID[3]);
+        PlayerPrefs.SetInt("5thScore", savedRankScore[4]);
+        PlayerPrefs.SetString("5thID", savedRankID[4]);
     }
 }
