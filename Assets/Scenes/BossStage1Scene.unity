@@ -4631,9 +4631,9 @@ MonoBehaviour:
   - {fileID: 111231835}
   - {fileID: 1252641341}
   - {fileID: 2066124953}
-  score: {fileID: 54147156}
+  score: {fileID: 1583997663}
   gameOver: {fileID: 1190581245}
-  bossScript: {fileID: 0}
+  bossScript: {fileID: 1163737300}
   hearts:
   - {fileID: 490164415}
   - {fileID: 134332179}
