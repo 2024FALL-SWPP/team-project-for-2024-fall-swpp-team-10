@@ -209,4 +209,13 @@ public class BossStagePlayer : MonoBehaviour
             projectileRb.velocity = direction * projectileSpeed;
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.inst.RemoveLife();
+            Destroy(other.gameObject);
+        }
+    }
 }

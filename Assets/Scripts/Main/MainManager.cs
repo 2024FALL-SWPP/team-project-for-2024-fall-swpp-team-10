@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using EnumManager;
 using TMPro;
-
+using UnityEngine.EventSystems;
 public class MainManager : MonoBehaviour
 {
     public GameObject[] characters;
@@ -134,6 +134,7 @@ public class MainManager : MonoBehaviour
         {
             musicManager.ResumeMusic();
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     private IEnumerator AddScoreEverySecond()

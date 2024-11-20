@@ -165,7 +165,7 @@ public class BossAttackPattern : MonoBehaviour
         {
             currentPhase = 1;
         }
-        else
+        else 
         {
             currentPhase = 2;
         }
@@ -312,7 +312,7 @@ public class BossAttackPattern : MonoBehaviour
     IEnumerator ExecuteAttack(Vector3 position)
     {
         // 운석 생성 위치: 그리드 셀의 중심에서 meteoriteHeight 높이 위
-        Vector3 spawnPosition = new Vector3(position.x, areaMin.y + meteoriteHeight, position.z - 2.5f);
+        Vector3 spawnPosition = new Vector3(position.x, areaMin.y + meteoriteHeight, position.z - 2f);
         GameObject meteorite = Instantiate(meteoritePrefab, spawnPosition, Quaternion.identity);
         meteorite.transform.localScale = Vector3.one * meteoriteSize;
 
@@ -329,8 +329,20 @@ public class BossAttackPattern : MonoBehaviour
             if (bossHealth < 0f)
             {
                 bossHealth = 0;
+                currentPhase = 3;
+
                 // 보스 사망 처리 (필요 시 추가)
             }
         }
+    }
+    // 현재 Phase 반환
+    public int GetCurrentPhase()
+    {
+        return currentPhase;
+    }
+    // 보스의 현재 생명력 반환
+    public float GetBossHealth()
+    {
+        return bossHealth;
     }
 }
