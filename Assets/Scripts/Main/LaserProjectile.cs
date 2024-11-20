@@ -30,7 +30,7 @@ public class LaserProjectile : MonoBehaviour
 
     void Awake()
     {
-        bossControl = GameObject.Find("Boss").GetComponent<BossControl>();
+        bossControl = GameObject.Find("Boss")?.GetComponent<BossControl>();
 
         trail = GetComponent<TrailRenderer>();
 

@@ -367,7 +367,6 @@ public class BossControl : MonoBehaviour
 
         if (status == 3) return;
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
-        return;
     }
 
     // Called by TransformWeakSpot()
