@@ -45,7 +45,7 @@ public class BossControl : MonoBehaviour
     Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);         //      ''       second hit
     Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);         //      ''       third hit = final color
     int hitCount = 0;   // Number of total hits on weakspot
-    int phase = 1;      // Phase no
+    BossStageManager bossStageManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -83,6 +83,8 @@ public class BossControl : MonoBehaviour
         GetWeakSpots();
 
         StartShootInterval();
+
+        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
 
         //BossDeath(); // Used to test boss death in scene
     }
@@ -368,8 +370,11 @@ public class BossControl : MonoBehaviour
         if (status == 3) return;
         hitCount += 1;
         if (hitCount % 9 == 0)
+        {
             Invoke("NewWeakSpots", 0.1f);
-        phase = hitCount / 9 + 1;
+            bossStageManager.DecreaseBossLife();
+        }
+       bossStageManager.SetPhase(hitCount / 9);
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
 

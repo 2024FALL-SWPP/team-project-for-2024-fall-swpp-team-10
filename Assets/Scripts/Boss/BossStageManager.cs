@@ -17,6 +17,8 @@ public class BossStageManager : MonoBehaviour
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
     private BossStageMusicManager musicManager;
+    private int bossLife;
+    private int currentPhase;
     public GameObject pause;
 
 
@@ -48,10 +50,17 @@ public class BossStageManager : MonoBehaviour
         isGameOver = false;
     }*/
 
+    private void OnLevelWasLoaded(int level)
+    {
+        Time.timeScale = 1;
+    }
+
     void Awake()
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
         musicManager = FindObjectOfType<BossStageMusicManager>();
+        bossLife = bossScript.GetTotalPhaseCount();
+        currentPhase = 0;
     }
 
     void Start()
@@ -71,11 +80,9 @@ public class BossStageManager : MonoBehaviour
         {
             Pause();
         }
+
         for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
             hearts[i].SetActive(i < GameManager.inst.GetLife());
-
-        for (int i = 0; i < bossScript.GetTotalPhaseCount(); i++)
-            Darkhearts[i].SetActive(i < bossScript.GetTotalPhaseCount() - bossScript.GetCurrentPhase());
 
         if (GameManager.inst.GetLife() <= 0)
         {
@@ -108,5 +115,27 @@ public class BossStageManager : MonoBehaviour
             musicManager.ResumeMusic();
         }
         EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public int GetBossLife()
+    {
+        return bossLife;
+    }
+
+    public void DecreaseBossLife()
+    {
+        bossLife -= 1;
+    }
+
+    public int GetPhase()
+    {
+        return currentPhase;
+    }
+
+    public void SetPhase(int phase)
+    {
+        currentPhase = phase;
+        for (int i = 0; i < bossScript.GetTotalPhaseCount(); i++)
+            Darkhearts[i].SetActive(i < bossLife);
     }
 }

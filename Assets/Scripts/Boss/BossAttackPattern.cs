@@ -6,49 +6,49 @@ using UnityEngine;
 public class BossAttackPattern : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject meteoritePrefab; // ¿î¼® ÇÁ¸®ÆÕ
-    public GameObject gridCellPrefab; // ±×¸®µå ¼¿ ÇÁ¸®ÆÕ
+    public GameObject meteoritePrefab; // ï¿½î¼® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject gridCellPrefab; // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     [Header("Player Area")]
-    //TODO: BossStagePlayer ½ºÅ©¸³Æ®ÀÇ constant¿Í ÀÏ¿øÈ­ÇÏ±â(ÁÖÀÇ!: ´Ü¼øÈ÷ ÀÏ¿øÈ­ÇÏ¸é ¿µ¿ª ²ÀÁþÁ¡ ºÎ±Ù¿¡ ¼­ ÀÖÀ» ¶§ cell ¾È¿¡ ÀÖ´Â °ÍÀ¸·Î ÀÎ½ÄµÇÁö ¾ÊÀ½)
-    public Vector3 areaMin = new Vector3(-10f, 1.5f, -10f); // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¿µ¿ª ÃÖ¼Ò°ª
-    public Vector3 areaMax = new Vector3(10f, 1.5f, 10f);   // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¿µ¿ª ÃÖ´ë°ª
+    //TODO: BossStagePlayer ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ constantï¿½ï¿½ ï¿½Ï¿ï¿½È­ï¿½Ï±ï¿½(ï¿½ï¿½ï¿½ï¿½!: ï¿½Ü¼ï¿½ï¿½ï¿½ ï¿½Ï¿ï¿½È­ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±Ù¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ cell ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½Äµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public Vector3 areaMin = new Vector3(-10f, 1.5f, -10f); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½
+    public Vector3 areaMax = new Vector3(10f, 1.5f, 10f);   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ë°ª
     private Vector3 offset = new Vector3(0.2f,0, 0.2f);
 
     [Header("Attack Settings")]
-    public float warningDuration = 1f; // °æ°í ½Ã°£
-    public float meteoriteHeight = 15f; // ¿î¼®ÀÌ ¶³¾îÁö´Â ³ôÀÌ
-    public float bossHealth = 100f; // º¸½ºÀÇ »ý¸í·Â
+    public float warningDuration = 1f; // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float meteoriteHeight = 15f; // ï¿½î¼®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     [Header("Player")]
-    public Transform playerTransform; // ÇÃ·¹ÀÌ¾îÀÇ Transform
+    public Transform playerTransform; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform
 
-    private int currentPhase = 0; // ÇöÀç Phase
-    private List<List<Vector3[]>> attackPatternsPerPhase; // Phaseº° °ø°Ý ÆÐÅÏ
+    private List<List<Vector3[]>> attackPatternsPerPhase; // Phaseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private bool isAttacking = false;
 
-    private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 ±×¸®µå ¼¿ ¹è¿­
+    private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½è¿­
     private float cellSizeX;
     private float cellSizeZ;
-    private float meteoriteSize; // ¿î¼® Å©±â
+    private float meteoriteSize; // ï¿½î¼® Å©ï¿½ï¿½
+
+    BossStageManager bossStageManager;
 
     void Start()
     {
         areaMin -= offset;
         areaMax += offset;
-        // ±×¸®µå ¼¿ »ý¼º ¹× ÃÊ±âÈ­
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
         InitializeGrid();
 
-        // °ø°Ý ÆÐÅÏ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         InitializeAttackPatterns();
 
-        // °ø°Ý ½ÃÄö½º ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
         StartCoroutine(AttackSequence());
     }
 
 
-
-    // ±×¸®µå ¼¿ »ý¼º
+    // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void InitializeGrid()
     {
         cellSizeX = (areaMax.x - areaMin.x) / 3f;
@@ -58,26 +58,26 @@ public class BossAttackPattern : MonoBehaviour
         {
             for (int z = 0; z < 3; z++)
             {
-                // ±×¸®µå ¼¿ÀÇ Áß½É À§Ä¡ °è»ê
+                // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
                 float posX = areaMin.x + cellSizeX * (x + 0.5f);
                 float posZ = areaMin.z + cellSizeZ * (z + 0.5f);
                 Vector3 cellPosition = new Vector3(posX, areaMin.y, posZ);
 
-                // ±×¸®µå ¼¿ ÀÎ½ºÅÏ½º »ý¼º
+                // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 GameObject cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
-                cell.transform.localScale = new Vector3(cellSizeX, 0.1f  ,cellSizeZ); // ¼¿ Å©±â Á¶Á¤
+                cell.transform.localScale = new Vector3(cellSizeX, 0.1f  ,cellSizeZ); // ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-                // GridCell ÄÄÆ÷³ÍÆ® ÇÒ´ç
+                // GridCell ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½
                 GridCell gridCell = cell.GetComponent<GridCell>();
                 if (gridCell == null)
                 {
                     gridCell = cell.AddComponent<GridCell>();
                 }
 
-                // ±×¸®µå ¼¿ ¹è¿­¿¡ ÀúÀå
+                // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 gridCells[x, z] = gridCell;
 
-                // µð¹ö±ëÀ» À§ÇØ ±×¸®µå ¼¿ÀÇ À§Ä¡ ½Ã°¢È­
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ã°ï¿½È­
                 Debug.DrawLine(new Vector3(posX - cellSizeX / 2, areaMin.y + 0.1f, posZ - cellSizeZ / 2),
                                new Vector3(posX + cellSizeX / 2, areaMin.y + 0.1f, posZ - cellSizeZ / 2),
                                Color.green, 100f);
@@ -93,15 +93,15 @@ public class BossAttackPattern : MonoBehaviour
             }
         }
 
-        // ±×¸®µå ¼¿ Å©±â¿¡ ¸ÂÃß¾î ¿î¼® Å©±â ¼³Á¤ (±×¸®µå ¼¿ÀÇ ³Êºñ¿Í ±íÀÌ Áß ÀÛÀº °ªÀ» ±âÁØÀ¸·Î ¼³Á¤)
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ Å©ï¿½â¿¡ ï¿½ï¿½ï¿½ß¾ï¿½ ï¿½î¼® Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         meteoriteSize = Mathf.Min(cellSizeX, cellSizeZ) * 0.05f;
     }
-    // °ø°Ý ÆÐÅÏ ÃÊ±âÈ­
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
     void InitializeAttackPatterns()
     {
         attackPatternsPerPhase = new List<List<Vector3[]>>();
 
-        // ±×¸®µå ¼¿ÀÇ ¿ùµå ÁÂÇ¥¸¦ ÀúÀå
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3[,] gridPositions = new Vector3[3, 3];
         for (int x = 0; x < 3; x++)
         {
@@ -111,7 +111,7 @@ public class BossAttackPattern : MonoBehaviour
             }
         }
 
-        // Phase 1 ÆÐÅÏ: ÇÃ·¹ÀÌ¾î°¡ ¼­ ÀÖ´Â ±×¸®µå °ø°Ý
+        // Phase 1 ï¿½ï¿½ï¿½ï¿½: ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         List<Vector3[]> phase1Patterns = new List<Vector3[]> {
             new Vector3[] { gridPositions[0, 0] },
             new Vector3[] { gridPositions[0, 1] },
@@ -125,7 +125,7 @@ public class BossAttackPattern : MonoBehaviour
         };
         attackPatternsPerPhase.Add(phase1Patterns);
 
-        // Phase 2 ÆÐÅÏ: ÇÃ·¹ÀÌ¾î°¡ ¼­ ÀÖ´Â °¡·Î/¼¼·Î ÁÙ°ú ´ë°¢¼± °ø°ÝÀ» ¹ø°¥¾Æ ½ÇÇà -> ÆÐÅÏ 1: °¡·Î/¼¼·Î ÁÙ ÀüÃ¼ °ø°Ý / ÆÐÅÏ 2: ´ë°¢¼± °ø°Ý
+        // Phase 2 ï¿½ï¿½ï¿½ï¿½: ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½Ù°ï¿½ ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ 1: ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ 2: ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         List<Vector3[]> phase2Patterns = new List<Vector3[]> {
             new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2] },
             new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] },
@@ -139,8 +139,8 @@ public class BossAttackPattern : MonoBehaviour
 
         attackPatternsPerPhase.Add(phase2Patterns);
 
-        /* Phase 3 ÆÐÅÏ: ³× °¡Áö ÆÐÅÏ Áß ÇÃ·¹ÀÌ¾î°¡ ¼­ ÀÖ´Â ¿µ¿ªÀ» Æ÷ÇÔÇÏ´Â ÆÐÅÏÀ» ·£´ý ½ÇÇà 
-        => ÆÐÅÏ 1: °¢ ¸ð¼­¸® °¡¿îµ¥ ±×¸®µå 4°³ °ø°Ý / ÆÐÅÏ 2: µÎ ´ë°¢¼±ÀÇ ÇÕÁýÇÕÀÌ µÇ´Â ±×¸®µå 5°³ °ø°Ý / ÆÐÅÏ 3: LÀÚ ¸ð¾çÀÇ 5°³ ±×¸®µå °ø°Ý / ÆÐÅÏ 4: Ã¹¹øÂ°¿Í ¼¼¹øÂ° °¡·Î/¼¼·Î ÁÙ ±×¸®µå 6°³ °ø°Ý*/
+        /* Phase 3 ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        => ï¿½ï¿½ï¿½ï¿½ 1: ï¿½ï¿½ ï¿½ð¼­¸ï¿½ ï¿½ï¿½ï¿½îµ¥ ï¿½×¸ï¿½ï¿½ï¿½ 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ 2: ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ 3: Lï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ 4: Ã¹ï¿½ï¿½Â°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ 6ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
         List<Vector3[]> phase3Patterns = new List<Vector3[]>{
         new Vector3[] { gridPositions[0, 1], gridPositions[1, 0], gridPositions[1, 2], gridPositions[2, 1] },
         new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] },
@@ -154,58 +154,38 @@ public class BossAttackPattern : MonoBehaviour
         attackPatternsPerPhase.Add(phase3Patterns);
     }
 
-    // ÇöÀç Phase ¾÷µ¥ÀÌÆ®
-    void UpdatePhase()
-    {
-        if (bossHealth >= 70f)
-        {
-            currentPhase = 0;
-        }
-        else if (bossHealth >= 40f)
-        {
-            currentPhase = 1;
-        }
-        else 
-        {
-            currentPhase = 2;
-        }
-    }
-
-    // °ø°Ý ½ÃÄö½º ½ÇÇà
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     IEnumerator AttackSequence()
     {
-        while (bossHealth > 0)
+        while (bossStageManager.GetBossLife() > 0)
         {
             if (!isAttacking)
             {
                 isAttacking = true;
 
-                // ÇöÀç Phase ¾÷µ¥ÀÌÆ®
-                UpdatePhase();
+                // ï¿½ï¿½ï¿½ï¿½ Phaseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                List<Vector3[]> patterns = attackPatternsPerPhase[bossStageManager.GetPhase()];
 
-                // ÇöÀç PhaseÀÇ ÆÐÅÏ ¸®½ºÆ® °¡Á®¿À±â
-                List<Vector3[]> patterns = attackPatternsPerPhase[currentPhase];
-
-                // ÇÃ·¹ÀÌ¾î À§Ä¡°¡ Æ÷ÇÔµÈ ÆÐÅÏ index Ã¼Å©
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ index Ã¼Å©
                 List<int> availableIndex = new List<int>();
                 for (int i = 0; i < patterns.Count; i++)
                 {
                     if (IsPlayerInPattern(patterns[i])){ availableIndex.Add(i); }
                 }
 
-                // ÆÐÅÏ ·£´ýÇÏ°Ô ¼±ÅÃ
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Vector3[] selectedPattern = null;
                 int randomIndex = Random.Range(0, availableIndex.Count);
                 selectedPattern = patterns[availableIndex[randomIndex]];
 
                 if (selectedPattern != null) 
                 { 
-                    // °ø°ÝÇÒ ±×¸®µå ¼¿ °­Á¶ (»¡°£»ö)
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
                     HighlightGridCells(selectedPattern, Color.red);
-                    // °æ°í ½Ã°£ ´ë±â
+                    // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½
                     yield return new WaitForSeconds(warningDuration);
 
-                    // °­Á¶ ÇØÁ¦ ¹× ¿î¼® °ø°Ý ½ÇÇà
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½î¼® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     ResetGridCells(selectedPattern);
 
                     foreach (Vector3 attackPos in selectedPattern)
@@ -213,8 +193,8 @@ public class BossAttackPattern : MonoBehaviour
                         StartCoroutine(ExecuteAttack(attackPos));
                     }
 
-                    // ´ÙÀ½ °ø°Ý±îÁö ´ë±â (Á¶Á¤ °¡´É)
-                    yield return new WaitForSeconds(2f); // ¿¹: 2ÃÊ ´ë±â
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+                    yield return new WaitForSeconds(2f); // ï¿½ï¿½: 2ï¿½ï¿½ ï¿½ï¿½ï¿½
                     isAttacking = false;
                 }
 
@@ -225,10 +205,10 @@ public class BossAttackPattern : MonoBehaviour
             yield return null;
         }
 
-        // º¸½º°¡ »ç¸ÁÇßÀ» ¶§ Ã³¸® (ÇÊ¿ä ½Ã Ãß°¡)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½Ê¿ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½)
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ ÆÐÅÏ¿¡ Æ÷ÇÔµÇ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     bool IsPlayerInPattern(Vector3[] pattern)
     {
         foreach (Vector3 cellPosition in pattern)
@@ -243,10 +223,10 @@ public class BossAttackPattern : MonoBehaviour
     }
 
 
-    // ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ ±×¸®µå ¼¿¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ Æ¯ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     bool IsPlayerInCell(GridCell cell)
     {
-        // ±×¸®µå ¼¿ÀÇ °æ°è °è»ê
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 cellPosition = cell.transform.position;
         Vector3 cellScale = cell.transform.localScale;
 
@@ -260,7 +240,7 @@ public class BossAttackPattern : MonoBehaviour
 
         Vector3 playerPos = playerTransform.position;
 
-        // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡°¡ ±×¸®µå ¼¿ÀÇ °æ°è ¾È¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (playerPos.x >=minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)
         {
             return true;
@@ -268,7 +248,7 @@ public class BossAttackPattern : MonoBehaviour
         return false;
     }
 
-    // ±×¸®µå ¼¿ °­Á¶ ±â´É ÇÔ¼ö
+    // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void HighlightGridCells(Vector3[] positions, Color color)
     {
         foreach (Vector3 pos in positions)
@@ -281,7 +261,7 @@ public class BossAttackPattern : MonoBehaviour
         }
     }
 
-    // ±×¸®µå ¼¿ °­Á¶ ÇØÁ¦ ÇÔ¼ö
+    // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void ResetGridCells(Vector3[] positions)
     {
         foreach (Vector3 pos in positions)
@@ -294,10 +274,10 @@ public class BossAttackPattern : MonoBehaviour
         }
     }
 
-    // Æ¯Á¤ À§Ä¡ÀÇ ±×¸®µå ¼¿ °¡Á®¿À±â
+    // Æ¯ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     GridCell GetGridCellByPosition(Vector3 position)
     {
-        // Á¤È®ÇÑ À§Ä¡ ºñ±³¸¦ À§ÇØ ÀÛÀº °Å¸® ±âÁØ
+        // ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ñ±³¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (GridCell cell in gridCells)
         {
             if (Vector3.Distance(cell.transform.position, position) < 0.1f)
@@ -308,44 +288,18 @@ public class BossAttackPattern : MonoBehaviour
         return null;
     }
 
-    // Æ¯Á¤ À§Ä¡¿¡ ¿î¼® °ø°Ý ½ÇÇà
+    // Æ¯ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½î¼® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     IEnumerator ExecuteAttack(Vector3 position)
     {
-        // ¿î¼® »ý¼º À§Ä¡: ±×¸®µå ¼¿ÀÇ Áß½É¿¡¼­ meteoriteHeight ³ôÀÌ À§
+        // ï¿½î¼® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡: ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½É¿ï¿½ï¿½ï¿½ meteoriteHeight ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         Vector3 spawnPosition = new Vector3(position.x, areaMin.y + meteoriteHeight, position.z - 2f);
         GameObject meteorite = Instantiate(meteoritePrefab, spawnPosition, Quaternion.identity);
         meteorite.transform.localScale = Vector3.one * meteoriteSize;
 
         yield return null;
     }
-
-    void Update()
-    {
-        // ½ÇÁ¦ °ÔÀÓ¿¡¼­´Â º¸½ºÀÇ »ý¸í·ÂÀÌ °ÔÀÓ ÀÌº¥Æ®¿¡ µû¶ó °¨¼ÒÇØ¾ß ÇÕ´Ï´Ù.
-        // ¿©±â¼­´Â Å×½ºÆ®¸¦ À§ÇØ ½Ã°£ÀÌ Áö³²¿¡ µû¶ó °¨¼Ò½ÃÅµ´Ï´Ù.
-        if (bossHealth > 0)
-        {
-            bossHealth -= Time.deltaTime * 2f; // ex)ÃÊ´ç 2¾¿ °¨¼Ò
-            if (bossHealth < 0f)
-            {
-                bossHealth = 0;
-                currentPhase = 3;
-
-                // º¸½º »ç¸Á Ã³¸® (ÇÊ¿ä ½Ã Ãß°¡)
-            }
-        }
-    }
-    // ÇöÀç Phase ¹ÝÈ¯
-    public int GetCurrentPhase()
-    {
-        return currentPhase;
-    }
-    // º¸½ºÀÇ ÇöÀç »ý¸í·Â ¹ÝÈ¯
-    public float GetBossHealth()
-    {
-        return bossHealth;
-    }
-    public float GetTotalPhaseCount() 
+    
+    public int GetTotalPhaseCount() 
     {
         return attackPatternsPerPhase.Count;
     }

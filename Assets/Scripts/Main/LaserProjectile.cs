@@ -62,6 +62,19 @@ public class LaserProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (bossControl is not null)
+        {
+            if (other.gameObject.CompareTag("WeakSpot")) // If weak spot hit, change the color
+            {
+                bossControl.TransformWeakSpot(other.gameObject);
+                Destroy(gameObject);
+            }
+            else if (bossControl is not null)   // If boss stage active,
+            {
+                Destroy(gameObject);    // Remove laser on collision
+            }
+            return;
+        }
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SetActive(false);
@@ -72,15 +85,6 @@ public class LaserProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
-        }
-        if (other.gameObject.CompareTag("WeakSpot")) // If weak spot hit, change the color
-        {
-            bossControl.TransformWeakSpot(other.gameObject);
-            Destroy(gameObject);
-        }
-        else if (bossControl is not null)   // If boss stage active,
-        {
-            Destroy(gameObject);    // Remove laser on collision
         }
     }
 }

@@ -3771,7 +3771,6 @@ MonoBehaviour:
   areaMax: {x: 10, y: 1.5, z: 10}
   warningDuration: 1
   meteoriteHeight: 15
-  bossHealth: 100
   playerTransform: {fileID: 1431771570}
 --- !u!1001 &1172250443
 PrefabInstance:
@@ -5910,7 +5909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1680471479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6229,7 +6228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1894462153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7096,7 +7095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2127547026
 RectTransform:
   m_ObjectHideFlags: 0
