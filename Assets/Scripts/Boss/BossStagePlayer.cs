@@ -199,7 +199,6 @@ public class BossStagePlayer : MonoBehaviour
             mousePosition.z = 16f; ; // Distance from camera to plane
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
             direction = (worldPoint - spawnPosition).normalized;
-            Debug.Log("Raycast did not hit any target.");
         }
             
         GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
@@ -208,7 +207,6 @@ public class BossStagePlayer : MonoBehaviour
         if (projectileRb != null)
         {
             projectileRb.velocity = direction * projectileSpeed;
-            Debug.Log(direction);
         }
     }
 }

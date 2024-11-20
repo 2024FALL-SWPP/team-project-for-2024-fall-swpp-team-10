@@ -11,8 +11,6 @@ public class BossControl : MonoBehaviour
     [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
 
-
-
     [Header("Carrot Shooting variables")]
     [SerializeField] Transform carrotSpawnOffset;
     [SerializeField] GameObject carrotPf;
@@ -372,7 +370,6 @@ public class BossControl : MonoBehaviour
         if (hitCount % 9 == 0)
             Invoke("NewWeakSpots", 0.1f);
         phase = hitCount / 9 + 1;
-        Debug.Log("Hit count: " + hitCount + "\nPhase No: " + phase);
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
 
