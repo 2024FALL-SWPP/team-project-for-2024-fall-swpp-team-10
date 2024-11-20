@@ -66,21 +66,21 @@ public class LaserProjectile : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             GameManager.inst.AddScore(1000);
-            gameObject.SetActive(false);
             Instantiate(hitParticle, transform.position, new Quaternion(0, 0, 0, 0));
+            Destroy(gameObject);
         }
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
         if (other.gameObject.CompareTag("WeakSpot")) // If weak spot hit, change the color
         {
             bossControl.TransformWeakSpot(other.gameObject);
-            gameObject.SetActive(false); // Turn off laser
+            Destroy(gameObject);
         }
         else if (bossControl is not null)   // If boss stage active,
         {
-            gameObject.SetActive(false);    // Remove laser on collision
+            Destroy(gameObject);    // Remove laser on collision
         }
     }
 }
