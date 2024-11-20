@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4179444013980043930}
   m_Layer: 3
   m_Name: Purple
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

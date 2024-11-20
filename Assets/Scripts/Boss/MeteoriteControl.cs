@@ -9,7 +9,7 @@ public class MeteoriteControl : MonoBehaviour
 
     void Awake() 
     {
-        // Rigidbody°¡ ¾ø´Ù¸é Ãß°¡ÇÏ¿© ¹°¸®ÀûÀ¸·Î ¶³¾îÁöµµ·Ï ¼³Á¤
+        // Rigidbodyï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ß°ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -20,7 +20,7 @@ public class MeteoriteControl : MonoBehaviour
     }
     void Start()
     {
-        // ¿î¼®ÀÌ ¶¥¿¡ ´êÀ» ¶§±îÁö Ã¼Å©
+        // ï¿½î¼®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
         StartCoroutine(CheckLanding());
     }
 
@@ -31,10 +31,10 @@ public class MeteoriteControl : MonoBehaviour
             yield return null;
         }
 
-        // Æø¹ß È¿°ú »ý¼º
+        // ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         TriggerExplosion();
 
-        // ¿î¼® Á¦°Å
+        // ï¿½î¼® ï¿½ï¿½ï¿½ï¿½
         Destroy(gameObject);
     }
 
@@ -43,13 +43,15 @@ public class MeteoriteControl : MonoBehaviour
         if (explosionPrefab != null)
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
-            Destroy(explosion, 2f); // 2ÃÊ ÈÄ Á¦°Å
+            Destroy(explosion, 2f); // 2ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
     private void OnCollisionEnter(Collision other)
     {
-        GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
-        Destroy(explosion, 0.5f); // 0.5ÃÊ ÈÄ Á¦°Å
-
+        if (!other.gameObject.CompareTag("Laser"))
+        {
+            GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
+            Destroy(explosion, 0.5f); // 0.5ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        }
     }
 }
