@@ -2477,6 +2477,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679364, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Size.x
+      value: 0.016752452
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679364, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Size.y
+      value: 0.0028528003
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679364, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679364, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Center.x
+      value: -0.00000049495713
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679364, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Center.y
+      value: 0.0014207917
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Size.y
+      value: 0.007868333
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Size.z
+      value: 0.010397917
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Center.x
+      value: 1.1401512e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Center.y
+      value: -0.00005560975
+      objectReference: {fileID: 0}
+    - target: {fileID: 367596012315679366, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_Center.z
+      value: -0.0018054172
+      objectReference: {fileID: 0}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: carrotSpeed
       value: 10
