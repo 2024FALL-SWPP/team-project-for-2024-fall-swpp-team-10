@@ -44,31 +44,31 @@ public class LeaderBoardManager : MonoBehaviour
         // 디버그용
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerPrefs.DeleteKey("1stScore");
-            PlayerPrefs.DeleteKey("1stID");
-            PlayerPrefs.DeleteKey("2ndScore");
-            PlayerPrefs.DeleteKey("2ndID");
-            PlayerPrefs.DeleteKey("3rdScore");
-            PlayerPrefs.DeleteKey("3rdID");
-            PlayerPrefs.DeleteKey("4thScore");
-            PlayerPrefs.DeleteKey("4thID");
-            PlayerPrefs.DeleteKey("5thScore");
-            PlayerPrefs.DeleteKey("5thID");
+            PlayerPrefs.DeleteKey("Supernatural1stScore");
+            PlayerPrefs.DeleteKey("Supernatural1stID");
+            PlayerPrefs.DeleteKey("Supernatural2ndScore");
+            PlayerPrefs.DeleteKey("Supernatural2ndID");
+            PlayerPrefs.DeleteKey("Supernatural3rdScore");
+            PlayerPrefs.DeleteKey("Supernatural3rdID");
+            PlayerPrefs.DeleteKey("Supernatural4thScore");
+            PlayerPrefs.DeleteKey("Supernatural4thID");
+            PlayerPrefs.DeleteKey("Supernatural5thScore");
+            PlayerPrefs.DeleteKey("Supernatural5thID");
         }
     }
 
     void ImportRank()   //랭킹 점수 불러오기
     {
-        savedRankScore[0] = PlayerPrefs.GetInt("1stScore");
-        savedRankID[0] = PlayerPrefs.GetString("1stID");
-        savedRankScore[1] = PlayerPrefs.GetInt("2ndScore");
-        savedRankID[1] = PlayerPrefs.GetString("2ndID");
-        savedRankScore[2] = PlayerPrefs.GetInt("3rdScore");
-        savedRankID[2] = PlayerPrefs.GetString("3rdID");
-        savedRankScore[3] = PlayerPrefs.GetInt("4thScore");
-        savedRankID[3] = PlayerPrefs.GetString("4thID");
-        savedRankScore[4] = PlayerPrefs.GetInt("5thScore");
-        savedRankID[4] = PlayerPrefs.GetString("5thID");
+        savedRankScore[0] = PlayerPrefs.GetInt("Supernatural1stScore");
+        savedRankID[0] = PlayerPrefs.GetString("Supernatural1stID");
+        savedRankScore[1] = PlayerPrefs.GetInt("Supernatural2ndScore");
+        savedRankID[1] = PlayerPrefs.GetString("Supernatural2ndID");
+        savedRankScore[2] = PlayerPrefs.GetInt("Supernatural3rdScore");
+        savedRankID[2] = PlayerPrefs.GetString("Supernatural3rdID");
+        savedRankScore[3] = PlayerPrefs.GetInt("Supernatural4thScore");
+        savedRankID[3] = PlayerPrefs.GetString("Supernatural4thID");
+        savedRankScore[4] = PlayerPrefs.GetInt("Supernatural5thScore");
+        savedRankID[4] = PlayerPrefs.GetString("Supernatural5thID");
         myScore.text = GameManager.inst.GetScore().ToString();
         myID.text = GameManager.inst.GetPlayerName();
     }
@@ -102,15 +102,15 @@ public class LeaderBoardManager : MonoBehaviour
 
     void RankSave()   //랭킹 점수 저장
     {
-        PlayerPrefs.SetInt("1stScore", savedRankScore[0]);
-        PlayerPrefs.SetString("1stID", savedRankID[0]);
-        PlayerPrefs.SetInt("2ndScore", savedRankScore[1]);
-        PlayerPrefs.SetString("2ndID", savedRankID[1]);
-        PlayerPrefs.SetInt("3rdScore", savedRankScore[2]);
-        PlayerPrefs.SetString("3rdID", savedRankID[2]);
-        PlayerPrefs.SetInt("4thScore", savedRankScore[3]);
-        PlayerPrefs.SetString("4thID", savedRankID[3]);
-        PlayerPrefs.SetInt("5thScore", savedRankScore[4]);
-        PlayerPrefs.SetString("5thID", savedRankID[4]);
+        PlayerPrefs.SetInt("Supernatural1stScore", savedRankScore[0]);
+        PlayerPrefs.SetString("Supernatural1stID", savedRankID[0]);
+        PlayerPrefs.SetInt("Supernatural2ndScore", savedRankScore[1]);
+        PlayerPrefs.SetString("Supernatural2ndID", savedRankID[1]);
+        PlayerPrefs.SetInt("Supernatural3rdScore", savedRankScore[2]);
+        PlayerPrefs.SetString("Supernatural3rdID", savedRankID[2]);
+        PlayerPrefs.SetInt("Supernatural4thScore", savedRankScore[3]);
+        PlayerPrefs.SetString("Supernatural4thID", savedRankID[3]);
+        PlayerPrefs.SetInt("Supernatural5thScore", savedRankScore[4]);
+        PlayerPrefs.SetString("Supernatural5thID", savedRankID[4]);
     }
 }
