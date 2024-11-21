@@ -242,15 +242,17 @@ public class BossStagePlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Obstacle") && !isInvincible)
+        if (other.gameObject.CompareTag("Obstacle"))
         {
+            Destroy(other.gameObject);
             if (enemyCollisionSound != null)
             {
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, gameObject.transform.position, collisionVolume);
             }
+            if (isInvincible) return;
             GameManager.inst.RemoveLife();
-            Destroy(other.gameObject);
-            StartCoroutine(Blink());
+            if (GameManager.inst.GetLife() > 0)
+                StartCoroutine(Blink());
         }
     }
 
