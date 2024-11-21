@@ -102,6 +102,7 @@ public class BossStageManager : MonoBehaviour
     }
     private void Update()
     {
+        musicManager.ChangeSpeed(1.25f);
         //scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {

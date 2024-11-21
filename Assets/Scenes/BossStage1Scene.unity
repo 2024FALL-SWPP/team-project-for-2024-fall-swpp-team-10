@@ -5569,6 +5569,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 9edb7b281f2484645bdfb5167e85f0fc, type: 3}
   musicVolume: 0.099
   loop: 1
+  pitch: 1
 --- !u!4 &1653543070
 Transform:
   m_ObjectHideFlags: 0
