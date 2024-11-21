@@ -51,6 +51,10 @@ public class BossControl : MonoBehaviour
     GameObject[] weakspots = new GameObject[3];
     bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
 
+    // Set up for weak spot generation check
+    GameObject[] weakspots = new GameObject[3];
+    bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
+
     // Start is called before the first frame update
     void Awake()
     {
