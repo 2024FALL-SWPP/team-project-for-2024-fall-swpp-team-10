@@ -357,7 +357,6 @@ public class BossControl : MonoBehaviour
         // Make sure weakspot is not buried under boss mesh
         if (collision.gameObject.CompareTag("WeakSpot"))
         {
-            Debug.Log("Weakspot Collision!");
             for (int i = 0; i < 3; i++)
             {
                 if (weakspots[i] == collision.gameObject)
