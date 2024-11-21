@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     [Header("Projectile Settings")]
-    public float projectileSpeed = 10.0f;
+    private float projectileSpeed = 50.0f;
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
     private bool hasTripleShot = false;  // Flag for triple shot power-up

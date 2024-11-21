@@ -154,9 +154,9 @@ MonoBehaviour:
   objects:
   - {fileID: 624789609739533775, guid: 80bc38f390ac1744f8e89ba38929af32, type: 3}
   startSpawning: 0
-  spawnInterval: 1
+  spawnInterval: 1.75
   reduceGap: 0
-  minSpawnInterval: 1
+  minSpawnInterval: 1.75
 --- !u!4 &2243683
 Transform:
   m_ObjectHideFlags: 0
