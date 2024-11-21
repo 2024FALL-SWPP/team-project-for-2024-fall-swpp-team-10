@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BossStagePlayer : MonoBehaviour
 {
@@ -27,11 +28,40 @@ public class BossStagePlayer : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] public AudioClip laserFireSound;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
+    [SerializeField] public AudioClip enemyCollisionSound;
+    [SerializeField][Range(0f, 1f)] public float collisionVolume = 0.5f;
+
+    // On Collision variables
+    private bool isInvincible = false;
+    private int blinkCount = 3;
+    private Renderer[] childRenderers; //Renderer of characters
+    private Color[,] originColors; // Origin color of characters
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        childRenderers = GetComponentsInChildren<Renderer>();
+
+        int maxSharedMaterialsLength = 0;
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
+        }
+        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
+
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                if (childRenderers[i].sharedMaterials[j].HasProperty("_Color"))
+                    originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
+            }
+        }
+
+        if (GameManager.inst.originColorSave == null)
+            GameManager.inst.originColorSave = originColors;
     }
 
     private void Start()
@@ -212,10 +242,52 @@ public class BossStagePlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle") && !isInvincible)
         {
+            if (enemyCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, gameObject.transform.position, collisionVolume);
+            }
             GameManager.inst.RemoveLife();
             Destroy(other.gameObject);
+            StartCoroutine(Blink());
+        }
+    }
+
+    // Blink on damage
+    IEnumerator Blink()
+    {
+        isInvincible = true;
+        for (int i = 0; i < blinkCount; i++)
+        {
+            ChangeColor(Color.red);
+            yield return new WaitForSeconds(0.2f);
+
+            ChangeColorOriginal();
+            yield return new WaitForSeconds(0.2f);
+        }
+        isInvincible = false;
+    }
+
+    // 캐릭터 색 전체 변환
+    private void ChangeColor(Color _color)
+    {
+        foreach (Renderer renderer in childRenderers)
+        {
+            foreach (Material material in renderer.sharedMaterials)
+                material.color = _color;
+        }
+    }
+
+    // 캐릭터 색 원래 색으로
+    public void ChangeColorOriginal()
+    {
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
+            {
+                childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
+            }
         }
     }
 }
