@@ -35,7 +35,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject leftLightstickPrefab;   // Assign in inspector
     public GameObject rightLightstickPrefab;  // Assign in inspector
     public float lightstickOffset = 1.0f;
-    public float lightStickDuration = 10.0f;
+    public float lightStickDuration = 5.0f;
     private float powerUpEndTime; // Track when the power-up should end
     private Coroutine tripleShotCoroutine;
 

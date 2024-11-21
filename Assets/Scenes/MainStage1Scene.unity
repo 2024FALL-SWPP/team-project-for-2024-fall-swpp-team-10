@@ -1985,9 +1985,9 @@ MonoBehaviour:
   - {fileID: 5469819106887244823, guid: 6c6dd5508f279f64e98d3b9e9dcbb736, type: 3}
   - {fileID: 8639605196045675972, guid: b9f95d5eecb529a45b15110b266cf035, type: 3}
   startSpawning: 10
-  spawnInterval: 5.3
-  reduceGap: 0.03
-  minSpawnInterval: 3
+  spawnInterval: 7.3
+  reduceGap: 0.05
+  minSpawnInterval: 5
 --- !u!4 &963564387
 Transform:
   m_ObjectHideFlags: 0
