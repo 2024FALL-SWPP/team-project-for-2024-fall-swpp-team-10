@@ -40,10 +40,10 @@ public class BossControl : MonoBehaviour
     MeshFilter meshFilter;
     LayerMask occlusionMask;
     Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
-    Color WeakSpotCols0 = new (40f/255f, 1, 0, 156f/255f);  // Initial spot color
-    Color WeakSpotCols1 = new (0, 1, 219f/255f, 156f/255f); // Spot color on first hit
-    Color WeakSpotCols2 = new (0, 152f/255f, 1, 1);         //      ''       second hit
-    Color WeakSpotCols3 = new (1, 1, 1, 100f/255f);         //      ''       third hit = final color
+    Color WeakSpotCols0 = new (51f/255f, 1f, 0f, 156f/255f);  // Initial spot color
+    Color WeakSpotCols1 = new (0f, 1f, 219f/255f, 156f/255f); // Spot color on first hit
+    Color WeakSpotCols2 = new (0f, 152f/255f, 1f, 1f);         //      ''       second hit
+    Color WeakSpotCols3 = new (1f, 1f, 1f, 100f/255f);         //      ''       third hit = final color
     int hitCount = 0;   // Number of total hits on weakspot
     BossStageManager bossStageManager;
 
@@ -385,7 +385,7 @@ public class BossControl : MonoBehaviour
         SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
         Color WeakSpotCol = sr.color;
 
-        int status = 0;
+        int status = -1;
 
         foreach (KeyValuePair<int, Color> statCol in WeakSpotStatCol)
         {
@@ -396,14 +396,14 @@ public class BossControl : MonoBehaviour
             }
         }
 
-        if (status == 3) return;
+        if (status == 3 || status == -1) return;
         hitCount += 1;
         if (hitCount % 9 == 0)
         {
             Invoke("NewWeakSpots", 0.2f);
             bossStageManager.DecreaseBossLife();
         }
-       bossStageManager.SetPhase(hitCount / 9);
+        bossStageManager.SetPhase(hitCount / 9);
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
 
