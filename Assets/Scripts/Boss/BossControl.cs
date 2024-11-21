@@ -47,6 +47,10 @@ public class BossControl : MonoBehaviour
     int hitCount = 0;   // Number of total hits on weakspot
     BossStageManager bossStageManager;
 
+    // Set up for weak spot generation check
+    GameObject[] weakspots = new GameObject[3];
+    bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -114,6 +118,11 @@ public class BossControl : MonoBehaviour
         // Finish condition for one shooting interval
         if (bossDead)
             StopShooting();
+
+
+        if (isColliding[0] && isColliding[1] && isColliding[2])
+            gameObject.GetComponent<MeshCollider>().enabled = false;
+
     }
 
     // Shoot one carrot
@@ -238,6 +247,8 @@ public class BossControl : MonoBehaviour
     // Create weak spots : Call at the start of each phase
     void GetWeakSpots()
     {
+        gameObject.GetComponent<MeshCollider>().enabled = true;
+
         // Get all vertices on boss mesh
         Vector3[] vertices = bossMesh.vertices;
 
@@ -309,8 +320,8 @@ public class BossControl : MonoBehaviour
                 Vector3 normal = bossMesh.normals[closestVertexIndex];
                 Vector3 worldNormal = meshFilter.transform.TransformDirection(normal);
 
-                Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
-
+                weakspots[chosenIndices.Count - 1] = Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
+                isColliding[chosenIndices.Count - 1] = false;
             }
         }
     }
@@ -346,7 +357,24 @@ public class BossControl : MonoBehaviour
         // Make sure weakspot is not buried under boss mesh
         if (collision.gameObject.CompareTag("WeakSpot"))
         {
+            for (int i = 0; i < 3; i++)
+            {
+                if (weakspots[i] == collision.gameObject)
+                    isColliding[i] = true;
+            }
             AdjustWeakSpot(collision.gameObject);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("WeakSpot"))
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (weakspots[i] == collision.gameObject)
+                    isColliding[i] = true;
+            }
         }
     }
 
