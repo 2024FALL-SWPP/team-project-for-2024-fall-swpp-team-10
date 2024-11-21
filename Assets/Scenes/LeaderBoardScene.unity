@@ -781,6 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173f438d1ac732f40926dd0c574d143b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageText: {fileID: 826289072}
   myScoreText: {fileID: 2124904264}
   myIDText: {fileID: 2122839458}
   rankIDText:
@@ -2248,7 +2249,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -58.8, y: 170}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 2000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &826289074
 MonoBehaviour:
@@ -2297,8 +2298,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.6
-  m_fontSizeBase: 57.6
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
