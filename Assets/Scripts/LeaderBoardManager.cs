@@ -44,31 +44,31 @@ public class LeaderBoardManager : MonoBehaviour
         // 디버그용
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerPrefs.DeleteKey("Supernatural1stScore");
-            PlayerPrefs.DeleteKey("Supernatural1stID");
-            PlayerPrefs.DeleteKey("Supernatural2ndScore");
-            PlayerPrefs.DeleteKey("Supernatural2ndID");
-            PlayerPrefs.DeleteKey("Supernatural3rdScore");
-            PlayerPrefs.DeleteKey("Supernatural3rdID");
-            PlayerPrefs.DeleteKey("Supernatural4thScore");
-            PlayerPrefs.DeleteKey("Supernatural4thID");
-            PlayerPrefs.DeleteKey("Supernatural5thScore");
-            PlayerPrefs.DeleteKey("Supernatural5thID");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_1stScore");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_1stID");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_2ndScore");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_2ndID");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_3rdScore");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_3rdID");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_4thScore");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_4thID");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_5thScore");
+            PlayerPrefs.DeleteKey(GameManager.inst.GetStage().ToString() + "_5thID");
         }
     }
 
     void ImportRank()   //랭킹 점수 불러오기
     {
-        savedRankScore[0] = PlayerPrefs.GetInt("Supernatural1stScore");
-        savedRankID[0] = PlayerPrefs.GetString("Supernatural1stID");
-        savedRankScore[1] = PlayerPrefs.GetInt("Supernatural2ndScore");
-        savedRankID[1] = PlayerPrefs.GetString("Supernatural2ndID");
-        savedRankScore[2] = PlayerPrefs.GetInt("Supernatural3rdScore");
-        savedRankID[2] = PlayerPrefs.GetString("Supernatural3rdID");
-        savedRankScore[3] = PlayerPrefs.GetInt("Supernatural4thScore");
-        savedRankID[3] = PlayerPrefs.GetString("Supernatural4thID");
-        savedRankScore[4] = PlayerPrefs.GetInt("Supernatural5thScore");
-        savedRankID[4] = PlayerPrefs.GetString("Supernatural5thID");
+        savedRankScore[0] = PlayerPrefs.GetInt(GameManager.inst.GetStage().ToString() + "_1stScore");
+        savedRankID[0] = PlayerPrefs.GetString(GameManager.inst.GetStage().ToString() + "_1stID");
+        savedRankScore[1] = PlayerPrefs.GetInt(GameManager.inst.GetStage().ToString() + "_2ndScore");
+        savedRankID[1] = PlayerPrefs.GetString(GameManager.inst.GetStage().ToString() + "_2ndID");
+        savedRankScore[2] = PlayerPrefs.GetInt(GameManager.inst.GetStage().ToString() + "_3rdScore");
+        savedRankID[2] = PlayerPrefs.GetString(GameManager.inst.GetStage().ToString() + "_3rdID");
+        savedRankScore[3] = PlayerPrefs.GetInt(GameManager.inst.GetStage().ToString() + "_4thScore");
+        savedRankID[3] = PlayerPrefs.GetString(GameManager.inst.GetStage().ToString() + "_4thID");
+        savedRankScore[4] = PlayerPrefs.GetInt(GameManager.inst.GetStage().ToString() + "_5thScore");
+        savedRankID[4] = PlayerPrefs.GetString(GameManager.inst.GetStage().ToString() + "_5thID");
         myScore.text = GameManager.inst.GetScore().ToString();
         myID.text = GameManager.inst.GetPlayerName();
     }
@@ -102,15 +102,15 @@ public class LeaderBoardManager : MonoBehaviour
 
     void RankSave()   //랭킹 점수 저장
     {
-        PlayerPrefs.SetInt("Supernatural1stScore", savedRankScore[0]);
-        PlayerPrefs.SetString("Supernatural1stID", savedRankID[0]);
-        PlayerPrefs.SetInt("Supernatural2ndScore", savedRankScore[1]);
-        PlayerPrefs.SetString("Supernatural2ndID", savedRankID[1]);
-        PlayerPrefs.SetInt("Supernatural3rdScore", savedRankScore[2]);
-        PlayerPrefs.SetString("Supernatural3rdID", savedRankID[2]);
-        PlayerPrefs.SetInt("Supernatural4thScore", savedRankScore[3]);
-        PlayerPrefs.SetString("Supernatural4thID", savedRankID[3]);
-        PlayerPrefs.SetInt("Supernatural5thScore", savedRankScore[4]);
-        PlayerPrefs.SetString("Supernatural5thID", savedRankID[4]);
+        PlayerPrefs.SetInt(GameManager.inst.GetStage().ToString() + "_1stScore", savedRankScore[0]);
+        PlayerPrefs.SetString(GameManager.inst.GetStage().ToString() + "_1stID", savedRankID[0]);
+        PlayerPrefs.SetInt(GameManager.inst.GetStage().ToString() + "_2ndScore", savedRankScore[1]);
+        PlayerPrefs.SetString(GameManager.inst.GetStage().ToString() + "_2ndID", savedRankID[1]);
+        PlayerPrefs.SetInt(GameManager.inst.GetStage().ToString() + "_3rdScore", savedRankScore[2]);
+        PlayerPrefs.SetString(GameManager.inst.GetStage().ToString() + "_3rdID", savedRankID[2]);
+        PlayerPrefs.SetInt(GameManager.inst.GetStage().ToString() + "_4thScore", savedRankScore[3]);
+        PlayerPrefs.SetString(GameManager.inst.GetStage().ToString() + "_4thID", savedRankID[3]);
+        PlayerPrefs.SetInt(GameManager.inst.GetStage().ToString() + "_5thScore", savedRankScore[4]);
+        PlayerPrefs.SetString(GameManager.inst.GetStage().ToString() + "_5thID", savedRankID[4]);
     }
 }
