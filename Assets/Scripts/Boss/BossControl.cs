@@ -51,10 +51,6 @@ public class BossControl : MonoBehaviour
     GameObject[] weakspots = new GameObject[3];
     bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
 
-    // Set up for weak spot generation check
-    GameObject[] weakspots = new GameObject[3];
-    bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -123,8 +119,8 @@ public class BossControl : MonoBehaviour
         if (bossDead)
             StopShooting();
 
-
-        if (isColliding[0] && isColliding[1] && isColliding[2])
+        gameObject.GetComponent<MeshCollider>().enabled = true;
+        if (!isColliding[0] && !isColliding[1] && !isColliding[2])
             gameObject.GetComponent<MeshCollider>().enabled = false;
 
     }
@@ -251,8 +247,6 @@ public class BossControl : MonoBehaviour
     // Create weak spots : Call at the start of each phase
     void GetWeakSpots()
     {
-        gameObject.GetComponent<MeshCollider>().enabled = true;
-
         // Get all vertices on boss mesh
         Vector3[] vertices = bossMesh.vertices;
 
@@ -325,9 +319,11 @@ public class BossControl : MonoBehaviour
                 Vector3 worldNormal = meshFilter.transform.TransformDirection(normal);
 
                 weakspots[chosenIndices.Count - 1] = Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
-                isColliding[chosenIndices.Count - 1] = false;
+                isColliding[chosenIndices.Count - 1] = true;
             }
         }
+
+        gameObject.GetComponent<MeshCollider>().enabled = true;
     }
 
     // To find normal (Called by GetWeakSpots())
@@ -361,6 +357,7 @@ public class BossControl : MonoBehaviour
         // Make sure weakspot is not buried under boss mesh
         if (collision.gameObject.CompareTag("WeakSpot"))
         {
+            Debug.Log("Weakspot Collision!");
             for (int i = 0; i < 3; i++)
             {
                 if (weakspots[i] == collision.gameObject)
@@ -377,7 +374,7 @@ public class BossControl : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 if (weakspots[i] == collision.gameObject)
-                    isColliding[i] = true;
+                    isColliding[i] = false;
             }
         }
     }
