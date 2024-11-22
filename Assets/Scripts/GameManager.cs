@@ -117,9 +117,9 @@ public class GameManager : MonoBehaviour
         if (life > 0)
             life--;
     }
-    public void AddLife()
+    public void AddLife(int MaxLife)
     {
-        if (life < maxLife)
+        if (life < MaxLife)
             life++;
     }
 
@@ -131,10 +131,5 @@ public class GameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
-    }
-    public void AddLife2()
-    {
-        if (life < bossStageMaxLife)
-            life++;
     }
 }

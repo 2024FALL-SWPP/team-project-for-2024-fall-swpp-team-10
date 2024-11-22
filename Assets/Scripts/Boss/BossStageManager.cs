@@ -42,9 +42,6 @@ public class BossStageManager : MonoBehaviour
             {
                 Debug.Log("BossStageManager: Setting maxLife to 5.");
                 GameManager.inst.ResetStats();
-                GameManager.inst.maxLife = 5;
-                Debug.Log($"BossStageManager: maxLife is now {GameManager.inst.maxLife}.");
-
                 // life를 maxLife로 설정
                 int initialLife = GameManager.inst.GetLife();
                 Debug.Log($"BossStageManager: Initial life before AddLife() - {initialLife}");
@@ -78,7 +75,7 @@ public class BossStageManager : MonoBehaviour
         // life를 bossStageMaxLife로 설정
         while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
-            GameManager.inst.AddLife2();
+            GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
         musicManager.ChangeSpeed(1.25f);
 
