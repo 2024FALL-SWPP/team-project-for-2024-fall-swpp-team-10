@@ -25,8 +25,9 @@ public class BossStageManager : MonoBehaviour
     private int bossMaxLife = 3;
     private int currentPhase;
     public GameObject pause;
-    public Camera mainCamera; 
-
+    public Camera mainCamera;
+    public AudioClip heartDeactivateSound; // 효과음
+    public float soundVolume = 0.7f; // 효과음 볼륨
 
 
     /*void OnEnable()
@@ -77,15 +78,18 @@ public class BossStageManager : MonoBehaviour
     private void Update()
     {
         scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver && !isGameClear)
         {
             Pause();
         }
 
-        for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
-            hearts[i].SetActive(i < GameManager.inst.GetLife());
+        if (!isGameClear)
+        {
+            for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
+                hearts[i].SetActive(i < GameManager.inst.GetLife());
+        }
 
-        if (GameManager.inst.GetLife() <= 0)
+        if (GameManager.inst.GetLife() <= 0 && !isGameOver)
         {
             Time.timeScale = 0;
             gameOver.SetActive(true);
@@ -93,11 +97,15 @@ public class BossStageManager : MonoBehaviour
             if (musicManager != null)
             {
                 musicManager.StopMusic();
+                musicManager.PlayGameOverMusic();
+
             }
         }
+
         // End condition
-        if (!bossScript2.IsDead() && GetBossLife() <= 0)
+        if (!bossScript2.IsDead() && GetBossLife() <= 0 && !isGameClear)
         {
+            isGameClear = true;
             StartCoroutine(HandleBossDeath());
 
         }
@@ -126,36 +134,72 @@ public class BossStageManager : MonoBehaviour
 
     private IEnumerator HandleBossDeath()
     {
-        Time.timeScale = 0.5f;
+        // 1. 슬로우 모션 적용
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-        // 1. ���� �ִϸ��̼� ����
-        bossScript2.BossDeath();
-
-        // 2. ī�޶� ���� ������ ��ȸ
-        yield return StartCoroutine(cameraScript.OrbitAroundBoss());
-
-        // 3. Fire �±� ������Ʈ ��Ȱ��ȭ
-        GameObject[] fireObjects = GameObject.FindGameObjectsWithTag("Fire");
-        foreach (GameObject fireObject in fireObjects)
+        // 2. "Obstacle" 태그 오브젝트 비활성화
+        GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in obstacleObjects)
         {
-            fireObject.SetActive(false);
+            obstacle.SetActive(false);
         }
 
-        // 4. �÷��̾ ���ڸ����� �� ���� ȸ��
-        yield return StartCoroutine(playerScript.SpinInPlace());
-        // 5. ���� �� ���� �ӵ� ����
-        yield return new WaitForSecondsRealtime(2f);
+        // 3. 보스의 죽음 애니메이션 실행
+        bossScript2.BossDeath();
+
+        // 4. 카메라가 보스 주위를 순회
+        yield return StartCoroutine(cameraScript.OrbitAroundBoss());
+
+        // 5. 플레이어가 제자리에서 한 바퀴 회전
         Time.timeScale = 1f;
-        /*if (musicManager != null)
-        {
-            musicManager.PlayVictoryMusic(); // �¸� ����
-        }*/
-        gameClear.SetActive(true);
-        isGameClear = true;
+        Time.fixedDeltaTime = 0.02f;
+        yield return StartCoroutine(playerScript.SpinInPlace());
+
+        // 6. 연출 후 카메라 원상복구+점수 추가
+        cameraScript.ResetCamera(); // 카메라를 원래 상태로 복구
+        AddScoreBasedOnLives();
+        // 디버그 출력
+        // 7. 승리 음악 재생
         if (musicManager != null)
         {
             musicManager.StopMusic();
+            musicManager.PlayVictoryMusic();
         }
+        gameClear.SetActive(true);
+        isGameClear = true;
+       
+    }
+
+    public void AddScoreBasedOnLives()
+    {
+        StartCoroutine(DeactivateLivesAndAddScore());
+    }
+
+    private IEnumerator DeactivateLivesAndAddScore()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (hearts[i].activeSelf) // 활성화된 Life만 처리
+            {
+                // Life 비활성화
+                hearts[i].SetActive(false);
+                // 점수 추가
+                GameManager.inst.AddScore(1000);
+                // 효과음 재생
+                if (heartDeactivateSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(heartDeactivateSound, mainCamera.transform.position, soundVolume);
+                }
+                // 0.5초 대기 후 다음 Life 처리
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+    }
+    private IEnumerator WaitBeforeNextLife()
+    {
+        yield return new WaitForSeconds(0.5f); // 0.5초 대기
+        AddScoreBasedOnLives(); // 다음 Life 처리
     }
 
     public int GetBossLife()

@@ -2776,12 +2776,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687f7a3ccfce75b49bb79ea1b4385f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1431771570}
   offset: {x: 0, y: 3, z: -5}
   followSpeed: 10
   pitch: 30
   bossTransform: {fileID: 1163737299}
   orbitDuration: 3
+  characters:
+  - {fileID: 1424859023}
+  - {fileID: 1924334493}
+  - {fileID: 922855648}
+  - {fileID: 1431771568}
+  - {fileID: 1283838795}
 --- !u!114 &659597872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5419,6 +5424,8 @@ MonoBehaviour:
   - {fileID: 1894462152}
   pause: {fileID: 1617246193}
   mainCamera: {fileID: 659597869}
+  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  soundVolume: 0.7
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6106,6 +6113,8 @@ MonoBehaviour:
   musicVolume: 0.099
   loop: 0
   pitch: 1
+  GameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
+  VictoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
 --- !u!1 &1677628843
 GameObject:
   m_ObjectHideFlags: 0

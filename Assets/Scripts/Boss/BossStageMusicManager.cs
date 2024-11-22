@@ -6,11 +6,15 @@ public class BossStageMusicManager : MusicManager
 {
     private GameObject[] fires;
     private AudioSource[] fireAudioSources;
+    [SerializeField] public AudioClip GameOverMusic;
+    [SerializeField] public AudioClip VictoryMusic;
 
     protected override void Awake()
     {
         // 부모 클래스(MusicManager)의 Awake 실행
         base.Awake();
+
+        base.audioSource.loop = true;
 
         // 보스 스테이지 전용 초기화 작업
         fires = GameObject.FindGameObjectsWithTag("Fire");
@@ -56,6 +60,18 @@ public class BossStageMusicManager : MusicManager
                 fireAudioSources[i]?.UnPause();
             }
         }
+    }
+    public void PlayGameOverMusic()
+    {
+        base.audioSource.clip = GameOverMusic;
+        base.audioSource.loop = false;
+        base.PlayMusic();
+    }
+    public void PlayVictoryMusic()
+    {
+        base.audioSource.clip = VictoryMusic;
+        base.audioSource.loop = false;
+        base.PlayMusic();
     }
 
 }
