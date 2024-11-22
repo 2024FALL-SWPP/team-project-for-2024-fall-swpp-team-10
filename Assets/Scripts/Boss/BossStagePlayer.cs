@@ -6,6 +6,7 @@ public class BossStagePlayer : MonoBehaviour
     [Header("Movement Settings")]
     public float speed = 10f;
     public float rotationSpeed = 5f; // 회전 보간 속도
+    private bool isSpinning = false;
 
     [Header("Movement Constraints")]
     public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
@@ -14,7 +15,6 @@ public class BossStagePlayer : MonoBehaviour
 
     [Header("Boss Settings")]
     public Transform bossTransform;
-
     private Rigidbody rb;
     private const float initialPitch = 20f;
     private Quaternion lastRotation;
@@ -78,8 +78,11 @@ public class BossStagePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        RotatePlayer();
+        if (!isSpinning)
+        {
+            MovePlayer();
+            RotatePlayer();
+        }
     }
 
     private void Update()
@@ -291,5 +294,28 @@ public class BossStagePlayer : MonoBehaviour
                 childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
             }
         }
+    }
+
+    public IEnumerator SpinInPlace()
+    {
+        isSpinning = true;
+        float elapsed = 0f;
+        float spinDuration = 2f; // 한 바퀴 도는 데 걸리는 시간
+
+        Quaternion initialRotation = transform.rotation;
+
+        while (elapsed < spinDuration)
+        {
+            float angle = (elapsed / spinDuration) * 360f; // 360도 회전
+            Quaternion targetRotation = Quaternion.Euler(0, angle, 0) * initialRotation;
+
+            rb.MoveRotation(targetRotation);
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        rb.MoveRotation(initialRotation);
+        isSpinning = false;
     }
 }

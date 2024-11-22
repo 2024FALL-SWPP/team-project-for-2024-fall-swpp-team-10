@@ -12,14 +12,21 @@ public class BossStageManager : MonoBehaviour
     public GameObject score;
     private TextMeshProUGUI scoreText;
     public GameObject gameOver;
+    public GameObject gameClear;
+    public BossStageCamera cameraScript; // BossStageCamera ��ũ��Ʈ ����
+    public BossStagePlayer playerScript; // BossStagePlayer ��ũ��Ʈ ����
     public BossAttackPattern bossScript; // BossAttackPattern 스크립트
+    public BossControl bossScript2; // BossAttackPattern ��ũ��Ʈ
     private bool isGameOver = false;
+    private bool isGameClear = false;
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
     private BossStageMusicManager musicManager;
     private int bossMaxLife = 3;
     private int currentPhase;
     public GameObject pause;
+    public Camera mainCamera; 
+
 
 
     /*void OnEnable()
@@ -69,7 +76,7 @@ public class BossStageManager : MonoBehaviour
 
     private void Update()
     {
-        //scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
+        scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
             Pause();
@@ -87,6 +94,12 @@ public class BossStageManager : MonoBehaviour
             {
                 musicManager.StopMusic();
             }
+        }
+        // End condition
+        if (!bossScript2.IsDead() && GetBossLife() <= 0)
+        {
+            StartCoroutine(HandleBossDeath());
+
         }
     }
 
@@ -109,6 +122,40 @@ public class BossStageManager : MonoBehaviour
             musicManager.ResumeMusic();
         }
         EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private IEnumerator HandleBossDeath()
+    {
+        Time.timeScale = 0.5f;
+
+        // 1. ���� �ִϸ��̼� ����
+        bossScript2.BossDeath();
+
+        // 2. ī�޶� ���� ������ ��ȸ
+        yield return StartCoroutine(cameraScript.OrbitAroundBoss());
+
+        // 3. Fire �±� ������Ʈ ��Ȱ��ȭ
+        GameObject[] fireObjects = GameObject.FindGameObjectsWithTag("Fire");
+        foreach (GameObject fireObject in fireObjects)
+        {
+            fireObject.SetActive(false);
+        }
+
+        // 4. �÷��̾ ���ڸ����� �� ���� ȸ��
+        yield return StartCoroutine(playerScript.SpinInPlace());
+        // 5. ���� �� ���� �ӵ� ����
+        yield return new WaitForSecondsRealtime(2f);
+        Time.timeScale = 1f;
+        /*if (musicManager != null)
+        {
+            musicManager.PlayVictoryMusic(); // �¸� ����
+        }*/
+        gameClear.SetActive(true);
+        isGameClear = true;
+        if (musicManager != null)
+        {
+            musicManager.StopMusic();
+        }
     }
 
     public int GetBossLife()

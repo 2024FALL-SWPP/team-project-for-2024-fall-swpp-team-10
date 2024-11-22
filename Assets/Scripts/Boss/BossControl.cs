@@ -450,4 +450,8 @@ public class BossControl : MonoBehaviour
     //        if (child.gameObject.CompareTag("WeakSpot"))
     //            if (TransformWeakSpot(child.gameObject)) return;
     //}
+    public bool IsDead() 
+    {
+        return bossDead;
+    }
 }
