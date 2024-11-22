@@ -32,7 +32,7 @@ public class ObjectManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
-            if (transform.position.z > 10)
+            if (transform.position.z > 98)
                 Destroy(gameObject);
         }
     }

@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     [Header("Projectile Settings")]
-    public float projectileSpeed = 10.0f;
+    private float projectileSpeed = 30.0f;
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
     private bool hasTripleShot = false;  // Flag for triple shot power-up
@@ -27,15 +27,13 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
     private float invincibleLength; // 무적 지속 시간
     private bool isInvincible = false; // 무적 지속중인지 확인
-    private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
-    private GameObject magnetEffect; // 자석 아이템 적용 시 UI
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
     public GameObject rightLightstickPrefab;  // Assign in inspector
     public float lightstickOffset = 1.0f;
-    public float lightStickDuration = 10.0f;
+    public float lightStickDuration = 5.0f;
     private float powerUpEndTime; // Track when the power-up should end
     private Coroutine tripleShotCoroutine;
 
@@ -58,7 +56,7 @@ public class PlayerControl : MonoBehaviour
         SyncCenterPosition();
 
         childRenderers = GetComponentsInChildren<Renderer>();
-        
+
         int maxSharedMaterialsLength = 0;
         for (int i = 0; i < childRenderers.Length; i++)
         {
@@ -78,8 +76,6 @@ public class PlayerControl : MonoBehaviour
         if (GameManager.inst.originColorSave == null)
             GameManager.inst.originColorSave = originColors;
 
-        magnetEffect = GameObject.FindWithTag("MagnetEffect");
-
         // Initialize lightsticks in disabled state
         if (leftLightstickPrefab != null)
             leftLightstickPrefab.SetActive(false);
@@ -93,32 +89,32 @@ public class PlayerControl : MonoBehaviour
         if (!isMoving)
         {
             // Handle left movement
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && currentGridPosition.x > 0)
+            if (Input.GetKeyDown(KeyCode.A) && currentGridPosition.x > 0)
             {
                 currentGridPosition.x--;
                 StartCoroutine(SmoothMove());
             }
             // Handle right movement
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && currentGridPosition.x < gridSize.x - 1)
+            else if (Input.GetKeyDown(KeyCode.D) && currentGridPosition.x < gridSize.x - 1)
             {
                 currentGridPosition.x++;
                 StartCoroutine(SmoothMove());
             }
             // Handle up movement
-            else if (Input.GetKeyDown(KeyCode.UpArrow) && currentGridPosition.y < gridSize.y - 1)
+            else if (Input.GetKeyDown(KeyCode.W) && currentGridPosition.y < gridSize.y - 1)
             {
                 currentGridPosition.y++;
                 StartCoroutine(SmoothMove());
             }
             // Handle down movement
-            else if (Input.GetKeyDown(KeyCode.DownArrow) && currentGridPosition.y > 0)
+            else if (Input.GetKeyDown(KeyCode.S) && currentGridPosition.y > 0)
             {
                 currentGridPosition.y--;
                 StartCoroutine(SmoothMove());
             }
         }
         // Fire Laser
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             FireLaser();
         }
@@ -134,8 +130,6 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-
-        magnetEffect.SetActive(isMagnet);
 
         damagedParticle.transform.position = centerPosition;
         hitOnInvincibleParticle.transform.position = centerPosition;
@@ -329,26 +323,37 @@ public class PlayerControl : MonoBehaviour
     // 자석 아이템 효과
     IEnumerator Magnet()
     {
-        float coinSpeed = 40f;
-        float distance = 1.4f;
-        magnetDuration = 5f;
+        float coinSpeed = 50f;
 
         if (isMagnet)
             yield break;
 
         isMagnet = true;
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
 
-        while (magnetDuration > 0)
+        while (true)
         {
-            magnetDuration -= Time.deltaTime;
-            GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+            // 모든 GameObject가 null인지 확인
+            bool allDestroyed = true;
+            foreach (GameObject coin in coins)
+            {
+                if (coin != null) // 아직 Destroy되지 않은 객체가 있다면
+                {
+                    allDestroyed = false;
+                    break;
+                }
+            }
+
+            if (allDestroyed)
+            {
+                break;
+            }
 
             foreach (GameObject coin in coins)
             {
-                if (coin != null)
+                if (coin != null && coin.transform.position.z - transform.position.z < 80)
                 {
-                    if (Vector3.Distance(coin.transform.position, centerPosition) < distance)
-                        coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
+                    coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
                 }
             }
 
@@ -376,7 +381,7 @@ public class PlayerControl : MonoBehaviour
                 GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
             }
-            
+
             if (enemyCollisionSound != null)
             {
                 AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
-    public float projectileDurationTime = 2f;
+    private float projectileDurationTime = 0.8f;
     private TrailRenderer trail;
 
     [Header("Trail Settings")]
