@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeteoriteControl : MonoBehaviour
 {
     public GameObject explosionPrefab;
-    private Vector3 offset = new Vector3(0, 1f, 2f);
+    private Vector3 offset = new Vector3(0, -1f, 2f);
 
     void Awake() 
     {

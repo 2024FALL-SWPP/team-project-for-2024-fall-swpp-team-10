@@ -16,7 +16,7 @@ public class BossStageManager : MonoBehaviour
     private bool isGameOver = false;
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
-    private MusicManager musicManager;
+    private BossStageMusicManager musicManager;
     public GameObject pause;
 
 
@@ -71,7 +71,7 @@ public class BossStageManager : MonoBehaviour
     void Awake()
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
-        musicManager = FindObjectOfType<MusicManager>();
+        musicManager = FindObjectOfType<BossStageMusicManager>();
     }
     void Start()
     {
@@ -80,14 +80,14 @@ public class BossStageManager : MonoBehaviour
         {
             GameManager.inst.AddLife2();
         }
-        
+        musicManager.ChangeSpeed(1.25f);
 
-        
+
+
 
     }
     private void Update()
     {
-        musicManager.ChangeSpeed(1.25f);
         //scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {

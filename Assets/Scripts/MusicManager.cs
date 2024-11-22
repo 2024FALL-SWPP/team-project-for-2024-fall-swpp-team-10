@@ -8,11 +8,10 @@ public class MusicManager : MonoBehaviour
     [SerializeField] public bool loop = false;
     [SerializeField] public float pitch = 1f;
 
-    private AudioSource audioSource;
-    private GameObject[] fires;
-    private AudioSource[] fireAudioSources;
+    protected AudioSource audioSource;
 
-    private void Awake()
+
+    protected virtual void Awake()
     {
         // Setup audio source
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -22,15 +21,6 @@ public class MusicManager : MonoBehaviour
         audioSource.pitch = pitch;
         PlayMusic();
 
-        fires = GameObject.FindGameObjectsWithTag("Fire");
-        if (fires != null)
-        {
-            fireAudioSources = new AudioSource[fires.Length];
-            for (int i = 0; i < fires.Length; i++)
-            {
-                fireAudioSources[i] = fires[i].GetComponent<AudioSource>();
-            }
-        }
     }
 
     public void PlayMusic()
@@ -63,13 +53,7 @@ public class MusicManager : MonoBehaviour
         {
             audioSource.Pause();
         }
-        if (fires != null)
-        {
-            for (int i = 0; i < fires.Length; i++)
-            {
-                fireAudioSources[i].Pause();
-            }
-        }
+
     }
 
     public void ResumeMusic()
@@ -78,13 +62,7 @@ public class MusicManager : MonoBehaviour
         {
             audioSource.UnPause();
         }
-        if (fires != null)
-        {
-            for (int i = 0; i < fires.Length; i++)
-            {
-                fireAudioSources[i].UnPause();
-            }
-        }
+
     }
 
     public void ChangeSpeed( float v)
