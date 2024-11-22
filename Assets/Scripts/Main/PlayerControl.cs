@@ -323,7 +323,7 @@ public class PlayerControl : MonoBehaviour
     // 자석 아이템 효과
     IEnumerator Magnet()
     {
-        float coinSpeed = 10f;
+        float coinSpeed = 50f;
 
         if (isMagnet)
             yield break;
@@ -351,7 +351,7 @@ public class PlayerControl : MonoBehaviour
 
             foreach (GameObject coin in coins)
             {
-                if (coin != null)
+                if (coin != null && coin.transform.position.z - transform.position.z < 80)
                 {
                     coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
                 }
