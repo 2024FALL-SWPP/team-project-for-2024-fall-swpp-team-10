@@ -75,30 +75,15 @@ public class BossStageManager : MonoBehaviour
     }
     void Start()
     {
-
-        Debug.Log("BossStageManager: Start called.");
-        if (SceneManager.GetActiveScene().name == "BossStage1Scene")
+        // life를 bossStageMaxLife로 설정
+        while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
-            if (GameManager.inst != null)
-            {
-                GameManager.inst.maxLife = 5;
+            GameManager.inst.AddLife2();
+        }
+        
 
-                // life를 maxLife로 설정
-                int initialLife = GameManager.inst.GetLife();
-                while (GameManager.inst.GetLife() < GameManager.inst.maxLife)
-                {
-                    GameManager.inst.AddLife();
-                }
-            }
-            else
-            {
-                Debug.LogWarning("BossStageManager: GameManager.inst is null in Start.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"BossStageManager: Current scene is {SceneManager.GetActiveScene().name}, expected BossStage1Scene.");
-        }
+        
+
     }
     private void Update()
     {
@@ -108,11 +93,11 @@ public class BossStageManager : MonoBehaviour
         {
             Pause();
         }
-        for (int i = 0; i < GameManager.inst.maxLife; i++)
+        for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
             hearts[i].SetActive(i < GameManager.inst.GetLife());
 
-        for (int i = 0; i < 3; i++)
-            Darkhearts[i].SetActive(i < 3- bossScript.GetCurrentPhase());
+        for (int i = 0; i < bossScript.GetTotalPhaseCount(); i++)
+            Darkhearts[i].SetActive(i < bossScript.GetTotalPhaseCount() - bossScript.GetCurrentPhase());
 
         if (GameManager.inst.GetLife() <= 0)
         {

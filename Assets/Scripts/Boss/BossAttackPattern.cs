@@ -345,4 +345,8 @@ public class BossAttackPattern : MonoBehaviour
     {
         return bossHealth;
     }
+    public float GetTotalPhaseCount() 
+    {
+        return attackPatternsPerPhase.Count;
+    }
 }
