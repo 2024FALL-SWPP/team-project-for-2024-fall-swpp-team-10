@@ -27,7 +27,6 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
     private float invincibleLength; // 무적 지속 시간
     private bool isInvincible = false; // 무적 지속중인지 확인
-    private float magnetDuration; // 자석 지속 시간
     private bool isMagnet = false; // 자석 지속중인지 확인
 
     [Header("Lightstick Settings")]
@@ -90,32 +89,32 @@ public class PlayerControl : MonoBehaviour
         if (!isMoving)
         {
             // Handle left movement
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && currentGridPosition.x > 0)
+            if (Input.GetKeyDown(KeyCode.A) && currentGridPosition.x > 0)
             {
                 currentGridPosition.x--;
                 StartCoroutine(SmoothMove());
             }
             // Handle right movement
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && currentGridPosition.x < gridSize.x - 1)
+            else if (Input.GetKeyDown(KeyCode.D) && currentGridPosition.x < gridSize.x - 1)
             {
                 currentGridPosition.x++;
                 StartCoroutine(SmoothMove());
             }
             // Handle up movement
-            else if (Input.GetKeyDown(KeyCode.UpArrow) && currentGridPosition.y < gridSize.y - 1)
+            else if (Input.GetKeyDown(KeyCode.W) && currentGridPosition.y < gridSize.y - 1)
             {
                 currentGridPosition.y++;
                 StartCoroutine(SmoothMove());
             }
             // Handle down movement
-            else if (Input.GetKeyDown(KeyCode.DownArrow) && currentGridPosition.y > 0)
+            else if (Input.GetKeyDown(KeyCode.S) && currentGridPosition.y > 0)
             {
                 currentGridPosition.y--;
                 StartCoroutine(SmoothMove());
             }
         }
         // Fire Laser
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             FireLaser();
         }
@@ -324,7 +323,7 @@ public class PlayerControl : MonoBehaviour
     // 자석 아이템 효과
     IEnumerator Magnet()
     {
-        float coinSpeed = 50f;
+        float coinSpeed = 10f;
 
         if (isMagnet)
             yield break;
