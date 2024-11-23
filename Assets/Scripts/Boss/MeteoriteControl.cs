@@ -5,6 +5,8 @@ using UnityEngine;
 public class MeteoriteControl : MonoBehaviour
 {
     public GameObject explosionPrefab;
+    private Vector3 offset = new Vector3(0, -1f, 2f);
+
     void Awake() 
     {
         // Rigidbody가 없다면 추가하여 물리적으로 떨어지도록 설정
@@ -40,9 +42,14 @@ public class MeteoriteControl : MonoBehaviour
     {
         if (explosionPrefab != null)
         {
-            Vector3 offset = new Vector3(0, 1f, 2.5f);
             GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
             Destroy(explosion, 2f); // 2초 후 제거
         }
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
+        Destroy(explosion, 0.5f); // 0.5초 후 제거
+
     }
 }

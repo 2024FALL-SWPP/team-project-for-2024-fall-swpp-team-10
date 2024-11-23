@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private Character character;
     private int score = 0;
     public Color[,] originColorSave = null;
-
+    public int bossStageMaxLife = 5;
 
     private void Awake()
     {
@@ -117,9 +117,9 @@ public class GameManager : MonoBehaviour
         if (life > 0)
             life--;
     }
-    public void AddLife()
+    public void AddLife(int _maxLife)
     {
-        if (life < maxLife)
+        if (life < _maxLife)
             life++;
     }
 

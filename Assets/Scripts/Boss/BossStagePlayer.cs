@@ -201,12 +201,21 @@ public class BossStagePlayer : MonoBehaviour
             direction = (worldPoint - spawnPosition).normalized;
         }
             
-        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition + Vector3.forward, Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
         if (projectileRb != null)
         {
             projectileRb.velocity = direction * projectileSpeed;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.inst.RemoveLife();
+            Destroy(other.gameObject);
         }
     }
 }
