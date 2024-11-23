@@ -25,7 +25,6 @@ public class MagnetManager : RotatingObject
         {
             transform.localScale = new Vector3(0, 0, 0);
             transform.position = playerControl.centerPosition;
-
         }
     }
 

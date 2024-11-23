@@ -383,7 +383,6 @@ public class PlayerControl : MonoBehaviour
 
         if (other.gameObject.CompareTag("Coin"))
         {
-            GameManager.inst.AddScore(200);
             if (coinCollectSound != null)
             {
                 AudioSource.PlayClipAtPoint(coinCollectSound, centerPosition, coinVolume);

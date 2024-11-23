@@ -21,6 +21,7 @@ public class CoinManager : RotatingObject
         base.OnCollisionEnter(other);
         if (other.gameObject.CompareTag("Player"))
         {
+            GameManager.inst.AddScore(200);
             Destroy(gameObject);
         }
     }
