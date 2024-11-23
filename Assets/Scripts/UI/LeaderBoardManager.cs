@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.IO;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class LeaderBoardManager : MonoBehaviour
 
     private int[] savedRankScore = new int[6]; //저장된 점수
     private string[] savedRankID = new string[6]; //저장된 ID
+
+    [Header("Export")]
+    public string m_Path = @"C:\tmp\";
+    public string m_FilePrefix = "PowerpuffBuns";
+    private string m_FilePath;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -140,4 +147,23 @@ public class LeaderBoardManager : MonoBehaviour
         PlayerPrefs.SetInt(PlayerPrefsScoreKey(5), savedRankScore[4]);
         PlayerPrefs.SetString(PlayerPrefsIDKey(5), savedRankID[4]);
     }
+
+    public void Export()
+    {
+        m_FilePath = m_Path + m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
+        StartCoroutine(SaveScreenJpg(m_FilePath));
+    }
+
+    IEnumerator SaveScreenJpg(string filePath)
+    {
+        yield return new WaitForEndOfFrame();
+
+        Texture2D texture = new Texture2D(Screen.width, Screen.height);
+        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        texture.Apply();
+        byte[] bytes = texture.EncodeToJPG();
+        File.WriteAllBytes(filePath, bytes);
+        DestroyImmediate(texture);
+    }
+
 }

@@ -667,7 +667,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 0.99607843, b: 0.8627451, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 0.7294118, a: 1}
     m_PressedColor: {r: 0.8862745, g: 0.8862745, b: 0.6313726, a: 1}
-    m_SelectedColor: {r: 0.8862745, g: 0.8862745, b: 0.6313726, a: 1}
+    m_SelectedColor: {r: 1, g: 0.99607843, b: 0.8627451, a: 1}
     m_DisabledColor: {r: 0.83137256, g: 0.83137256, b: 0.7490196, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -687,9 +687,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: LoadMainMenu
+      - m_Target: {fileID: 458745287}
+        m_TargetAssemblyTypeName: LeaderBoardManager, Assembly-CSharp
+        m_MethodName: Export
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -796,6 +796,8 @@ MonoBehaviour:
   - {fileID: 599723567}
   - {fileID: 2144080538}
   - {fileID: 1248422455}
+  m_Path: C:\tmp\
+  m_FilePrefix: PowerpuffBuns
 --- !u!1 &520150840
 GameObject:
   m_ObjectHideFlags: 0
