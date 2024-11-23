@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5829996645169184194}
   - component: {fileID: 4289426703656774972}
   - component: {fileID: 9143964412676551499}
-  - component: {fileID: 3973894242724896650}
+  - component: {fileID: -816406397603946295}
   m_Layer: 6
   m_Name: Invincible
   m_TagString: Invincible
@@ -135,7 +135,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.2960825, y: 4.3232093, z: 0.39957228}
   m_Center: {x: -0.01195979, y: 0.39462456, z: -0.0068377773}
---- !u!114 &3973894242724896650
+--- !u!114 &-816406397603946295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +144,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5469819106887244823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02bc3a849ee64b6438ceaf95521a1c16, type: 3}
+  m_Script: {fileID: 11500000, guid: cda07e3981e8e7d47ba2e45d9da38c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 22

@@ -5,10 +5,9 @@ using UnityEngine;
 public class ObjectManager : MonoBehaviour
 {
     protected float speed = 22.0f;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    protected virtual void Awake()
+    {
     }
 
     // Update is called once per frame
@@ -22,5 +21,5 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    public virtual void OnCollisionEnter(Collision other) { }
+    protected virtual void OnCollisionEnter(Collision other) { }
 }

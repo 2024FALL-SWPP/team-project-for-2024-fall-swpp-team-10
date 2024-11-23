@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
     private Vector3 initialPosition; // Initial world position of the player
-    private Vector3 centerPosition; // 캐릭터 중앙 위치 보정
+    public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     [Header("Projectile Settings")]
@@ -27,7 +27,6 @@ public class PlayerControl : MonoBehaviour
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
     private float invincibleLength; // 무적 지속 시간
     private bool isInvincible = false; // 무적 지속중인지 확인
-    private bool isMagnet = false; // 자석 지속중인지 확인
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
@@ -320,48 +319,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    // 자석 아이템 효과
-    IEnumerator Magnet()
-    {
-        float coinSpeed = 50f;
-
-        if (isMagnet)
-            yield break;
-
-        isMagnet = true;
-        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
-
-        while (true)
-        {
-            // 모든 GameObject가 null인지 확인
-            bool allDestroyed = true;
-            foreach (GameObject coin in coins)
-            {
-                if (coin != null) // 아직 Destroy되지 않은 객체가 있다면
-                {
-                    allDestroyed = false;
-                    break;
-                }
-            }
-
-            if (allDestroyed)
-            {
-                break;
-            }
-
-            foreach (GameObject coin in coins)
-            {
-                if (coin != null && coin.transform.position.z - transform.position.z < 80)
-                {
-                    coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
-                }
-            }
-
-            yield return null;
-        }
-        isMagnet = false;
-    }
-
     void DisableLightsticks()
     {
         if (leftLightstickPrefab != null)
@@ -422,11 +379,6 @@ public class PlayerControl : MonoBehaviour
         if (other.gameObject.CompareTag("Invincible"))
         {
             StartCoroutine(Invincible());
-        }
-
-        if (other.gameObject.CompareTag("Magnet"))
-        {
-            StartCoroutine(Magnet());
         }
 
         if (other.gameObject.CompareTag("Coin"))
