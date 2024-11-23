@@ -18,6 +18,15 @@ public class MainManager : MonoBehaviour
 
     private bool isGameOver = false;
     private MusicManager musicManager;
+
+    // Stage End Condition Variables
+    [Header("Stage End Condition Settings")]
+    [SerializeField] float stageDuration = 3.0f; // Length of the main stage
+    private float currentStageTime = 0f;
+    private bool isStageComplete = false;
+    private StageTransitionManager transitionManager;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,6 +34,8 @@ public class MainManager : MonoBehaviour
         scoreText = score.GetComponent<TextMeshProUGUI>();
         // DontDestroyOnLoad(gameObject);
         musicManager = FindObjectOfType<MusicManager>();
+        currentStageTime = 0f;
+        transitionManager = FindObjectOfType<StageTransitionManager>();
     }
 
     // Update is called once per frame
@@ -50,6 +61,35 @@ public class MainManager : MonoBehaviour
                 musicManager.StopMusic();
             }
         }
+
+        if (!isStageComplete)
+        {
+            currentStageTime += Time.deltaTime;
+            // Check if stage duration is complete
+            if (currentStageTime >= stageDuration)
+            {
+                StartCoroutine(CompleteStage());
+            }
+        }
+    }
+
+    private IEnumerator CompleteStage()
+    {
+        isStageComplete = true;
+
+        if (musicManager != null)
+        {
+            musicManager.PauseMusic();
+        }
+
+        // Freeze the game
+        Time.timeScale = 0f;
+
+        // Start the transition sequence
+        if (transitionManager != null)
+        {
+            yield return StartCoroutine(transitionManager.StartStageTransition());
+        }
     }
 
     private void OnEnable()
@@ -59,8 +99,11 @@ public class MainManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        characters[(int)GameManager.inst.GetCharacter()].SetActive(true);
-        characterUI[(int)GameManager.inst.GetCharacter()].SetActive(true);
+        int characterIndex = (int)GameManager.inst.GetCharacter();
+        characters[characterIndex].SetActive(true);
+        characterUI[characterIndex].SetActive(true);
+        GameObject activeCharacter = characters[characterIndex];
+        transitionManager.SetCurrentCharacter(activeCharacter);
         Time.timeScale = 1;
         GameManager.inst.ResetStats();
         isGameOver = false;

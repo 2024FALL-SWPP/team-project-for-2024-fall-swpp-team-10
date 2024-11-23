@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainStage" + stage + "Scene");
     }
 
+    public void LoadBossStage()
+    {
+        SceneManager.LoadScene("BossStage" + stage + "Scene");
+    }
+
     public void LoadLeaderboard()
     {
         SceneManager.LoadScene("LeaderBoardScene");
