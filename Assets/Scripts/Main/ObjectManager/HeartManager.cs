@@ -21,6 +21,7 @@ public class HeartManager : RotatingObject
         base.OnCollisionEnter(other);
         if (other.gameObject.CompareTag("Player"))
         {
+            GameManager.inst.AddLife(GameManager.inst.maxLife);
             Destroy(gameObject);
         }
     }

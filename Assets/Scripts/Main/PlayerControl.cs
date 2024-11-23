@@ -371,11 +371,6 @@ public class PlayerControl : MonoBehaviour
             StartCoroutine(Blink());
         }
 
-        if (other.gameObject.CompareTag("Heart"))
-        {
-            GameManager.inst.AddLife(GameManager.inst.maxLife);
-        }
-
         if (other.gameObject.CompareTag("Invincible"))
         {
             StartCoroutine(Invincible());
