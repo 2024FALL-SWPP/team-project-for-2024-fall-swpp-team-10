@@ -12,7 +12,7 @@ public class BossStageManager : MonoBehaviour
     public GameObject score;
     private TextMeshProUGUI scoreText;
     public GameObject gameOver;
-    public BossAttackPattern bossScript; // BossAttackPattern ½ºÅ©¸³Æ®
+    public BossAttackPattern bossScript; // BossAttackPattern ï¿½ï¿½Å©ï¿½ï¿½Æ®
     private bool isGameOver = false;
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
@@ -22,47 +22,30 @@ public class BossStageManager : MonoBehaviour
 
     /*void OnEnable()
     {
-        // ¾À ·Îµå ¿Ï·á ÀÌº¥Æ®¿¡ µî·Ï
+        // ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ï·ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½
         SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log("BossStageManager: Subscribed to sceneLoaded.");
     }
 
     void OnDisable()
     {
-        // ¾À ·Îµå ¿Ï·á ÀÌº¥Æ®¿¡¼­ ÇØÁ¦
+        // ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ï·ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         SceneManager.sceneLoaded -= OnSceneLoaded;
         Debug.Log("BossStageManager: Unsubscribed from sceneLoaded.");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "BossStage1Scene") // BossStage1Scene È®ÀÎ
+        GameManager.inst.ResetStats();
+        while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
-            if (GameManager.inst != null)
-            {
-                Debug.Log("BossStageManager: Setting maxLife to 5.");
-                GameManager.inst.ResetStats();
-                // life¸¦ maxLife·Î ¼³Á¤
-                int initialLife = GameManager.inst.GetLife();
-                Debug.Log($"BossStageManager: Initial life before AddLife() - {initialLife}");
-                while (GameManager.inst.GetLife() < GameManager.inst.maxLife)
-                {
-                    GameManager.inst.AddLife();
-                    Debug.Log($"BossStageManager: Life increased to {GameManager.inst.GetLife()}.");
-                }
-
-                Debug.Log($"BossStageManager: Final life is {GameManager.inst.GetLife()}.");
-            }
-            else
-            {
-                Debug.LogWarning("BossStageManager: GameManager.inst is null.");
-            }
-            characters[(int)GameManager.inst.GetCharacter()].SetActive(true);
-            characterUI[(int)GameManager.inst.GetCharacter()].SetActive(true);
-            Time.timeScale = 1;
-            isGameOver = false;
-
+            GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
+
+        characters[(int)GameManager.inst.GetCharacter()].SetActive(true);
+        characterUI[(int)GameManager.inst.GetCharacter()].SetActive(true);
+        Time.timeScale = 1;
+        isGameOver = false;
     }*/
 
     void Awake()
@@ -70,19 +53,17 @@ public class BossStageManager : MonoBehaviour
         scoreText = score.GetComponent<TextMeshProUGUI>();
         musicManager = FindObjectOfType<BossStageMusicManager>();
     }
+
     void Start()
     {
-        // life¸¦ bossStageMaxLife·Î ¼³Á¤
+        // lifeï¿½ï¿½ bossStageMaxLifeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
         musicManager.ChangeSpeed(1.25f);
-
-
-
-
     }
+
     private void Update()
     {
         //scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
@@ -107,6 +88,7 @@ public class BossStageManager : MonoBehaviour
             }
         }
     }
+
     public void Pause()
     {
         pause.SetActive(true);
