@@ -34,8 +34,10 @@ public class BossAttackPattern : MonoBehaviour
 
     void Start()
     {
+        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
         areaMin -= offset;
         areaMax += offset;
+        
         // �׸��� �� ���� �� �ʱ�ȭ
         InitializeGrid();
 
@@ -43,7 +45,6 @@ public class BossAttackPattern : MonoBehaviour
         InitializeAttackPatterns();
 
         // ���� ������ ����
-        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
         StartCoroutine(AttackSequence());
     }
 
@@ -152,6 +153,11 @@ public class BossAttackPattern : MonoBehaviour
 
 
         attackPatternsPerPhase.Add(phase3Patterns);
+
+        if (attackPatternsPerPhase.Count != bossStageManager.GetBossMaxLife())
+        {
+            Debug.LogWarning("Count of attack patterns per phase must be equal to boss max life!");
+        }
     }
 
     // ���� ������ ����
@@ -297,10 +303,5 @@ public class BossAttackPattern : MonoBehaviour
         meteorite.transform.localScale = Vector3.one * meteoriteSize;
 
         yield return null;
-    }
-    
-    public int GetTotalPhaseCount() 
-    {
-        return attackPatternsPerPhase.Count;
     }
 }

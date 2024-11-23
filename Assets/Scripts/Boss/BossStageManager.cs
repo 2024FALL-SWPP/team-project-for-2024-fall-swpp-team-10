@@ -17,6 +17,7 @@ public class BossStageManager : MonoBehaviour
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
     private BossStageMusicManager musicManager;
+    private int bossMaxLife = 3;
     private int bossLife;
     private int currentPhase;
     public GameObject pause;
@@ -59,7 +60,7 @@ public class BossStageManager : MonoBehaviour
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
         musicManager = FindObjectOfType<BossStageMusicManager>();
-        bossLife = bossScript.GetTotalPhaseCount();
+        bossLife = bossMaxLife;
         currentPhase = 0;
     }
 
@@ -122,6 +123,11 @@ public class BossStageManager : MonoBehaviour
         return bossLife;
     }
 
+    public int GetBossMaxLife()
+    {
+        return bossMaxLife;
+    }
+
     public void DecreaseBossLife()
     {
         bossLife -= 1;
@@ -135,7 +141,7 @@ public class BossStageManager : MonoBehaviour
     public void SetPhase(int phase)
     {
         currentPhase = phase;
-        for (int i = 0; i < bossScript.GetTotalPhaseCount(); i++)
+        for (int i = 0; i < bossMaxLife; i++)
             Darkhearts[i].SetActive(i < bossLife);
     }
 }
