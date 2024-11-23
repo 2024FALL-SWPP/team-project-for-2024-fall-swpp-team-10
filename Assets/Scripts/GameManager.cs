@@ -117,9 +117,9 @@ public class GameManager : MonoBehaviour
         if (life > 0)
             life--;
     }
-    public void AddLife(int MaxLife)
+    public void AddLife(int _maxLife)
     {
-        if (life < MaxLife)
+        if (life < _maxLife)
             life++;
     }
 
