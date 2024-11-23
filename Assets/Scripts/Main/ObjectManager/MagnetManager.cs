@@ -5,7 +5,7 @@ using UnityEngine;
 public class MagnetManager : RotatingObject
 {
     private GameObject player;
-    protected PlayerControl playerControl;
+    private PlayerControl playerControl;
     private bool isMagnet = false; // 자석 지속중인지 확인
 
     // Start is called before the first frame update

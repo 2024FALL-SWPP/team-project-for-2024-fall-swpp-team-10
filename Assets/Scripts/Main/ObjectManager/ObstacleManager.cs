@@ -15,4 +15,17 @@ public class ObstacleManager : DamagingObject
     {
         base.Update();
     }
+
+    protected override void OnCollisionEnter(Collision other)
+    {
+        if (playerControl.isInvincible)
+        {
+            GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
+        }
+        base.OnCollisionEnter(other);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.inst.AddScore(-500);
+        }
+    }
 }

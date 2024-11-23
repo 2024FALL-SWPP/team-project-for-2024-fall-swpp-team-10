@@ -25,8 +25,7 @@ public class PlayerControl : MonoBehaviour
     private Renderer[] childRenderers; //Renderer of characters
     private Color[,] originColors; // Origin color of characters
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
-    private float invincibleLength; // 무적 지속 시간
-    private bool isInvincible = false; // 무적 지속중인지 확인
+    public bool isInvincible = false; // 무적 지속중인지 확인
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
@@ -257,7 +256,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     // 피격 시 깜빡임
-    IEnumerator Blink()
+    public IEnumerator Blink()
     {
         isInvincible = true;
         for (int i = 0; i < blinkCount; i++)
@@ -271,34 +270,8 @@ public class PlayerControl : MonoBehaviour
         isInvincible = false;
     }
 
-    // 무적 아이템 효과
-    IEnumerator Invincible()
-    {
-        invincibleLength = 10f;
-        if (isInvincible)
-            yield break;
-        isInvincible = true;
-        while (invincibleLength > 0)
-        {
-            invincibleLength -= 0.6f;
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.yellow);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.green);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.blue);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.magenta);
-            yield return new WaitForSeconds(0.1f);
-        }
-        ChangeColorOriginal();
-
-        isInvincible = false;
-    }
-
     // 캐릭터 색 전체 변환
-    private void ChangeColor(Color _color)
+    public void ChangeColor(Color _color)
     {
         foreach (Renderer renderer in childRenderers)
         {
@@ -334,8 +307,6 @@ public class PlayerControl : MonoBehaviour
             if (isInvincible)
             {
                 Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                Destroy(other.gameObject);
-                GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
                 return;
             }
 
@@ -345,9 +316,6 @@ public class PlayerControl : MonoBehaviour
             }
 
             Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-            GameManager.inst.RemoveLife();
-            GameManager.inst.AddScore(-1000);
-            StartCoroutine(Blink());
         }
 
         if (other.gameObject.CompareTag("Obstacle"))
@@ -355,8 +323,6 @@ public class PlayerControl : MonoBehaviour
             if (isInvincible)
             {
                 Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                Destroy(other.gameObject);
-                GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
                 return;
             }
 
@@ -366,14 +332,6 @@ public class PlayerControl : MonoBehaviour
             }
 
             Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-            GameManager.inst.RemoveLife();
-            GameManager.inst.AddScore(-500);
-            StartCoroutine(Blink());
-        }
-
-        if (other.gameObject.CompareTag("Invincible"))
-        {
-            StartCoroutine(Invincible());
         }
 
         if (other.gameObject.CompareTag("Coin"))
