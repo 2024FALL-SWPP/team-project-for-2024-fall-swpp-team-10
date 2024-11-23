@@ -31,7 +31,7 @@ public class LeaderBoardManager : MonoBehaviour
     private string[] savedRankID = new string[6]; //저장된 ID
 
     [Header("Export")]
-    private string m_Path = "Assets/Exports/";
+    private string m_Path = "Exports/";
     public string m_FilePrefix = "PowerpuffBuns";
     private string m_FilePath;
 
