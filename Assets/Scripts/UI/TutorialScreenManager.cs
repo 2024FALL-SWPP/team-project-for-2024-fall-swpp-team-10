@@ -10,6 +10,7 @@ public class TutorialScreenManager : MonoBehaviour
     public Button previousButton;
     public Button nextButton;
 
+
     private int currentPage = 0;
     public Sprite[] stageBackgrounds;
     public GameObject background;
@@ -18,11 +19,10 @@ public class TutorialScreenManager : MonoBehaviour
 
     void Start()
     {
-        SetTutorialImages();
-
-        UpdateTutorialPage();
         previousButton.onClick.AddListener(GoToPreviousPage);
         nextButton.onClick.AddListener(GoToNextPage);
+        ShowPage(currentPage);
+        UpdateButtonStates();
     }
 
     private void OnEnable()
@@ -39,42 +39,42 @@ public class TutorialScreenManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void SetTutorialImages()
+    void ShowPage(int pageIndex)
     {
         for (int i = 0; i < tutorialPageGameObjects.Length; i++)
         {
-            // example of tutorial file name: Stage1Tutorial2.png ("second image of Stage 1 Tutorial")
-            string tutorialFilename = "Stage" + GameManager.inst.GetStage() + "Tutorial" + (i + 1);
-            tutorialPageGameObjects[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(tutorialFilename);
+            tutorialPageGameObjects[i].SetActive(i == pageIndex);
         }
-    }
-
-    void UpdateTutorialPage()
-    {
-        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
-        {
-            tutorialPageGameObjects[i].SetActive(i == currentPage);
-        }
-
-        previousButton.interactable = currentPage > 0;
-        nextButton.interactable = currentPage < tutorialPageGameObjects.Length - 1;
+        currentPage = pageIndex;
     }
 
     public void GoToPreviousPage()
     {
         if (currentPage > 0)
         {
-            currentPage--;
-            UpdateTutorialPage();
+            ShowPage(currentPage - 1);
+            UpdateButtonStates();
         }
     }
 
     public void GoToNextPage()
     {
+        Debug.Log("Enetered next page");
         if (currentPage < tutorialPageGameObjects.Length - 1)
         {
-            currentPage++;
-            UpdateTutorialPage();
+            ShowPage(currentPage + 1);
+            UpdateButtonStates();
         }
+    }
+
+    private void UpdateButtonStates()
+    {
+        // Disable previous button on first page
+        if (previousButton != null)
+            previousButton.gameObject.SetActive(currentPage > 0);
+
+        // Disable next button on last page
+        if (nextButton != null)
+            nextButton.gameObject.SetActive(currentPage < tutorialPageGameObjects.Length - 1);
     }
 }
