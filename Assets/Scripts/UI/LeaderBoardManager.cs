@@ -25,11 +25,13 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject[] rankScoreText = new GameObject[5];
     private TextMeshProUGUI[] rankScore = new TextMeshProUGUI[5]; //보이는 점수
 
+    string[] rankExpressions = new string[] { "1st", "2nd", "3rd", "4th", "5th" };
+
     private int[] savedRankScore = new int[6]; //저장된 점수
     private string[] savedRankID = new string[6]; //저장된 ID
 
     [Header("Export")]
-    public string m_Path = @"C:\tmp\";
+    private string m_Path = "Assets/Exports/";
     public string m_FilePrefix = "PowerpuffBuns";
     private string m_FilePath;
 
@@ -67,41 +69,29 @@ public class LeaderBoardManager : MonoBehaviour
 
     private string PlayerPrefsScoreKey(int rank)
     {
-        string[] rankExpressions = new string[] { "1st", "2nd", "3rd", "4th", "5th" };
         return stage + $"_{rankExpressions[rank - 1]}Score";
     }
     private string PlayerPrefsIDKey(int rank)
     {
-        string[] rankExpressions = new string[] { "1st", "2nd", "3rd", "4th", "5th" };
         return stage + $"_{rankExpressions[rank - 1]}ID";
     }
 
     void RemoveRank()
     {
-        PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(1));
-        PlayerPrefs.DeleteKey(PlayerPrefsIDKey(1));
-        PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(2));
-        PlayerPrefs.DeleteKey(PlayerPrefsIDKey(2));
-        PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(3));
-        PlayerPrefs.DeleteKey(PlayerPrefsIDKey(3));
-        PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(4));
-        PlayerPrefs.DeleteKey(PlayerPrefsIDKey(4));
-        PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(5));
-        PlayerPrefs.DeleteKey(PlayerPrefsIDKey(5));
+        for (int i = 1; i <= rankExpressions.Length; i++)
+        {
+            PlayerPrefs.DeleteKey(PlayerPrefsScoreKey(i));
+            PlayerPrefs.DeleteKey(PlayerPrefsIDKey(i));
+        }
     }
 
     void ImportRank()   //랭킹 점수 불러오기
     {
-        savedRankScore[0] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(1));
-        savedRankID[0] = PlayerPrefs.GetString(PlayerPrefsIDKey(1));
-        savedRankScore[1] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(2));
-        savedRankID[1] = PlayerPrefs.GetString(PlayerPrefsIDKey(2));
-        savedRankScore[2] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(3));
-        savedRankID[2] = PlayerPrefs.GetString(PlayerPrefsIDKey(3));
-        savedRankScore[3] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(4));
-        savedRankID[3] = PlayerPrefs.GetString(PlayerPrefsIDKey(4));
-        savedRankScore[4] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(5));
-        savedRankID[4] = PlayerPrefs.GetString(PlayerPrefsIDKey(5));
+        for (int i = 0; i < rankExpressions.Length; i++)
+        {
+            savedRankScore[i] = PlayerPrefs.GetInt(PlayerPrefsScoreKey(i + 1));
+            savedRankID[i] = PlayerPrefs.GetString(PlayerPrefsIDKey(i + 1));
+        }
         myScore.text = GameManager.inst.GetScore().ToString();
         myID.text = GameManager.inst.GetPlayerName();
     }
@@ -136,16 +126,11 @@ public class LeaderBoardManager : MonoBehaviour
 
     void RankSave()   //랭킹 점수 저장
     {
-        PlayerPrefs.SetInt(PlayerPrefsScoreKey(1), savedRankScore[0]);
-        PlayerPrefs.SetString(PlayerPrefsIDKey(1), savedRankID[0]);
-        PlayerPrefs.SetInt(PlayerPrefsScoreKey(2), savedRankScore[1]);
-        PlayerPrefs.SetString(PlayerPrefsIDKey(2), savedRankID[1]);
-        PlayerPrefs.SetInt(PlayerPrefsScoreKey(3), savedRankScore[2]);
-        PlayerPrefs.SetString(PlayerPrefsIDKey(3), savedRankID[2]);
-        PlayerPrefs.SetInt(PlayerPrefsScoreKey(4), savedRankScore[3]);
-        PlayerPrefs.SetString(PlayerPrefsIDKey(4), savedRankID[3]);
-        PlayerPrefs.SetInt(PlayerPrefsScoreKey(5), savedRankScore[4]);
-        PlayerPrefs.SetString(PlayerPrefsIDKey(5), savedRankID[4]);
+        for (int i = 0; i < rankExpressions.Length; i++)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsScoreKey(i + 1), savedRankScore[i]);
+            PlayerPrefs.SetString(PlayerPrefsIDKey(i + 1), savedRankID[i]);
+        }
     }
 
     public void Export()
