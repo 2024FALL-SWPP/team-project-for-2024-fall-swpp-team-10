@@ -7,10 +7,10 @@ public class SpawnObjects : MonoBehaviour
 {
     public GameObject[] objects;
 
-    public float startSpawning = 0f; // 소환 시작 시간
-    public float spawnInterval = 2.0f; // 소환 간격
-    public float reduceGap = 0.01f; // 소환 간격이 줄어드는 간격
-    public float minSpawnInterval = 0.3f; // 최소 소환 간격
+    public float startSpawning; // 소환 시작 시간
+    public float spawnInterval; // 소환 간격
+    public float reduceGap; // 소환 간격이 줄어드는 간격
+    public float minSpawnInterval; // 최소 소환 간격
 
     // Start is called before the first frame update
     void Start()

@@ -454,11 +454,6 @@ public class PlayerControl : MonoBehaviour
 
             Destroy(other.gameObject);
         }
-
-        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) // if it is item or coin
-        {
-            Destroy(other.gameObject);
-        }
     }
 
     IEnumerator TripleShotPowerUpTimer()
