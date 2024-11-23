@@ -21,7 +21,7 @@ public class MagnetManager : RotatingObject
     {
         if (!isMagnet)
             base.Update();
-        else
+        else // 아이템이 파괴되면 coroutine이 시작하지 않기 때문에 플레이어 안에 작게 숨겨두게 변경
         {
             transform.localScale = new Vector3(0, 0, 0);
             transform.position = playerControl.centerPosition;
