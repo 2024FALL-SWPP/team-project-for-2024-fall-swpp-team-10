@@ -9,11 +9,13 @@ public class BossStageCamera : MonoBehaviour
     public float followSpeed = 5f;
     public float pitch = 30f; // 카메라의 X축 기울기 (위쪽으로 약간 더 기울기)
     public Transform bossTransform; // 보스 Transform
-    public float orbitDuration = 3f; // 보스 주위를 순회하는 데 걸리는 시간
+    public float orbitAroundBossDuration = 3f; // 보스 주위를 순회하는 데 걸리는 시간
     private bool isOrbiting = false;
+    public float transitionAroundPlayerSpinDuration = 1f; //플레이어가 회전하는데에 걸리는 시간
     private bool cameraFixed = false;
-    public GameObject[] characters;
+    public GameObject[] characters;  //추후 삭제 예정
     private BossStagePlayer playerScript;
+    public BossStageManager managerScript;
 
     private void Awake() 
     {
@@ -26,6 +28,9 @@ public class BossStageCamera : MonoBehaviour
                 break;
             }
         }
+        /*playerScript = managerScript.characters[(int)GameManager.inst.GetCharacter()].GetComponent<BossStagePlayer>();
+        player = managerScript.characters[(int)GameManager.inst.GetCharacter()].transform;*/
+
     }
     private void LateUpdate()
     {
@@ -63,10 +68,10 @@ public class BossStageCamera : MonoBehaviour
 
         float elapsed = 0f;
 
-        while (elapsed < orbitDuration)
+        while (elapsed < orbitAroundBossDuration)
         {
             // 각도 계산
-            float angle = (elapsed / orbitDuration) * 360f; // 360도 순회
+            float angle = (elapsed / orbitAroundBossDuration) * 360f; // 360도 순회
             Vector3 orbitPosition = bossTransform.position + new Vector3(
                 Mathf.Cos(Mathf.Deg2Rad * angle) *(-8),
                 15,
@@ -94,15 +99,14 @@ public class BossStageCamera : MonoBehaviour
         Quaternion fixedRotation = Quaternion.LookRotation(player.position - fixedPosition);
 
         // 카메라 이동 (부드럽게)
-        float transitionDuration = 1f;
         float elapsed = 0f;
         Vector3 startPos = transform.position;
         Quaternion startRot = transform.rotation;
 
-        while (elapsed < transitionDuration)
+        while (elapsed < transitionAroundPlayerSpinDuration)
         {
-            transform.position = Vector3.Lerp(startPos, fixedPosition, elapsed / transitionDuration);
-            transform.rotation = Quaternion.Slerp(startRot, fixedRotation, elapsed / transitionDuration);
+            transform.position = Vector3.Lerp(startPos, fixedPosition, elapsed / transitionAroundPlayerSpinDuration);
+            transform.rotation = Quaternion.Slerp(startRot, fixedRotation, elapsed / transitionAroundPlayerSpinDuration);
             elapsed += Time.unscaledDeltaTime;
             yield return null;
         }

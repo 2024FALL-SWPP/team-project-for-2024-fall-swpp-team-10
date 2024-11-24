@@ -2780,13 +2780,15 @@ MonoBehaviour:
   followSpeed: 10
   pitch: 30
   bossTransform: {fileID: 1163737299}
-  orbitDuration: 3
+  orbitAroundBossDuration: 3
+  transitionAroundPlayerSpinDuration: 1
   characters:
   - {fileID: 1424859023}
   - {fileID: 1924334493}
   - {fileID: 922855648}
   - {fileID: 1431771568}
   - {fileID: 1283838795}
+  managerScript: {fileID: 1474742877}
 --- !u!114 &659597872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5410,8 +5412,8 @@ MonoBehaviour:
   gameClear: {fileID: 71086760}
   cameraScript: {fileID: 659597871}
   playerScript: {fileID: 1431771574}
-  bossScript: {fileID: 1163737300}
-  bossScript2: {fileID: 1163737305}
+  bossAttackPatternScript: {fileID: 1163737300}
+  bossControlScript: {fileID: 1163737305}
   hearts:
   - {fileID: 490164415}
   - {fileID: 134332179}
@@ -5425,6 +5427,8 @@ MonoBehaviour:
   pause: {fileID: 1617246193}
   mainCamera: {fileID: 659597869}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
+  victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
   soundVolume: 0.7
 --- !u!1001 &1495427503
 PrefabInstance:
@@ -6113,8 +6117,8 @@ MonoBehaviour:
   musicVolume: 0.099
   loop: 0
   pitch: 1
-  GameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
-  VictoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
+  gameOverMusic: {fileID: 0}
+  victoryMusic: {fileID: 0}
 --- !u!1 &1677628843
 GameObject:
   m_ObjectHideFlags: 0

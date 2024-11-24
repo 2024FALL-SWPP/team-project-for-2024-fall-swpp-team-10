@@ -15,8 +15,8 @@ public class BossStageManager : MonoBehaviour
     public GameObject gameClear;
     public BossStageCamera cameraScript; // BossStageCamera ��ũ��Ʈ ����
     public BossStagePlayer playerScript; // BossStagePlayer ��ũ��Ʈ ����
-    public BossAttackPattern bossScript; // BossAttackPattern 스크립트
-    public BossControl bossScript2; // BossAttackPattern ��ũ��Ʈ
+    public BossAttackPattern bossAttackPatternScript; // BossAttackPattern ��ũ��Ʈ
+    public BossControl bossControlScript; // BossAttackPattern ��ũ��Ʈ
     private bool isGameOver = false;
     private bool isGameClear = false;
     public GameObject[] hearts;
@@ -26,7 +26,9 @@ public class BossStageManager : MonoBehaviour
     private int currentPhase;
     public GameObject pause;
     public Camera mainCamera;
-    public AudioClip heartDeactivateSound; // 효과음
+    public AudioClip heartDeactivateSound; // 하트->스코어 전환 효과음
+    public AudioClip gameOverMusic; //게임오버 효과음
+    public AudioClip victoryMusic; //게임클리어 효과음
     public float soundVolume = 0.7f; // 효과음 볼륨
 
 
@@ -97,13 +99,14 @@ public class BossStageManager : MonoBehaviour
             if (musicManager != null)
             {
                 musicManager.StopMusic();
-                musicManager.PlayGameOverMusic();
+                AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
+                //musicManager.PlayGameOverMusic();
 
             }
         }
 
         // End condition
-        if (!bossScript2.IsDead() && GetBossLife() <= 0 && !isGameClear)
+        if (!bossControlScript.IsDead() && GetBossLife() <= 0 && !isGameClear)
         {
             isGameClear = true;
             StartCoroutine(HandleBossDeath());
@@ -146,7 +149,7 @@ public class BossStageManager : MonoBehaviour
         }
 
         // 3. 보스의 죽음 애니메이션 실행
-        bossScript2.BossDeath();
+        bossControlScript.BossDeath();
 
         // 4. 카메라가 보스 주위를 순회
         yield return StartCoroutine(cameraScript.OrbitAroundBoss());
@@ -164,42 +167,16 @@ public class BossStageManager : MonoBehaviour
         if (musicManager != null)
         {
             musicManager.StopMusic();
-            musicManager.PlayVictoryMusic();
+            AudioSource.PlayClipAtPoint(victoryMusic, Camera.main.transform.position, soundVolume);
+            //musicManager.PlayVictoryMusic();
         }
         gameClear.SetActive(true);
         isGameClear = true;
-       
     }
 
     public void AddScoreBasedOnLives()
     {
-        StartCoroutine(DeactivateLivesAndAddScore());
-    }
-
-    private IEnumerator DeactivateLivesAndAddScore()
-    {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if (hearts[i].activeSelf) // 활성화된 Life만 처리
-            {
-                // Life 비활성화
-                hearts[i].SetActive(false);
-                // 점수 추가
-                GameManager.inst.AddScore(1000);
-                // 효과음 재생
-                if (heartDeactivateSound != null)
-                {
-                    AudioSource.PlayClipAtPoint(heartDeactivateSound, mainCamera.transform.position, soundVolume);
-                }
-                // 0.5초 대기 후 다음 Life 처리
-                yield return new WaitForSeconds(0.5f);
-            }
-        }
-    }
-    private IEnumerator WaitBeforeNextLife()
-    {
-        yield return new WaitForSeconds(0.5f); // 0.5초 대기
-        AddScoreBasedOnLives(); // 다음 Life 처리
+        StartCoroutine(GameManager.inst.DeactivateLivesAndAddScore(hearts, heartDeactivateSound, soundVolume));
     }
 
     public int GetBossLife()

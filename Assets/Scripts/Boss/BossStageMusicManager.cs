@@ -6,8 +6,6 @@ public class BossStageMusicManager : MusicManager
 {
     private GameObject[] fires;
     private AudioSource[] fireAudioSources;
-    [SerializeField] public AudioClip GameOverMusic;
-    [SerializeField] public AudioClip VictoryMusic;
 
     protected override void Awake()
     {
@@ -61,17 +59,4 @@ public class BossStageMusicManager : MusicManager
             }
         }
     }
-    public void PlayGameOverMusic()
-    {
-        base.audioSource.clip = GameOverMusic;
-        base.audioSource.loop = false;
-        base.PlayMusic();
-    }
-    public void PlayVictoryMusic()
-    {
-        base.audioSource.clip = VictoryMusic;
-        base.audioSource.loop = false;
-        base.PlayMusic();
-    }
-
 }
