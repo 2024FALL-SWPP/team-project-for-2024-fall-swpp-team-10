@@ -47,6 +47,10 @@ public class BossControl : MonoBehaviour
     int hitCount = 0;   // Number of total hits on weakspot
     BossStageManager bossStageManager;
 
+    [Header("Audio Settings")]
+    [SerializeField] public AudioClip weakSpotSound;
+    [SerializeField][Range(0f, 1f)] public float weakSpotVolume = 0.7f;
+
     // Set up for weak spot generation check
     GameObject[] weakspots = new GameObject[3];
     bool[] isColliding = new bool[3];   // Flag to identify if mesh collider is needed
@@ -393,6 +397,10 @@ public class BossControl : MonoBehaviour
         }
 
         if (status == 3 || status == -1) return;
+        if (weakSpotSound != null)
+        {
+            AudioSource.PlayClipAtPoint(weakSpotSound, gameObject.transform.position, weakSpotVolume);
+        }
         hitCount += 1;
         if (hitCount % 9 == 0)
         {
