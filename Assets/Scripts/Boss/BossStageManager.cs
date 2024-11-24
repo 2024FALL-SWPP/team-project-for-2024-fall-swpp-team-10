@@ -12,7 +12,7 @@ public class BossStageManager : MonoBehaviour
     public GameObject score;
     private TextMeshProUGUI scoreText;
     public GameObject gameOver;
-    public BossAttackPattern bossScript; // BossAttackPattern ��ũ��Ʈ
+    public BossAttackPattern bossScript; // BossAttackPattern 스크립트
     private bool isGameOver = false;
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
@@ -25,14 +25,14 @@ public class BossStageManager : MonoBehaviour
 
     /*void OnEnable()
     {
-        // �� �ε� �Ϸ� �̺�Ʈ�� ���
+        // 씬 로드 완료 이벤트에 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log("BossStageManager: Subscribed to sceneLoaded.");
     }
 
     void OnDisable()
     {
-        // �� �ε� �Ϸ� �̺�Ʈ���� ����
+        // 씬 로드 완료 이벤트에서 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
         Debug.Log("BossStageManager: Unsubscribed from sceneLoaded.");
     }
@@ -50,11 +50,6 @@ public class BossStageManager : MonoBehaviour
         Time.timeScale = 1;
         isGameOver = false;
     }*/
-
-    private void OnLevelWasLoaded(int level)
-    {
-        Time.timeScale = 1;
-    }
 
     void Awake()
     {
@@ -135,6 +130,7 @@ public class BossStageManager : MonoBehaviour
 
     public int GetPhase()
     {
+        Debug.Log(currentPhase);
         return currentPhase;
     }
 

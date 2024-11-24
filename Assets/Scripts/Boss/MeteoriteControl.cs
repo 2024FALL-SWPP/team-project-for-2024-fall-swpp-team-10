@@ -9,7 +9,7 @@ public class MeteoriteControl : MonoBehaviour
 
     void Awake() 
     {
-        // Rigidbody�� ���ٸ� �߰��Ͽ� ���������� ���������� ����
+        // Rigidbody가 없다면 추가하여 물리적으로 떨어지도록 설정
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -20,7 +20,7 @@ public class MeteoriteControl : MonoBehaviour
     }
     void Start()
     {
-        // ��� ���� ���� ������ üũ
+        // 운석이 땅에 닿을 때까지 체크
         StartCoroutine(CheckLanding());
     }
 
@@ -31,10 +31,10 @@ public class MeteoriteControl : MonoBehaviour
             yield return null;
         }
 
-        // ���� ȿ�� ����
+        // 폭발 효과 생성
         TriggerExplosion();
 
-        // � ����
+        // 운석 제거
         Destroy(gameObject);
     }
 
@@ -43,7 +43,7 @@ public class MeteoriteControl : MonoBehaviour
         if (explosionPrefab != null)
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
-            Destroy(explosion, 2f); // 2�� �� ����
+            Destroy(explosion, 2f); // 2초 후 제거
         }
     }
     private void OnCollisionEnter(Collision other)
@@ -51,7 +51,7 @@ public class MeteoriteControl : MonoBehaviour
         if (!other.gameObject.CompareTag("Laser"))
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position + offset, Quaternion.identity);
-            Destroy(explosion, 0.5f); // 0.5�� �� ����
+            Destroy(explosion, 0.5f); // 0.5초  후 제거
         }
     }
 }

@@ -401,8 +401,8 @@ public class BossControl : MonoBehaviour
         {
             Invoke("NewWeakSpots", 0.2f);
             bossStageManager.DecreaseBossLife();
+            bossStageManager.IncrementPhase();
         }
-        bossStageManager.IncrementPhase();
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
 
