@@ -30,7 +30,9 @@ public class BossStageManager : MonoBehaviour
     public AudioClip gameOverMusic; //게임오버 효과음
     public AudioClip victoryMusic; //게임클리어 효과음
     public float soundVolume = 0.7f; // 효과음 볼륨
-
+    private GameObject[] fires;
+    private GameClearLight gameClearLight; // GameClearLight 컴포넌트 참조
+    public Transform player; //추후 삭제 예정
 
     /*void OnEnable()
     {
@@ -65,6 +67,8 @@ public class BossStageManager : MonoBehaviour
         scoreText = score.GetComponent<TextMeshProUGUI>();
         musicManager = FindObjectOfType<BossStageMusicManager>();
         currentPhase = 0;
+        fires = GameObject.FindGameObjectsWithTag("Fire");
+        gameClearLight = GetComponent<GameClearLight>();
     }
 
     void Start()
@@ -100,7 +104,6 @@ public class BossStageManager : MonoBehaviour
             {
                 musicManager.StopMusic();
                 AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
-                //musicManager.PlayGameOverMusic();
 
             }
         }
@@ -154,21 +157,30 @@ public class BossStageManager : MonoBehaviour
         // 4. 카메라가 보스 주위를 순회
         yield return StartCoroutine(cameraScript.OrbitAroundBoss());
 
+        //(Optional)
+        gameClearLight.ActivateLight(player);
+        //gameClearLight.ActivateLight(characters[(int)GameManager.inst.GetCharacter()].transform);
+
         // 5. 플레이어가 제자리에서 한 바퀴 회전
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
         yield return StartCoroutine(playerScript.SpinInPlace());
 
+        //(Optional)
+        for (int i = 0; i < fires.Length; i++)
+        {
+            fires[i].SetActive(false);
+
+        }
         // 6. 연출 후 카메라 원상복구+점수 추가
         cameraScript.ResetCamera(); // 카메라를 원래 상태로 복구
         AddScoreBasedOnLives();
-        // 디버그 출력
+
         // 7. 승리 음악 재생
         if (musicManager != null)
         {
             musicManager.StopMusic();
             AudioSource.PlayClipAtPoint(victoryMusic, Camera.main.transform.position, soundVolume);
-            //musicManager.PlayVictoryMusic();
         }
         gameClear.SetActive(true);
         isGameClear = true;
