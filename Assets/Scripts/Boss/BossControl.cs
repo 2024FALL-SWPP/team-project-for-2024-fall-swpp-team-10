@@ -405,7 +405,6 @@ public class BossControl : MonoBehaviour
         if (hitCount % 9 == 0)
         {
             Invoke("NewWeakSpots", 0.2f);
-            bossStageManager.DecreaseBossLife();
             bossStageManager.IncrementPhase();
         }
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
