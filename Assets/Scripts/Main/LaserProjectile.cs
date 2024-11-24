@@ -62,7 +62,7 @@ public class LaserProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (bossControl is not null)
+        if (bossControl != null)
         {
             if (other.gameObject.CompareTag("WeakSpot")) // If weak spot hit, change the color
             {
