@@ -28,7 +28,7 @@ public class BossStagePlayer : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] public AudioClip laserFireSound;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
-    [SerializeField] public AudioClip enemyCollisionSound;
+    [SerializeField] public AudioClip obstacleCollisionSound;
     [SerializeField][Range(0f, 1f)] public float collisionVolume = 0.5f;
 
     // On Collision variables
@@ -60,7 +60,7 @@ public class BossStagePlayer : MonoBehaviour
             }
         }
 
-        if (GameManager.inst.originColorSave == null)
+        if (GameManager.inst.originColorSave == null) // Singleton Game Manager will handle this on scene transitions (Refer to : https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/125#discussion_r1852641260)
             GameManager.inst.originColorSave = originColors;
     }
 
@@ -245,11 +245,11 @@ public class BossStagePlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Destroy(other.gameObject);
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, gameObject.transform.position, collisionVolume);
-            }
             if (isInvincible) return;
+            if (obstacleCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(obstacleCollisionSound, gameObject.transform.position, collisionVolume);
+            }
             GameManager.inst.RemoveLife();
             if (GameManager.inst.GetLife() > 0)
                 StartCoroutine(Blink());

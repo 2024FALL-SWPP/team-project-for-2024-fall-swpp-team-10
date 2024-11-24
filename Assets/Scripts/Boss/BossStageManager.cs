@@ -130,7 +130,6 @@ public class BossStageManager : MonoBehaviour
 
     public int GetPhase()
     {
-        Debug.Log(currentPhase);
         return currentPhase;
     }
 
