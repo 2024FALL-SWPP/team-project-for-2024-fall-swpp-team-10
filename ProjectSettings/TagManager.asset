@@ -15,6 +15,7 @@ TagManager:
   - MagnetEffect
   - WeakSpot
   - Fire
+  - Laser
   layers:
   - Default
   - TransparentFX

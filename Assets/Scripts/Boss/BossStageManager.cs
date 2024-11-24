@@ -12,24 +12,26 @@ public class BossStageManager : MonoBehaviour
     public GameObject score;
     private TextMeshProUGUI scoreText;
     public GameObject gameOver;
-    public BossAttackPattern bossScript; // BossAttackPattern ��ũ��Ʈ
+    public BossAttackPattern bossScript; // BossAttackPattern 스크립트
     private bool isGameOver = false;
     public GameObject[] hearts;
     public GameObject[] Darkhearts;
     private BossStageMusicManager musicManager;
+    private int bossMaxLife = 3;
+    private int currentPhase;
     public GameObject pause;
 
 
     /*void OnEnable()
     {
-        // �� �ε� �Ϸ� �̺�Ʈ�� ���
+        // 씬 로드 완료 이벤트에 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log("BossStageManager: Subscribed to sceneLoaded.");
     }
 
     void OnDisable()
     {
-        // �� �ε� �Ϸ� �̺�Ʈ���� ����
+        // 씬 로드 완료 이벤트에서 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
         Debug.Log("BossStageManager: Unsubscribed from sceneLoaded.");
     }
@@ -52,6 +54,7 @@ public class BossStageManager : MonoBehaviour
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
         musicManager = FindObjectOfType<BossStageMusicManager>();
+        currentPhase = 0;
     }
 
     void Start()
@@ -71,11 +74,9 @@ public class BossStageManager : MonoBehaviour
         {
             Pause();
         }
+
         for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
             hearts[i].SetActive(i < GameManager.inst.GetLife());
-
-        for (int i = 0; i < bossScript.GetTotalPhaseCount(); i++)
-            Darkhearts[i].SetActive(i < bossScript.GetTotalPhaseCount() - bossScript.GetCurrentPhase());
 
         if (GameManager.inst.GetLife() <= 0)
         {
@@ -108,5 +109,27 @@ public class BossStageManager : MonoBehaviour
             musicManager.ResumeMusic();
         }
         EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public int GetBossLife()
+    {
+        return bossMaxLife - currentPhase;
+    }
+
+    public int GetBossMaxLife()
+    {
+        return bossMaxLife;
+    }
+
+    public int GetPhase()
+    {
+        return currentPhase;
+    }
+
+    public void IncrementPhase()
+    {
+        currentPhase += 1;
+        for (int i = 0; i < bossMaxLife; i++)
+            Darkhearts[i].SetActive(i < GetBossLife());
     }
 }
