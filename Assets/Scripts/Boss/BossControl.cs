@@ -119,10 +119,7 @@ public class BossControl : MonoBehaviour
         if (bossDead)
             StopShooting();
 
-        gameObject.GetComponent<MeshCollider>().enabled = true;
-        if (!isColliding[0] && !isColliding[1] && !isColliding[2])
-            gameObject.GetComponent<MeshCollider>().enabled = false;
-
+        gameObject.GetComponent<MeshCollider>().enabled = isColliding[0] || isColliding[1] || isColliding[2];
     }
 
     // Shoot one carrot
