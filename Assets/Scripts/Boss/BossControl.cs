@@ -402,7 +402,7 @@ public class BossControl : MonoBehaviour
             Invoke("NewWeakSpots", 0.2f);
             bossStageManager.DecreaseBossLife();
         }
-        bossStageManager.SetPhase(hitCount / 9);
+        bossStageManager.IncrementPhase();
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
 

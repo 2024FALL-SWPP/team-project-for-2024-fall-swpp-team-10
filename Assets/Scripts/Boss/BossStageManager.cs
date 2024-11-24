@@ -138,9 +138,9 @@ public class BossStageManager : MonoBehaviour
         return currentPhase;
     }
 
-    public void SetPhase(int phase)
+    public void IncrementPhase()
     {
-        currentPhase = phase;
+        currentPhase += 1;
         for (int i = 0; i < bossMaxLife; i++)
             Darkhearts[i].SetActive(i < bossLife);
     }
