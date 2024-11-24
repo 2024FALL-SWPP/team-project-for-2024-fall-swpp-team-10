@@ -3071,6 +3071,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 922855649}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
   laserVolume: 0.7
+  obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  collisionVolume: 0.5
 --- !u!65 &922855652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4190,6 +4192,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1283838796}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
   laserVolume: 0.7
+  obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  collisionVolume: 0.5
 --- !u!65 &1283838799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4650,6 +4654,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1424859024}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
   laserVolume: 0.7
+  obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  collisionVolume: 0.5
 --- !u!65 &1424859027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4847,6 +4853,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1431771570}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
   laserVolume: 0.7
+  obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  collisionVolume: 0.5
 --- !u!65 &1431771575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6520,6 +6528,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1924334494}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
   laserVolume: 0.7
+  obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  collisionVolume: 0.5
 --- !u!65 &1924334497
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6795,6 +6805,10 @@ PrefabInstance:
       propertyPath: carrotSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: weakSpotSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 65c53739decc14696af98d5cf59f9738, type: 3}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: bossReducedSize
       value: 0.6
