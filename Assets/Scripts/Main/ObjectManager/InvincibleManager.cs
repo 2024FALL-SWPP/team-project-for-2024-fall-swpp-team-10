@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InvincibleManager : RotatingObject
+public class InvincibleManager : BeneficialObject
 {
     private GameObject player;
     private PlayerControl playerControl;

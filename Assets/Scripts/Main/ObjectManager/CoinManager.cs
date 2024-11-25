@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinManager : RotatingObject
+public class CoinManager : BeneficialObject
 {
     // Start is called before the first frame update
     protected override void Awake()

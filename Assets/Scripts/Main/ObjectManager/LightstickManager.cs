@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightstickManager : RotatingObject
+public class LightstickManager : BeneficialObject
 {
     // Start is called before the first frame update
     protected override void Awake()

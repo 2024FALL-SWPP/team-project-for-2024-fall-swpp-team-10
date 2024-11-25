@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class DamagingObject : ObjectManager // enemy, obstacle
 {
     protected GameObject player;
     protected PlayerControl playerControl;
+    protected int score;
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -25,13 +27,19 @@ public class DamagingObject : ObjectManager // enemy, obstacle
         base.OnCollisionEnter(other);
         if (other.gameObject.CompareTag("Player"))
         {
-            if (playerControl.isInvincible)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            GameManager.inst.RemoveLife();
-            StartCoroutine(playerControl.Blink());
+            OnPlayerCollision(other.gameObject);
         }
+    }
+    protected virtual void OnPlayerCollision(GameObject player)
+    {
+        if (playerControl.isInvincible)
+        {
+            GameManager.inst.AddScore(score);
+            Destroy(gameObject);
+            return;
+        }
+        GameManager.inst.AddScore(score * -1);
+        GameManager.inst.RemoveLife();
+        StartCoroutine(playerControl.Blink());
     }
 }

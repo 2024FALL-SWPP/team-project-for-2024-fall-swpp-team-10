@@ -8,6 +8,7 @@ public class EnemyManager : DamagingObject
     protected override void Awake()
     {
         base.Awake();
+        score = 1000;
     }
 
     // Update is called once per frame
@@ -18,14 +19,6 @@ public class EnemyManager : DamagingObject
 
     protected override void OnCollisionEnter(Collision other)
     {
-        if (playerControl.isInvincible)
-        {
-            GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
-        }
         base.OnCollisionEnter(other);
-        if (other.gameObject.CompareTag("Player"))
-        {
-            GameManager.inst.AddScore(-1000);
-        }
     }
 }

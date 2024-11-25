@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetManager : RotatingObject
+public class MagnetManager : BeneficialObject
 {
     private GameObject player;
     private PlayerControl playerControl;
     private bool isMagnet = false; // 자석 지속중인지 확인
+
+    private float positionZ(GameObject gameObject)
+    {
+        return gameObject.transform.position.z;
+    }
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -70,7 +75,7 @@ public class MagnetManager : RotatingObject
 
             foreach (GameObject coin in coins)
             {
-                if (coin != null && coin.transform.position.z - playerControl.centerPosition.z < 80)
+                if (coin != null && -6 < positionZ(coin) && positionZ(coin) < 80)
                 {
                     coin.transform.position = Vector3.MoveTowards(coin.transform.position, playerControl.centerPosition, coinSpeed * Time.deltaTime);
                 }
