@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590543317e584e24da054ab022f80be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healSound: {fileID: 8300000, guid: 53047f24ace2fd541a0bb8e1d14f8a34, type: 3}
+  volume: 0.5
 --- !u!54 &-4751042087660274877
 Rigidbody:
   m_ObjectHideFlags: 0
