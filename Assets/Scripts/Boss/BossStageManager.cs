@@ -16,7 +16,7 @@ public class BossStageManager : MonoBehaviour
     public BossStageCamera cameraScript; // BossStageCamera ��ũ��Ʈ ����
     public BossStagePlayer playerScript; // BossStagePlayer ��ũ��Ʈ ����
     public BossAttackPattern bossAttackPatternScript; // BossAttackPattern ��ũ��Ʈ
-    public BossControl bossControlScript; // BossAttackPattern ��ũ��Ʈ
+    public BossControl bossControlScript; // BossControl ��ũ��Ʈ
     private bool isGameOver = false;
     private bool isGameClear = false;
     public GameObject[] hearts;
