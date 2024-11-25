@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class BeneficialObject : ObjectManager //coin, item
 {
+    protected GameObject player;
+    protected PlayerControl playerControl;
     protected float rotationSpeed = 500.0f;
 
     protected override void Awake()
     {
         base.Awake();
+        player = GameObject.FindWithTag("Player");
+        playerControl = player.GetComponent<PlayerControl>();
     }
 
     protected override void Update()
@@ -27,5 +31,11 @@ public class BeneficialObject : ObjectManager //coin, item
             if (transform.position.z > 98)
                 Destroy(gameObject);
         }
+    }
+
+    protected void HideAndKeep()
+    {
+        transform.localScale = new Vector3(0, 0, 0);
+        transform.position = playerControl.centerPosition;
     }
 }

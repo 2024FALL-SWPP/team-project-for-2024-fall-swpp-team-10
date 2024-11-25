@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MagnetManager : BeneficialObject
 {
-    private GameObject player;
-    private PlayerControl playerControl;
     private bool isMagnet = false; // 자석 지속중인지 확인
     private float coinSpeed = 50f;
 
@@ -18,8 +16,6 @@ public class MagnetManager : BeneficialObject
     protected override void Awake()
     {
         base.Awake();
-        player = GameObject.FindWithTag("Player");
-        playerControl = player.GetComponent<PlayerControl>();
     }
 
     // Update is called once per frame
@@ -29,8 +25,7 @@ public class MagnetManager : BeneficialObject
             base.Update();
         else // 아이템이 파괴되면 coroutine이 시작하지 않기 때문에 플레이어 안에 작게 숨겨두게 변경
         {
-            transform.localScale = new Vector3(0, 0, 0);
-            transform.position = playerControl.centerPosition;
+            HideAndKeep();
         }
     }
 
@@ -48,11 +43,9 @@ public class MagnetManager : BeneficialObject
     // 자석 아이템 효과
     IEnumerator Magnet()
     {
-
+        isMagnet = true;
         if (isMagnet)
             yield break;
-
-        isMagnet = true;
 
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
 

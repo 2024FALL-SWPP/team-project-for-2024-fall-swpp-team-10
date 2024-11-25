@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InvincibleManager : BeneficialObject
 {
-    private GameObject player;
-    private PlayerControl playerControl;
     private float invincibleLength; // 무적 지속 시간
     private bool isInvincibleItemPlaying = false;
 
@@ -13,8 +11,6 @@ public class InvincibleManager : BeneficialObject
     protected override void Awake()
     {
         base.Awake();
-        player = GameObject.FindWithTag("Player");
-        playerControl = player.GetComponent<PlayerControl>();
     }
 
     // Update is called once per frame
@@ -24,8 +20,7 @@ public class InvincibleManager : BeneficialObject
             base.Update();
         else // 아이템이 파괴되면 coroutine이 시작하지 않기 때문에 플레이어 안에 작게 숨겨두게 변경
         {
-            transform.localScale = new Vector3(0, 0, 0);
-            transform.position = playerControl.centerPosition;
+            HideAndKeep();
         }
     }
 
@@ -44,11 +39,11 @@ public class InvincibleManager : BeneficialObject
     IEnumerator Invincible()
     {
         invincibleLength = 10f;
+        isInvincibleItemPlaying = true;
         if (playerControl.isInvincible)
             yield break;
 
         playerControl.isInvincible = true;
-        isInvincibleItemPlaying = true;
 
         while (invincibleLength > 0)
         {
