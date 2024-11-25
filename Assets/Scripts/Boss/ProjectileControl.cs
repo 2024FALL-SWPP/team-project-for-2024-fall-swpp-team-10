@@ -9,6 +9,7 @@ public class ProjectileControl : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        Physics.IgnoreLayerCollision(7, 8);
     }
 
     // Update is called once per frame

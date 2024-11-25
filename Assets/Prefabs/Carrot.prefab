@@ -302,8 +302,8 @@ GameObject:
   - component: {fileID: 8280074461216107946}
   - component: {fileID: -4862004438305492166}
   - component: {fileID: 774754881651480987}
-  m_Layer: 0
-  m_Name: carrotPf
+  m_Layer: 8
+  m_Name: Carrot
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
