@@ -32,18 +32,19 @@ public class InvincibleManager : BeneficialObject
     protected override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
+    }
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            StartCoroutine(Invincible());
-        }
+    protected override void OnPlayerCollision(GameObject player)
+    {
+        base.OnPlayerCollision(player);
+        StartCoroutine(Invincible());
     }
 
     // 무적 아이템 효과
     IEnumerator Invincible()
     {
         invincibleLength = 10f;
-        if (isInvincibleItemPlaying)
+        if (playerControl.isInvincible)
             yield break;
 
         playerControl.isInvincible = true;
@@ -66,7 +67,6 @@ public class InvincibleManager : BeneficialObject
         playerControl.ChangeColorOriginal();
 
         playerControl.isInvincible = false;
-        isInvincibleItemPlaying = false;
 
         Destroy(gameObject);
     }

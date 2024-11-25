@@ -20,4 +20,9 @@ public class LightstickManager : BeneficialObject
     {
         base.OnCollisionEnter(other);
     }
+
+    protected override void OnPlayerCollision(GameObject player)
+    {
+        base.OnPlayerCollision(player);
+    }
 }

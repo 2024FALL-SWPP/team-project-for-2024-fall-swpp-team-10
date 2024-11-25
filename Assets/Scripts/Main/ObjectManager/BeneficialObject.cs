@@ -21,6 +21,7 @@ public class BeneficialObject : ObjectManager //coin, item
 
     protected override void OnCollisionEnter(Collision other)
     {
+        base.OnCollisionEnter(other);
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
             if (transform.position.z > 98)

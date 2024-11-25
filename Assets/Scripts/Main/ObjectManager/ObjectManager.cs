@@ -21,5 +21,13 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    protected virtual void OnCollisionEnter(Collision other) { }
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            OnPlayerCollision(other.gameObject);
+        }
+    }
+
+    protected virtual void OnPlayerCollision(GameObject player) { }
 }

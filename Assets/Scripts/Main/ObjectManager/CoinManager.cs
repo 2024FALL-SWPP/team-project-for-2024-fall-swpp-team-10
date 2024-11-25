@@ -19,10 +19,12 @@ public class CoinManager : BeneficialObject
     protected override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
-        if (other.gameObject.CompareTag("Player"))
-        {
-            GameManager.inst.AddScore(200);
-            Destroy(gameObject);
-        }
+    }
+
+    protected override void OnPlayerCollision(GameObject player)
+    {
+        base.OnPlayerCollision(player);
+        GameManager.inst.AddScore(200);
+        Destroy(gameObject);
     }
 }

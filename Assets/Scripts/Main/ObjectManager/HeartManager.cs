@@ -19,10 +19,12 @@ public class HeartManager : BeneficialObject
     protected override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
-        if (other.gameObject.CompareTag("Player"))
-        {
-            GameManager.inst.AddLife(GameManager.inst.maxLife);
-            Destroy(gameObject);
-        }
+    }
+
+    protected override void OnPlayerCollision(GameObject player)
+    {
+        base.OnPlayerCollision(player);
+        GameManager.inst.AddLife(GameManager.inst.maxLife);
+        Destroy(gameObject);
     }
 }

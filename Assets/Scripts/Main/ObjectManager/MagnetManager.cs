@@ -7,6 +7,7 @@ public class MagnetManager : BeneficialObject
     private GameObject player;
     private PlayerControl playerControl;
     private bool isMagnet = false; // 자석 지속중인지 확인
+    private float coinSpeed = 50f;
 
     private float positionZ(GameObject gameObject)
     {
@@ -36,17 +37,17 @@ public class MagnetManager : BeneficialObject
     protected override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
+    }
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            StartCoroutine(Magnet());
-        }
+    protected override void OnPlayerCollision(GameObject player)
+    {
+        base.OnPlayerCollision(player);
+        StartCoroutine(Magnet());
     }
 
     // 자석 아이템 효과
     IEnumerator Magnet()
     {
-        float coinSpeed = 50f;
 
         if (isMagnet)
             yield break;
@@ -83,7 +84,6 @@ public class MagnetManager : BeneficialObject
 
             yield return null;
         }
-        isMagnet = false;
         Destroy(gameObject);
     }
 }

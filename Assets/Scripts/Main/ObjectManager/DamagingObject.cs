@@ -25,12 +25,8 @@ public class DamagingObject : ObjectManager // enemy, obstacle
     protected override void OnCollisionEnter(Collision other)
     {
         base.OnCollisionEnter(other);
-        if (other.gameObject.CompareTag("Player"))
-        {
-            OnPlayerCollision(other.gameObject);
-        }
     }
-    protected virtual void OnPlayerCollision(GameObject player)
+    protected override void OnPlayerCollision(GameObject player)
     {
         if (playerControl.isInvincible)
         {
