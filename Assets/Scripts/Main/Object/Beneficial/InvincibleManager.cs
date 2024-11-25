@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InvincibleManager : BeneficialObject
 {
-    private float invincibleLength; // 무적 지속 시간
     private bool isInvincibleItemPlaying = false;
 
     // Start is called before the first frame update
@@ -38,16 +37,18 @@ public class InvincibleManager : BeneficialObject
     // 무적 아이템 효과
     IEnumerator Invincible()
     {
-        invincibleLength = 10f;
-        isInvincibleItemPlaying = true;
+        playerControl.invincibleLength = 10f;
         if (playerControl.isInvincible)
+        {
+            Destroy(gameObject);
             yield break;
-
+        }
+        isInvincibleItemPlaying = true;
         playerControl.isInvincible = true;
 
-        while (invincibleLength > 0)
+        while (playerControl.invincibleLength > 0)
         {
-            invincibleLength -= 0.6f;
+            playerControl.invincibleLength -= 0.6f;
             playerControl.ChangeColor(Color.red);
             yield return new WaitForSeconds(0.1f);
             playerControl.ChangeColor(Color.yellow);

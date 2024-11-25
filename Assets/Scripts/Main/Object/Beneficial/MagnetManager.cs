@@ -44,8 +44,6 @@ public class MagnetManager : BeneficialObject
     IEnumerator Magnet()
     {
         isMagnet = true;
-        if (isMagnet)
-            yield break;
 
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
 

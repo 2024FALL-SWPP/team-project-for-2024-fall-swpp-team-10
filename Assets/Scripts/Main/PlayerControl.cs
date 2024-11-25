@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour
     private Color[,] originColors; // Origin color of characters
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
     public bool isInvincible = false; // 무적 지속중인지 확인
+    public float invincibleLength; // 무적 지속 시간
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
