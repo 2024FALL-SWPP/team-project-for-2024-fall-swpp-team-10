@@ -547,18 +547,12 @@ MonoBehaviour:
   centerPosition: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 2471692}
-  isInvincible: 0
   invincibleLength: 0
   leftLightstickPrefab: {fileID: 1687402553}
   rightLightstickPrefab: {fileID: 1898876668}
   lightstickOffset: 1
   lightStickDuration: 10
-  hitOnInvincibleParticle: {fileID: 625621707174889904, guid: ef43e5aef41c142fb85a7658a397dc75, type: 3}
-  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
-  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &111234844 stripped
 Transform:
@@ -2444,18 +2438,12 @@ MonoBehaviour:
   centerPosition: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 186956375}
-  isInvincible: 0
   invincibleLength: 0
   leftLightstickPrefab: {fileID: 1687402553}
   rightLightstickPrefab: {fileID: 1898876668}
   lightstickOffset: 1
   lightStickDuration: 10
-  hitOnInvincibleParticle: {fileID: 5112437202714306363, guid: 7b4191607aae74c0ab244a8d6e48adbf, type: 3}
-  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
-  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &973557195 stripped
 Transform:
@@ -4153,18 +4141,12 @@ MonoBehaviour:
   centerPosition: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1043615632}
-  isInvincible: 0
   invincibleLength: 0
   leftLightstickPrefab: {fileID: 1687402553}
   rightLightstickPrefab: {fileID: 1898876668}
   lightstickOffset: 1
   lightStickDuration: 10
-  hitOnInvincibleParticle: {fileID: 2026841622986246505, guid: 986e0b5078eb01e40a6653f3158a4751, type: 3}
-  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
-  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1625009819 stripped
 Transform:
@@ -4341,18 +4323,12 @@ MonoBehaviour:
   centerPosition: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 929826646}
-  isInvincible: 0
   invincibleLength: 0
   leftLightstickPrefab: {fileID: 1687402553}
   rightLightstickPrefab: {fileID: 1898876668}
   lightstickOffset: 1
   lightStickDuration: 10
-  hitOnInvincibleParticle: {fileID: 6984943078359629718, guid: 90739c14d49b4a1478165d02dc050b6f, type: 3}
-  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
-  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1699910874 stripped
 Transform:
@@ -4586,18 +4562,12 @@ MonoBehaviour:
   centerPosition: {x: 0, y: 0, z: 0}
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 84019538}
-  isInvincible: 0
   invincibleLength: 0
   leftLightstickPrefab: {fileID: 1687402553}
   rightLightstickPrefab: {fileID: 1898876668}
   lightstickOffset: 1
   lightStickDuration: 10
-  hitOnInvincibleParticle: {fileID: 15085447402717889, guid: 743ce290c74ae49c19aa3f128322fc7e, type: 3}
-  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
-  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  coinVolume: 1
   laserVolume: 0.7
 --- !u!4 &1799102595 stripped
 Transform:

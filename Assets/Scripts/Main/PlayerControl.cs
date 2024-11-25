@@ -37,9 +37,7 @@ public class PlayerControl : MonoBehaviour
     private Coroutine tripleShotCoroutine;
 
     [Header("Audio Settings")]
-    [SerializeField] public AudioClip coinCollectSound;
     [SerializeField] public AudioClip laserFireSound;
-    [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
 
     void Awake()
@@ -295,13 +293,6 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Coin"))
-        {
-            if (coinCollectSound != null)
-            {
-                AudioSource.PlayClipAtPoint(coinCollectSound, centerPosition, coinVolume);
-            }
-        }
 
         if (other.gameObject.CompareTag("Lightstick"))
         {
