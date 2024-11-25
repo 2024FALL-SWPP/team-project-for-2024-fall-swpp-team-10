@@ -38,13 +38,13 @@ public class InvincibleManager : BeneficialObject
     IEnumerator Invincible()
     {
         playerControl.invincibleLength = 10f;
-        if (playerControl.isInvincible)
+        if (playerControl.GetIsInvincible())
         {
             Destroy(gameObject);
             yield break;
         }
         isInvincibleItemPlaying = true;
-        playerControl.isInvincible = true;
+        playerControl.SetIsInvincible(true);
 
         while (playerControl.invincibleLength > 0)
         {
@@ -62,7 +62,7 @@ public class InvincibleManager : BeneficialObject
         }
         playerControl.ChangeColorOriginal();
 
-        playerControl.isInvincible = false;
+        playerControl.SetIsInvincible(false);
 
         Destroy(gameObject);
     }

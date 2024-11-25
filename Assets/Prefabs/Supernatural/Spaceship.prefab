@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd5bf498c4c8114380cb356d0cbbbcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  volume: 0.5
 --- !u!54 &7690734446867109499
 Rigidbody:
   m_ObjectHideFlags: 0

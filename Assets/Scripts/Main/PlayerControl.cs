@@ -25,7 +25,7 @@ public class PlayerControl : MonoBehaviour
     private Renderer[] childRenderers; //Renderer of characters
     private Color[,] originColors; // Origin color of characters
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
-    public bool isInvincible = false; // 무적 지속중인지 확인
+    private bool isInvincible = false; // 무적 지속중인지 확인
     public float invincibleLength; // 무적 지속 시간
 
     [Header("Lightstick Settings")]
@@ -36,14 +36,9 @@ public class PlayerControl : MonoBehaviour
     private float powerUpEndTime; // Track when the power-up should end
     private Coroutine tripleShotCoroutine;
 
-    [Header("Particle System")]
-    public ParticleSystem hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
-    public ParticleSystem damagedParticle; // 장애물이나 적에 부딪혔을 때
-
     [Header("Audio Settings")]
     [SerializeField] public AudioClip coinCollectSound;
     [SerializeField] public AudioClip laserFireSound;
-    [SerializeField] public AudioClip enemyCollisionSound;
     [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
 
@@ -129,9 +124,6 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-
-        damagedParticle.transform.position = centerPosition;
-        hitOnInvincibleParticle.transform.position = centerPosition;
     }
 
     void SyncCenterPosition()
@@ -303,22 +295,6 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
-        {
-            if (isInvincible)
-            {
-                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                return;
-            }
-
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
-            }
-
-            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-        }
-
         if (other.gameObject.CompareTag("Coin"))
         {
             if (coinCollectSound != null)
@@ -356,5 +332,14 @@ public class PlayerControl : MonoBehaviour
         hasTripleShot = false;
         DisableLightsticks();
         tripleShotCoroutine = null;
+    }
+
+    public void SetIsInvincible(bool _isInvincible)
+    {
+        isInvincible = _isInvincible;
+    }
+    public bool GetIsInvincible()
+    {
+        return isInvincible;
     }
 }
