@@ -39,6 +39,10 @@ public class DamagingObject : ObjectManager // enemy, obstacle
         if (playerControl.GetIsInvincible())
         {
             Instantiate(hitOnInvincibleParticle[(int)GameManager.inst.GetCharacter()], playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
+            if (enemyCollisionSound != null)
+            {
+                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, volume);
+            }
             GameManager.inst.AddScore(score);
             Destroy(gameObject);
             return;
