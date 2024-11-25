@@ -3,3 +3,4 @@ laser reference: https://freesound.org/people/nsstudios/sounds/344276/
 crash1 reference: https://freesound.org/people/qubodup/sounds/151624/
 crash2 reference: https://freesound.org/people/Leszek_Szary/sounds/146730/
 weakspot reference: https://pixabay.com/sound-effects/laser-zap-90575/
+heal reference: https://freesound.org/people/ReincarnatedEchoes/sounds/644306/

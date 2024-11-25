@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HeartManager : BeneficialObject
 {
+    [Header("Sound System")]
+    [SerializeField] public AudioClip healSound;
+    [SerializeField][Range(0f, 1f)] public float volume = 0.5f;
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -24,6 +27,10 @@ public class HeartManager : BeneficialObject
     protected override void OnPlayerCollision(GameObject player)
     {
         base.OnPlayerCollision(player);
+        if (healSound != null)
+        {
+            AudioSource.PlayClipAtPoint(healSound, transform.position, volume);
+        }
         GameManager.inst.AddLife(GameManager.inst.maxLife);
         Destroy(gameObject);
     }

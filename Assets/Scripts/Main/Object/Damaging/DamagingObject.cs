@@ -8,6 +8,7 @@ public class DamagingObject : ObjectManager // enemy, obstacle
     protected GameObject player;
     protected PlayerControl playerControl;
     protected int score;
+
     [Header("Sound System")]
     [SerializeField] public AudioClip enemyCollisionSound;
     [SerializeField][Range(0f, 1f)] public float volume = 0.5f;
