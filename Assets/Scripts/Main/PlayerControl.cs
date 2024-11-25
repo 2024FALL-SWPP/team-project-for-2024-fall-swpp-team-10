@@ -303,23 +303,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            if (isInvincible)
-            {
-                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                return;
-            }
-
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
-            }
-
-            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-        }
-
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
             if (isInvincible)
             {
