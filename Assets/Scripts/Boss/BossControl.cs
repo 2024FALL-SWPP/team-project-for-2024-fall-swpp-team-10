@@ -383,6 +383,7 @@ public class BossControl : MonoBehaviour
     public void TransformWeakSpot(GameObject weakSpot)
     {
         SpriteRenderer sr = weakSpot.GetComponent<SpriteRenderer>();
+        if (sr == null) return;
         Color WeakSpotCol = sr.color;
 
         int status = -1;
@@ -404,8 +405,8 @@ public class BossControl : MonoBehaviour
         hitCount += 1;
         if (hitCount % 9 == 0)
         {
-            Invoke("NewWeakSpots", 0.2f);
             bossStageManager.IncrementPhase();
+            if (bossStageManager.GetPhase() < 3) Invoke("NewWeakSpots", 0.2f);
         }
         StartCoroutine(gradualColorChange(sr, sr.color, WeakSpotStatCol[status + 1]));
     }
@@ -416,16 +417,17 @@ public class BossControl : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 0.1f;
 
-        while (sr && elapsedTime < duration)
+        while (elapsedTime < duration)
         {
-            sr.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
-
             elapsedTime += Time.deltaTime;
+            if (sr != null)
+                sr.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
+
 
             yield return null;
         }
 
-        sr.color = endCol;
+        if (sr != null) sr.color = endCol;
     }
 
     // Called on boss death, call on phase change
