@@ -132,4 +132,25 @@ public class GameManager : MonoBehaviour
     {
         return score;
     }
+    //추후 리팩토링 예정https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/126#discussion_r1855493298
+    public IEnumerator DeactivateLivesAndAddScore(GameObject[] hearts, AudioClip heartDeactivateSound, float soundVolume)     
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (hearts[i].activeSelf) // 활성화된 Life만 처리
+            {
+                // Life 비활성화
+                hearts[i].SetActive(false);
+                // 점수 추가
+                GameManager.inst.AddScore(5000);
+                // 효과음 재생
+                if (heartDeactivateSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(heartDeactivateSound, Camera.main.transform.position, soundVolume);
+                }
+                // 0.5초 대기 후 다음 Life 처리
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+    }
 }

@@ -6,6 +6,8 @@ public class BossStagePlayer : MonoBehaviour
     [Header("Movement Settings")]
     public float speed = 10f;
     public float rotationSpeed = 5f; // 회전 보간 속도
+    private bool isSpinning = false;
+    private float playerSpinDuration = 3f; // 한 바퀴 도는 데 걸리는 시간
 
     [Header("Movement Constraints")]
     public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
@@ -14,7 +16,6 @@ public class BossStagePlayer : MonoBehaviour
 
     [Header("Boss Settings")]
     public Transform bossTransform;
-
     private Rigidbody rb;
     private const float initialPitch = 20f;
     private Quaternion lastRotation;
@@ -78,8 +79,11 @@ public class BossStagePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        RotatePlayer();
+        if (!isSpinning)
+        {
+            MovePlayer();
+            RotatePlayer();
+        }
     }
 
     private void Update()
@@ -291,5 +295,46 @@ public class BossStagePlayer : MonoBehaviour
                 childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
             }
         }
+    }
+
+    // 코루틴을 통해 플레이어가 제자리에서 한 바퀴 돌도록 구현
+    public IEnumerator SpinInPlace()
+    {
+        if (isSpinning) yield break; // 이미 회전 중이라면 중복 실행 방지
+        isSpinning = true;
+
+        // 카메라를 플레이어에게 고정하도록 BossStageCamera에 요청
+        BossStageCamera cameraScript = FindObjectOfType<BossStageCamera>();
+        if (cameraScript != null)
+        {
+            StartCoroutine(cameraScript.FixCameraOnPlayerDuringSpin());
+        }
+
+        // 카메라 이동 완료 후 잠시 대기
+        yield return new WaitForSeconds(1.5f); // 추가 대기 시간
+
+        float elapsed = 0f;
+
+        Quaternion initialRotation = transform.rotation;
+
+        while (elapsed < playerSpinDuration)
+        {
+            float angle = (elapsed / playerSpinDuration) * 360f; // 360도 회전
+            Quaternion targetRotation = Quaternion.Euler(0, angle, 0) * initialRotation;
+
+            rb.MoveRotation(targetRotation);
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        rb.MoveRotation(initialRotation);
+        isSpinning = false;
+    }
+
+    // 플레이어가 회전 중인지 여부를 반환
+    public bool IsSpinning()
+    {
+        return isSpinning;
     }
 }

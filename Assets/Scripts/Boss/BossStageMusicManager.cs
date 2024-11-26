@@ -12,6 +12,8 @@ public class BossStageMusicManager : MusicManager
         // 부모 클래스(MusicManager)의 Awake 실행
         base.Awake();
 
+        base.audioSource.loop = true;
+
         // 보스 스테이지 전용 초기화 작업
         fires = GameObject.FindGameObjectsWithTag("Fire");
         if (fires != null)
@@ -57,5 +59,4 @@ public class BossStageMusicManager : MusicManager
             }
         }
     }
-
 }

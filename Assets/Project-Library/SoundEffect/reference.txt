@@ -4,3 +4,5 @@ crash1 reference: https://freesound.org/people/qubodup/sounds/151624/
 crash2 reference: https://freesound.org/people/Leszek_Szary/sounds/146730/
 weakspot reference: https://pixabay.com/sound-effects/laser-zap-90575/
 heal reference: https://freesound.org/people/ReincarnatedEchoes/sounds/644306/
+GameOver reference: https://mixkit.co/free-sound-effects/game/
+Victory reference: https://pixabay.com/ko/sound-effects/search/success/
