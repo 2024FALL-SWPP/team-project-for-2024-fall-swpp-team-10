@@ -416,7 +416,7 @@ public class BossControl : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 0.1f;
 
-        while (elapsedTime < duration)
+        while (sr && elapsedTime < duration)
         {
             sr.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
 
