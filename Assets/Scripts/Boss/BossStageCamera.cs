@@ -9,9 +9,9 @@ public class BossStageCamera : MonoBehaviour
     public float followSpeed = 5f;
     public float pitch = 30f; // 카메라의 X축 기울기 (위쪽으로 약간 더 기울기)
     public Transform bossTransform; // 보스 Transform
-    public float orbitAroundBossDuration = 3f; // 보스 주위를 순회하는 데 걸리는 시간
+    private float orbitAroundBossDuration = 8f; // 보스 주위를 순회하는 데 걸리는 시간
     private bool isOrbiting = false;
-    public float transitionAroundPlayerSpinDuration = 1f; //플레이어가 회전하는데에 걸리는 시간
+    public float transitionAroundPlayerSpinDuration = 1f; // 카메라가 플레이어 얼굴을 비추는 위치로 이동하는 데 걸리는 시간
     private bool cameraFixed = false;
     public GameObject[] characters;  //추후 삭제 예정
     private BossStagePlayer playerScript;
@@ -94,8 +94,13 @@ public class BossStageCamera : MonoBehaviour
     {
         cameraFixed = true;
 
+        // 플레이어의 이동 가능한 영역의 중심 계산
+        Vector3 areaCenter = (playerScript.areaMin + playerScript.areaMax) / 2f;
+
+        // 플레이어와 영역 중심 간의 방향 계산
+        Vector3 directionToCenter = (areaCenter - player.position).normalized;
         // 플레이어의 얼굴을 비추도록 카메라 위치 조정
-        Vector3 fixedPosition = player.position + new Vector3(0, 0.5f, -2f); // 플레이어 앞쪽에 위치
+        Vector3 fixedPosition = player.position + directionToCenter*2 + new Vector3(0,2f,0); // 플레이어 앞쪽에 위치
         Quaternion fixedRotation = Quaternion.LookRotation(player.position - fixedPosition);
 
         // 카메라 이동 (부드럽게)

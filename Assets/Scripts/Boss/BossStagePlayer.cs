@@ -7,6 +7,7 @@ public class BossStagePlayer : MonoBehaviour
     public float speed = 10f;
     public float rotationSpeed = 5f; // 회전 보간 속도
     private bool isSpinning = false;
+    private float playerSpinDuration = 3f; // 한 바퀴 도는 데 걸리는 시간
 
     [Header("Movement Constraints")]
     public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
@@ -309,14 +310,16 @@ public class BossStagePlayer : MonoBehaviour
             StartCoroutine(cameraScript.FixCameraOnPlayerDuringSpin());
         }
 
+        // 카메라 이동 완료 후 잠시 대기
+        yield return new WaitForSeconds(1.5f); // 추가 대기 시간
+
         float elapsed = 0f;
-        float spinDuration = 2f; // 한 바퀴 도는 데 걸리는 시간
 
         Quaternion initialRotation = transform.rotation;
 
-        while (elapsed < spinDuration)
+        while (elapsed < playerSpinDuration)
         {
-            float angle = (elapsed / spinDuration) * 360f; // 360도 회전
+            float angle = (elapsed / playerSpinDuration) * 360f; // 360도 회전
             Quaternion targetRotation = Quaternion.Euler(0, angle, 0) * initialRotation;
 
             rb.MoveRotation(targetRotation);

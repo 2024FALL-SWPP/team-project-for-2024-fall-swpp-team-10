@@ -160,18 +160,18 @@ public class BossStageManager : MonoBehaviour
         //(Optional)
         gameClearLight.ActivateLight(player);
         //gameClearLight.ActivateLight(characters[(int)GameManager.inst.GetCharacter()].transform);
-
-        // 5. 플레이어가 제자리에서 한 바퀴 회전
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
-        yield return StartCoroutine(playerScript.SpinInPlace());
-
         //(Optional)
         for (int i = 0; i < fires.Length; i++)
         {
             fires[i].SetActive(false);
 
         }
+        // 5. 플레이어가 제자리에서 한 바퀴 회전
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+        yield return StartCoroutine(playerScript.SpinInPlace());
+
+
         // 6. 연출 후 카메라 원상복구+점수 추가
         cameraScript.ResetCamera(); // 카메라를 원래 상태로 복구
         AddScoreBasedOnLives();
