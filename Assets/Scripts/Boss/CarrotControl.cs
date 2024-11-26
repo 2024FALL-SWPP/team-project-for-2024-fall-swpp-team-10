@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileControl : MonoBehaviour
+public class CarrotControl : MonoBehaviour
 {
     Camera mainCamera;
     // Start is called before the first frame update
