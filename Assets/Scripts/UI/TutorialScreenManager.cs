@@ -6,23 +6,49 @@ using UnityEngine.SceneManagement;
 
 public class TutorialScreenManager : MonoBehaviour
 {
-    public GameObject[] tutorialPageGameObjects;
+    [Header("Tutorial Pages")]
+    public GameObject[] supernaturalTutorialPages;  // Array for Supernatural tutorial pages
+    public GameObject[] dittoTutorialPages;         // Array for Ditto tutorial pages
     public Button previousButton;
     public Button nextButton;
 
-
+    private GameObject[] currentTutorialPages;
     private int currentPage = 0;
     public Sprite[] stageBackgrounds;
     public GameObject background;
 
     private Image backgroundImage;
-
     void Start()
     {
-        previousButton.onClick.AddListener(GoToPreviousPage);
-        nextButton.onClick.AddListener(GoToNextPage);
+        SetupTutorialPages();
         ShowPage(currentPage);
         UpdateButtonStates();
+    }
+
+    private void SetupTutorialPages()
+    {
+        // Get the current stage from GameManager
+        int currentStage = GameManager.inst.GetStage();
+
+        // Set the active tutorial pages based on stage
+        if (currentStage == 1) // Supernatural
+        {
+            currentTutorialPages = supernaturalTutorialPages;
+            // Deactivate Ditto pages
+            foreach (var page in dittoTutorialPages)
+            {
+                page.SetActive(false);
+            }
+        }
+        else // Ditto
+        {
+            currentTutorialPages = dittoTutorialPages;
+            // Deactivate Supernatural pages
+            foreach (var page in supernaturalTutorialPages)
+            {
+                page.SetActive(false);
+            }
+        }
     }
 
     private void OnEnable()
@@ -41,9 +67,10 @@ public class TutorialScreenManager : MonoBehaviour
 
     void ShowPage(int pageIndex)
     {
-        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
+        Debug.Log($"pageIndex is: {pageIndex}");
+        for (int i = 0; i < currentTutorialPages.Length; i++)
         {
-            tutorialPageGameObjects[i].SetActive(i == pageIndex);
+            currentTutorialPages[i].SetActive(i == pageIndex);
         }
         currentPage = pageIndex;
     }
@@ -60,7 +87,8 @@ public class TutorialScreenManager : MonoBehaviour
     public void GoToNextPage()
     {
         Debug.Log("Enetered next page");
-        if (currentPage < tutorialPageGameObjects.Length - 1)
+        Debug.Log($"current page is: {currentPage}");
+        if (currentPage < currentTutorialPages.Length - 1)
         {
             ShowPage(currentPage + 1);
             UpdateButtonStates();
@@ -75,6 +103,7 @@ public class TutorialScreenManager : MonoBehaviour
 
         // Disable next button on last page
         if (nextButton != null)
-            nextButton.gameObject.SetActive(currentPage < tutorialPageGameObjects.Length - 1);
+            nextButton.gameObject.SetActive(currentPage < currentTutorialPages.Length - 1);
     }
 }
+
