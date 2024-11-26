@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6682664355841681166}
-  - component: {fileID: -6550886065861721545}
+  - component: {fileID: -2365122652707045757}
   - component: {fileID: -8956976204531240872}
   - component: {fileID: -7306384732433477196}
   m_Layer: 0
@@ -202,7 +202,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6550886065861721545
+--- !u!114 &-2365122652707045757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,9 +211,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6338332139874680244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d868c8270c63a746829121efb9c4a0b, type: 3}
+  m_Script: {fileID: 11500000, guid: dbd5bf498c4c8114380cb356d0cbbbcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
+  volume: 0.5
+  hitOnInvincibleParticle:
+  - {fileID: 2026841622986246505, guid: 986e0b5078eb01e40a6653f3158a4751, type: 3}
+  - {fileID: 6984943078359629718, guid: 90739c14d49b4a1478165d02dc050b6f, type: 3}
+  - {fileID: 5112437202714306363, guid: 7b4191607aae74c0ab244a8d6e48adbf, type: 3}
+  - {fileID: 625621707174889904, guid: ef43e5aef41c142fb85a7658a397dc75, type: 3}
+  - {fileID: 15085447402717889, guid: 743ce290c74ae49c19aa3f128322fc7e, type: 3}
+  damagedParticle: {fileID: 4578293216070569105, guid: b3fce66d1ff9a3449a52ccee87b2d518, type: 3}
 --- !u!54 &-8956976204531240872
 Rigidbody:
   m_ObjectHideFlags: 0

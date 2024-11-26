@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
     private Vector3 initialPosition; // Initial world position of the player
-    private Vector3 centerPosition; // 캐릭터 중앙 위치 보정
+    public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
     [Header("Projectile Settings")]
@@ -25,9 +25,8 @@ public class PlayerControl : MonoBehaviour
     private Renderer[] childRenderers; //Renderer of characters
     private Color[,] originColors; // Origin color of characters
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
-    private float invincibleLength; // 무적 지속 시간
     private bool isInvincible = false; // 무적 지속중인지 확인
-    private bool isMagnet = false; // 자석 지속중인지 확인
+    public float invincibleLength; // 무적 지속 시간
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
@@ -37,15 +36,8 @@ public class PlayerControl : MonoBehaviour
     private float powerUpEndTime; // Track when the power-up should end
     private Coroutine tripleShotCoroutine;
 
-    [Header("Particle System")]
-    public ParticleSystem hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
-    public ParticleSystem damagedParticle; // 장애물이나 적에 부딪혔을 때
-
     [Header("Audio Settings")]
-    [SerializeField] public AudioClip coinCollectSound;
     [SerializeField] public AudioClip laserFireSound;
-    [SerializeField] public AudioClip enemyCollisionSound;
-    [SerializeField][Range(0f, 1f)] public float coinVolume = 0.5f;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
 
     void Awake()
@@ -130,9 +122,6 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-
-        damagedParticle.transform.position = centerPosition;
-        hitOnInvincibleParticle.transform.position = centerPosition;
     }
 
     void SyncCenterPosition()
@@ -258,7 +247,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     // 피격 시 깜빡임
-    IEnumerator Blink()
+    public IEnumerator Blink()
     {
         isInvincible = true;
         for (int i = 0; i < blinkCount; i++)
@@ -272,34 +261,8 @@ public class PlayerControl : MonoBehaviour
         isInvincible = false;
     }
 
-    // 무적 아이템 효과
-    IEnumerator Invincible()
-    {
-        invincibleLength = 10f;
-        if (isInvincible)
-            yield break;
-        isInvincible = true;
-        while (invincibleLength > 0)
-        {
-            invincibleLength -= 0.6f;
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.yellow);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.green);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.blue);
-            yield return new WaitForSeconds(0.1f);
-            ChangeColor(Color.magenta);
-            yield return new WaitForSeconds(0.1f);
-        }
-        ChangeColorOriginal();
-
-        isInvincible = false;
-    }
-
     // 캐릭터 색 전체 변환
-    private void ChangeColor(Color _color)
+    public void ChangeColor(Color _color)
     {
         foreach (Renderer renderer in childRenderers)
         {
@@ -320,48 +283,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    // 자석 아이템 효과
-    IEnumerator Magnet()
-    {
-        float coinSpeed = 50f;
-
-        if (isMagnet)
-            yield break;
-
-        isMagnet = true;
-        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
-
-        while (true)
-        {
-            // 모든 GameObject가 null인지 확인
-            bool allDestroyed = true;
-            foreach (GameObject coin in coins)
-            {
-                if (coin != null) // 아직 Destroy되지 않은 객체가 있다면
-                {
-                    allDestroyed = false;
-                    break;
-                }
-            }
-
-            if (allDestroyed)
-            {
-                break;
-            }
-
-            foreach (GameObject coin in coins)
-            {
-                if (coin != null && coin.transform.position.z - transform.position.z < 80)
-                {
-                    coin.transform.position = Vector3.MoveTowards(coin.transform.position, centerPosition, coinSpeed * Time.deltaTime);
-                }
-            }
-
-            yield return null;
-        }
-        isMagnet = false;
-    }
-
     void DisableLightsticks()
     {
         if (leftLightstickPrefab != null)
@@ -372,71 +293,6 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            if (isInvincible)
-            {
-                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                Destroy(other.gameObject);
-                GameManager.inst.AddScore(1000); // 무적 상태에서 적 부딪하면 1000점 추가
-                return;
-            }
-
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
-            }
-
-            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-            GameManager.inst.RemoveLife();
-            GameManager.inst.AddScore(-1000);
-            StartCoroutine(Blink());
-        }
-
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            if (isInvincible)
-            {
-                Instantiate(hitOnInvincibleParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-                Destroy(other.gameObject);
-                GameManager.inst.AddScore(500); // 무적 상태에서 장애물 부딪하면 500점 추가
-                return;
-            }
-
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, centerPosition, coinVolume);
-            }
-
-            Instantiate(damagedParticle, centerPosition, new Quaternion(0, 0, 0, 0));
-            GameManager.inst.RemoveLife();
-            GameManager.inst.AddScore(-500);
-            StartCoroutine(Blink());
-        }
-
-        if (other.gameObject.CompareTag("Heart"))
-        {
-            GameManager.inst.AddLife(GameManager.inst.maxLife);
-        }
-
-        if (other.gameObject.CompareTag("Invincible"))
-        {
-            StartCoroutine(Invincible());
-        }
-
-        if (other.gameObject.CompareTag("Magnet"))
-        {
-            StartCoroutine(Magnet());
-        }
-
-        if (other.gameObject.CompareTag("Coin"))
-        {
-            GameManager.inst.AddScore(200);
-            if (coinCollectSound != null)
-            {
-                AudioSource.PlayClipAtPoint(coinCollectSound, centerPosition, coinVolume);
-            }
-        }
 
         if (other.gameObject.CompareTag("Lightstick"))
         {
@@ -454,11 +310,6 @@ public class PlayerControl : MonoBehaviour
 
             Destroy(other.gameObject);
         }
-
-        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Obstacle")) // if it is item or coin
-        {
-            Destroy(other.gameObject);
-        }
     }
 
     IEnumerator TripleShotPowerUpTimer()
@@ -472,5 +323,14 @@ public class PlayerControl : MonoBehaviour
         hasTripleShot = false;
         DisableLightsticks();
         tripleShotCoroutine = null;
+    }
+
+    public void SetIsInvincible(bool _isInvincible)
+    {
+        isInvincible = _isInvincible;
+    }
+    public bool GetIsInvincible()
+    {
+        return isInvincible;
     }
 }

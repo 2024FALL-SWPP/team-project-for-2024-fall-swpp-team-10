@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1825877701695181361}
   - component: {fileID: 3378413594435393848}
   - component: {fileID: 1742520869515835770}
-  - component: {fileID: -4499620137963429387}
+  - component: {fileID: -767712340991919050}
   - component: {fileID: -4321390075111914627}
   - component: {fileID: 5860428014477027884}
   m_Layer: 6
@@ -86,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-4499620137963429387
+--- !u!114 &-767712340991919050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,9 +95,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 683890755977579402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d868c8270c63a746829121efb9c4a0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 957565f2330f0eb408892f46e46a3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinCollectSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  coinVolume: 0.5
 --- !u!54 &-4321390075111914627
 Rigidbody:
   m_ObjectHideFlags: 0
