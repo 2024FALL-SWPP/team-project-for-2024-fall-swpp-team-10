@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healSound: {fileID: 8300000, guid: 53047f24ace2fd541a0bb8e1d14f8a34, type: 3}
-  volume: 0.5
+  volume: 1
 --- !u!54 &-4751042087660274877
 Rigidbody:
   m_ObjectHideFlags: 0
