@@ -22,7 +22,7 @@ public class BossAttackPattern : MonoBehaviour
     [Header("Player")]
     public Transform playerTransform; // 플레이어의 Transform
 
-    private List<List<Vector3[]>> attackPatternsPerPhase; // Phase별 공격 패턴
+    private List<List<IMeteoriteDropStrategy>> strategiesPerPhase; // Phase별 전략 목록
     private bool isAttacking = false;
 
     private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 �׸��� �� �迭
@@ -41,7 +41,7 @@ public class BossAttackPattern : MonoBehaviour
         InitializeGrid();
 
         // 공격 패턴 초기화
-        InitializeAttackPatterns();
+        InitializeStrategies();
 
         // 공격 시퀀스 시작
         StartCoroutine(AttackSequence());
@@ -98,9 +98,9 @@ public class BossAttackPattern : MonoBehaviour
         meteoriteSize = Mathf.Min(cellSizeX, cellSizeZ) * 0.05f;
     }
     // 공격 패턴 초기화
-    void InitializeAttackPatterns()
+    void InitializeStrategies()
     {
-        attackPatternsPerPhase = new List<List<Vector3[]>>();
+        strategiesPerPhase = new List<List<IMeteoriteDropStrategy>>();
 
         // 그리드 셀의 월드 좌표를 저장
         Vector3[,] gridPositions = new Vector3[3, 3];
@@ -113,48 +113,42 @@ public class BossAttackPattern : MonoBehaviour
         }
 
         // Phase 1 패턴: 플레이어가 서 있는 그리드 공격
-        List<Vector3[]> phase1Patterns = new List<Vector3[]> {
-            new Vector3[] { gridPositions[0, 0] },
-            new Vector3[] { gridPositions[0, 1] },
-            new Vector3[] { gridPositions[0, 2] },
-            new Vector3[] { gridPositions[1, 0] },
-            new Vector3[] { gridPositions[1, 1] },
-            new Vector3[] { gridPositions[1, 2] },
-            new Vector3[] { gridPositions[2, 0] },
-            new Vector3[] { gridPositions[2, 1] },
-            new Vector3[] { gridPositions[2, 2] }
-        };
-        attackPatternsPerPhase.Add(phase1Patterns);
+        List<IMeteoriteDropStrategy> phase1Strategies = new List<IMeteoriteDropStrategy>();
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[0, 0] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[0, 1] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[0, 2] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[1, 0] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[1, 1] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[1, 2] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[2, 0] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[2, 1] }));
+        phase1Strategies.Add(new SingleCellPatternStrategy(new Vector3[] { gridPositions[2, 2] }));
+        strategiesPerPhase.Add(phase1Strategies);
 
         // Phase 2 패턴: 플레이어가 서 있는 가로/세로 줄과 대각선 공격을 번갈아 실행 -> 패턴 1: 가로/세로 줄 전체 공격 / 패턴 2: 대각선 공격
-        List<Vector3[]> phase2Patterns = new List<Vector3[]> {
-            new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2] },
-            new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] },
-            new Vector3[] { gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0] },
-            new Vector3[] { gridPositions[0, 1], gridPositions[1, 1], gridPositions[2, 1] },
-            new Vector3[] { gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
-            new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2] },
-            new Vector3[] { gridPositions[0, 2], gridPositions[1, 1], gridPositions[2, 0] }
-        };
-
-        attackPatternsPerPhase.Add(phase2Patterns);
+        List<IMeteoriteDropStrategy> phase2Strategies = new List<IMeteoriteDropStrategy>();
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[1, 0], gridPositions[1, 1], gridPositions[1, 2] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 1], gridPositions[1, 1], gridPositions[2, 1] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2] }));
+        phase2Strategies.Add(new RowColumnPatternStrategy(new Vector3[] { gridPositions[0, 2], gridPositions[1, 1], gridPositions[2, 0] }));
+        strategiesPerPhase.Add(phase2Strategies);
 
         /* Phase 3 패턴: 네 가지 패턴 중 플레이어가 서 있는 영역을 포함하는 패턴을 랜덤 실행 
         => 패턴 1: 각 모서리 가운데 그리드 4개 공격 / 패턴 2: 두 대각선의 합집합이 되는 그리드 5개 공격 / 패턴 3: L자 모양의 5개 그리드 공격 / 패턴 4: 첫번째와 세번째 가로/세로 줄 그리드 6개 공격*/
-        List<Vector3[]> phase3Patterns = new List<Vector3[]>{
-        new Vector3[] { gridPositions[0, 1], gridPositions[1, 0], gridPositions[1, 2], gridPositions[2, 1] },
-        new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] },
-        new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] },
-        new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
-        new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] },
-        new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] }
-        };
+        List<IMeteoriteDropStrategy> phase3Strategies = new List<IMeteoriteDropStrategy>();
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 1], gridPositions[1, 0], gridPositions[1, 2], gridPositions[2, 1] }));
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[1, 1], gridPositions[2, 2], gridPositions[0, 2], gridPositions[2, 0] }));
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] }));
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] }));
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[0, 1], gridPositions[0, 2], gridPositions[2, 0], gridPositions[2, 1], gridPositions[2, 2] }));
+        phase3Strategies.Add(new ComplexPatternStrategy(new Vector3[] { gridPositions[0, 0], gridPositions[1, 0], gridPositions[2, 0], gridPositions[0, 2], gridPositions[1, 2], gridPositions[2, 2] }));
+        strategiesPerPhase.Add(phase3Strategies);
 
-
-        attackPatternsPerPhase.Add(phase3Patterns);
-
-        if (attackPatternsPerPhase.Count != bossStageManager.GetBossMaxLife())
+        if (strategiesPerPhase.Count != bossStageManager.GetBossMaxLife())
         {
             Debug.LogWarning("Count of attack patterns per phase must be equal to boss max life!");
         }
@@ -169,43 +163,54 @@ public class BossAttackPattern : MonoBehaviour
             {
                 isAttacking = true;
 
-                // 현재 Phase의 패턴 리스트 가져오기
-                List<Vector3[]> patterns = attackPatternsPerPhase[bossStageManager.GetPhase()];
-
-                // 플레이어 위치가 포함된 패턴 index 체크
-                List<int> availableIndex = new List<int>();
-                for (int i = 0; i < patterns.Count; i++)
+                // 현재 Phase의 전략 리스트 가져오기
+                int currentPhase = bossStageManager.GetPhase();
+                if (currentPhase >= strategiesPerPhase.Count)
                 {
-                    if (IsPlayerInPattern(patterns[i])){ availableIndex.Add(i); }
+                    Debug.LogWarning("No strategy corresponding to this phase.");
+                    yield break;
                 }
 
-                // 패턴 랜덤하게 선택
-                Vector3[] selectedPattern = null;
-                int randomIndex = Random.Range(0, availableIndex.Count);
-                selectedPattern = patterns[availableIndex[randomIndex]];
+                List<IMeteoriteDropStrategy> currentPhaseStrategies = strategiesPerPhase[currentPhase];
 
-                if (selectedPattern != null) 
-                { 
-                    // 공격할 그리드 셀 강조 (빨간색)
-                    HighlightGridCells(selectedPattern, Color.red);
-                    // 경고 시간 대기
-                    yield return new WaitForSeconds(warningDuration);
+                // 플레이어가 포함된 전략 필터링
+                List<IMeteoriteDropStrategy> availableStrategies = new List<IMeteoriteDropStrategy>();
+                foreach (var strategy in currentPhaseStrategies)
+                {
+                    // 플레이어 위치 기반 확인
+                    // 방법1)Strategy Class에서 직접 확인하도록 하기 방법2)미리 추출
+                    // 방법2 사용
+                    ComplexPatternStrategy complexStrategy = strategy as ComplexPatternStrategy;
+                    RowColumnPatternStrategy rowColumnStrategy = strategy as RowColumnPatternStrategy;
+                    SingleCellPatternStrategy singleCellStrategy = strategy as SingleCellPatternStrategy;
 
-                    // 강조 해제 및 운석 공격 실행
-                    ResetGridCells(selectedPattern);
+                    Vector3[] pattern = null;
 
-                    foreach (Vector3 attackPos in selectedPattern)
-                    {
-                        StartCoroutine(ExecuteAttack(attackPos));
-                    }
+                    if (complexStrategy != null)
+                        pattern = complexStrategy.GetPatternPositions();
+                    else if (rowColumnStrategy != null)
+                        pattern = rowColumnStrategy.GetPatternPositions();
+                    else if (singleCellStrategy != null)
+                        pattern = singleCellStrategy.GetPatternPositions();
 
-                    // 다음 공격까지 대기 (조정 가능)
-                    yield return new WaitForSeconds(2f); // 예: 2초 대기
+                    if (pattern != null && IsPlayerInPattern(pattern))
+                        availableStrategies.Add(strategy);
+                }
+
+                if (availableStrategies.Count == 0)
+                {
+                    Debug.LogWarning("No attack patterns involving players.");
                     isAttacking = false;
+                    yield return null;
+                    continue;
                 }
 
+                int randomIndex = Random.Range(0, availableStrategies.Count);
+                IMeteoriteDropStrategy selectedStrategy = availableStrategies[randomIndex];
 
-                
+                yield return StartCoroutine(selectedStrategy.Execute(this));
+
+                isAttacking = false;
             }
 
             yield return null;
@@ -215,7 +220,7 @@ public class BossAttackPattern : MonoBehaviour
     }
 
     // 플레이어가 패턴에 포함되는지 확인하는 함수
-    bool IsPlayerInPattern(Vector3[] pattern)
+    public bool IsPlayerInPattern(Vector3[] pattern)
     {
         foreach (Vector3 cellPosition in pattern)
         {
@@ -230,7 +235,7 @@ public class BossAttackPattern : MonoBehaviour
 
 
     // 플레이어가 특정 그리드 셀에 있는지 확인하는 함수
-    bool IsPlayerInCell(GridCell cell)
+    public bool IsPlayerInCell(GridCell cell)
     {
         // 그리드 셀의 경계 계산
         Vector3 cellPosition = cell.transform.position;
@@ -255,7 +260,7 @@ public class BossAttackPattern : MonoBehaviour
     }
 
     // 그리드 셀 강조 기능 함수
-    void HighlightGridCells(Vector3[] positions, Color color)
+    public void HighlightGridCells(Vector3[] positions, Color color)
     {
         foreach (Vector3 pos in positions)
         {
@@ -268,7 +273,7 @@ public class BossAttackPattern : MonoBehaviour
     }
 
     // 그리드 셀 강조 해제 함수
-    void ResetGridCells(Vector3[] positions)
+    public void ResetGridCells(Vector3[] positions)
     {
         foreach (Vector3 pos in positions)
         {
@@ -281,7 +286,7 @@ public class BossAttackPattern : MonoBehaviour
     }
 
     // 특정 위치의 그리드 셀 가져오기
-    GridCell GetGridCellByPosition(Vector3 position)
+    public GridCell GetGridCellByPosition(Vector3 position)
     {
         // 정확한 위치 비교를 위해 작은 거리 기준
         foreach (GridCell cell in gridCells)
@@ -295,7 +300,7 @@ public class BossAttackPattern : MonoBehaviour
     }
 
     // 특정 위치에 운석 공격 실행
-    IEnumerator ExecuteAttack(Vector3 position)
+    public IEnumerator ExecuteAttack(Vector3 position)
     {
         // 운석 생성 위치: 그리드 셀의 중심에서 meteoriteHeight 높이 위
         Vector3 spawnPosition = new Vector3(position.x, areaMin.y + meteoriteHeight, position.z - 2.5f);
