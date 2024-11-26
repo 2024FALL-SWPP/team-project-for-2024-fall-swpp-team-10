@@ -4,16 +4,16 @@ using System.Collections;
 public class BossStageCamera : MonoBehaviour
 {
     [Header("Camera Settings")]
-    private Transform player; // ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public Vector3 offset = new Vector3(0, 3, -5); // µÚÂÊ°ú À§ÂÊÀ¸·ÎÀÇ °Å¸®
+    private Transform player; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform
+    public Vector3 offset = new Vector3(0, 3, -5); // ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
     public float followSpeed = 5f;
-    public float pitch = 30f; // Ä«¸Þ¶óÀÇ XÃà ±â¿ï±â (À§ÂÊÀ¸·Î ¾à°£ ´õ ±â¿ï±â)
-    public Transform bossTransform; // º¸½º Transform
-    private float orbitAroundBossDuration = 8f; // º¸½º ÁÖÀ§¸¦ ¼øÈ¸ÇÏ´Â µ¥ °É¸®´Â ½Ã°£
+    public float pitch = 30f; // Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½à°£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public Transform bossTransform; // ï¿½ï¿½ï¿½ï¿½ Transform
+    private float orbitAroundBossDuration = 8f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     private bool isOrbiting = false;
-    public float transitionAroundPlayerSpinDuration = 1f; // Ä«¸Þ¶ó°¡ ÇÃ·¹ÀÌ¾î ¾ó±¼À» ºñÃß´Â À§Ä¡·Î ÀÌµ¿ÇÏ´Â µ¥ °É¸®´Â ½Ã°£
+    public float transitionAroundPlayerSpinDuration = 1f; // Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     private bool cameraFixed = false;
-    public GameObject[] characters;  //ÃßÈÄ »èÁ¦ ¿¹Á¤
+    public GameObject[] characters;  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private BossStagePlayer playerScript;
     public BossStageManager managerScript;
 
@@ -43,7 +43,7 @@ public class BossStageCamera : MonoBehaviour
 
     private void FollowPlayer()
     {
-        // ÇÃ·¹ÀÌ¾îÀÇ YÃà È¸Àü¸¸ »ç¿ëÇÏ¿© Ä«¸Þ¶ó À§Ä¡ °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Yï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
         Quaternion yawRotation = Quaternion.Euler(0f, player.eulerAngles.y, 0f);
         Vector3 desiredPosition = player.position + yawRotation * offset;
 
@@ -52,58 +52,58 @@ public class BossStageCamera : MonoBehaviour
 
     private void LookAtPlayer()
     {
-        // Ä«¸Þ¶ó°¡ ¾à°£ À§¸¦ ¹Ù¶óº¸µµ·Ï Á¶Á¤
-        Vector3 lookAtTarget = player.position + Vector3.up * 2f; // ÇÃ·¹ÀÌ¾îº¸´Ù ¾à°£ À§ÂÊÀ» ¹Ù¶óº¸µµ·Ï º¸Á¤
+        // Ä«ï¿½Þ¶ï¿½ ï¿½à°£ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector3 lookAtTarget = player.position + Vector3.up * 2f; // ï¿½Ã·ï¿½ï¿½Ì¾îº¸ï¿½ï¿½ ï¿½à°£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Quaternion targetRotation = Quaternion.LookRotation(lookAtTarget - transform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, followSpeed * Time.deltaTime);
     }
 
-    // º¸½º ÁÖÀ§¸¦ ¼øÈ¸ÇÏ´Â ÄÚ·çÆ¾
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾
     public IEnumerator OrbitAroundBoss()
     {
         isOrbiting = true;
 
-        // ½½·Î¿ì ¸ð¼Ç Àû¿ëÀº ÀÌ¹Ì BossStageManager¿¡¼­ Ã³¸®µÊ
+        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ BossStageManagerï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½
 
         float elapsed = 0f;
 
         while (elapsed < orbitAroundBossDuration)
         {
-            // °¢µµ °è»ê
-            float angle = (elapsed / orbitAroundBossDuration) * 360f; // 360µµ ¼øÈ¸
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            float angle = (elapsed / orbitAroundBossDuration) * 360f; // 360ï¿½ï¿½ ï¿½ï¿½È¸
             Vector3 orbitPosition = bossTransform.position + new Vector3(
                 Mathf.Cos(Mathf.Deg2Rad * angle) *(-8),
                 15,
                 Mathf.Sin(Mathf.Deg2Rad * angle) * (-8)
             );
 
-            // Ä«¸Þ¶ó À§Ä¡ ¹× º¸½º ¹Ù¶óº¸±â
+            // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸±ï¿½
             transform.position = orbitPosition;
-            transform.LookAt(bossTransform); // Ç×»ó º¸½º¸¦ ¹Ù¶óº½
+            transform.LookAt(bossTransform); // ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶ï¿½
 
-            elapsed += Time.unscaledDeltaTime; // ½½·Î¿ì ¸ð¼Ç¿¡¼­µµ Á¤»óÀûÀ¸·Î ÁøÇàµÇµµ·Ï unscaledDeltaTime »ç¿ë
+            elapsed += Time.unscaledDeltaTime; // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ unscaledDeltaTime ï¿½ï¿½ï¿½
             yield return null;
         }
 
         isOrbiting = false;
     }
 
-    // Ä«¸Þ¶ó¸¦ ÇÃ·¹ÀÌ¾î¿¡°Ô °íÁ¤ÇÏ´Â ¸Þ¼­µå
+    // Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public IEnumerator FixCameraOnPlayerDuringSpin()
     {
         cameraFixed = true;
 
-        // ÇÃ·¹ÀÌ¾îÀÇ ÀÌµ¿ °¡´ÉÇÑ ¿µ¿ªÀÇ Áß½É °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½ï¿½
         Vector3 areaCenter = (playerScript.areaMin + playerScript.areaMax) / 2f;
 
-        // ÇÃ·¹ÀÌ¾î¿Í ¿µ¿ª Áß½É °£ÀÇ ¹æÇâ °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToCenter = (areaCenter - player.position).normalized;
-        // ÇÃ·¹ÀÌ¾îÀÇ ¾ó±¼À» ºñÃßµµ·Ï Ä«¸Þ¶ó À§Ä¡ Á¶Á¤
-        Vector3 fixedPosition = player.position + directionToCenter*2 + new Vector3(0,2f,0); // ÇÃ·¹ÀÌ¾î ¾ÕÂÊ¿¡ À§Ä¡
-        Quaternion fixedRotation = Quaternion.LookRotation(player.position - fixedPosition);
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+        Vector3 fixedPosition = player.position + directionToCenter*2 + new Vector3(0, 1f, 0); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½Ä¡
+        Quaternion fixedRotation = Quaternion.LookRotation(player.position + new Vector3(0, 0.5f, 0) - fixedPosition);
 
-        // Ä«¸Þ¶ó ÀÌµ¿ (ºÎµå·´°Ô)
+        // Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½ (ï¿½Îµå·´ï¿½ï¿½)
         float elapsed = 0f;
         Vector3 startPos = transform.position;
         Quaternion startRot = transform.rotation;
@@ -119,18 +119,18 @@ public class BossStageCamera : MonoBehaviour
         transform.position = fixedPosition;
         transform.rotation = fixedRotation;
 
-        // ÇÃ·¹ÀÌ¾î°¡ È¸ÀüÇÏ´Â µ¿¾È Ä«¸Þ¶ó °íÁ¤
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ È¸ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½
         while (playerScript.IsSpinning())
         {
-            // Ä«¸Þ¶ó´Â °íÁ¤µÈ »óÅÂ·Î À¯Áö
+            // Ä«ï¿½Þ¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return null;
         }
 
-        // ÇÃ·¹ÀÌ¾î È¸ÀüÀÌ ³¡³ª¸é Ä«¸Þ¶ó ¿ø»óº¹±¸
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½óº¹±ï¿½
         ResetCamera();
     }
 
-    // Ä«¸Þ¶ó¸¦ ¿ø·¡ »óÅÂ·Î º¹±¸ÇÏ´Â ¸Þ¼­µå
+    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public void ResetCamera()
     {
         cameraFixed = false;
