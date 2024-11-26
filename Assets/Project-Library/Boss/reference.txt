@@ -6,3 +6,7 @@ Retrieved mouth model and rig from:
 Retrieved Carrot model from:
 	Carrot
 		https://skfb.ly/6yZxN
+
+Retrieved Football model from:
+	Football
+		https://www.fab.com/listings/1becc7fc-1746-41c5-acbd-43acbc6f3001

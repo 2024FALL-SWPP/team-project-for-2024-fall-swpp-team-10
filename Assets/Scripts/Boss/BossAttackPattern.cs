@@ -6,8 +6,8 @@ using UnityEngine;
 public class BossAttackPattern : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject meteoritePrefab; // � ������
-    public GameObject gridCellPrefab; // �׸��� �� ������
+    public GameObject meteoritePrefab; // 운석 프리팹
+    public GameObject gridCellPrefab; // 그리드 셀 프리팹
 
     [Header("Player Area")]
     //TODO: BossStagePlayer 스크립트의 constant와 일원화하기(주의!: 단순히 일원화하면 영역 꼭짓점 부근에 서 있을 때 cell 안에 있는 것으로 인식되지 않음)
