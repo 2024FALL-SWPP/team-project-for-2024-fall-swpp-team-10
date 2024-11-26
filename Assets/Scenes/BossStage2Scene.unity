@@ -11798,7 +11798,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 65c53739decc14696af98d5cf59f9738, type: 3}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: bossReducedSize
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: carrotTargetPos
