@@ -10,7 +10,6 @@ public class HeartManager : BeneficialObject
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
         if (healSound != null)
         {
             AudioSource.PlayClipAtPoint(healSound, transform.position, volume);

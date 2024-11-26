@@ -25,7 +25,6 @@ public class MagnetManager : BeneficialObject
     
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
         StartCoroutine(Magnet());
     }
 

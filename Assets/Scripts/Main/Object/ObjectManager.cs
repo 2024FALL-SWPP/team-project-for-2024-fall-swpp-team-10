@@ -34,5 +34,7 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    protected virtual void OnPlayerCollision(GameObject player) { }
+    protected virtual void OnPlayerCollision(GameObject player) {
+        throw new NotImplementedException();
+    }
 }

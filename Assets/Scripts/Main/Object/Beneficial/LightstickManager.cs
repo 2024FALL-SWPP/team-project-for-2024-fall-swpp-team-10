@@ -13,6 +13,6 @@ public class LightstickManager : BeneficialObject
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
+        Debug.Log("OnPlayerCollision still not implemented in LightStickManager");
     }
 }

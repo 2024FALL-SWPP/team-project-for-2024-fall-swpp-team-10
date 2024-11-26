@@ -19,7 +19,6 @@ public class InvincibleManager : BeneficialObject
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
         StartCoroutine(Invincible());
     }
 

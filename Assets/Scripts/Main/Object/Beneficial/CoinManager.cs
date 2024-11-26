@@ -10,7 +10,6 @@ public class CoinManager : BeneficialObject
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
         if (coinCollectSound != null)
         {
             AudioSource.PlayClipAtPoint(coinCollectSound, playerControl.centerPosition, coinVolume);
