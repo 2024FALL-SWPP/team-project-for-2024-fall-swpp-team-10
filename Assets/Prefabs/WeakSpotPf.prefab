@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6425864469339993223}
   - component: {fileID: 2380142132980168655}
   - component: {fileID: 6312795094801635100}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WeakSpotPf
   m_TagString: WeakSpot
   m_Icon: {fileID: 0}
