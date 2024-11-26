@@ -10,15 +10,4 @@ public class ObstacleManager : DamagingObject
         base.Awake();
         score = 500;
     }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-    protected override void OnCollisionEnter(Collision other)
-    {
-        base.OnCollisionEnter(other);
-    }
 }

@@ -1,13 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
+    protected GameObject player;
+    protected PlayerControl playerControl;
     protected float speed = 22.0f;
 
     protected virtual void Awake()
     {
+        player = GameObject.FindWithTag("Player");
+        playerControl = player.GetComponent<PlayerControl>();
     }
 
     // Update is called once per frame

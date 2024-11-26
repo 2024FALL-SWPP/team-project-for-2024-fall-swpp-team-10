@@ -12,12 +12,6 @@ public class MagnetManager : BeneficialObject
         return gameObject.transform.position.z;
     }
 
-    // Start is called before the first frame update
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     // Update is called once per frame
     protected override void Update()
     {
@@ -28,12 +22,7 @@ public class MagnetManager : BeneficialObject
             HideAndKeep();
         }
     }
-
-    protected override void OnCollisionEnter(Collision other)
-    {
-        base.OnCollisionEnter(other);
-    }
-
+    
     protected override void OnPlayerCollision(GameObject player)
     {
         base.OnPlayerCollision(player);

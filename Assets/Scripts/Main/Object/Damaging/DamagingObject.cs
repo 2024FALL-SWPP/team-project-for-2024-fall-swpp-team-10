@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class DamagingObject : ObjectManager // enemy, obstacle
 {
-    protected GameObject player;
-    protected PlayerControl playerControl;
     protected int score;
 
     [Header("Sound System")]
@@ -17,34 +15,14 @@ public class DamagingObject : ObjectManager // enemy, obstacle
     [Header("Particle System")]
     public ParticleSystem[] hitOnInvincibleParticle; // 무적 상태에서 장애물이나 적을 파괴했을 때
     public ParticleSystem damagedParticle; // 장애물이나 적에 부딪혔을 때
-    // Start is called before the first frame update
-    protected override void Awake()
-    {
-        base.Awake();
-        player = GameObject.FindWithTag("Player");
-        playerControl = player.GetComponent<PlayerControl>();
-    }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-    protected override void OnCollisionEnter(Collision other)
-    {
-        base.OnCollisionEnter(other);
-    }
     protected override void OnPlayerCollision(GameObject player)
     {
         if (playerControl.GetIsInvincible())
         {
             Instantiate(hitOnInvincibleParticle[(int)GameManager.inst.GetCharacter()], playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
-            if (enemyCollisionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, volume);
-            }
             GameManager.inst.AddScore(score);
+            CollisionSoundPlay();
             Destroy(gameObject);
             return;
         }
@@ -52,11 +30,15 @@ public class DamagingObject : ObjectManager // enemy, obstacle
         GameManager.inst.AddScore(score * -1);
         GameManager.inst.RemoveLife();
 
+        CollisionSoundPlay();
+        StartCoroutine(playerControl.Blink());
+    }
+
+    protected virtual void CollisionSoundPlay()
+    {
         if (enemyCollisionSound != null)
         {
             AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, volume);
         }
-
-        StartCoroutine(playerControl.Blink());
     }
 }

@@ -10,15 +10,4 @@ public class EnemyManager : DamagingObject
         base.Awake();
         score = 1000;
     }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-    protected override void OnCollisionEnter(Collision other)
-    {
-        base.OnCollisionEnter(other);
-    }
 }

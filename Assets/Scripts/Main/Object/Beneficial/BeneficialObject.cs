@@ -6,16 +6,7 @@ using UnityEngine;
 
 public class BeneficialObject : ObjectManager //coin, item
 {
-    protected GameObject player;
-    protected PlayerControl playerControl;
     protected float rotationSpeed = 500.0f;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        player = GameObject.FindWithTag("Player");
-        playerControl = player.GetComponent<PlayerControl>();
-    }
 
     protected override void Update()
     {
