@@ -2471,10 +2471,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687f7a3ccfce75b49bb79ea1b4385f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1431771570}
   offset: {x: 0, y: 3, z: -5}
   followSpeed: 10
   pitch: 30
+  bossTransform: {fileID: 0}
+  transitionAroundPlayerSpinDuration: 1
+  characters: []
+  managerScript: {fileID: 0}
 --- !u!114 &659597872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4787,7 +4790,11 @@ MonoBehaviour:
   - {fileID: 2066124953}
   score: {fileID: 1583997663}
   gameOver: {fileID: 1190581245}
-  bossScript: {fileID: 1163737300}
+  gameClear: {fileID: 0}
+  cameraScript: {fileID: 0}
+  playerScript: {fileID: 0}
+  bossAttackPatternScript: {fileID: 0}
+  bossControlScript: {fileID: 0}
   hearts:
   - {fileID: 490164415}
   - {fileID: 134332179}
@@ -4799,6 +4806,12 @@ MonoBehaviour:
   - {fileID: 1680471478}
   - {fileID: 1894462152}
   pause: {fileID: 1617246193}
+  mainCamera: {fileID: 0}
+  heartDeactivateSound: {fileID: 0}
+  gameOverMusic: {fileID: 0}
+  victoryMusic: {fileID: 0}
+  soundVolume: 0.7
+  player: {fileID: 0}
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5304,7 +5317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ef9cb32f6779842b21fc20b6520242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundMusic: {fileID: 8300000, guid: 9edb7b281f2484645bdfb5167e85f0fc, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: fe892c4abda61444994ea84230ef7040, type: 3}
   musicVolume: 0.099
   loop: 0
   pitch: 1
