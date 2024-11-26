@@ -67,7 +67,6 @@ public class TutorialScreenManager : MonoBehaviour
 
     void ShowPage(int pageIndex)
     {
-        Debug.Log($"pageIndex is: {pageIndex}");
         for (int i = 0; i < currentTutorialPages.Length; i++)
         {
             currentTutorialPages[i].SetActive(i == pageIndex);
@@ -86,8 +85,6 @@ public class TutorialScreenManager : MonoBehaviour
 
     public void GoToNextPage()
     {
-        Debug.Log("Enetered next page");
-        Debug.Log($"current page is: {currentPage}");
         if (currentPage < currentTutorialPages.Length - 1)
         {
             ShowPage(currentPage + 1);
