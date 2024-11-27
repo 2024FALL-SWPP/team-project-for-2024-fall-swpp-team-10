@@ -250,6 +250,7 @@ public class PlayerControl : MonoBehaviour
     // 피격 시 깜빡임
     public IEnumerator Blink()
     {
+        yield return new WaitForSeconds(0.1f);
         isBlinking = true;
         for (int i = 0; i < blinkCount; i++)
         {
@@ -334,7 +335,7 @@ public class PlayerControl : MonoBehaviour
     {
         return isInvincible;
     }
-    
+
     public bool GetIsBlinking()
     {
         return isBlinking;
