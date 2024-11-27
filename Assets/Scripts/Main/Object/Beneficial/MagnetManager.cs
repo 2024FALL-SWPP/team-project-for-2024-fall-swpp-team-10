@@ -17,7 +17,7 @@ public class MagnetManager : BeneficialObject
     {
         if (!isMagnet)
             base.Update();
-        else // 아이템이 파괴되면 coroutine이 시작하지 않기 때문에 플레이어 안에 작게 숨겨두게 변경
+        else // 아이템이 파괴되면 coroutine이 시작하지 않기 때문에 플레이어 뒤에 작게 숨겨두게 변경
         {
             HideAndKeep();
         }

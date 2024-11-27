@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour
     private Color[,] originColors; // Origin color of characters
     private int blinkCount = 3; // 피격 시 깜빡이는 횟수
     private bool isInvincible = false; // 무적 지속중인지 확인
+    private bool isBlinking = false; // 깜빡이는중인지 확인
     public float invincibleLength; // 무적 지속 시간
 
     [Header("Lightstick Settings")]
@@ -249,7 +250,7 @@ public class PlayerControl : MonoBehaviour
     // 피격 시 깜빡임
     public IEnumerator Blink()
     {
-        isInvincible = true;
+        isBlinking = true;
         for (int i = 0; i < blinkCount; i++)
         {
             ChangeColor(Color.red);
@@ -258,7 +259,7 @@ public class PlayerControl : MonoBehaviour
             ChangeColorOriginal();
             yield return new WaitForSeconds(0.2f);
         }
-        isInvincible = false;
+        isBlinking = false;
     }
 
     // 캐릭터 색 전체 변환
@@ -332,5 +333,10 @@ public class PlayerControl : MonoBehaviour
     public bool GetIsInvincible()
     {
         return isInvincible;
+    }
+    
+    public bool GetIsBlinking()
+    {
+        return isBlinking;
     }
 }

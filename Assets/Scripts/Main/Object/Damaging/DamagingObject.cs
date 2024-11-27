@@ -18,10 +18,11 @@ public class DamagingObject : ObjectManager // enemy, obstacle
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        if (playerControl.GetIsInvincible())
+        if (playerControl.GetIsInvincible() || playerControl.GetIsBlinking())
         {
             Instantiate(hitOnInvincibleParticle[(int)GameManager.inst.GetCharacter()], playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
-            GameManager.inst.AddScore(score);
+            if (playerControl.GetIsInvincible())
+                GameManager.inst.AddScore(score);
             CollisionSoundPlay();
             Destroy(gameObject);
             return;
