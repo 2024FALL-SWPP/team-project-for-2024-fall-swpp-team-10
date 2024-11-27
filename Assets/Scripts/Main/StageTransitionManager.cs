@@ -122,9 +122,26 @@ public class StageTransitionManager : MonoBehaviour
         }
 
         // Reset time scale before scene change
-        Time.timeScale = originalTimeScale;
+        Time.timeScale = 1;
 
         // Load boss scene
         GameManager.inst.LoadBossStage();
+    }
+
+    public IEnumerator BossStageTransition()
+    {
+        if (transitionAnimator != null)
+        {
+            // Play the animation
+            transitionAnimator.Play("BossStageStart");
+
+            // Get animation length
+            AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
+            while (!stateInfo.IsName("BossStageStart"))
+            {
+                yield return null;
+                stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
+            }
+        }
     }
 }
