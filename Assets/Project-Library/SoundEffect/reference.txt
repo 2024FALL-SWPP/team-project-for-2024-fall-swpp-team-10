@@ -6,3 +6,4 @@ weakspot reference: https://pixabay.com/sound-effects/laser-zap-90575/
 heal reference: https://freesound.org/people/ReincarnatedEchoes/sounds/644306/
 GameOver reference: https://mixkit.co/free-sound-effects/game/
 Victory reference: https://pixabay.com/ko/sound-effects/search/success/
+hover reference: https://freesound.org/people/deadsillyrabbit/sounds/251389/
