@@ -36,6 +36,8 @@ public class MainManager : MonoBehaviour
         musicManager = FindObjectOfType<MusicManager>();
         currentStageTime = 0f;
         transitionManager = FindObjectOfType<StageTransitionManager>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -54,6 +56,8 @@ public class MainManager : MonoBehaviour
         if (GameManager.inst.GetLife() <= 0)
         {
             Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             gameOver.SetActive(true);
             isGameOver = true;
             if (musicManager != null)
@@ -119,6 +123,8 @@ public class MainManager : MonoBehaviour
     public void Pause()
     {
         pause.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0;
         if (musicManager != null)
         {
