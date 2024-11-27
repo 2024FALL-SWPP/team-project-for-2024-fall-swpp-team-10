@@ -27,6 +27,6 @@ public class BeneficialObject : ObjectManager //coin, item
     protected void HideAndKeep()
     {
         transform.localScale = new Vector3(0, 0, 0);
-        transform.position = playerControl.centerPosition;
+        transform.position = playerControl.centerPosition - new Vector3(0, 0, -10);
     }
 }
