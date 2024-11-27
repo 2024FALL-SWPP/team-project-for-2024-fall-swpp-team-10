@@ -2895,7 +2895,6 @@ MonoBehaviour:
   followSpeed: 10
   pitch: 30
   bossTransform: {fileID: 1163737299}
-  orbitAroundBossDuration: 3
   transitionAroundPlayerSpinDuration: 1
   characters:
   - {fileID: 1424859023}
@@ -11057,7 +11056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: 9edb7b281f2484645bdfb5167e85f0fc, type: 3}
-  musicVolume: 0.099
+  musicVolume: 0.25
   loop: 0
   pitch: 1
 --- !u!1 &1677628843
@@ -12381,7 +12380,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 65c53739decc14696af98d5cf59f9738, type: 3}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: bossReducedSize
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: carrotTargetPos
