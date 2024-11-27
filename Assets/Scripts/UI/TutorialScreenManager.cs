@@ -6,23 +6,49 @@ using UnityEngine.SceneManagement;
 
 public class TutorialScreenManager : MonoBehaviour
 {
-    public GameObject[] tutorialPageGameObjects;
+    [Header("Tutorial Pages")]
+    public GameObject[] supernaturalTutorialPages;  // Array for Supernatural tutorial pages
+    public GameObject[] dittoTutorialPages;         // Array for Ditto tutorial pages
     public Button previousButton;
     public Button nextButton;
 
+    private GameObject[] currentTutorialPages;
     private int currentPage = 0;
     public Sprite[] stageBackgrounds;
     public GameObject background;
 
     private Image backgroundImage;
-
     void Start()
     {
-        SetTutorialImages();
+        SetupTutorialPages();
+        ShowPage(currentPage);
+        UpdateButtonStates();
+    }
 
-        UpdateTutorialPage();
-        previousButton.onClick.AddListener(GoToPreviousPage);
-        nextButton.onClick.AddListener(GoToNextPage);
+    private void SetupTutorialPages()
+    {
+        // Get the current stage from GameManager
+        int currentStage = GameManager.inst.GetStage();
+
+        // Set the active tutorial pages based on stage
+        if (currentStage == 1) // Supernatural
+        {
+            currentTutorialPages = supernaturalTutorialPages;
+            // Deactivate Ditto pages
+            foreach (var page in dittoTutorialPages)
+            {
+                page.SetActive(false);
+            }
+        }
+        else // Ditto
+        {
+            currentTutorialPages = dittoTutorialPages;
+            // Deactivate Supernatural pages
+            foreach (var page in supernaturalTutorialPages)
+            {
+                page.SetActive(false);
+            }
+        }
     }
 
     private void OnEnable()
@@ -39,42 +65,42 @@ public class TutorialScreenManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void SetTutorialImages()
+    void ShowPage(int pageIndex)
     {
-        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
+        for (int i = 0; i < currentTutorialPages.Length; i++)
         {
-            // example of tutorial file name: Stage1Tutorial2.png ("second image of Stage 1 Tutorial")
-            string tutorialFilename = "Stage" + GameManager.inst.GetStage() + "Tutorial" + (i + 1);
-            tutorialPageGameObjects[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(tutorialFilename);
+            currentTutorialPages[i].SetActive(i == pageIndex);
         }
-    }
-
-    void UpdateTutorialPage()
-    {
-        for (int i = 0; i < tutorialPageGameObjects.Length; i++)
-        {
-            tutorialPageGameObjects[i].SetActive(i == currentPage);
-        }
-
-        previousButton.interactable = currentPage > 0;
-        nextButton.interactable = currentPage < tutorialPageGameObjects.Length - 1;
+        currentPage = pageIndex;
     }
 
     public void GoToPreviousPage()
     {
         if (currentPage > 0)
         {
-            currentPage--;
-            UpdateTutorialPage();
+            ShowPage(currentPage - 1);
+            UpdateButtonStates();
         }
     }
 
     public void GoToNextPage()
     {
-        if (currentPage < tutorialPageGameObjects.Length - 1)
+        if (currentPage < currentTutorialPages.Length - 1)
         {
-            currentPage++;
-            UpdateTutorialPage();
+            ShowPage(currentPage + 1);
+            UpdateButtonStates();
         }
     }
+
+    private void UpdateButtonStates()
+    {
+        // Disable previous button on first page
+        if (previousButton != null)
+            previousButton.gameObject.SetActive(currentPage > 0);
+
+        // Disable next button on last page
+        if (nextButton != null)
+            nextButton.gameObject.SetActive(currentPage < currentTutorialPages.Length - 1);
+    }
 }
+
