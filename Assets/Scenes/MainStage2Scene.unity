@@ -2051,9 +2051,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 8499544411135595749, guid: e67055c97a39a3043bcfc4e89edc5b0e, type: 3}
-  - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
+  - {fileID: 1699014806214105435, guid: 602980db2a0806d4bb3b874d34aac702, type: 3}
   - {fileID: 7815097556879130542, guid: 7a0f6d48e59212d4e95aaef2ce3e5bf0, type: 3}
-  - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
+  - {fileID: 8495199809961606211, guid: 0e11c9354a331994a9150b41081470f7, type: 3}
   startSpawning: 5
   spawnInterval: 2.3
   reduceGap: 0.02
