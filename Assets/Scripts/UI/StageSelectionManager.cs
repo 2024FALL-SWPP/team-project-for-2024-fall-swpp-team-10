@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class StageSelectionManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class StageSelectionManager : MonoBehaviour
     public Button buttonLeft;
 
     public GameObject[] stages;
-    private int stageNum = 0;
+    private int stageNum = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,35 +20,23 @@ public class StageSelectionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stageNum == 0)
-        {
-            buttonLeft.gameObject.SetActive(false);
-        }
-        else
-        {
-            buttonLeft.gameObject.SetActive(true);
-        }
-        if (stageNum == stages.Length - 1)
-        {
-            buttonRight.gameObject.SetActive(false);
-        }
-        else
-        {
-            buttonRight.gameObject.SetActive(true);
-        }
+        buttonLeft.gameObject.SetActive(stageNum > 1);
+        buttonRight.gameObject.SetActive(stageNum < stages.Length);
     }
 
     public void ButtonRight()
     {
-        stages[stageNum].SetActive(false);
+        stages[stageNum - 1].SetActive(false);
         stageNum++;
-        stages[stageNum].SetActive(true);
+        stages[stageNum - 1].SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void ButtonLeft()
     {
-        stages[stageNum].SetActive(false);
+        stages[stageNum - 1].SetActive(false);
         stageNum--;
-        stages[stageNum].SetActive(true);
+        stages[stageNum - 1].SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

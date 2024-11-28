@@ -2496,8 +2496,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 367730821}
-          m_TargetAssemblyTypeName: CharacterButton, Assembly-CSharp
-          m_MethodName: SelectedSound
+          m_TargetAssemblyTypeName: CharacterButtonHandler, Assembly-CSharp
+          m_MethodName: OnPointerClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2711,8 +2711,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 388217122}
-          m_TargetAssemblyTypeName: CharacterButton, Assembly-CSharp
-          m_MethodName: SelectedSound
+          m_TargetAssemblyTypeName: CharacterButtonHandler, Assembly-CSharp
+          m_MethodName: OnPointerClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5009,8 +5009,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 663272392}
-          m_TargetAssemblyTypeName: CharacterButton, Assembly-CSharp
-          m_MethodName: SelectedSound
+          m_TargetAssemblyTypeName: CharacterButtonHandler, Assembly-CSharp
+          m_MethodName: OnPointerClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8172,8 +8172,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1064097486}
-          m_TargetAssemblyTypeName: CharacterButton, Assembly-CSharp
-          m_MethodName: SelectedSound
+          m_TargetAssemblyTypeName: CharacterButtonHandler, Assembly-CSharp
+          m_MethodName: OnPointerClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -14550,8 +14550,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2080824952}
-          m_TargetAssemblyTypeName: CharacterButton, Assembly-CSharp
-          m_MethodName: SelectedSound
+          m_TargetAssemblyTypeName: CharacterButtonHandler, Assembly-CSharp
+          m_MethodName: OnPointerClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

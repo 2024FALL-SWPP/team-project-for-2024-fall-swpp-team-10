@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterButton : MonoBehaviour
+public class CharacterButtonHandler : MonoBehaviour
 {
     [Header("Sound System")]
     public AudioSource audioSource;
@@ -12,6 +12,8 @@ public class CharacterButton : MonoBehaviour
 
     [Header("Hover")]
     public GameObject hover;
+
+    private int blinkcount = 3;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,7 +25,7 @@ public class CharacterButton : MonoBehaviour
     {
     }
 
-    public void SelectedSound()
+    public void OnPointerClick()
     {
         if (!GameManager.inst.selected)
         {
@@ -57,7 +59,13 @@ public class CharacterButton : MonoBehaviour
     IEnumerator WaitTwoSecondsAndStart()
     {
         hover.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < blinkcount; i++)
+        {
+            yield return new WaitForSeconds(0.4f);
+            hover.SetActive(false);
+            yield return new WaitForSeconds(0.4f);
+            hover.SetActive(true);
+        }
         GameManager.inst.LoadMainStage();
     }
 }

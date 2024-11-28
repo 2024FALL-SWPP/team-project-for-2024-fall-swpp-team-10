@@ -134,8 +134,18 @@ public class GameManager : MonoBehaviour
     {
         return score;
     }
+
+    public void CursorActive(bool toVisible)
+    {
+        if (toVisible)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = toVisible;
+    }
+
     //���� �����丵 ����https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/126#discussion_r1855493298
-    public IEnumerator DeactivateLivesAndAddScore(GameObject[] hearts, AudioClip heartDeactivateSound, float soundVolume)     
+    public IEnumerator DeactivateLivesAndAddScore(GameObject[] hearts, AudioClip heartDeactivateSound, float soundVolume)
     {
         for (int i = 0; i < hearts.Length; i++)
         {
