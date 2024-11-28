@@ -2496,7 +2496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: ad49ade2740b24d4280629f8db284830, type: 3}
-  musicVolume: 0.5
+  musicVolume: 0.2
   loop: 0
   pitch: 1
 --- !u!4 &1018631492
