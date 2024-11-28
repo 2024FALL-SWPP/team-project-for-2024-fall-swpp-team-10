@@ -184,6 +184,8 @@ public class BossStageManager : MonoBehaviour
         }
         gameClear.SetActive(true);
         isGameClear = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void AddScoreBasedOnLives()

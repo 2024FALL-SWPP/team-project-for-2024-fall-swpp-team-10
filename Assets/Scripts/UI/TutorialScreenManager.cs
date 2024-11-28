@@ -59,6 +59,8 @@ public class TutorialScreenManager : MonoBehaviour
     {
         backgroundImage = background.GetComponent<Image>();
         backgroundImage.sprite = stageBackgrounds[GameManager.inst.GetStage() - 1];
+        GameManager.inst.selected = false;
+        Time.timeScale = 1;
     }
     private void OnDisable()
     {

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 public class StartButtonController : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class StartButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return) && btnStart.interactable)
+        {
+            GameManager.inst.SetPlayerName();
+            GameManager.inst.LoadStageSelection();
+        }
     }
 
     private void ValidatePlayerName()
