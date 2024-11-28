@@ -33,6 +33,7 @@ public class BossStageManager : MonoBehaviour
     private GameClearLight gameClearLight; // GameClearLight 컴포넌트 참조
     public Transform player; //추후 삭제 예정
     private StageTransitionManager transitionManager;
+    [SerializeField] Animator transitionAnimator;
 
 
 
@@ -85,7 +86,9 @@ public class BossStageManager : MonoBehaviour
         musicManager.ChangeSpeed(1.25f);
         if (transitionManager != null)
         {
-            transitionManager.BossStageTransition();
+            Debug.Log("Playing boss ani");
+            transitionAnimator.gameObject.SetActive(true);
+            StartCoroutine(transitionManager.BossStageTransition());
         }
     }
 

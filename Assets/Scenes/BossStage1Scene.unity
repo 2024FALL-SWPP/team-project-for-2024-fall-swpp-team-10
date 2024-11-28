@@ -3147,7 +3147,7 @@ GameObject:
   - component: {fileID: 808526296}
   - component: {fileID: 808526295}
   m_Layer: 0
-  m_Name: StageTransitionManager
+  m_Name: BossStageTransitionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3603,7 +3603,7 @@ GameObject:
   - component: {fileID: 945322148}
   - component: {fileID: 945322147}
   m_Layer: 0
-  m_Name: StageTransitionAnimator
+  m_Name: BossStageTransitionAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3619,7 +3619,7 @@ Animator:
   m_GameObject: {fileID: 945322146}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0b096826e5f0b474492e146dd31cafa9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6dd8b785ad9784ba08cb9dcf22c33866, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -10600,6 +10600,7 @@ MonoBehaviour:
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
   soundVolume: 0.7
   player: {fileID: 1431771570}
+  transitionAnimator: {fileID: 945322147}
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -102,8 +102,8 @@ public class StageTransitionManager : MonoBehaviour
         countdownText.gameObject.SetActive(true);
         for (int i = (int)countdownDuration; i > 0; i--)
         {
-            countdownText.text = $"Moving to Boss Stage in {i}...";
             yield return new WaitForSecondsRealtime(1f);
+            countdownText.text = $"Moving to Boss Stage in {i}...";
         }
 
         // Play animation - Uncompleted
@@ -114,11 +114,6 @@ public class StageTransitionManager : MonoBehaviour
 
             // Get animation length
             AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            while (!stateInfo.IsName("MainStageEnd"))
-            {
-                yield return null;
-                stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            }
         }
 
         // Reset time scale before scene change
@@ -133,6 +128,7 @@ public class StageTransitionManager : MonoBehaviour
         if (transitionAnimator != null)
         {
             // Play the animation
+            Debug.Log("Entered BossStageTransition");
             transitionAnimator.Play("BossStageStart");
 
             // Get animation length
