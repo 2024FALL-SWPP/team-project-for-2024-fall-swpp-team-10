@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public Color[,] originColorSave = null;
     public int bossStageMaxLife = 5;
 
+    public bool selected = false;
+
     private void Awake()
     {
         if (GameManager.inst == null)
@@ -132,23 +134,23 @@ public class GameManager : MonoBehaviour
     {
         return score;
     }
-    //ÃßÈÄ ¸®ÆÑÅä¸µ ¿¹Á¤https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/126#discussion_r1855493298
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ä¸µ ï¿½ï¿½ï¿½ï¿½https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/126#discussion_r1855493298
     public IEnumerator DeactivateLivesAndAddScore(GameObject[] hearts, AudioClip heartDeactivateSound, float soundVolume)     
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (hearts[i].activeSelf) // È°¼ºÈ­µÈ Life¸¸ Ã³¸®
+            if (hearts[i].activeSelf) // È°ï¿½ï¿½È­ï¿½ï¿½ Lifeï¿½ï¿½ Ã³ï¿½ï¿½
             {
-                // Life ºñÈ°¼ºÈ­
+                // Life ï¿½ï¿½È°ï¿½ï¿½È­
                 hearts[i].SetActive(false);
-                // Á¡¼ö Ãß°¡
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                 GameManager.inst.AddScore(5000);
-                // È¿°úÀ½ Àç»ý
+                // È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 if (heartDeactivateSound != null)
                 {
                     AudioSource.PlayClipAtPoint(heartDeactivateSound, Camera.main.transform.position, soundVolume);
                 }
-                // 0.5ÃÊ ´ë±â ÈÄ ´ÙÀ½ Life Ã³¸®
+                // 0.5ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Life Ã³ï¿½ï¿½
                 yield return new WaitForSeconds(0.5f);
             }
         }

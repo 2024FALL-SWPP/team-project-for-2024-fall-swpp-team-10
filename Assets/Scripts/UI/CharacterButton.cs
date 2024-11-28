@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterButton : MonoBehaviour
 {
     [Header("Sound System")]
+    public AudioSource audioSource;
     [SerializeField] public AudioClip hoverSound;
-    [SerializeField][Range(0f, 1f)] public float volume = 0.5f;
+    [SerializeField] public AudioClip selectSound;
 
     [Header("Hover")]
     public GameObject hover;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
     }
@@ -21,17 +23,41 @@ public class CharacterButton : MonoBehaviour
     {
     }
 
+    public void SelectedSound()
+    {
+        if (!GameManager.inst.selected)
+        {
+            GameManager.inst.selected = true;
+            if (selectSound != null)
+            {
+                audioSource.PlayOneShot(selectSound);
+                StartCoroutine(WaitTwoSecondsAndStart());
+            }
+        }
+    }
+
     public void OnPointerEnter()
     {
-        hover.SetActive(true);
-        if (hoverSound != null)
+        if (!GameManager.inst.selected)
         {
-            AudioSource.PlayClipAtPoint(hoverSound, new Vector3(960, 540, 0), volume);
+            hover.SetActive(true);
+            if (hoverSound != null)
+            {
+                audioSource.PlayOneShot(hoverSound);
+            }
         }
     }
 
     public void OnPointerExit()
     {
-        hover.SetActive(false);
+        if (!GameManager.inst.selected)
+            hover.SetActive(false);
+    }
+
+    IEnumerator WaitTwoSecondsAndStart()
+    {
+        hover.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        GameManager.inst.LoadMainStage();
     }
 }
