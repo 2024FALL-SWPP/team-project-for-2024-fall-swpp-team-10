@@ -334,7 +334,7 @@ public class PlayerControl : MonoBehaviour
     {
         return isInvincible;
     }
-    
+
     public bool GetIsBlinking()
     {
         return isBlinking;

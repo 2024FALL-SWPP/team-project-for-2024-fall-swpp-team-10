@@ -22,7 +22,7 @@ public class MagnetManager : BeneficialObject
             HideAndKeep();
         }
     }
-    
+
     protected override void OnPlayerCollision(GameObject player)
     {
         StartCoroutine(Magnet());
@@ -55,7 +55,7 @@ public class MagnetManager : BeneficialObject
 
             foreach (GameObject coin in coins)
             {
-                if (coin != null && -6 < positionZ(coin) && positionZ(coin) < 80)
+                if (coin != null && player.transform.position.z < positionZ(coin) && positionZ(coin) < 80)
                 {
                     coin.transform.position = Vector3.MoveTowards(coin.transform.position, playerControl.centerPosition, coinSpeed * Time.deltaTime);
                 }

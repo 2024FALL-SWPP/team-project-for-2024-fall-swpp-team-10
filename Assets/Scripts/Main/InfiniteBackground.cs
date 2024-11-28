@@ -5,6 +5,8 @@ using UnityEngine;
 public class InfiniteBackground : MonoBehaviour
 {
     private float speed = 20.0f;
+    public int numbersOfMapPrefab;
+    public float standardZPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -15,10 +17,10 @@ public class InfiniteBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime);
-        if (transform.position.z < -240)
+        transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
+        if (transform.position.z < -standardZPosition)
         {
-            transform.Translate(transform.position.x, transform.position.y, 720);
+            transform.position = new Vector3(transform.position.x, transform.position.y, standardZPosition * (numbersOfMapPrefab - 1));
         }
     }
 }
