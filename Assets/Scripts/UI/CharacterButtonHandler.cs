@@ -32,7 +32,7 @@ public class CharacterButtonHandler : MonoBehaviour
             GameManager.inst.selected = true;
             if (selectSound != null)
             {
-                audioSource.PlayOneShot(selectSound);
+                audioSource.PlayOneShot(selectSound, 3f);
                 StartCoroutine(WaitTwoSecondsAndStart());
             }
         }
