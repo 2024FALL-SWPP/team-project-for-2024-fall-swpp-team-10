@@ -4,7 +4,6 @@ public class MusicManager : MonoBehaviour
 {
     [Header("Audio Settings")]
     [SerializeField] public AudioClip backgroundMusic;
-    protected AudioClip musicToPlay;
     [SerializeField][Range(0f, 1f)] public float musicVolume = 0.5f;
     [SerializeField] public bool loop = false;
     [SerializeField] public float pitch = 1f;
@@ -16,17 +15,11 @@ public class MusicManager : MonoBehaviour
     {
         // Setup audio source
         audioSource = gameObject.AddComponent<AudioSource>();
-        SetMusic();
-        audioSource.clip = musicToPlay;
+        audioSource.clip = backgroundMusic;
         audioSource.volume = musicVolume;
         audioSource.loop = loop;
         audioSource.pitch = pitch;
         PlayMusic();
-    }
-
-    protected virtual void SetMusic()
-    {
-        musicToPlay = backgroundMusic;
     }
 
     public void PlayMusic()
