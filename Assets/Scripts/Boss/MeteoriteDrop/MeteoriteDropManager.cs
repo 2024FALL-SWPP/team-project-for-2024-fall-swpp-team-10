@@ -34,7 +34,7 @@ public class MeteoriteDropManager : MonoBehaviour
 
     void Start()
     {
-        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
+        bossStageManager = gameObject.GetComponent<BossStageManager>();
         areaMin -= offset;
         areaMax += offset;
         // 그리드 셀 생성 및 초기화

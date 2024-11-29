@@ -4240,41 +4240,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8206b722d11501a449d6a278cca2adfa, type: 3}
---- !u!1 &1163737292 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
-  m_PrefabInstance: {fileID: 2039046443}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1163737299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   m_PrefabInstance: {fileID: 2039046443}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1163737300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163737292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a54e869efdc43544bdd8b2d98c20581, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meteoritePrefab: {fileID: 3227589770988646094, guid: 4bec0b7fd33af18479addce8dda9958f, type: 3}
-  gridCellPrefab: {fileID: 4049657199444927572, guid: 56db6faffa0a9b24e917fc354ed85a5d, type: 3}
-  areaMin: {x: -10, y: 1.5, z: -10}
-  areaMax: {x: 10, y: 1.5, z: 10}
-  warningDuration: 1
-  meteoriteHeight: 15
-  playerTransform: {fileID: 1431771570}
 --- !u!114 &1163737305 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   m_PrefabInstance: {fileID: 2039046443}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163737292}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d886e5e2aeca74bb1b740eb723715091, type: 3}
@@ -10288,6 +10264,7 @@ GameObject:
   - component: {fileID: 1474742876}
   - component: {fileID: 1474742877}
   - component: {fileID: 1474742878}
+  - component: {fileID: 1474742879}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -10339,7 +10316,6 @@ MonoBehaviour:
   gameClear: {fileID: 71086760}
   cameraScript: {fileID: 659597871}
   playerScript: {fileID: 1431771574}
-  bossAttackPatternScript: {fileID: 1163737300}
   bossControlScript: {fileID: 1163737305}
   hearts:
   - {fileID: 490164415}
@@ -10372,6 +10348,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spotlight: {fileID: 247866380}
   glowEffect: {fileID: 1352405953}
+--- !u!114 &1474742879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474742874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54e869efdc43544bdd8b2d98c20581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meteoritePrefab: {fileID: 3227589770988646094, guid: 4bec0b7fd33af18479addce8dda9958f, type: 3}
+  gridCellPrefab: {fileID: 4049657199444927572, guid: 56db6faffa0a9b24e917fc354ed85a5d, type: 3}
+  areaMin: {x: -10, y: 1.5, z: -10}
+  areaMax: {x: 10, y: 1.5, z: 10}
+  warningDuration: 1
+  meteoriteHeight: 15
+  playerTransform: {fileID: 1431771570}
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
