@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhaseTwoStrategy : MeteoriteDropStrategy
+public class PhaseTwoStrategy : DropAttackStrategy
 {
     public PhaseTwoStrategy(GridCell[,] gridCells)
     {

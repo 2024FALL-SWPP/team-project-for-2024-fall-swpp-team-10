@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteoriteDropStrategy
+public class DropAttackStrategy
 {
 
     protected List<Vector3[]> patterns;
@@ -13,7 +13,7 @@ public class MeteoriteDropStrategy
         Random.InitState(System.Environment.TickCount);
     }
 
-    public IEnumerator Execute(MeteoriteDropManager meteoriteDropManager)
+    public IEnumerator Execute(DropAttackManager meteoriteDropManager)
     {
         List<Vector3[]> availablePatterns = new List<Vector3[]>();
         foreach (var pattern in patterns)
@@ -44,7 +44,7 @@ public class MeteoriteDropStrategy
 
 
     // 플레이어가 패턴에 포함되는지 확인하는 함수
-    public bool IsPlayerInPattern(MeteoriteDropManager meteoriteDropManager, Vector3[] pattern)
+    public bool IsPlayerInPattern(DropAttackManager meteoriteDropManager, Vector3[] pattern)
     {
         foreach (Vector3 cellPosition in pattern)
         {
@@ -58,7 +58,7 @@ public class MeteoriteDropStrategy
     }
 
     // 플레이어가 특정 그리드 셀에 있는지 확인하는 함수
-    public bool IsPlayerInCell(MeteoriteDropManager meteoriteDropManager, GridCell cell)
+    public bool IsPlayerInCell(DropAttackManager meteoriteDropManager, GridCell cell)
     {
         // 그리드 셀의 경계 계산
         Vector3 cellPosition = cell.transform.position;

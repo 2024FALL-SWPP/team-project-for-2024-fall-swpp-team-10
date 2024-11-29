@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteoriteDropManager : MonoBehaviour
+public class DropAttackManager : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject meteoritePrefab; // 운석 프리팹
@@ -22,7 +22,7 @@ public class MeteoriteDropManager : MonoBehaviour
     [Header("Player")]
     public Transform playerTransform; // 플레이어의 Transform
 
-    private MeteoriteDropStrategy currentStrategy; // 현재 Phase의 Strategy
+    private DropAttackStrategy currentStrategy; // 현재 Phase의 Strategy
     private bool isAttacking = false;
 
     private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 �׸��� �� �迭
