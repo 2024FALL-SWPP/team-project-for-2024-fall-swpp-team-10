@@ -14,7 +14,7 @@ public class MusicManager : MonoBehaviour
     protected virtual void Awake()
     {
         // Setup audio source
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         audioSource.clip = backgroundMusic;
         audioSource.volume = musicVolume;
         audioSource.loop = loop;
