@@ -15,6 +15,7 @@ public class SpawnObjects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Random.InitState(System.Environment.TickCount);
         StartCoroutine(Spawn());
     }
 
