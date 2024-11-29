@@ -4764,9 +4764,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 6338332139874680244, guid: 40613e311b868a54099dbdbfb622ed52, type: 3}
-  - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
+  - {fileID: 4733150328534946732, guid: 9146b8304b6815543bdacb4294e0b05d, type: 3}
   - {fileID: 7462247613009824198, guid: d8fe314455cde314ba17b4425734d115, type: 3}
-  - {fileID: 4095483754371699841, guid: 9effd30e80a8ae14dbf1701177ae2194, type: 3}
+  - {fileID: 4733150328534946732, guid: 9146b8304b6815543bdacb4294e0b05d, type: 3}
   startSpawning: 5
   spawnInterval: 2.3
   reduceGap: 0.02

@@ -69,6 +69,7 @@ public class BossStageManager : MonoBehaviour
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
         gameClearLight = GetComponent<GameClearLight>();
+        GameManager.inst.CursorActive(true);
     }
 
     void Start()
