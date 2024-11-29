@@ -69,7 +69,7 @@ public class BossStageManager : MonoBehaviour
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
         gameClearLight = GetComponent<GameClearLight>();
-        GameManager.inst.CursorActive(false);
+        GameManager.inst.CursorActive(true);
     }
 
     void Start()
@@ -121,7 +121,6 @@ public class BossStageManager : MonoBehaviour
     public void Pause()
     {
         pause.SetActive(true);
-        GameManager.inst.CursorActive(true);
         Time.timeScale = 0;
         if (musicManager != null)
         {
@@ -132,7 +131,6 @@ public class BossStageManager : MonoBehaviour
     public void Resume()
     {
         pause.SetActive(false);
-        GameManager.inst.CursorActive(false);
         Time.timeScale = 1;
         if (musicManager != null)
         {
