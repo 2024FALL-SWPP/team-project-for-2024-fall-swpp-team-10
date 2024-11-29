@@ -9,5 +9,6 @@ public class ObstacleManager : DamagingObject
     {
         base.Awake();
         score = 500;
+        isDestroyable = false;
     }
 }

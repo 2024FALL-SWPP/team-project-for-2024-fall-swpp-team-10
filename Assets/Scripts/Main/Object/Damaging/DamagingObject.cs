@@ -6,6 +6,7 @@ using UnityEngine;
 public class DamagingObject : ObjectManager // enemy, obstacle
 {
     protected int score;
+    protected bool isDestroyable;
 
     [Header("Sound System")]
     [SerializeField] public AudioClip enemyCollisionSound;
@@ -27,6 +28,8 @@ public class DamagingObject : ObjectManager // enemy, obstacle
             Destroy(gameObject);
             return;
         }
+
+        isDestroyable = false; // 플레이어가 해당 Object에 의해 타격을 입은 경우, 해당 Object를 파괴할 수는 없다.
         Instantiate(damagedParticle, playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
         GameManager.inst.AddScore(score * -1);
         GameManager.inst.RemoveLife();
@@ -41,5 +44,10 @@ public class DamagingObject : ObjectManager // enemy, obstacle
         {
             AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, volume);
         }
+    }
+
+    public bool IsDestroyable()
+    {
+        return isDestroyable;
     }
 }
