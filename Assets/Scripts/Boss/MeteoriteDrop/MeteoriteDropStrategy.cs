@@ -6,6 +6,11 @@ public class MeteoriteDropStrategy
 {
     protected List<Vector3[]> patterns;
 
+    void Start()
+    {
+        Random.InitState(System.Environment.TickCount);
+    }
+
     public virtual IEnumerator Execute(BossAttackPattern bossAttackPattern)
     {
         throw new System.NotImplementedException();
