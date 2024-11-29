@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 using EnumManager;
 using TMPro;
 using UnityEngine.EventSystems;
-public class MainManager : MonoBehaviour
+public class MainManager : StageManager
 {
-    [Header("UI Setting")]
+    /*[Header("UI Setting")]
     public GameObject[] characters;
     public GameObject[] characterUI;
     public GameObject[] hearts;
@@ -28,27 +28,29 @@ public class MainManager : MonoBehaviour
     public float stageDuration = 3.0f; // Length of the main stage
     private float currentStageTime = 0f;
     private bool isStageComplete = false;
+    private StageTransitionManager transitionManager;*/
+    [Header("MainStage End Condition Settings")]
+    [SerializeField] float stageDuration = 3.0f;
+    private float currentStageTime = 180.0f;
     private StageTransitionManager transitionManager;
     public GameObject bossLandingParticle;
     float bossDropSpeed = 10f;
 
     GameObject activeCharacter;
 
-
     // Start is called before the first frame update
-    void Awake()
+    protected override void Awake()
     {
-        StartCoroutine(AddScoreEverySecond());
-        scoreText = score.GetComponent<TextMeshProUGUI>();
-        // DontDestroyOnLoad(gameObject);
-        musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
-        currentStageTime = 0f;
+        base.Awake();
+        maxLife = GameManager.inst.maxLife;
+        GameManager.inst.ResetStats();
         transitionManager = FindObjectOfType<StageTransitionManager>();
         GameManager.inst.CursorActive(false);
+        StartCoroutine(AddScoreEverySecond());
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
@@ -86,8 +88,22 @@ public class MainManager : MonoBehaviour
                 StartCoroutine(CompleteStage());
             }
         }
-    }
+    }*/
+    protected override void Update()
+    {
+        base.Update();
 
+        // �������� �Ϸ� üũ
+        if (!isStageComplete)
+        {
+            currentStageTime += Time.deltaTime;
+            // Check if stage duration is complete
+            if (currentStageTime >= stageDuration)
+            {
+                StartCoroutine(CompleteStage());
+            }
+        }
+    }
     private IEnumerator CompleteStage()
     {
         isStageComplete = true;
@@ -104,9 +120,12 @@ public class MainManager : MonoBehaviour
         {
             musicManager.PauseMusic();
         }
-
+        yield return new WaitForSeconds(0.5f);
+        AddScoreBasedOnLives();
         // Freeze the game
         Time.timeScale = 0f;
+
+
 
         // Start the transition sequence
         if (transitionManager != null)
@@ -115,12 +134,12 @@ public class MainManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    }*/
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    /*void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         int characterIndex = (int)GameManager.inst.GetCharacter();
         characters[characterIndex].SetActive(true);
@@ -133,9 +152,15 @@ public class MainManager : MonoBehaviour
         isSpawnStopped = false;
 
         characters[(int)GameManager.inst.GetCharacter()].GetComponent<PlayerControl>().ChangeColorOriginal();
+    }*/
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        base.OnSceneLoaded(scene, mode);
+        transitionManager.SetCurrentCharacter(activeCharacter);
+        activeCharacter.GetComponent<PlayerControl>().ChangeColorOriginal();
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -161,11 +186,28 @@ public class MainManager : MonoBehaviour
             musicManager.ResumeMusic();
         }
         EventSystem.current.SetSelectedGameObject(null);
+    }*/
+    protected override void PauseGame()
+    {
+        base .PauseGame();
+        GameManager.inst.CursorActive(true);
     }
 
+    public override void ResumeGame()
+    {
+        base.ResumeGame();
+        GameManager.inst.CursorActive(false);
+    }
+
+    // ���� ���� ó��
+    protected override void HandleGameOver()
+    {
+        base.HandleGameOver();
+        GameManager.inst.CursorActive(true);
+    }
     private IEnumerator AddScoreEverySecond()
     {
-        while (GameManager.inst.GetLife() > 0)
+        while (GameManager.inst.GetLife() > 0 && !isStageComplete)
         {
             yield return new WaitForSeconds(1.0f);
             GameManager.inst.AddScore(100);

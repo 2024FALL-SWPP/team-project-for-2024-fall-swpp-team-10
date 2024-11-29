@@ -22,7 +22,7 @@ public class MusicManager : MonoBehaviour
         PlayMusic();
     }
 
-    public void PlayMusic()
+    public virtual void PlayMusic()
     {
         if (audioSource != null && !audioSource.isPlaying)
         {
@@ -30,7 +30,7 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    public void StopMusic()
+    public virtual void StopMusic()
     {
         if (audioSource != null && audioSource.isPlaying)
         {
@@ -38,7 +38,7 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    public void SetVolume(float volume)
+    public virtual void SetVolume(float volume)
     {
         if (audioSource != null)
         {
@@ -46,7 +46,7 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    public void PauseMusic()
+    public virtual void PauseMusic()
     {
         if (audioSource != null && audioSource.isPlaying)
         {
@@ -55,7 +55,7 @@ public class MusicManager : MonoBehaviour
 
     }
 
-    public void ResumeMusic()
+    public virtual void ResumeMusic()
     {
         if (audioSource != null && !audioSource.isPlaying)
         {
@@ -64,7 +64,7 @@ public class MusicManager : MonoBehaviour
 
     }
 
-    public void ChangeSpeed(float v)
+    public virtual void ChangeSpeed(float v)
     {
         if (audioSource != null)
         {

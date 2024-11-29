@@ -164,6 +164,10 @@ MonoBehaviour:
   - {fileID: 612423162}
   - {fileID: 1190830568}
   - {fileID: 950541327}
+  pauseMenu: {fileID: 1037198480}
+  gameOverScreen: {fileID: 1316025212}
+  score: {fileID: 1312659204}
+  scoreText: {fileID: 1312659206}
   hearts:
   - {fileID: 1039681153}
   - {fileID: 534734793}
@@ -174,6 +178,8 @@ MonoBehaviour:
   boss: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   stageDuration: 183
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
+  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  soundVolume: 0.7
 --- !u!114 &40871804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3030,7 +3036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480902787771362996, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Resume
+      value: ResumeGame
       objectReference: {fileID: 0}
     - target: {fileID: 4480902787771362996, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

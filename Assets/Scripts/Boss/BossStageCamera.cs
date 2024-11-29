@@ -17,9 +17,9 @@ public class BossStageCamera : MonoBehaviour
     private BossStagePlayer playerScript;
     public BossStageManager managerScript;
 
-    private void Awake() 
+    void Start() 
     {
-        for (int i = 0; i < characters.Length; i++)
+        /*for (int i = 0; i < characters.Length; i++)
         {
             if (characters[i].activeSelf)
             {
@@ -27,9 +27,9 @@ public class BossStageCamera : MonoBehaviour
                 player = characters[i].transform;
                 break;
             }
-        }
-        /*playerScript = managerScript.characters[(int)GameManager.inst.GetCharacter()].GetComponent<BossStagePlayer>();
-        player = managerScript.characters[(int)GameManager.inst.GetCharacter()].transform;*/
+        }*/
+        playerScript = managerScript.ActiveCharacter().GetComponent<BossStagePlayer>();
+        player = managerScript.ActiveCharacter().transform;
 
     }
     private void LateUpdate()

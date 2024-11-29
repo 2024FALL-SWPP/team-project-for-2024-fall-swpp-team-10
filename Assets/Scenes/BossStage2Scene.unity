@@ -8247,7 +8247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cd0a884df54fd4142ae94593f1eaa1d5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cd0a884df54fd4142ae94593f1eaa1d5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9332,7 +9332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1252641342
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9376,7 +9376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ddda4bc09f4e54877b60c768491ce6db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ddda4bc09f4e54877b60c768491ce6db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9931,7 +9931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d16e0b016651b46bf8545122cd801be1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d16e0b016651b46bf8545122cd801be1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10420,40 +10420,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1424859023}
+  - {fileID: 1924334493}
+  - {fileID: 922855648}
   - {fileID: 1431771568}
-  - {fileID: 0}
+  - {fileID: 1283838795}
   characterUI:
   - {fileID: 736295309}
   - {fileID: 411612365}
   - {fileID: 111231835}
   - {fileID: 1252641341}
   - {fileID: 2066124953}
+  pauseMenu: {fileID: 1617246193}
+  gameOverScreen: {fileID: 1190581245}
   score: {fileID: 1583997663}
-  gameOver: {fileID: 1190581245}
-  gameClear: {fileID: 1390848906}
-  cameraScript: {fileID: 659597871}
-  playerScript: {fileID: 1431771574}
-  bossControlScript: {fileID: 1163737305}
+  scoreText: {fileID: 1583997665}
   hearts:
   - {fileID: 490164415}
   - {fileID: 134332179}
   - {fileID: 358595470}
   - {fileID: 1880908856}
   - {fileID: 14207239}
-  Darkhearts:
+  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  soundVolume: 0.7
+  darkHearts:
   - {fileID: 2127547025}
   - {fileID: 1680471478}
   - {fileID: 1894462152}
-  pause: {fileID: 1617246193}
+  gameClear: {fileID: 1390848906}
+  cameraScript: {fileID: 659597871}
+  bossControlScript: {fileID: 1163737305}
   mainCamera: {fileID: 659597869}
-  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
-  soundVolume: 0.7
-  player: {fileID: 1431771570}
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10560,7 +10559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
@@ -11929,7 +11928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalRotation.w
