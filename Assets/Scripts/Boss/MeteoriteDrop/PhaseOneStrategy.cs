@@ -7,6 +7,7 @@ public class PhaseOneStrategy : MeteoriteDropStrategy
     public PhaseOneStrategy(GridCell[,] gridCells)
     {
         patterns = new List<Vector3[]>();
+        gridCellWarningColor = new Color(1f, 0.5f, 0f); //주황색
 
         // 그리드 셀의 위치를 가져와서 패턴 정의
         for (int x = 0; x < 3; x++)
@@ -16,10 +17,5 @@ public class PhaseOneStrategy : MeteoriteDropStrategy
                 patterns.Add(new Vector3[] { gridCells[x, z].transform.position });
             }
         }
-    }
-
-    public override IEnumerator Execute(BossAttackPattern bossAttackPattern)
-    {
-        return ExecuteCommon(bossAttackPattern, Color.red);
     }
 }

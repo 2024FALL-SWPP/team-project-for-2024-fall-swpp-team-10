@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class MeteoriteDropStrategy
 {
+
     protected List<Vector3[]> patterns;
+    protected Color gridCellWarningColor;
 
     void Start()
     {
         Random.InitState(System.Environment.TickCount);
     }
 
-    public virtual IEnumerator Execute(BossAttackPattern bossAttackPattern)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected IEnumerator ExecuteCommon(BossAttackPattern bossAttackPattern, Color highlightColor)
+    public IEnumerator Execute(MeteoriteDropManager meteoriteDropManager)
     {
         List<Vector3[]> availablePatterns = new List<Vector3[]>();
         foreach (var pattern in patterns)
         {
-            if (IsPlayerInPattern(bossAttackPattern, pattern))
+            if (IsPlayerInPattern(meteoriteDropManager, pattern))
             {
                 availablePatterns.Add(pattern);
             }
@@ -33,13 +30,13 @@ public class MeteoriteDropStrategy
         int randomIndex = Random.Range(0, availablePatterns.Count);
         Vector3[] selectedPattern = availablePatterns[randomIndex];
 
-        bossAttackPattern.HighlightGridCells(selectedPattern, highlightColor);
-        yield return new WaitForSeconds(bossAttackPattern.warningDuration);
-        bossAttackPattern.ResetGridCells(selectedPattern);
+        meteoriteDropManager.HighlightGridCells(selectedPattern, gridCellWarningColor);
+        yield return new WaitForSeconds(meteoriteDropManager.warningDuration);
+        meteoriteDropManager.ResetGridCells(selectedPattern);
 
         foreach (Vector3 pos in selectedPattern)
         {
-            bossAttackPattern.StartCoroutine(bossAttackPattern.ExecuteAttack(pos));
+            meteoriteDropManager.StartCoroutine(meteoriteDropManager.ExecuteAttack(pos));
         }
 
         yield return new WaitForSeconds(2f);
@@ -47,12 +44,12 @@ public class MeteoriteDropStrategy
 
 
     // 플레이어가 패턴에 포함되는지 확인하는 함수
-    public bool IsPlayerInPattern(BossAttackPattern bossAttackPattern, Vector3[] pattern)
+    public bool IsPlayerInPattern(MeteoriteDropManager meteoriteDropManager, Vector3[] pattern)
     {
         foreach (Vector3 cellPosition in pattern)
         {
-            GridCell cell = bossAttackPattern.GetGridCellByPosition(cellPosition);
-            if (cell != null && IsPlayerInCell(bossAttackPattern, cell))
+            GridCell cell = meteoriteDropManager.GetGridCellByPosition(cellPosition);
+            if (cell != null && IsPlayerInCell(meteoriteDropManager, cell))
             {
                 return true;
             }
@@ -61,7 +58,7 @@ public class MeteoriteDropStrategy
     }
 
     // 플레이어가 특정 그리드 셀에 있는지 확인하는 함수
-    public bool IsPlayerInCell(BossAttackPattern bossAttackPattern, GridCell cell)
+    public bool IsPlayerInCell(MeteoriteDropManager meteoriteDropManager, GridCell cell)
     {
         // 그리드 셀의 경계 계산
         Vector3 cellPosition = cell.transform.position;
@@ -75,7 +72,7 @@ public class MeteoriteDropStrategy
         float minZ = cellPosition.z - halfSizeZ;
         float maxZ = cellPosition.z + halfSizeZ;
 
-        Vector3 playerPos = bossAttackPattern.playerTransform.position;
+        Vector3 playerPos = meteoriteDropManager.playerTransform.position;
 
         // 플레이어의 위치가 그리드 셀의 경계 안에 있는지 확인
         if (playerPos.x >= minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)

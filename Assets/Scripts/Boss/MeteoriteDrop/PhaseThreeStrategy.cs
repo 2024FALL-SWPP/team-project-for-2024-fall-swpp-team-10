@@ -7,6 +7,7 @@ public class PhaseThreeStrategy : MeteoriteDropStrategy
     public PhaseThreeStrategy(GridCell[,] gridCells)
     {
         patterns = new List<Vector3[]>();
+        gridCellWarningColor = Color.magenta; //자홍색
 
         // 패턴 1: 각 모서리 가운데 그리드 4개 공격
         patterns.Add(new Vector3[]
@@ -80,10 +81,5 @@ public class PhaseThreeStrategy : MeteoriteDropStrategy
             gridCells[1,2].transform.position,
             gridCells[2,2].transform.position
         });
-    }
-
-    public override IEnumerator Execute(BossAttackPattern bossAttackPattern)
-    {
-        return ExecuteCommon(bossAttackPattern, Color.green);
     }
 }

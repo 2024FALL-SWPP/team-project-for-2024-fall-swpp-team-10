@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossAttackPattern : MonoBehaviour
+public class MeteoriteDropManager : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject meteoritePrefab; // 운석 프리팹
