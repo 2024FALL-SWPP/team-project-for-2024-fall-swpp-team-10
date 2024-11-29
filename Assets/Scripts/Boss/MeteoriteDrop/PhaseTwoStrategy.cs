@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhaseTwoStrategy : IMeteoriteDropStrategy
+public class PhaseTwoStrategy : MeteoriteDropStrategy
 {
-    private List<Vector3[]> patterns;
-
     public PhaseTwoStrategy(GridCell[,] gridCells)
     {
         patterns = new List<Vector3[]>();
@@ -37,35 +35,8 @@ public class PhaseTwoStrategy : IMeteoriteDropStrategy
         patterns.Add(new Vector3[] { gridCells[0, 2].transform.position, gridCells[1, 1].transform.position, gridCells[2, 0].transform.position });
     }
 
-    public IEnumerator Execute(BossAttackPattern bossAttackPattern)
+    public override IEnumerator Execute(BossAttackPattern bossAttackPattern)
     {
-        // 플레이어 위치가 포함된 패턴 필터링
-        List<Vector3[]> availablePatterns = new List<Vector3[]>();
-        foreach (var pattern in patterns)
-        {
-            if (bossAttackPattern.IsPlayerInPattern(pattern))
-            {
-                availablePatterns.Add(pattern);
-            }
-        }
-
-        if (availablePatterns.Count == 0)
-            yield break;
-
-        // 패턴 랜덤 선택
-        int randomIndex = Random.Range(0, availablePatterns.Count);
-        Vector3[] selectedPattern = availablePatterns[randomIndex];
-
-        // 공격 실행
-        bossAttackPattern.HighlightGridCells(selectedPattern, Color.blue);
-        yield return new WaitForSeconds(bossAttackPattern.warningDuration);
-        bossAttackPattern.ResetGridCells(selectedPattern);
-
-        foreach (Vector3 pos in selectedPattern)
-        {
-            bossAttackPattern.StartCoroutine(bossAttackPattern.ExecuteAttack(pos));
-        }
-
-        yield return new WaitForSeconds(2f);
+        return ExecuteCommon(bossAttackPattern, Color.blue);
     }
 }

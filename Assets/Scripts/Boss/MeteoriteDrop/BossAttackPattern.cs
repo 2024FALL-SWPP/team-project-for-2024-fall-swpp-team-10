@@ -22,7 +22,7 @@ public class BossAttackPattern : MonoBehaviour
     [Header("Player")]
     public Transform playerTransform; // 플레이어의 Transform
 
-    private List<IMeteoriteDropStrategy> strategiesPerPhase; // 현재 Phase의 Strategy List
+    private MeteoriteDropStrategy currentStrategy; // 현재 Phase의 Strategy
     private bool isAttacking = false;
 
     private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 �׸��� �� �迭
@@ -41,7 +41,7 @@ public class BossAttackPattern : MonoBehaviour
         InitializeGrid();
 
         // 공격 패턴 초기화
-        InitializeStrategies();
+        UpdateNewStrategy();
 
         // 공격 시퀀스 시작
         StartCoroutine(AttackSequence());
@@ -98,22 +98,19 @@ public class BossAttackPattern : MonoBehaviour
         meteoriteSize = Mathf.Min(cellSizeX, cellSizeZ) * 0.05f;
     }
     // 공격 패턴 초기화
-    void InitializeStrategies()
+    void UpdateNewStrategy()
     {
-        strategiesPerPhase = new List<IMeteoriteDropStrategy>();
-
-        // 현재 Phase에 해당하는 전략을 생성하여 리스트에 추가
-        int currentPhase = bossStageManager.GetPhase() + 1; // Phase indexing: 0-base
+        int currentPhase = bossStageManager.GetPhase(); // Phase indexing: 0-base
         switch (currentPhase)
         {
+            case 0:
+                currentStrategy = new PhaseOneStrategy(gridCells);
+                break;
             case 1:
-                strategiesPerPhase.Add(new PhaseOneStrategy(gridCells));
+                currentStrategy = new PhaseTwoStrategy(gridCells);
                 break;
             case 2:
-                strategiesPerPhase.Add(new PhaseTwoStrategy(gridCells));
-                break;
-            case 3:
-                strategiesPerPhase.Add(new PhaseThreeStrategy(gridCells));
+                currentStrategy = new PhaseThreeStrategy(gridCells);
                 break;
             default:
                 Debug.LogWarning("Invalid Phase");
@@ -121,32 +118,30 @@ public class BossAttackPattern : MonoBehaviour
         }
     }
 
+
     // 공격 시퀀스 실행
     IEnumerator AttackSequence()
     {
-        int lastPhase = bossStageManager.GetPhase() + 1; // 초기 Phase 저장
+        int lastPhase = bossStageManager.GetPhase(); // 초기 Phase 저장
 
         while (bossStageManager.GetBossLife() > 0)
         {
             if (!isAttacking)
             {
+                isAttacking = true;
+
                 // 현재 Phase 확인
-                int currentPhase = bossStageManager.GetPhase() + 1;
+                int currentPhase = bossStageManager.GetPhase();
 
                 // Phase가 변경되었는지 확인
                 if (currentPhase != lastPhase)
                 {
-                    InitializeStrategies(); // 새로운 전략 갱신
+                    UpdateNewStrategy(); // 새로운 전략 갱신
                     lastPhase = currentPhase; // 마지막 Phase 업데이트
                 }
 
-                isAttacking = true;
-
                 // 현재 Phase의 전략 실행
-                foreach (var strategy in strategiesPerPhase)
-                {
-                    yield return StartCoroutine(strategy.Execute(this));
-                }
+                yield return StartCoroutine(currentStrategy.Execute(this));
 
                 isAttacking = false;
             }
@@ -156,46 +151,6 @@ public class BossAttackPattern : MonoBehaviour
 
 
         // 보스가 사망했을 때 처리 (필요 시 추가)
-    }
-
-    // 플레이어가 패턴에 포함되는지 확인하는 함수
-    public bool IsPlayerInPattern(Vector3[] pattern)
-    {
-        foreach (Vector3 cellPosition in pattern)
-        {
-            GridCell cell = GetGridCellByPosition(cellPosition);
-            if (cell != null && IsPlayerInCell(cell))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    // 플레이어가 특정 그리드 셀에 있는지 확인하는 함수
-    public bool IsPlayerInCell(GridCell cell)
-    {
-        // 그리드 셀의 경계 계산
-        Vector3 cellPosition = cell.transform.position;
-        Vector3 cellScale = cell.transform.localScale;
-
-        float halfSizeX = cellScale.x / 2f;
-        float halfSizeZ = cellScale.z / 2f;
-
-        float minX = cellPosition.x - halfSizeX;
-        float maxX = cellPosition.x + halfSizeX;
-        float minZ = cellPosition.z - halfSizeZ;
-        float maxZ = cellPosition.z + halfSizeZ;
-
-        Vector3 playerPos = playerTransform.position;
-
-        // 플레이어의 위치가 그리드 셀의 경계 안에 있는지 확인
-        if (playerPos.x >=minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)
-        {
-            return true;
-        }
-        return false;
     }
 
     // 그리드 셀 강조 기능 함수
