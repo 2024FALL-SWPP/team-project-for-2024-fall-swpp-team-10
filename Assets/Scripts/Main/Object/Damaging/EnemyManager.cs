@@ -9,6 +9,5 @@ public class EnemyManager : DamagingObject
     {
         base.Awake();
         score = 1000;
-        isDestroyable = true;
     }
 }
