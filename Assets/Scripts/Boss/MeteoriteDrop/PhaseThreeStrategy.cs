@@ -7,7 +7,7 @@ public class PhaseThreeStrategy : MeteoriteDropStrategy
     public PhaseThreeStrategy(GridCell[,] gridCells)
     {
         patterns = new List<Vector3[]>();
-        gridCellWarningColor = Color.magenta; //자홍색
+        gridCellWarningColor = Color.red; //빨간색
 
         // 패턴 1: 각 모서리 가운데 그리드 4개 공격
         patterns.Add(new Vector3[]

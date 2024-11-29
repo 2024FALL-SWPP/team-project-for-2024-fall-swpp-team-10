@@ -7,7 +7,7 @@ public class PhaseTwoStrategy : MeteoriteDropStrategy
     public PhaseTwoStrategy(GridCell[,] gridCells)
     {
         patterns = new List<Vector3[]>();
-        gridCellWarningColor = new Color(1f, 0.5f, 0f); //주황색
+        gridCellWarningColor = Color.magenta; //자홍색
         // 가로 줄 공격 패턴
         for (int x = 0; x < 3; x++)
         {
