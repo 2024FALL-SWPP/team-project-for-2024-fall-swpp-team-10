@@ -7489,7 +7489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687f7a3ccfce75b49bb79ea1b4385f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 3, z: -5}
+  offset: {x: 0, y: 2.5, z: -5.5}
   followSpeed: 10
   pitch: 30
   bossTransform: {fileID: 1163737299}
@@ -11714,7 +11714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: m_LocalRotation.w

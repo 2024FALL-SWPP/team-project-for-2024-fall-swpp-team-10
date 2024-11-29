@@ -5,7 +5,7 @@ public class BossStageCamera : MonoBehaviour
 {
     [Header("Camera Settings")]
     private Transform player; // �÷��̾��� Transform
-    public Vector3 offset = new Vector3(0, 3, -5); // ���ʰ� ���������� �Ÿ�
+    public Vector3 offset = new Vector3(0, 2.5f, -5.5f); // ���ʰ� ���������� �Ÿ�
     public float followSpeed = 5f;
     public float pitch = 30f; // ī�޶��� X�� ���� (�������� �ణ �� ����)
     public Transform bossTransform; // ���� Transform
