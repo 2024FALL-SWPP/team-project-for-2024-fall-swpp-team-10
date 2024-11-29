@@ -153,7 +153,7 @@ public class PlayerControl : MonoBehaviour
     }
     void SpawnProjectile(Vector3 spawnPosition)
     {
-        GameObject projectile = Instantiate(projectilePrefab, spawnPosition + new Vector3(0, 0, 1f), Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition + new Vector3(0, 0, 2f), Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
         if (projectileRb != null)

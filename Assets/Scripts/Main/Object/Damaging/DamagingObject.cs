@@ -6,6 +6,7 @@ using UnityEngine;
 public class DamagingObject : ObjectManager // enemy, obstacle
 {
     protected int score;
+    protected bool hasCollided = false; // 이미 플레이어와 충돌했는지 여부 (collision 처리가 중복되는 것을 방지하기 위함)
 
     [Header("Sound System")]
     [SerializeField] public AudioClip enemyCollisionSound;
@@ -18,6 +19,8 @@ public class DamagingObject : ObjectManager // enemy, obstacle
 
     protected override void OnPlayerCollision(GameObject player)
     {
+        if (hasCollided) return; // 이미 collision 처리가 되었다면 return
+
         if (playerControl.GetIsInvincible() || playerControl.GetIsBlinking())
         {
             Instantiate(hitOnInvincibleParticle[(int)GameManager.inst.GetCharacter()], playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
@@ -27,6 +30,8 @@ public class DamagingObject : ObjectManager // enemy, obstacle
             Destroy(gameObject);
             return;
         }
+
+        hasCollided = true;
         Instantiate(damagedParticle, playerControl.centerPosition, new Quaternion(0, 0, 0, 0));
         GameManager.inst.AddScore(score * -1);
         GameManager.inst.RemoveLife();
@@ -41,5 +46,10 @@ public class DamagingObject : ObjectManager // enemy, obstacle
         {
             AudioSource.PlayClipAtPoint(enemyCollisionSound, transform.position, volume);
         }
+    }
+
+    public bool HasCollided()
+    {
+        return hasCollided;
     }
 }
