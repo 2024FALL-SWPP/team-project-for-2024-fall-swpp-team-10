@@ -40,7 +40,8 @@ public class ButtonHandler : MonoBehaviour
 
     public void SetCharacter(int character)
     {
-        GameManager.inst.SetCharacter((Character)character);
+        if (!GameManager.inst.selected)
+            GameManager.inst.SetCharacter((Character)character);
     }
     public void LoadMainStage()
     {
