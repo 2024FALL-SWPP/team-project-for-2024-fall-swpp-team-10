@@ -22,6 +22,12 @@ public class GameManagerTest
         Assert.AreEqual(true, true);
     }
 
+    [Test]
+    public void GameManagerTestSimpleFails()
+    {
+        Assert.AreEqual(true, false);
+    }
+
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
