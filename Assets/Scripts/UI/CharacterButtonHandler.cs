@@ -66,6 +66,7 @@ public class CharacterButtonHandler : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
             hover.SetActive(true);
         }
+        GameManager.inst.selected = false;
         GameManager.inst.LoadMainStage();
     }
 }
