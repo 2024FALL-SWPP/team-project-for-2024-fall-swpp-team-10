@@ -30,7 +30,7 @@ public class MainManager : MonoBehaviour
     private bool isStageComplete = false;
     private StageTransitionManager transitionManager;
     public GameObject bossLandingParticle;
-    float bossSpeed = 10f;
+    float bossDropSpeed = 10f;
 
     GameObject activeCharacter;
 
@@ -72,7 +72,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        if (stageDuration - currentStageTime < 5.0f)
+        if (!isSpawnStopped && stageDuration - currentStageTime < 5.0f)
         {
             isSpawnStopped = true;
         }
@@ -95,7 +95,7 @@ public class MainManager : MonoBehaviour
         boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
         while (boss.transform.position.y >= 2)
         {
-            boss.transform.Translate(Vector3.down * bossSpeed * Time.deltaTime, Space.World);
+            boss.transform.Translate(Vector3.down * bossDropSpeed * Time.deltaTime, Space.World);
             yield return null;
         }
         Instantiate(bossLandingParticle, boss.transform.position - new Vector3(0, 0, 0.6f), boss.transform.rotation);
