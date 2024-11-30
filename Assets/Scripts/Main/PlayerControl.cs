@@ -5,8 +5,9 @@ using EnumManager;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : PlayerBase
 {
+    /*
     private float gridSpacing = 1.0f; // Distance between grid positions
     private Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
     public float moveSpeed = 10f; // Speed of movement between grid positions
@@ -40,8 +41,30 @@ public class PlayerControl : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] public AudioClip laserFireSound;
     [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
+    */
+    private float gridSpacing = 1.0f; // Distance between grid positions
+    private Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
+    public float moveSpeed = 10f; // Speed of movement between grid positions
 
-    void Awake()
+    private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
+    private Vector3 initialPosition; // Initial world position of the player
+    public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
+    private bool isMoving = false; // Flag to prevent movement while transitioning
+
+    [Header("Projectile Settings")]
+    private float projectileSpeed = 30.0f;
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint;
+    private bool hasTripleShot = false;  // Flag for triple shot power-up
+
+    [Header("Lightstick Settings")]
+    public GameObject leftLightstickPrefab;   // Assign in inspector
+    public GameObject rightLightstickPrefab;  // Assign in inspector
+    public float lightstickOffset = 1.0f;
+    public float lightStickDuration = 5.0f;
+    private float powerUpEndTime; // Track when the power-up should end
+    private Coroutine tripleShotCoroutine;
+    /*void Awake()
     {
         // Set the initial position as the down of the grid (1,0)
         initialPosition = transform.position - Vector3.down;
@@ -70,6 +93,20 @@ public class PlayerControl : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
 
         // Initialize lightsticks in disabled state
+        if (leftLightstickPrefab != null)
+            leftLightstickPrefab.SetActive(false);
+        if (rightLightstickPrefab != null)
+            rightLightstickPrefab.SetActive(false);
+    }*/
+    protected override void Awake()
+    {
+        base.Awake();
+
+        initialPosition = transform.position - Vector3.down;
+        currentGridPosition = new Vector2Int(1, 0);
+        SyncCenterPosition();
+
+        // 라이트스틱 초기화
         if (leftLightstickPrefab != null)
             leftLightstickPrefab.SetActive(false);
         if (rightLightstickPrefab != null)
@@ -129,7 +166,7 @@ public class PlayerControl : MonoBehaviour
     {
         centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
     }
-    void FireLaser()
+    protected override void FireLaser()
     {
         if (laserFireSound != null)
         {
@@ -246,7 +283,7 @@ public class PlayerControl : MonoBehaviour
             0
         );
     }
-
+/*
     // 피격 시 깜빡임
     public IEnumerator Blink()
     {
@@ -283,7 +320,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
-
+*/
     void DisableLightsticks()
     {
         if (leftLightstickPrefab != null)
@@ -292,7 +329,7 @@ public class PlayerControl : MonoBehaviour
             rightLightstickPrefab.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected override void OnCollisionEnter(Collision other)
     {
 
         if (other.gameObject.CompareTag("Lightstick"))
@@ -325,7 +362,7 @@ public class PlayerControl : MonoBehaviour
         DisableLightsticks();
         tripleShotCoroutine = null;
     }
-
+/*
     public void SetIsInvincible(bool _isInvincible)
     {
         isInvincible = _isInvincible;
@@ -339,4 +376,5 @@ public class PlayerControl : MonoBehaviour
     {
         return isBlinking;
     }
+*/
 }
