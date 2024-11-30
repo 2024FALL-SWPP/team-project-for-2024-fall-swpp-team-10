@@ -4470,8 +4470,9 @@ MonoBehaviour:
   score: {fileID: 1250928733}
   pause: {fileID: 1292896941}
   gameOver: {fileID: 547247828}
-  boss: {fileID: 0}
-  stageDuration: 17
+  boss: {fileID: 919132149155446097, guid: 3682f0b07fc8f4df1bbc9aa859817674, type: 3}
+  stageDuration: 187
+  bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &1694800667
 MonoBehaviour:
   m_ObjectHideFlags: 0

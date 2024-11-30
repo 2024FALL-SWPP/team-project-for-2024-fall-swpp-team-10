@@ -29,6 +29,10 @@ public class MainManager : MonoBehaviour
     private float currentStageTime = 0f;
     private bool isStageComplete = false;
     private StageTransitionManager transitionManager;
+    public GameObject bossLandingParticle;
+    float bossSpeed = 10f;
+
+    GameObject activeCharacter;
 
 
     // Start is called before the first frame update
@@ -88,6 +92,14 @@ public class MainManager : MonoBehaviour
     {
         isStageComplete = true;
 
+        boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
+        while (boss.transform.position.y >= 2)
+        {
+            boss.transform.Translate(Vector3.down * bossSpeed * Time.deltaTime, Space.World);
+            yield return null;
+        }
+        Instantiate(bossLandingParticle, boss.transform.position - new Vector3(0, 0, 0.6f), boss.transform.rotation);
+        yield return new WaitForSecondsRealtime(2.5f);
         if (musicManager != null)
         {
             musicManager.PauseMusic();
@@ -113,7 +125,7 @@ public class MainManager : MonoBehaviour
         int characterIndex = (int)GameManager.inst.GetCharacter();
         characters[characterIndex].SetActive(true);
         characterUI[characterIndex].SetActive(true);
-        GameObject activeCharacter = characters[characterIndex];
+        activeCharacter = characters[characterIndex];
         transitionManager.SetCurrentCharacter(activeCharacter);
         Time.timeScale = 1;
         GameManager.inst.ResetStats();
@@ -163,5 +175,10 @@ public class MainManager : MonoBehaviour
     public bool IsSpawnStopped()
     {
         return isSpawnStopped;
+    }
+
+    public bool IsStageComplete()
+    {
+        return isStageComplete;
     }
 }
