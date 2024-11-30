@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteoriteControl : MonoBehaviour
+public class DropObjectControl : MonoBehaviour
 {
     public GameObject explosionPrefab;
     private Vector3 offset = new Vector3(0, -1f, 2f);
@@ -20,7 +20,7 @@ public class MeteoriteControl : MonoBehaviour
     }
     void Start()
     {
-        // 운석이 땅에 닿을 때까지 체크
+        // 낙하물이 땅에 닿을 때까지 체크
         StartCoroutine(CheckLanding());
     }
 
@@ -34,7 +34,7 @@ public class MeteoriteControl : MonoBehaviour
         // 폭발 효과 생성
         TriggerExplosion();
 
-        // 운석 제거
+        // 낙하물 제거
         Destroy(gameObject);
     }
 

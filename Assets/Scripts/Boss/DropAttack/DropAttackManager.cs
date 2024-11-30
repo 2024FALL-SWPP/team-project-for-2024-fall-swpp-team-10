@@ -6,7 +6,7 @@ using UnityEngine;
 public class DropAttackManager : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject meteoritePrefab; // 운석 프리팹
+    public GameObject dropObjectPrefab; // 낙하물 프리팹
     public GameObject gridCellPrefab; // 그리드 셀 프리팹
 
     [Header("Player Area")]
@@ -17,7 +17,7 @@ public class DropAttackManager : MonoBehaviour
 
     [Header("Attack Settings")]
     public float warningDuration = 1f; // 경고 시간
-    public float meteoriteHeight = 15f; // 운석이 떨어지는 높이
+    public float dropHeight = 15f; // 낙하물이 떨어지는 높이
 
     [Header("Player")]
     public Transform playerTransform; // 플레이어의 Transform
@@ -28,7 +28,7 @@ public class DropAttackManager : MonoBehaviour
     private GridCell[,] gridCells = new GridCell[3, 3]; // 3x3 �׸��� �� �迭
     private float cellSizeX;
     private float cellSizeZ;
-    private float meteoriteSize; // 운석 크기
+    private float dropObjectSize; // 낙하물 크기
 
     BossStageManager bossStageManager;
 
@@ -94,8 +94,8 @@ public class DropAttackManager : MonoBehaviour
             }
         }
 
-        // 그리드 셀 크기에 맞추어 운석 크기 설정 (그리드 셀의 너비와 깊이 중 작은 값을 기준으로 설정)
-        meteoriteSize = Mathf.Min(cellSizeX, cellSizeZ) * 0.05f;
+        // 그리드 셀 크기에 맞추어 낙하물 크기 설정 (그리드 셀의 너비와 깊이 중 작은 값을 기준으로 설정)
+        dropObjectSize = Mathf.Min(cellSizeX, cellSizeZ) * 0.05f;
     }
     // 공격 패턴 초기화
     void UpdateNewStrategy()
@@ -193,13 +193,13 @@ public class DropAttackManager : MonoBehaviour
         return null;
     }
 
-    // 특정 위치에 운석 공격 실행
+    // 특정 위치에 낙하 공격 실행
     public IEnumerator ExecuteAttack(Vector3 position)
     {
-        // 운석 생성 위치: 그리드 셀의 중심에서 meteoriteHeight 높이 위
-        Vector3 spawnPosition = new Vector3(position.x, areaMin.y + meteoriteHeight, position.z - 2.5f);
-        GameObject meteorite = Instantiate(meteoritePrefab, spawnPosition, Quaternion.identity);
-        meteorite.transform.localScale = Vector3.one * meteoriteSize;
+        // 낙하물 생성 위치: 그리드 셀의 중심에서 dropHeight 높이 위
+        Vector3 spawnPosition = new Vector3(position.x, areaMin.y + dropHeight, position.z - 2.5f);
+        GameObject dropObject = Instantiate(dropObjectPrefab, spawnPosition, Quaternion.identity);
+        dropObject.transform.localScale = Vector3.one * dropObjectSize;
 
         yield return null;
     }

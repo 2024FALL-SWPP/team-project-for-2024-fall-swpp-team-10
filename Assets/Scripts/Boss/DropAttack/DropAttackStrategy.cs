@@ -13,12 +13,12 @@ public class DropAttackStrategy
         Random.InitState(System.Environment.TickCount);
     }
 
-    public IEnumerator Execute(DropAttackManager meteoriteDropManager)
+    public IEnumerator Execute(DropAttackManager dropAttackManager)
     {
         List<Vector3[]> availablePatterns = new List<Vector3[]>();
         foreach (var pattern in patterns)
         {
-            if (IsPlayerInPattern(meteoriteDropManager, pattern))
+            if (IsPlayerInPattern(dropAttackManager, pattern))
             {
                 availablePatterns.Add(pattern);
             }
@@ -30,26 +30,26 @@ public class DropAttackStrategy
         int randomIndex = Random.Range(0, availablePatterns.Count);
         Vector3[] selectedPattern = availablePatterns[randomIndex];
 
-        meteoriteDropManager.HighlightGridCells(selectedPattern, gridCellWarningColor);
-        yield return new WaitForSeconds(meteoriteDropManager.warningDuration);
-        meteoriteDropManager.ResetGridCells(selectedPattern);
+        dropAttackManager.HighlightGridCells(selectedPattern, gridCellWarningColor);
+        yield return new WaitForSeconds(dropAttackManager.warningDuration);
+        dropAttackManager.ResetGridCells(selectedPattern);
 
         foreach (Vector3 pos in selectedPattern)
         {
-            meteoriteDropManager.StartCoroutine(meteoriteDropManager.ExecuteAttack(pos));
+            dropAttackManager.StartCoroutine(dropAttackManager.ExecuteAttack(pos));
         }
 
         yield return new WaitForSeconds(2f);
     }
 
 
-    // ÇÃ·¹ÀÌ¾î°¡ ÆÐÅÏ¿¡ Æ÷ÇÔµÇ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-    public bool IsPlayerInPattern(DropAttackManager meteoriteDropManager, Vector3[] pattern)
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+    public bool IsPlayerInPattern(DropAttackManager dropAttackManager, Vector3[] pattern)
     {
         foreach (Vector3 cellPosition in pattern)
         {
-            GridCell cell = meteoriteDropManager.GetGridCellByPosition(cellPosition);
-            if (cell != null && IsPlayerInCell(meteoriteDropManager, cell))
+            GridCell cell = dropAttackManager.GetGridCellByPosition(cellPosition);
+            if (cell != null && IsPlayerInCell(dropAttackManager, cell))
             {
                 return true;
             }
@@ -57,10 +57,10 @@ public class DropAttackStrategy
         return false;
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ ±×¸®µå ¼¿¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-    public bool IsPlayerInCell(DropAttackManager meteoriteDropManager, GridCell cell)
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ Æ¯ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+    public bool IsPlayerInCell(DropAttackManager dropAttackManager, GridCell cell)
     {
-        // ±×¸®µå ¼¿ÀÇ °æ°è °è»ê
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 cellPosition = cell.transform.position;
         Vector3 cellScale = cell.transform.localScale;
 
@@ -72,9 +72,9 @@ public class DropAttackStrategy
         float minZ = cellPosition.z - halfSizeZ;
         float maxZ = cellPosition.z + halfSizeZ;
 
-        Vector3 playerPos = meteoriteDropManager.playerTransform.position;
+        Vector3 playerPos = dropAttackManager.playerTransform.position;
 
-        // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡°¡ ±×¸®µå ¼¿ÀÇ °æ°è ¾È¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (playerPos.x >= minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)
         {
             return true;
