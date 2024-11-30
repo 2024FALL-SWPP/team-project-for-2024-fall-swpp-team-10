@@ -7,21 +7,25 @@ using TMPro;
 using UnityEngine.EventSystems;
 public class MainManager : MonoBehaviour
 {
+    [Header("UI Setting")]
     public GameObject[] characters;
     public GameObject[] characterUI;
     public GameObject[] hearts;
-
-    public GameObject pause;
-    public GameObject gameOver;
     public GameObject score;
     private TextMeshProUGUI scoreText;
 
+    [Header("other UI")]
+    public GameObject pause;
+    public GameObject gameOver;
+    public GameObject boss;
+
     private bool isGameOver = false;
+    private bool isSpawnStopped = false;
     private MusicManager musicManager;
 
     // Stage End Condition Variables
     [Header("Stage End Condition Settings")]
-    [SerializeField] float stageDuration = 3.0f; // Length of the main stage
+    public float stageDuration = 3.0f; // Length of the main stage
     private float currentStageTime = 0f;
     private bool isStageComplete = false;
     private StageTransitionManager transitionManager;
@@ -62,6 +66,11 @@ public class MainManager : MonoBehaviour
             {
                 musicManager.StopMusic();
             }
+        }
+
+        if (stageDuration - currentStageTime < 5.0f)
+        {
+            isSpawnStopped = true;
         }
 
         if (!isStageComplete)
@@ -109,6 +118,7 @@ public class MainManager : MonoBehaviour
         Time.timeScale = 1;
         GameManager.inst.ResetStats();
         isGameOver = false;
+        isSpawnStopped = false;
 
         characters[(int)GameManager.inst.GetCharacter()].GetComponent<PlayerControl>().ChangeColorOriginal();
     }
@@ -148,5 +158,10 @@ public class MainManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
             GameManager.inst.AddScore(100);
         }
+    }
+
+    public bool IsSpawnStopped()
+    {
+        return isSpawnStopped;
     }
 }
