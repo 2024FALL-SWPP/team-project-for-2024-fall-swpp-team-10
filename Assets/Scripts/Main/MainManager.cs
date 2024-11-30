@@ -7,32 +7,11 @@ using TMPro;
 using UnityEngine.EventSystems;
 public class MainManager : StageManager
 {
-    /*[Header("UI Setting")]
-    public GameObject[] characters;
-    public GameObject[] characterUI;
-    public GameObject[] hearts;
-    public GameObject score;
-    private TextMeshProUGUI scoreText;
-
-    [Header("other UI")]
-    public GameObject pause;
-    public GameObject gameOver;
-    public GameObject boss;
-
-    private bool isGameOver = false;
-    private bool isSpawnStopped = false;
-    private MusicManager musicManager;
-
-    // Stage End Condition Variables
-    [Header("Stage End Condition Settings")]
-    public float stageDuration = 3.0f; // Length of the main stage
-    private float currentStageTime = 0f;
-    private bool isStageComplete = false;
-    private StageTransitionManager transitionManager;*/
     [Header("MainStage End Condition Settings")]
     [SerializeField] float stageDuration = 3.0f;
     private float currentStageTime = 180.0f;
     private StageTransitionManager transitionManager;
+    private bool isSpawnStopped = false;
     public GameObject bossLandingParticle;
     float bossDropSpeed = 10f;
 
@@ -49,30 +28,9 @@ public class MainManager : StageManager
         StartCoroutine(AddScoreEverySecond());
     }
 
-    // Update is called once per frame
-    /*void Update()
+    protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
-        {
-            Pause();
-        }
-
-        scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
-
-        for (int i = 0; i < GameManager.inst.maxLife; i++)
-            hearts[i].SetActive(i < GameManager.inst.GetLife());
-
-        if (GameManager.inst.GetLife() <= 0)
-        {
-            Time.timeScale = 0;
-            GameManager.inst.CursorActive(true);
-            gameOver.SetActive(true);
-            isGameOver = true;
-            if (musicManager != null)
-            {
-                musicManager.StopMusic();
-            }
-        }
+        base.Update();
 
         if (!isSpawnStopped && stageDuration - currentStageTime < 5.0f)
         {
@@ -88,22 +46,8 @@ public class MainManager : StageManager
                 StartCoroutine(CompleteStage());
             }
         }
-    }*/
-    protected override void Update()
-    {
-        base.Update();
-
-        // �������� �Ϸ� üũ
-        if (!isStageComplete)
-        {
-            currentStageTime += Time.deltaTime;
-            // Check if stage duration is complete
-            if (currentStageTime >= stageDuration)
-            {
-                StartCoroutine(CompleteStage());
-            }
-        }
     }
+
     private IEnumerator CompleteStage()
     {
         isStageComplete = true;
@@ -121,7 +65,7 @@ public class MainManager : StageManager
             musicManager.PauseMusic();
         }
         yield return new WaitForSeconds(0.5f);
-        AddScoreBasedOnLives();
+        StartCoroutine(AddScoreBasedOnLives());
         // Freeze the game
         Time.timeScale = 0f;
 
@@ -134,25 +78,6 @@ public class MainManager : StageManager
         }
     }
 
-    /*private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }*/
-
-    /*void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        int characterIndex = (int)GameManager.inst.GetCharacter();
-        characters[characterIndex].SetActive(true);
-        characterUI[characterIndex].SetActive(true);
-        activeCharacter = characters[characterIndex];
-        transitionManager.SetCurrentCharacter(activeCharacter);
-        Time.timeScale = 1;
-        GameManager.inst.ResetStats();
-        isGameOver = false;
-        isSpawnStopped = false;
-
-        characters[(int)GameManager.inst.GetCharacter()].GetComponent<PlayerControl>().ChangeColorOriginal();
-    }*/
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         base.OnSceneLoaded(scene, mode);
@@ -160,36 +85,9 @@ public class MainManager : StageManager
         activeCharacter.GetComponent<PlayerControl>().ChangeColorOriginal();
     }
 
-    /*private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    public void Pause()
-    {
-        pause.SetActive(true);
-        GameManager.inst.CursorActive(true);
-        Time.timeScale = 0;
-        if (musicManager != null)
-        {
-            musicManager.PauseMusic();
-        }
-    }
-
-    public void Resume()
-    {
-        pause.SetActive(false);
-        GameManager.inst.CursorActive(false);
-        Time.timeScale = 1;
-        if (musicManager != null)
-        {
-            musicManager.ResumeMusic();
-        }
-        EventSystem.current.SetSelectedGameObject(null);
-    }*/
     protected override void PauseGame()
     {
-        base .PauseGame();
+        base.PauseGame();
         GameManager.inst.CursorActive(true);
     }
 

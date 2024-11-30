@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -11,7 +13,7 @@ public abstract class StageManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject gameOverScreen;
     public GameObject score;
-    public TextMeshProUGUI scoreText;
+    private TextMeshProUGUI scoreText;
     protected bool isGameOver = false;
     protected MusicManager musicManager;
 
@@ -108,11 +110,27 @@ public abstract class StageManager : MonoBehaviour
     }
 
     // Add score based on remaining lives
-    protected virtual void AddScoreBasedOnLives()
+    protected virtual IEnumerator AddScoreBasedOnLives()
     {
         if (hearts != null)
         {
-            StartCoroutine(GameManager.inst.DeactivateLivesAndAddScore(hearts, heartDeactivateSound, soundVolume));
+            for (int i = 0; i < hearts.Length; i++)
+            {
+                if (hearts[i].activeSelf) // 활성화된 Life만 처리
+                {
+                    // Life 비활성화
+                    hearts[i].SetActive(false);
+                    // 점수 추가
+                    GameManager.inst.AddScore(5000);
+                    // 효과음 재생
+                    if (heartDeactivateSound != null)
+                    {
+                        AudioSource.PlayClipAtPoint(heartDeactivateSound, Camera.main.transform.position, soundVolume);
+                    }
+                    // 0.5초 대기 후 다음 Life 처리
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
         }
     }
 }

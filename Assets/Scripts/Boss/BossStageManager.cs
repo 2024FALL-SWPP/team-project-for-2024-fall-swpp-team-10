@@ -7,34 +7,6 @@ using EnumManager;
 using UnityEngine.EventSystems;
 public class BossStageManager : StageManager
 {
-    /*public GameObject[] characters;
-    public GameObject[] characterUI;
-    public GameObject score;
-    private TextMeshProUGUI scoreText;
-    public GameObject gameOver;
-    public GameObject gameClear;
-    public BossStageCamera cameraScript; // BossStageCamera ��ũ��Ʈ ����
-    public BossStagePlayer playerScript; // BossStagePlayer ��ũ��Ʈ ����
-    public BossControl bossControlScript; // BossControl ��ũ��Ʈ
-    private bool isGameOver = false;
-    private bool isGameClear = false;
-    public GameObject[] hearts;
-    public GameObject[] Darkhearts;
-    private BossStageMusicManager musicManager;
-    private int bossMaxLife = 3;
-    private int currentPhase;
-    public GameObject pause;
-    public Camera mainCamera;
-    public AudioClip heartDeactivateSound; // 하트->스코어 전환 효과음
-    public AudioClip gameOverMusic; //게임오버 효과음
-    public AudioClip victoryMusic; //게임클리어 효과음
-    public float soundVolume = 0.7f; // 효과음 볼륨
-    private GameObject[] fires;
-    private GameClearLight gameClearLight; // GameClearLight 컴포넌트 참조
-    public Transform player; //추후 삭제 예정
-    */
-    private StageTransitionManager transitionManager;
-    [SerializeField] Animator transitionAnimator;
     [Header("Boss Stage Settings")]
     public GameObject[] darkHearts; // 보스의 하트
 
@@ -47,18 +19,11 @@ public class BossStageManager : StageManager
     public AudioClip victoryMusic; //게임클리어 효과음
     private GameObject[] fires;
     private GameClearLight gameClearLight;
-
     private int bossMaxLife = 3;
     private int currentPhase;
+    private StageTransitionManager transitionManager;
+    [SerializeField] Animator transitionAnimator;
 
-    /*void Awake()
-    {
-        scoreText = score.GetComponent<TextMeshProUGUI>();
-        musicManager = FindObjectOfType<BossStageMusicManager>();
-        currentPhase = 0;
-        fires = GameObject.FindGameObjectsWithTag("Fire");
-        gameClearLight = GetComponent<GameClearLight>();
-    }*/
     protected override void Awake()
     {
         base.Awake();
@@ -70,10 +35,10 @@ public class BossStageManager : StageManager
         gameClearLight = GetComponent<GameClearLight>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         playerScript = activeCharacter.GetComponent<BossStagePlayer>();
-        // life�� bossStageMaxLife�� ����
+
         while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
@@ -87,41 +52,6 @@ public class BossStageManager : StageManager
         }
     }
 
-    /*private void Update()
-    {
-        scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver && !isGameClear)
-        {
-            Pause();
-        }
-
-        if (!isGameClear)
-        {
-            for (int i = 0; i < GameManager.inst.bossStageMaxLife; i++)
-                hearts[i].SetActive(i < GameManager.inst.GetLife());
-        }
-
-        if (GameManager.inst.GetLife() <= 0 && !isGameOver)
-        {
-            Time.timeScale = 0;
-            gameOver.SetActive(true);
-            isGameOver = true;
-            if (musicManager != null)
-            {
-                musicManager.StopMusic();
-                AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
-
-            }
-        }
-
-        // End condition
-        if (!bossControlScript.IsDead() && GetBossLife() <= 0 && !isGameClear)
-        {
-            isGameClear = true;
-            StartCoroutine(HandleBossDeath());
-
-        }
-    }*/
     protected override void Update()
     {
         base.Update();
@@ -143,26 +73,6 @@ public class BossStageManager : StageManager
         }
     }
 
-    /*public void Pause()
-    {
-        pause.SetActive(true);
-        Time.timeScale = 0;
-        if (musicManager != null)
-        {
-            musicManager.PauseMusic();
-        }
-    }
-
-    public void Resume()
-    {
-        pause.SetActive(false);
-        Time.timeScale = 1;
-        if (musicManager != null)
-        {
-            musicManager.ResumeMusic();
-        }
-        EventSystem.current.SetSelectedGameObject(null);
-    }*/
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
@@ -198,7 +108,7 @@ public class BossStageManager : StageManager
 
         // 5. 연출 후 카메라 원상복구+점수 추가
         cameraScript.ResetCamera(); // 카메라를 원래 상태로 복구
-        AddScoreBasedOnLives();
+        StartCoroutine(AddScoreBasedOnLives());
 
         // 6. 승리 음악 재생
         if (musicManager != null)
@@ -210,11 +120,6 @@ public class BossStageManager : StageManager
         isStageComplete = true;
         GameManager.inst.CursorActive(true);
     }
-
-    /*public void AddScoreBasedOnLives()
-    {
-        StartCoroutine(GameManager.inst.DeactivateLivesAndAddScore(hearts, heartDeactivateSound, soundVolume));
-    }*/
 
     public int GetBossLife()
     {
