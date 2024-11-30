@@ -19,7 +19,7 @@ public class DropAttackManager : MonoBehaviour
     public float dropHeight = 15f; // 낙하물이 떨어지는 높이
 
     [Header("Player")]
-    public Transform playerTransform; // 플레이어의 Transform
+    private Transform playerTransform; // 플레이어의 Transform
 
     private DropAttackStrategy currentStrategy; // 현재 Phase의 Strategy
     private bool isAttacking = false;
@@ -34,6 +34,8 @@ public class DropAttackManager : MonoBehaviour
     void Start()
     {
         bossStageManager = gameObject.GetComponent<BossStageManager>();
+        playerTransform = bossStageManager.ActiveCharacter().transform;
+
         areaMin -= offset;
         areaMax += offset;
         // 그리드 셀 생성 및 초기화
@@ -201,5 +203,10 @@ public class DropAttackManager : MonoBehaviour
         dropObject.transform.localScale = Vector3.one * dropObjectSize;
 
         yield return null;
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return playerTransform.position;
     }
 }

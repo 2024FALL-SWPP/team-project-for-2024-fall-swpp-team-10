@@ -72,7 +72,7 @@ public class DropAttackStrategy
         float minZ = cellPosition.z - halfSizeZ;
         float maxZ = cellPosition.z + halfSizeZ;
 
-        Vector3 playerPos = dropAttackManager.playerTransform.position;
+        Vector3 playerPos = dropAttackManager.GetPlayerPosition();
 
         // �÷��̾��� ��ġ�� �׸��� ���� ��� �ȿ� �ִ��� Ȯ��
         if (playerPos.x >= minX && playerPos.x <= maxX && playerPos.z >= minZ && playerPos.z <= maxZ)
