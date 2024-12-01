@@ -32,6 +32,10 @@ public class BossStageManager : MonoBehaviour
     private GameObject[] fires;
     private GameClearLight gameClearLight; // GameClearLight 컴포넌트 참조
     public Transform player; //추후 삭제 예정
+    private StageTransitionManager transitionManager;
+    [SerializeField] Animator transitionAnimator;
+
+
 
     /*void OnEnable()
     {
@@ -68,6 +72,7 @@ public class BossStageManager : MonoBehaviour
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
         gameClearLight = GetComponent<GameClearLight>();
+        transitionManager = FindObjectOfType<StageTransitionManager>();
         GameManager.inst.CursorActive(true);
     }
 
@@ -79,6 +84,12 @@ public class BossStageManager : MonoBehaviour
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
         musicManager.ChangeSpeed(1.25f);
+        if (transitionManager != null)
+        {
+            Debug.Log("Playing boss ani");
+            transitionAnimator.gameObject.SetActive(true);
+            StartCoroutine(transitionManager.BossStageTransition());
+        }
     }
 
     private void Update()
