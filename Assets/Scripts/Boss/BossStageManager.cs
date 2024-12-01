@@ -126,6 +126,15 @@ public class BossStageManager : MonoBehaviour
             StartCoroutine(HandleBossDeath());
 
         }
+        //"Obstacle" 태그 오브젝트 비활성화
+        if (isGameClear) 
+        {
+            GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+            foreach (GameObject obstacle in obstacleObjects)
+            {
+                obstacle.SetActive(false);
+            }
+        }
     }
 
     public void Pause()
@@ -155,17 +164,10 @@ public class BossStageManager : MonoBehaviour
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-        // 2. "Obstacle" 태그 오브젝트 비활성화
-        GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obstacle in obstacleObjects)
-        {
-            obstacle.SetActive(false);
-        }
-
-        // 3. 보스의 죽음 애니메이션 실행
+        // 2. 보스의 죽음 애니메이션 실행
         bossControlScript.BossDeath();
 
-        // 4. 카메라가 보스 주위를 순회
+        // 3. 카메라가 보스 주위를 순회
         yield return StartCoroutine(cameraScript.OrbitAroundBoss());
 
         //(Optional)
@@ -177,17 +179,17 @@ public class BossStageManager : MonoBehaviour
             fires[i].SetActive(false);
 
         }
-        // 5. 플레이어가 제자리에서 한 바퀴 회전
+        // 4. 플레이어가 제자리에서 한 바퀴 회전
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
         yield return StartCoroutine(playerScript.SpinInPlace());
 
 
-        // 6. 연출 후 카메라 원상복구+점수 추가
+        // 5. 연출 후 카메라 원상복구+점수 추가
         cameraScript.ResetCamera(); // 카메라를 원래 상태로 복구
         AddScoreBasedOnLives();
 
-        // 7. 승리 음악 재생
+        // 6. 승리 음악 재생
         if (musicManager != null)
         {
             musicManager.StopMusic();
@@ -195,8 +197,7 @@ public class BossStageManager : MonoBehaviour
         }
         gameClear.SetActive(true);
         isGameClear = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameManager.inst.CursorActive(true);
     }
 
     public void AddScoreBasedOnLives()
