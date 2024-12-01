@@ -27,8 +27,6 @@ public class LobbyMusicManager : MusicManager
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // if (scene.name.Contains("MainStage"))
-        //     StopMusic();
         if (scene.name.Contains("Selection") || scene.name.Contains("MainMenu"))
             PlayMusic();
     }
@@ -40,7 +38,7 @@ public class LobbyMusicManager : MusicManager
 
     private void Update()
     {
-        if (GameManager.inst.selected)
+        if (GameManager.inst.selected && audioSource.isPlaying)
         {
             StopMusic();
         }
