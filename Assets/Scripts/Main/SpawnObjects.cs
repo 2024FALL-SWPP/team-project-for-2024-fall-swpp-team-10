@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpawnObjects : MonoBehaviour
 {
     public GameObject[] objects;
-    private MainManager mainManager;
+    private MainStageManager mainStageManager;
 
     public float startSpawning; // 소환 시작 시간
     public float spawnInterval; // 소환 간격
@@ -16,7 +16,7 @@ public class SpawnObjects : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        mainManager = FindObjectOfType<MainManager>();
+        mainStageManager = FindObjectOfType<MainStageManager>();
         Random.InitState(System.Environment.TickCount);
         StartCoroutine(Spawn());
     }
@@ -29,7 +29,7 @@ public class SpawnObjects : MonoBehaviour
     IEnumerator Spawn()
     {
         yield return new WaitForSeconds(startSpawning);
-        while (true && !mainManager.IsSpawnStopped())
+        while (true && !mainStageManager.IsSpawnStopped())
         {
             int spawnRandom = Random.Range(0, objects.Length);
             int xRandom = Random.Range(0, 3) - 1;

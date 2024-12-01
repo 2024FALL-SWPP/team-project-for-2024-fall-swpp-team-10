@@ -10,12 +10,10 @@ public class MainStageManager : StageManager
     [Header("MainStage End Condition Settings")]
     [SerializeField] float stageDuration = 3.0f;
     private float currentStageTime = 0f;
-    private StageTransitionManager transitionManager;
     private bool isSpawnStopped = false;
+    public GameObject boss;
     public GameObject bossLandingParticle;
     float bossDropSpeed = 10f;
-
-    GameObject activeCharacter;
 
     // Start is called before the first frame update
     protected override void Awake()

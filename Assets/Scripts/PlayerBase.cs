@@ -5,10 +5,8 @@ public abstract class PlayerBase : MonoBehaviour
 {
     protected Renderer[] childRenderers; //Renderer of characters
     protected Color[,] originColors; // Origin color of characters
-    protected int blinkCount = 3; // ÇÇ°Ý ½Ã ±ôºýÀÌ´Â È½¼ö
-    protected bool isInvincible = false; // ¹«Àû Áö¼ÓÁßÀÎÁö È®ÀÎ
-    protected bool isBlinking = false; // ±ôºýÀÌ´ÂÁßÀÎÁö È®ÀÎ
-    public float invincibleLength; // ¹«Àû Áö¼Ó ½Ã°£
+    protected int blinkCount = 3; // ï¿½Ç°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ È½ï¿½ï¿½
+    protected bool isBlinking = false; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 
     [Header("Audio Settings")]
     public AudioClip laserFireSound;
@@ -38,7 +36,7 @@ public abstract class PlayerBase : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
     }
 
-    // Ä³¸¯ÅÍ »ö ÀüÃ¼ º¯È¯
+    // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½È¯
     public void ChangeColor(Color color)
     {
         foreach (Renderer renderer in childRenderers)
@@ -48,7 +46,7 @@ public abstract class PlayerBase : MonoBehaviour
         }
     }
 
-    // Ä³¸¯ÅÍ »ö ¿ø·¡ »öÀ¸·Î
+    // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
@@ -59,7 +57,7 @@ public abstract class PlayerBase : MonoBehaviour
             }
         }
     }
-    // ÇÇ°Ý ½Ã ±ôºýÀÓ
+    // ï¿½Ç°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public IEnumerator Blink()
     {
         isBlinking = true;
@@ -72,15 +70,6 @@ public abstract class PlayerBase : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         isBlinking = false;
-    }
-
-    public void SetIsInvincible(bool _isInvincible)
-    {
-        isInvincible = _isInvincible;
-    }
-    public bool GetIsInvincible()
-    {
-        return isInvincible;
     }
 
     public bool GetIsBlinking()

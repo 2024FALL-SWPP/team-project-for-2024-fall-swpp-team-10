@@ -14,14 +14,12 @@ public class BossStageManager : StageManager
     public BossStageCamera cameraScript;
     private BossStagePlayer playerScript;
     public BossControl bossControlScript;
-    public Camera mainCamera;
     public AudioClip gameOverMusic; //게임오버 효과음
     public AudioClip victoryMusic; //게임클리어 효과음
     private GameObject[] fires;
     private GameClearLight gameClearLight;
     private int bossMaxLife = 3;
     private int currentPhase;
-    private StageTransitionManager transitionManager;
     [SerializeField] Animator transitionAnimator;
 
     protected override void Awake()
@@ -62,8 +60,9 @@ public class BossStageManager : StageManager
             isStageComplete = true;
             StartCoroutine(HandleBossDeath());
         }
-        //"Obstacle" 태그 오브젝트 비활성화
-        if (isGameClear) 
+
+        // "Obstacle" 태그 오브젝트 비활성화
+        if (isStageComplete) 
         {
             GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject obstacle in obstacleObjects)

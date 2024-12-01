@@ -16,6 +16,10 @@ public class MainStagePlayer : PlayerBase
     public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
+    [Header("Invincible Settings")]
+    private bool isInvincible = false; // 무적 지속중인지 확인
+    public float invincibleLength; // 무적 지속 시간
+
     [Header("Projectile Settings")]
     private float projectileSpeed = 30.0f;
     public GameObject projectilePrefab;
@@ -258,4 +262,12 @@ public class MainStagePlayer : PlayerBase
         tripleShotCoroutine = null;
     }
 
+    public void SetIsInvincible(bool _isInvincible)
+    {
+        isInvincible = _isInvincible;
+    }
+    public bool GetIsInvincible()
+    {
+        return isInvincible;
+    }
 }
