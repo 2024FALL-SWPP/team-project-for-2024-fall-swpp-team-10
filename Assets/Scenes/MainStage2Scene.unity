@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 40871804}
   - component: {fileID: 40871803}
   m_Layer: 0
-  m_Name: MainManager
+  m_Name: MainStageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,19 +167,15 @@ MonoBehaviour:
   pauseMenu: {fileID: 1037198480}
   gameOverScreen: {fileID: 1316025212}
   score: {fileID: 1312659204}
-  scoreText: {fileID: 1312659206}
   hearts:
   - {fileID: 1039681153}
   - {fileID: 534734793}
   - {fileID: 1883791994}
-  score: {fileID: 1312659204}
-  pause: {fileID: 1037198480}
-  gameOver: {fileID: 1316025212}
-  boss: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
-  stageDuration: 183
-  bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
+  stageDuration: 183
+  boss: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &40871804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,17 +586,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9cca14bdcc14bb5a67e8d298fec438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   moveSpeed: 20
   centerPosition: {x: 0, y: 0, z: 0}
+  invincibleLength: 0
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 977188891}
-  invincibleLength: 0
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
   lightStickDuration: 10
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
 --- !u!65 &124041599
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1121,17 +1117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9cca14bdcc14bb5a67e8d298fec438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   moveSpeed: 20
   centerPosition: {x: 0, y: 0, z: 0}
+  invincibleLength: 0
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1461268936}
-  invincibleLength: 0
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
   lightStickDuration: 10
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
 --- !u!65 &221971126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1861,17 +1857,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9cca14bdcc14bb5a67e8d298fec438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   moveSpeed: 20
   centerPosition: {x: 0, y: 0, z: 0}
+  invincibleLength: 0
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 1803942100}
-  invincibleLength: 0
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
   lightStickDuration: 10
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
 --- !u!65 &691819272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4238,17 +4234,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9cca14bdcc14bb5a67e8d298fec438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   moveSpeed: 20
   centerPosition: {x: 0, y: 0, z: 0}
+  invincibleLength: 0
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 577981441}
-  invincibleLength: 0
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
   lightStickDuration: 10
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
 --- !u!65 &1325425141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5960,17 +5956,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9cca14bdcc14bb5a67e8d298fec438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   moveSpeed: 20
   centerPosition: {x: 0, y: 0, z: 0}
+  invincibleLength: 0
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 1630171361}
-  invincibleLength: 0
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
   lightStickDuration: 10
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
 --- !u!65 &1837999631
 BoxCollider:
   m_ObjectHideFlags: 0

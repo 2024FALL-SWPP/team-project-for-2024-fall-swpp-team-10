@@ -3137,7 +3137,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824263047
 GameObject:
@@ -3516,6 +3516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -3525,8 +3527,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 922855649}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &922855652
@@ -3659,7 +3659,7 @@ RectTransform:
   m_Children:
   - {fileID: 561139317}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4973,6 +4973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -4982,8 +4984,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 1283838796}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1283838799
@@ -10247,6 +10247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -10256,8 +10258,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1424859024}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1424859027
@@ -10446,6 +10446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -10455,8 +10457,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 1431771570}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1431771575
@@ -10548,11 +10548,8 @@ MonoBehaviour:
   gameClear: {fileID: 71086760}
   cameraScript: {fileID: 659597871}
   bossControlScript: {fileID: 1163737305}
-  mainCamera: {fileID: 659597869}
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
-  soundVolume: 0.7
-  player: {fileID: 1431771570}
   transitionAnimator: {fileID: 945322147}
 --- !u!114 &1474742878
 MonoBehaviour:
@@ -12473,6 +12470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -12482,8 +12481,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 1924334494}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1924334497
