@@ -33,7 +33,7 @@ public class MainManager : MonoBehaviour
         StartCoroutine(AddScoreEverySecond());
         scoreText = score.GetComponent<TextMeshProUGUI>();
         // DontDestroyOnLoad(gameObject);
-        musicManager = FindObjectOfType<MusicManager>();
+        musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
         currentStageTime = 0f;
         transitionManager = FindObjectOfType<StageTransitionManager>();
         GameManager.inst.CursorActive(false);

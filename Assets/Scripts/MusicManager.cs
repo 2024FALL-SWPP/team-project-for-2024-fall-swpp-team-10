@@ -14,13 +14,12 @@ public class MusicManager : MonoBehaviour
     protected virtual void Awake()
     {
         // Setup audio source
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         audioSource.clip = backgroundMusic;
         audioSource.volume = musicVolume;
         audioSource.loop = loop;
         audioSource.pitch = pitch;
         PlayMusic();
-
     }
 
     public void PlayMusic()
@@ -65,7 +64,7 @@ public class MusicManager : MonoBehaviour
 
     }
 
-    public void ChangeSpeed( float v)
+    public void ChangeSpeed(float v)
     {
         if (audioSource != null)
         {
