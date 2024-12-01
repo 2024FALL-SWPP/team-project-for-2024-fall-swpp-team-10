@@ -30,7 +30,7 @@ public abstract class StageManager : MonoBehaviour
     protected virtual void Awake()
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
-        musicManager = FindObjectOfType<MusicManager>();
+        musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
     }
 
     protected virtual void Update()
