@@ -27,7 +27,7 @@ public class GameManagerTest
         lifeField.SetValue(gameManager, 1);
 
         FieldInfo scoreField = typeof(GameManager).GetField("score", BindingFlags.NonPublic | BindingFlags.Instance);
-        lifeField.SetValue(gameManager, 50000);
+        scoreField.SetValue(gameManager, 50000);
 
         // call
         gameManager.ResetStats();
