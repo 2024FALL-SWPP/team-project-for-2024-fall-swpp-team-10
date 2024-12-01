@@ -72,4 +72,18 @@ public class GameManagerTest
 
         Assert.AreEqual("LeaderBoardScene", SceneManager.GetActiveScene().name);
     }
+
+    [UnityTest]
+    public IEnumerator TestCursorActive()
+    {
+        gameManager.CursorActive(true);
+        yield return null;
+        Assert.AreEqual(CursorLockMode.None, Cursor.lockState);
+        Assert.AreEqual(true, Cursor.visible);
+
+        gameManager.CursorActive(false);
+        yield return null;
+        Assert.AreEqual(CursorLockMode.Locked, Cursor.lockState);
+        Assert.AreEqual(false, Cursor.visible);
+    }
 }

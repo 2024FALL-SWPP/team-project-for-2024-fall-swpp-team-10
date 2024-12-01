@@ -119,16 +119,4 @@ public class GameManagerTest
         gameManager.AddScore(-10000);
         Assert.AreEqual(0, gameManager.GetScore());
     }
-
-    [Test]
-    public void TestCursorActive()
-    {
-        gameManager.CursorActive(true);
-        Assert.AreEqual(CursorLockMode.None, Cursor.lockState);
-        Assert.AreEqual(true, Cursor.visible);
-
-        gameManager.CursorActive(false);
-        Assert.AreEqual(CursorLockMode.Locked, Cursor.lockState);
-        Assert.AreEqual(false, Cursor.visible);
-    }
 }
