@@ -16,7 +16,7 @@ public class StageTransitionManager : MonoBehaviour
 
     [Header("Transition Settings")]
     [SerializeField] float cameraTransitionDuration = 2.0f;
-    [SerializeField] float countdownDuration = 5.0f;
+    [SerializeField] public float countdownDuration = 5.0f;
     [SerializeField] Animator transitionAnimator;  // Reference to the Animator component
 
 
@@ -98,14 +98,6 @@ public class StageTransitionManager : MonoBehaviour
             yield return null;
         }
 
-        // Start countdown
-        countdownText.gameObject.SetActive(true);
-        for (int i = (int)countdownDuration; i > 0; i--)
-        {
-            yield return new WaitForSecondsRealtime(1f);
-            countdownText.text = $"Moving to Boss Stage in {i}...";
-        }
-
         // Play animation - Uncompleted
         if (transitionAnimator != null)
         {
@@ -123,12 +115,32 @@ public class StageTransitionManager : MonoBehaviour
         GameManager.inst.LoadBossStage();
     }
 
-    public IEnumerator BossStageTransition()
+    public IEnumerator Countdown()
+    {
+        // Start countdown
+        countdownText.gameObject.SetActive(true);
+        for (int i = (int)countdownDuration; i > 0; i--)
+        {
+            countdownText.text = $"Boss Stage Starting in {i}...";
+            yield return new WaitForSecondsRealtime(1f);
+        }
+
+        countdownText.gameObject.SetActive(false);
+    }
+
+    public float BossStageTransition()
+    {
+        StartCoroutine("BossStageTransitionCoroutine");
+        AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
+        float animationDuration = stateInfo.length / stateInfo.speed;
+        return animationDuration;
+    }
+
+    private IEnumerator BossStageTransitionCoroutine()
     {
         if (transitionAnimator != null)
         {
             // Play the animation
-            Debug.Log("Entered BossStageTransition");
             transitionAnimator.Play("BossStageStart");
 
             // Get animation length
