@@ -5,43 +5,8 @@ using EnumManager;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerControl : PlayerBase
+public class MainStagePlayer : PlayerBase
 {
-    /*
-    private float gridSpacing = 1.0f; // Distance between grid positions
-    private Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
-    public float moveSpeed = 10f; // Speed of movement between grid positions
-
-    private Vector2Int currentGridPosition; // Current grid position (logical, not world space)
-    private Vector3 initialPosition; // Initial world position of the player
-    public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
-    private bool isMoving = false; // Flag to prevent movement while transitioning
-
-    [Header("Projectile Settings")]
-    private float projectileSpeed = 30.0f;
-    public GameObject projectilePrefab;
-    public Transform projectileSpawnPoint;
-    private bool hasTripleShot = false;  // Flag for triple shot power-up
-
-    private Renderer[] childRenderers; //Renderer of characters
-    private Color[,] originColors; // Origin color of characters
-    private int blinkCount = 3; // 피격 시 깜빡이는 횟수
-    private bool isInvincible = false; // 무적 지속중인지 확인
-    private bool isBlinking = false; // 깜빡이는중인지 확인
-    public float invincibleLength; // 무적 지속 시간
-
-    [Header("Lightstick Settings")]
-    public GameObject leftLightstickPrefab;   // Assign in inspector
-    public GameObject rightLightstickPrefab;  // Assign in inspector
-    public float lightstickOffset = 1.0f;
-    public float lightStickDuration = 5.0f;
-    private float powerUpEndTime; // Track when the power-up should end
-    private Coroutine tripleShotCoroutine;
-
-    [Header("Audio Settings")]
-    [SerializeField] public AudioClip laserFireSound;
-    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
-    */
     private float gridSpacing = 1.0f; // Distance between grid positions
     private Vector2Int gridSize = new Vector2Int(3, 3); // 3x3 grid
     public float moveSpeed = 10f; // Speed of movement between grid positions
@@ -64,40 +29,7 @@ public class PlayerControl : PlayerBase
     public float lightStickDuration = 5.0f;
     private float powerUpEndTime; // Track when the power-up should end
     private Coroutine tripleShotCoroutine;
-    /*void Awake()
-    {
-        // Set the initial position as the down of the grid (1,0)
-        initialPosition = transform.position - Vector3.down;
-        currentGridPosition = new Vector2Int(1, 0); // Start at the down logically
-        SyncCenterPosition();
 
-        childRenderers = GetComponentsInChildren<Renderer>();
-
-        int maxSharedMaterialsLength = 0;
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
-        }
-        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
-
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                if (childRenderers[i].sharedMaterials[j].HasProperty("_Color"))
-                    originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
-            }
-        }
-
-        if (GameManager.inst.originColorSave == null)
-            GameManager.inst.originColorSave = originColors;
-
-        // Initialize lightsticks in disabled state
-        if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(false);
-        if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(false);
-    }*/
     protected override void Awake()
     {
         base.Awake();
@@ -283,44 +215,7 @@ public class PlayerControl : PlayerBase
             0
         );
     }
-/*
-    // 피격 시 깜빡임
-    public IEnumerator Blink()
-    {
-        isBlinking = true;
-        for (int i = 0; i < blinkCount; i++)
-        {
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(0.2f);
 
-            ChangeColorOriginal();
-            yield return new WaitForSeconds(0.2f);
-        }
-        isBlinking = false;
-    }
-
-    // 캐릭터 색 전체 변환
-    public void ChangeColor(Color _color)
-    {
-        foreach (Renderer renderer in childRenderers)
-        {
-            foreach (Material material in renderer.sharedMaterials)
-                material.color = _color;
-        }
-    }
-
-    // 캐릭터 색 원래 색으로
-    public void ChangeColorOriginal()
-    {
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
-            }
-        }
-    }
-*/
     void DisableLightsticks()
     {
         if (leftLightstickPrefab != null)
@@ -362,19 +257,5 @@ public class PlayerControl : PlayerBase
         DisableLightsticks();
         tripleShotCoroutine = null;
     }
-/*
-    public void SetIsInvincible(bool _isInvincible)
-    {
-        isInvincible = _isInvincible;
-    }
-    public bool GetIsInvincible()
-    {
-        return isInvincible;
-    }
 
-    public bool GetIsBlinking()
-    {
-        return isBlinking;
-    }
-*/
 }

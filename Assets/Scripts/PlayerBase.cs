@@ -38,6 +38,7 @@ public abstract class PlayerBase : MonoBehaviour
             GameManager.inst.originColorSave = originColors;
     }
 
+    // 캐릭터 색 전체 변환
     public void ChangeColor(Color color)
     {
         foreach (Renderer renderer in childRenderers)
@@ -47,6 +48,7 @@ public abstract class PlayerBase : MonoBehaviour
         }
     }
 
+    // 캐릭터 색 원래 색으로
     public void ChangeColorOriginal()
     {
         for (int i = 0; i < childRenderers.Length; i++)
@@ -57,11 +59,10 @@ public abstract class PlayerBase : MonoBehaviour
             }
         }
     }
-
+    // 피격 시 깜빡임
     public IEnumerator Blink()
     {
         isBlinking = true;
-        isInvincible = true;
         for (int i = 0; i < blinkCount; i++)
         {
             ChangeColor(Color.red);
@@ -71,7 +72,6 @@ public abstract class PlayerBase : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         isBlinking = false;
-        isInvincible = false;
     }
 
     public void SetIsInvincible(bool _isInvincible)
@@ -90,7 +90,5 @@ public abstract class PlayerBase : MonoBehaviour
 
     protected abstract void FireLaser();
 
-    protected virtual void OnCollisionEnter(Collision other)
-    {
-    }
+    protected abstract void OnCollisionEnter(Collision other);
 }

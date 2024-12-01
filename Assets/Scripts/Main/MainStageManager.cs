@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 using EnumManager;
 using TMPro;
 using UnityEngine.EventSystems;
-public class MainManager : StageManager
+public class MainStageManager : StageManager
 {
     [Header("MainStage End Condition Settings")]
     [SerializeField] float stageDuration = 3.0f;
-    private float currentStageTime = 180.0f;
+    private float currentStageTime = 0f;
     private StageTransitionManager transitionManager;
     private bool isSpawnStopped = false;
     public GameObject bossLandingParticle;
@@ -82,7 +82,7 @@ public class MainManager : StageManager
     {
         base.OnSceneLoaded(scene, mode);
         transitionManager.SetCurrentCharacter(activeCharacter);
-        activeCharacter.GetComponent<PlayerControl>().ChangeColorOriginal();
+        activeCharacter.GetComponent<MainStagePlayer>().ChangeColorOriginal();
     }
 
     protected override void PauseGame()

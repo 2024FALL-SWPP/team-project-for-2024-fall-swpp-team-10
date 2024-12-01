@@ -6,13 +6,13 @@ using UnityEngine;
 public class ObjectManager : MonoBehaviour
 {
     protected GameObject player;
-    protected PlayerControl playerControl;
+    protected MainStagePlayer playerControl;
     protected float speed = 22.0f;
 
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player");
-        playerControl = player.GetComponent<PlayerControl>();
+        playerControl = player.GetComponent<MainStagePlayer>();
     }
 
     // Update is called once per frame

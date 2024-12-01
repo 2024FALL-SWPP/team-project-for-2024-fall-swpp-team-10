@@ -2,42 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class BossStagePlayer : PlayerBase
-{/*
-    [Header("Movement Settings")]
-    public float speed = 10f;
-    public float rotationSpeed = 5f; // 회전 보간 속도
-    private bool isSpinning = false;
-    private float playerSpinDuration = 3f; // 한 바퀴 도는 데 걸리는 시간
-
-    [Header("Movement Constraints")]
-    public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
-    public Vector3 areaMax = new Vector3(10f, 0.8f,10f);
-    public float minDistanceFromBoss = 2f; // 원점으로부터 최소 거리 설정
-
-    [Header("Boss Settings")]
-    public Transform bossTransform;
-    private Rigidbody rb;
-    private const float initialPitch = 20f;
-    private Quaternion lastRotation;
-
-    [Header("Projectile Settings")]
-    public float projectileSpeed = 10.0f;
-    public GameObject projectilePrefab;
-    public Transform projectileSpawnPoint;
-    private Camera mainCamera;
-
-    [Header("Audio Settings")]
-    [SerializeField] public AudioClip laserFireSound;
-    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
-    [SerializeField] public AudioClip obstacleCollisionSound;
-    [SerializeField][Range(0f, 1f)] public float collisionVolume = 0.5f;
-
-    // On Collision variables
-    private bool isInvincible = false;
-    private int blinkCount = 3;
-    private Renderer[] childRenderers; //Renderer of characters
-    private Color[,] originColors; // Origin color of characters
-    */
+{
     [Header("Movement Settings")]
     public float speed = 10f;
     public float rotationSpeed = 5f; // 회전 보간 속도
@@ -65,31 +30,6 @@ public class BossStagePlayer : PlayerBase
     public AudioClip obstacleCollisionSound;
     [Range(0f, 1f)] public float collisionVolume = 0.5f;
 
-    /*private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-
-        childRenderers = GetComponentsInChildren<Renderer>();
-
-        int maxSharedMaterialsLength = 0;
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
-        }
-        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
-
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                if (childRenderers[i].sharedMaterials[j].HasProperty("_Color"))
-                    originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
-            }
-        }
-
-        if (GameManager.inst.originColorSave == null) // Singleton Game Manager will handle this on scene transitions (Refer to : https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/125#discussion_r1852641260)
-            GameManager.inst.originColorSave = originColors;
-    }*/
     protected override void Awake()
     {
         base.Awake();
@@ -280,7 +220,7 @@ public class BossStagePlayer : PlayerBase
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Destroy(other.gameObject);
-            if (isInvincible) return;
+            if (isBlinking) return;
             if (obstacleCollisionSound != null)
             {
                 AudioSource.PlayClipAtPoint(obstacleCollisionSound, gameObject.transform.position, collisionVolume);
@@ -290,44 +230,7 @@ public class BossStagePlayer : PlayerBase
                 StartCoroutine(Blink());
         }
     }
-/*
-    // Blink on damage
-    IEnumerator Blink()
-    {
-        isInvincible = true;
-        for (int i = 0; i < blinkCount; i++)
-        {
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(0.2f);
 
-            ChangeColorOriginal();
-            yield return new WaitForSeconds(0.2f);
-        }
-        isInvincible = false;
-    }
-
-    // 캐릭터 색 전체 변환
-    private void ChangeColor(Color _color)
-    {
-        foreach (Renderer renderer in childRenderers)
-        {
-            foreach (Material material in renderer.sharedMaterials)
-                material.color = _color;
-        }
-    }
-
-    // 캐릭터 색 원래 색으로
-    public void ChangeColorOriginal()
-    {
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
-            }
-        }
-    }
-*/
     // 코루틴을 통해 플레이어가 제자리에서 한 바퀴 돌도록 구현
     public IEnumerator SpinInPlace()
     {
