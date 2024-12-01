@@ -8,19 +8,24 @@ public class InfiniteBackground : MonoBehaviour
     public int numbersOfMapPrefab;
     public float standardZPosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private MainManager mainManager;
 
+    // Start is called before the first frame update
+    void Awake()
+    {
+        mainManager = FindObjectOfType<MainManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
-        if (transform.position.z < -standardZPosition)
+        if (!mainManager.IsStageComplete())
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, standardZPosition * (numbersOfMapPrefab - 1));
+            transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
+            if (transform.position.z < -standardZPosition)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, standardZPosition * (numbersOfMapPrefab - 1));
+            }
         }
     }
 }

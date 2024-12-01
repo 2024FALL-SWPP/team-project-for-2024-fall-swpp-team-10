@@ -4467,10 +4467,12 @@ MonoBehaviour:
   - {fileID: 2092622253}
   - {fileID: 1270904264}
   - {fileID: 798267248}
+  score: {fileID: 1250928733}
   pause: {fileID: 1292896941}
   gameOver: {fileID: 547247828}
-  score: {fileID: 1250928733}
+  boss: {fileID: 2918174079348635216, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
   stageDuration: 187
+  bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &1694800667
 MonoBehaviour:
   m_ObjectHideFlags: 0
