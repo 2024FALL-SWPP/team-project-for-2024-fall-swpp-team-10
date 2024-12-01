@@ -4470,7 +4470,7 @@ MonoBehaviour:
   pause: {fileID: 1292896941}
   gameOver: {fileID: 547247828}
   score: {fileID: 1250928733}
-  stageDuration: 2
+  stageDuration: 187
 --- !u!114 &1694800667
 MonoBehaviour:
   m_ObjectHideFlags: 0
