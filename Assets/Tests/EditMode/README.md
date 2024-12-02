@@ -9,6 +9,8 @@
 https://docs.unity3d.com/Packages/com.unity.test-framework@1.1/manual/edit-mode-vs-play-mode-tests.html#edit-mode-tests
 
 ### How to run edit mode tests?
+> 반드시 비어있는 SampleScene에서 테스트를 수행하세요.
+
 1. Unity에서 `Window > General > TestRunner` 클릭해서 TestRunner 창 열기
 2. TestRunner 창에서 Edit Mode 선택
     - `Run All`을 클릭하면 repository에 있는 모든 edit mode test 수행됨
