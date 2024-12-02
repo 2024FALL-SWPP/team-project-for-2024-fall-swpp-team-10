@@ -19,7 +19,6 @@ public class StageTransitionManager : MonoBehaviour
     [SerializeField] float countdownDuration = 5.0f;
     [SerializeField] Animator transitionAnimator;  // Reference to the Animator component
 
-
     private bool isTransitioning = false;
     private Camera mainCamera;
     private Transform finalCameraAngle;
@@ -51,6 +50,8 @@ public class StageTransitionManager : MonoBehaviour
     {
         if (isTransitioning) yield break;
         isTransitioning = true;
+
+        activeCharacter.transform.Find("PointLight").gameObject.SetActive(true);
 
         // Make sure time is not scaled
         float originalTimeScale = Time.timeScale;
