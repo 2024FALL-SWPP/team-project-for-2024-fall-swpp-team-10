@@ -596,7 +596,7 @@ MonoBehaviour:
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
-  lightStickDuration: 10
+  lightstickEndTime: 0
 --- !u!65 &124041599
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
-  lightStickDuration: 10
+  lightstickEndTime: 0
 --- !u!65 &221971126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
-  lightStickDuration: 10
+  lightstickEndTime: 0
 --- !u!65 &691819272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4244,7 +4244,7 @@ MonoBehaviour:
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
-  lightStickDuration: 10
+  lightstickEndTime: 0
 --- !u!65 &1325425141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5966,7 +5966,7 @@ MonoBehaviour:
   leftLightstickPrefab: {fileID: 1432548208}
   rightLightstickPrefab: {fileID: 1117575159}
   lightstickOffset: 1
-  lightStickDuration: 10
+  lightstickEndTime: 0
 --- !u!65 &1837999631
 BoxCollider:
   m_ObjectHideFlags: 0

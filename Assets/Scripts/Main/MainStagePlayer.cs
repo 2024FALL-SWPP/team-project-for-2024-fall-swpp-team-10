@@ -16,6 +16,7 @@ public class MainStagePlayer : PlayerBase
     public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
+    private bool disableKeys = false; // Flag for disabling keyboard/mouse inputs
     [Header("Invincible Settings")]
     private bool isInvincible = false; // 무적 지속중인지 확인
     public float invincibleLength; // 무적 지속 시간
@@ -24,15 +25,13 @@ public class MainStagePlayer : PlayerBase
     private float projectileSpeed = 30.0f;
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
-    private bool hasTripleShot = false;  // Flag for triple shot power-up
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
     public GameObject rightLightstickPrefab;  // Assign in inspector
     public float lightstickOffset = 1.0f;
-    public float lightStickDuration = 5.0f;
-    private float powerUpEndTime; // Track when the power-up should end
-    private Coroutine tripleShotCoroutine;
+    public float lightstickEndTime;
+    private bool isTripleShot;
 
     protected override void Awake()
     {
@@ -52,7 +51,7 @@ public class MainStagePlayer : PlayerBase
     void Update()
     {
         // Handle movement. Only allow new movement input if we're not currently moving
-        if (!isMoving)
+        if (!isMoving & !disableKeys)
         {
             // Handle left movement
             if (Input.GetKeyDown(KeyCode.A) && currentGridPosition.x > 0)
@@ -90,7 +89,7 @@ public class MainStagePlayer : PlayerBase
         {
             isMoving = true;
             transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
-            DisableLightsticks();
+            ControlLightsticks();
         }
         if (transform.position.y < 0)
         {
@@ -112,7 +111,7 @@ public class MainStagePlayer : PlayerBase
         SpawnProjectile(projectileSpawnPoint.position);
 
         // Side shots if lightsticks are active
-        if (hasTripleShot)
+        if (isTripleShot)
         {
             if (leftLightstickPrefab != null && leftLightstickPrefab.activeSelf)
             {
@@ -135,44 +134,44 @@ public class MainStagePlayer : PlayerBase
         }
     }
 
-    private void UpdateLightstickPositions(Vector3 playerPosition)
-    {
-        if (!hasTripleShot) return;
+    // private void UpdateLightstickPositions(Vector3 playerPosition)
+    // {
+    //     if (!hasTripleShot) return;
 
-        float spawnHeight = projectileSpawnPoint.position.y;
+    //     float spawnHeight = projectileSpawnPoint.position.y;
 
-        // Update left lightstick
-        if (leftLightstickPrefab != null)
-        {
-            bool shouldBeActive = currentGridPosition.x > 0;
-            leftLightstickPrefab.SetActive(shouldBeActive);
-            if (shouldBeActive)
-            {
-                Vector3 leftPosition = new Vector3(
-                    playerPosition.x - lightstickOffset,
-                    spawnHeight,  // Use spawn point height
-                    playerPosition.z
-                );
-                leftLightstickPrefab.transform.position = leftPosition;
-            }
-        }
+    //     // Update left lightstick
+    //     if (leftLightstickPrefab != null)
+    //     {
+    //         bool shouldBeActive = currentGridPosition.x > 0;
+    //         leftLightstickPrefab.SetActive(shouldBeActive);
+    //         if (shouldBeActive)
+    //         {
+    //             Vector3 leftPosition = new Vector3(
+    //                 playerPosition.x - lightstickOffset,
+    //                 spawnHeight,  // Use spawn point height
+    //                 playerPosition.z
+    //             );
+    //             leftLightstickPrefab.transform.position = leftPosition;
+    //         }
+    //     }
 
-        // Update right lightstick
-        if (rightLightstickPrefab != null)
-        {
-            bool shouldBeActive = currentGridPosition.x < gridSize.x - 1;
-            rightLightstickPrefab.SetActive(shouldBeActive);
-            if (shouldBeActive)
-            {
-                Vector3 rightPosition = new Vector3(
-                    playerPosition.x + lightstickOffset,
-                    spawnHeight,  // Use spawn point height
-                    playerPosition.z
-                );
-                rightLightstickPrefab.transform.position = rightPosition;
-            }
-        }
-    }
+    //     // Update right lightstick
+    //     if (rightLightstickPrefab != null)
+    //     {
+    //         bool shouldBeActive = currentGridPosition.x < gridSize.x - 1;
+    //         rightLightstickPrefab.SetActive(shouldBeActive);
+    //         if (shouldBeActive)
+    //         {
+    //             Vector3 rightPosition = new Vector3(
+    //                 playerPosition.x + lightstickOffset,
+    //                 spawnHeight,  // Use spawn point height
+    //                 playerPosition.z
+    //             );
+    //             rightLightstickPrefab.transform.position = rightPosition;
+    //         }
+    //     }
+    // }
 
     IEnumerator SmoothMove()
     {
@@ -204,7 +203,7 @@ public class MainStagePlayer : PlayerBase
             SyncCenterPosition();
 
             // Update lightstick positions to maintain relative positioning
-            UpdateLightstickPositions(transform.position);
+            // UpdateLightstickPositions(transform.position);
             yield return null;
         }
 
@@ -220,47 +219,47 @@ public class MainStagePlayer : PlayerBase
         );
     }
 
-    void DisableLightsticks()
+    public void ControlLightsticks()
     {
         if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(false);
+            leftLightstickPrefab.SetActive(isTripleShot);
         if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(false);
+            rightLightstickPrefab.SetActive(isTripleShot);
     }
 
-    protected override void OnCollisionEnter(Collision other)
-    {
+    // protected override OnCollisionEnter(Collision other)
+    // {
 
-        if (other.gameObject.CompareTag("Lightstick"))
-        {
-            if (tripleShotCoroutine != null)
-            {
-                StopCoroutine(tripleShotCoroutine);
-                tripleShotCoroutine = null;
-            }
+    //     if (other.gameObject.CompareTag("Lightstick"))
+    //     {
+    //         if (tripleShotCoroutine != null)
+    //         {
+    //             StopCoroutine(tripleShotCoroutine);
+    //             tripleShotCoroutine = null;
+    //         }
 
-            hasTripleShot = true;
-            powerUpEndTime = Time.time + lightStickDuration;
+    //         hasTripleShot = true;
+    //         powerUpEndTime = Time.time + lightStickDuration;
 
-            UpdateLightstickPositions(transform.position);
-            tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
+    //         UpdateLightstickPositions(transform.position);
+    //         tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
 
-            Destroy(other.gameObject);
-        }
-    }
+    //         Destroy(other.gameObject);
+    //     }
+    // }
 
-    IEnumerator TripleShotPowerUpTimer()
-    {
+    // IEnumerator TripleShotPowerUpTimer()
+    // {
 
-        while (Time.time < powerUpEndTime)
-        {
-            float remainingTime = powerUpEndTime - Time.time;
-            yield return new WaitForSeconds(0.1f);
-        }
-        hasTripleShot = false;
-        DisableLightsticks();
-        tripleShotCoroutine = null;
-    }
+    //     while (Time.time < powerUpEndTime)
+    //     {
+    //         float remainingTime = powerUpEndTime - Time.time;
+    //         yield return new WaitForSeconds(0.1f);
+    //     }
+    //     hasTripleShot = false;
+    //     DisableLightsticks();
+    //     tripleShotCoroutine = null;
+    // }
 
     public void SetIsInvincible(bool _isInvincible)
     {
@@ -269,5 +268,25 @@ public class MainStagePlayer : PlayerBase
     public bool GetIsInvincible()
     {
         return isInvincible;
+    }
+
+    public bool GetIsTripleShot()
+    {
+        return isTripleShot;
+    }
+
+    public void SetTripleShot(bool _isTripleShot)
+    {
+        isTripleShot = _isTripleShot;
+    }
+
+    public Vector2Int GetCurrentGridPosition()
+    {
+        return currentGridPosition;
+    }
+
+    public Vector2Int GetGridSize()
+    {
+        return gridSize;
     }
 }

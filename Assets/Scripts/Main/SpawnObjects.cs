@@ -31,7 +31,7 @@ public class SpawnObjects : MonoBehaviour
         yield return new WaitForSeconds(startSpawning);
         while (true && !mainStageManager.IsSpawnStopped())
         {
-            int spawnRandom = Random.Range(0, objects.Length);
+            int spawnRandom = 1;
             int xRandom = Random.Range(0, 3) - 1;
             int yRandom = Random.Range(0, 3) - 1;
 
