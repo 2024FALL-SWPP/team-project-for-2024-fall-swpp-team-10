@@ -10599,12 +10599,12 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1533073517}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 852545478}
+        m_TargetAssemblyTypeName: ButtonHandler, Scripts
         m_MethodName: LoadLeaderboard
         m_Mode: 1
         m_Arguments:
