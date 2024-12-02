@@ -15,7 +15,6 @@ public class MainStagePlayer : PlayerBase
     private Vector3 initialPosition; // Initial world position of the player
     public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
-    private bool enableKeys = true; // Flag for disabling keyboard/mouse inputs
 
     [Header("Invincible Settings")]
     private bool isInvincible = false; // 무적 지속중인지 확인
@@ -270,10 +269,5 @@ public class MainStagePlayer : PlayerBase
     public bool GetIsInvincible()
     {
         return isInvincible;
-    }
-
-    public void SetEnableKeys(bool _enableKeys)
-    {
-        enableKeys = _enableKeys;
     }
 }
