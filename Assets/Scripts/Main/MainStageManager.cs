@@ -48,6 +48,7 @@ public class MainStageManager : StageManager
 
     private IEnumerator CompleteStage()
     {
+        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         isStageComplete = true;
 
         boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
@@ -86,12 +87,14 @@ public class MainStageManager : StageManager
     protected override void PauseGame()
     {
         base.PauseGame();
+        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         GameManager.inst.CursorActive(true);
     }
 
     public override void ResumeGame()
     {
         base.ResumeGame();
+        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(true);
         GameManager.inst.CursorActive(false);
     }
 
@@ -99,6 +102,7 @@ public class MainStageManager : StageManager
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
+        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         GameManager.inst.CursorActive(true);
     }
     private IEnumerator AddScoreEverySecond()
