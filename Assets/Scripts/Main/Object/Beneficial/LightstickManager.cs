@@ -35,16 +35,12 @@ public class LightstickManager : BeneficialObject
         }
         isLightstickItemPlaying = true;
         playerControl.SetTripleShot(true);
-        UpdateLightstickPositions(player.transform.position);
-        while (1 < playerControl.lightstickEndTime)
+        while (0 < playerControl.lightstickEndTime)
         {
-            Debug.Log($"playerControl.lightstickEndTime: {playerControl.lightstickEndTime}");
             playerControl.lightstickEndTime -= 1.0f;
-            yield return new WaitForSeconds(0.9f);
+            yield return new WaitForSeconds(1.0f);
         }
-        Debug.Log("Exit while loop");
         playerControl.SetTripleShot(false);
-        playerControl.ControlLightsticks();
         Destroy(gameObject);
     }
 

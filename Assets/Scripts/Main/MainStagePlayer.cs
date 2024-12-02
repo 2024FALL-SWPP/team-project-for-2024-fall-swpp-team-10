@@ -30,7 +30,7 @@ public class MainStagePlayer : PlayerBase
     public GameObject rightLightstickPrefab;  // Assign in inspector
     public float lightstickOffset = 1.0f;
     public float lightstickEndTime;
-    private bool isTripleShot;
+    private bool isTripleShot = false;
 
     protected override void Awake()
     {
@@ -42,9 +42,9 @@ public class MainStagePlayer : PlayerBase
 
         // 라이트스틱 초기화
         if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(false);
+            leftLightstickPrefab.SetActive(isTripleShot);
         if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(false);
+            rightLightstickPrefab.SetActive(isTripleShot);
     }
 
     void Update()
@@ -201,6 +201,7 @@ public class MainStagePlayer : PlayerBase
     public void SetTripleShot(bool _isTripleShot)
     {
         isTripleShot = _isTripleShot;
+        ControlLightsticks();
     }
 
     public Vector2Int GetCurrentGridPosition()
