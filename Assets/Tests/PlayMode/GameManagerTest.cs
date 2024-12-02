@@ -14,6 +14,7 @@ public class GameManagerTest
     {
         // Initialize a new instance of GameManager before each test
         gameManager = new GameManager();
+        GameManager.inst = gameManager;
     }
 
     // A Test behaves as an ordinary method
