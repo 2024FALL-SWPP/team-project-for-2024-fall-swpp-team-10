@@ -75,7 +75,7 @@ public class LaserProjectile : MonoBehaviour
 
         // in Main Stage
         if (other.gameObject.CompareTag("Enemy"))
-        {   
+        {
             if (!other.gameObject.GetComponent<EnemyManager>().HasCollided()) // if enemy has not collided with the player yet
             {
                 GameManager.inst.AddScore(1000);

@@ -39,10 +39,10 @@ public class BossControl : MonoBehaviour
     MeshFilter meshFilter;
     LayerMask occlusionMask;
     Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
-    Color WeakSpotCols0 = new (51f/255f, 1f, 0f, 156f/255f);  // Initial spot color
-    Color WeakSpotCols1 = new (0f, 1f, 219f/255f, 156f/255f); // Spot color on first hit
-    Color WeakSpotCols2 = new (0f, 152f/255f, 1f, 1f);         //      ''       second hit
-    Color WeakSpotCols3 = new (1f, 1f, 1f, 100f/255f);         //      ''       third hit = final color
+    Color WeakSpotCols0 = new(51f / 255f, 1f, 0f, 156f / 255f);  // Initial spot color
+    Color WeakSpotCols1 = new(0f, 1f, 219f / 255f, 156f / 255f); // Spot color on first hit
+    Color WeakSpotCols2 = new(0f, 152f / 255f, 1f, 1f);         //      ''       second hit
+    Color WeakSpotCols3 = new(1f, 1f, 1f, 100f / 255f);         //      ''       third hit = final color
     int hitCount = 0;   // Number of total hits on weakspot
     BossStageManager bossStageManager;
 
@@ -89,7 +89,7 @@ public class BossControl : MonoBehaviour
 
         //BossDeath(); // Used to test boss death in scene
     }
-    void Start() 
+    void Start()
     {
         carrotTargetPos = bossStageManager.ActiveCharacter().transform;
     }
@@ -267,7 +267,7 @@ public class BossControl : MonoBehaviour
 
             // Perform an occlusion check
             if (Physics.Linecast(mainCamera.transform.position, worldPos, occlusionMask)) continue;
-            
+
             int index = 0;
 
             // X-axis split: left or right
@@ -290,7 +290,7 @@ public class BossControl : MonoBehaviour
             //|----|----|
 
             regions[index].Add(worldPos);
-            
+
         }
 
         // Choose three random regions and select one random point from each
@@ -356,6 +356,7 @@ public class BossControl : MonoBehaviour
         }
 
         if (status == 3 || status == -1) return;
+        GameManager.inst.AddScore(3000);
         if (weakSpotSound != null)
         {
             AudioSource.PlayClipAtPoint(weakSpotSound, gameObject.transform.position, weakSpotVolume);
@@ -410,7 +411,7 @@ public class BossControl : MonoBehaviour
     //        if (child.gameObject.CompareTag("WeakSpot"))
     //            if (TransformWeakSpot(child.gameObject)) return;
     //}
-    public bool IsDead() 
+    public bool IsDead()
     {
         return bossDead;
     }
