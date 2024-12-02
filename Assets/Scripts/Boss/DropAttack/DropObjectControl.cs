@@ -22,6 +22,7 @@ public class DropObjectControl : MonoBehaviour
     {
         // 낙하물이 땅에 닿을 때까지 체크
         StartCoroutine(CheckLanding());
+        Physics.IgnoreLayerCollision(10, 11);
     }
 
     IEnumerator CheckLanding()

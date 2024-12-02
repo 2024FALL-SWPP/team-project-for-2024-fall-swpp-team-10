@@ -24,10 +24,12 @@ TagManager:
   - Water
   - UI
   - Items
-  - Weakspot
+  - IgnoreCarrot
   - Carrot
   - Player
   - 
+  - DropObjectMesh
+  - DropObjectBox
   - 
   - 
   - 

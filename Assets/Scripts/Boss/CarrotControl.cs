@@ -10,6 +10,7 @@ public class CarrotControl : MonoBehaviour
     {
         mainCamera = Camera.main;
         Physics.IgnoreLayerCollision(7, 8);
+        Physics.IgnoreLayerCollision(11, 8);
     }
 
     // Update is called once per frame
@@ -28,5 +29,12 @@ public class CarrotControl : MonoBehaviour
         return viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
                viewportPosition.z > 0;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.layer);
+        if (collision.gameObject.layer == 10)
+            Destroy(gameObject);
     }
 }
