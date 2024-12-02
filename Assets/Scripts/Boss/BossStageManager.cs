@@ -50,7 +50,7 @@ public class BossStageManager : StageManager
         }
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
 

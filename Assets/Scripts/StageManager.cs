@@ -33,7 +33,7 @@ public abstract class StageManager : MonoBehaviour
         musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
@@ -86,7 +86,7 @@ public abstract class StageManager : MonoBehaviour
     {
         return activeCharacter;
     }
-    protected virtual void PauseGame()
+    public virtual void PauseGame()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0;

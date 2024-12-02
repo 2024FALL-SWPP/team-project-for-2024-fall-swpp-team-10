@@ -21,16 +21,8 @@ public class MainStageManagerTest
         GameManager.inst = gameManager;
 
         // Load the test scene
-        gameManager.LoadMainStage();
-        Debug.Log(SceneManager.GetActiveScene().name);
+        EditorSceneManager.OpenScene("Assets/Scenes/MainStage1Scene.unity");
         mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        Object.Destroy(gameManagerObject);
-        Object.Destroy(mainStageManager);
     }
 
     [UnityTest]
@@ -40,7 +32,8 @@ public class MainStageManagerTest
         mainStageManager.stageDuration = 2.0f;
 
         // Act
-        yield return new WaitForSeconds(2.1f);
+        for (int i = 0; i < 126; i++)
+            yield return null;
 
         // Assert
         Assert.IsTrue(mainStageManager.IsStageComplete());
@@ -53,7 +46,8 @@ public class MainStageManagerTest
         mainStageManager.stageDuration = 2.0f;
 
         // Act
-        yield return new WaitForSeconds(2.1f);
+        for (int i = 0; i < 126; i++)
+            yield return null;
 
         // Assert
         Assert.IsNotNull(mainStageManager.boss);
@@ -68,7 +62,11 @@ public class MainStageManagerTest
         int initialScore = GameManager.inst.GetScore();
 
         // Act
-        yield return new WaitForSeconds(3.1f);
+        for (int i = 0; i < 186; i++)
+        {
+            Debug.Log(GameManager.inst.GetScore());
+            yield return null;
+        }
 
         // Assert
         Assert.Greater(GameManager.inst.GetScore(), initialScore);
