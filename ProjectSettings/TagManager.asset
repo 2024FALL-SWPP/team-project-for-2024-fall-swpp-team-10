@@ -24,31 +24,11 @@ TagManager:
   - Water
   - UI
   - Items
-  - Weakspot
+  - IgnoreCarrot
   - Carrot
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - DropObjectMesh
+  - DropObjectBox
   m_SortingLayers:
   - name: Default
     uniqueID: 0

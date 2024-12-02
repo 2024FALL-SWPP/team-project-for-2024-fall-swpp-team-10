@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1296558194292379976}
   - component: {fileID: 3031140616979808211}
   - component: {fileID: 4047962333283071767}
-  - component: {fileID: 6009319440676941950}
-  m_Layer: 0
+  - component: {fileID: 5986569441710157824}
+  m_Layer: 10
   m_Name: Football
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -64,8 +64,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 180128, guid: d64dadb073f5bb64f97af17f6be6e028, type: 3}
---- !u!65 &6009319440676941950
-BoxCollider:
+--- !u!135 &5986569441710157824
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -75,8 +75,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.39122, y: 0.7727337, z: 19.478437}
-  m_Center: {x: 0.007072687, y: -2.252221, z: 7.384182}
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 8}
 --- !u!1001 &6790918911345502923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,6 +147,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6640939d9c40844a6b5a196b33646eba, type: 3}
       propertyPath: m_Name
       value: football_ball_FBX
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6640939d9c40844a6b5a196b33646eba, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6640939d9c40844a6b5a196b33646eba, type: 3}
