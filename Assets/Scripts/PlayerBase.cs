@@ -7,6 +7,7 @@ public abstract class PlayerBase : MonoBehaviour
     protected Color[,] originColors; // Origin color of characters
     protected int blinkCount = 3; // �ǰ� �� �����̴� Ƚ��
     protected bool isBlinking = false; // �����̴������� Ȯ��
+    protected bool enableKeys = true; // Flag for disabling keyboard/mouse inputs
 
     [Header("Audio Settings")]
     public AudioClip laserFireSound;
@@ -75,6 +76,11 @@ public abstract class PlayerBase : MonoBehaviour
     public bool GetIsBlinking()
     {
         return isBlinking;
+    }
+
+    public void SetEnableKeys(bool _enableKeys)
+    {
+        enableKeys = _enableKeys;
     }
 
     protected abstract void FireLaser();

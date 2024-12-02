@@ -52,7 +52,7 @@ public class MainStagePlayer : PlayerBase
     void Update()
     {
         // Handle movement. Only allow new movement input if we're not currently moving
-        if (!isMoving)
+        if (!isMoving && enableKeys)
         {
             // Handle left movement
             if (Input.GetKeyDown(KeyCode.A) && currentGridPosition.x > 0)
@@ -80,7 +80,7 @@ public class MainStagePlayer : PlayerBase
             }
         }
         // Fire Laser
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && enableKeys)
         {
             FireLaser();
         }
