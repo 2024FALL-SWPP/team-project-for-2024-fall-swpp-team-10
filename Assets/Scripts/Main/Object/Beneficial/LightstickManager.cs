@@ -4,43 +4,36 @@ using UnityEngine;
 
 public class LightstickManager : BeneficialObject
 {
+    private bool isLightstickItemPlaying = false;
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
         // Update lightstick positions to maintain relative positioning
         UpdateLightstickPositions(player.transform.position);
+        if (!isLightstickItemPlaying)
+        {
+            base.Update();
+        }
+        else
+        {
+            HideAndKeep();
+        }
     }
 
     protected override void OnPlayerCollision(GameObject player)
     {
         StartCoroutine(TripleShotPowerUp());
-        // if (playerControl != null)
-        // {
-        //     if (playerControl.tripleShotCoroutine != null)
-        //     {
-        //         StopCoroutine(playerControl.tripleShotCoroutine);
-        //         playerControl.tripleShotCoroutine = null;
-        //     }
-
-        //     playerControl.hasTripleShot = true;
-        //     playerControl.lightstickEndTime = Time.time + playerControl.lightStickDuration;
-
-        //     UpdateLightstickPositions(player.transform.position);
-        //     playerControl.tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
-
-
-        // }
     }
 
     IEnumerator TripleShotPowerUp()
     {
-        playerControl.lightstickEndTime = 5.0f;
+        playerControl.lightstickEndTime = 10.0f;
         if (playerControl.GetIsTripleShot())
         {
             Destroy(gameObject);
             yield break;
         }
+        isLightstickItemPlaying = true;
         playerControl.SetTripleShot(true);
         UpdateLightstickPositions(player.transform.position);
         while (1 < playerControl.lightstickEndTime)

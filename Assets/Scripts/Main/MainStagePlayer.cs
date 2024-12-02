@@ -16,7 +16,6 @@ public class MainStagePlayer : PlayerBase
     public Vector3 centerPosition; // 캐릭터 중앙 위치 보정
     private bool isMoving = false; // Flag to prevent movement while transitioning
 
-    private bool disableKeys = false; // Flag for disabling keyboard/mouse inputs
     [Header("Invincible Settings")]
     private bool isInvincible = false; // 무적 지속중인지 확인
     public float invincibleLength; // 무적 지속 시간
@@ -51,7 +50,7 @@ public class MainStagePlayer : PlayerBase
     void Update()
     {
         // Handle movement. Only allow new movement input if we're not currently moving
-        if (!isMoving & !disableKeys)
+        if (!isMoving)
         {
             // Handle left movement
             if (Input.GetKeyDown(KeyCode.A) && currentGridPosition.x > 0)
@@ -134,45 +133,6 @@ public class MainStagePlayer : PlayerBase
         }
     }
 
-    // private void UpdateLightstickPositions(Vector3 playerPosition)
-    // {
-    //     if (!hasTripleShot) return;
-
-    //     float spawnHeight = projectileSpawnPoint.position.y;
-
-    //     // Update left lightstick
-    //     if (leftLightstickPrefab != null)
-    //     {
-    //         bool shouldBeActive = currentGridPosition.x > 0;
-    //         leftLightstickPrefab.SetActive(shouldBeActive);
-    //         if (shouldBeActive)
-    //         {
-    //             Vector3 leftPosition = new Vector3(
-    //                 playerPosition.x - lightstickOffset,
-    //                 spawnHeight,  // Use spawn point height
-    //                 playerPosition.z
-    //             );
-    //             leftLightstickPrefab.transform.position = leftPosition;
-    //         }
-    //     }
-
-    //     // Update right lightstick
-    //     if (rightLightstickPrefab != null)
-    //     {
-    //         bool shouldBeActive = currentGridPosition.x < gridSize.x - 1;
-    //         rightLightstickPrefab.SetActive(shouldBeActive);
-    //         if (shouldBeActive)
-    //         {
-    //             Vector3 rightPosition = new Vector3(
-    //                 playerPosition.x + lightstickOffset,
-    //                 spawnHeight,  // Use spawn point height
-    //                 playerPosition.z
-    //             );
-    //             rightLightstickPrefab.transform.position = rightPosition;
-    //         }
-    //     }
-    // }
-
     IEnumerator SmoothMove()
     {
         isMoving = true;
@@ -201,9 +161,6 @@ public class MainStagePlayer : PlayerBase
 
             // 캐릭터 중앙 위치 수정
             SyncCenterPosition();
-
-            // Update lightstick positions to maintain relative positioning
-            // UpdateLightstickPositions(transform.position);
             yield return null;
         }
 
@@ -226,40 +183,6 @@ public class MainStagePlayer : PlayerBase
         if (rightLightstickPrefab != null)
             rightLightstickPrefab.SetActive(isTripleShot);
     }
-
-    // protected override OnCollisionEnter(Collision other)
-    // {
-
-    //     if (other.gameObject.CompareTag("Lightstick"))
-    //     {
-    //         if (tripleShotCoroutine != null)
-    //         {
-    //             StopCoroutine(tripleShotCoroutine);
-    //             tripleShotCoroutine = null;
-    //         }
-
-    //         hasTripleShot = true;
-    //         powerUpEndTime = Time.time + lightStickDuration;
-
-    //         UpdateLightstickPositions(transform.position);
-    //         tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
-
-    //         Destroy(other.gameObject);
-    //     }
-    // }
-
-    // IEnumerator TripleShotPowerUpTimer()
-    // {
-
-    //     while (Time.time < powerUpEndTime)
-    //     {
-    //         float remainingTime = powerUpEndTime - Time.time;
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-    //     hasTripleShot = false;
-    //     DisableLightsticks();
-    //     tripleShotCoroutine = null;
-    // }
 
     public void SetIsInvincible(bool _isInvincible)
     {
