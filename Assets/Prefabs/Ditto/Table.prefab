@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 1224700328564371219}
   m_Layer: 0
   m_Name: Table
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,7 +397,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4117767489009073345}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0139999995, y: 2.195, z: 9.199}
+  m_LocalPosition: {x: 0, y: 2, z: 9}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -453,8 +453,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.056265075, y: 0.054509487, z: 0.03960495}
-  m_Center: {x: -0.00080028473, y: -0.0030333938, z: 0.00097084045}
+  m_Size: {x: 0.056728024, y: 0.07230165, z: 0.069163226}
+  m_Center: {x: -0.0010317594, y: -0.0000013709068, z: -0.00029129983}
 --- !u!1 &5191971079977728179
 GameObject:
   m_ObjectHideFlags: 0

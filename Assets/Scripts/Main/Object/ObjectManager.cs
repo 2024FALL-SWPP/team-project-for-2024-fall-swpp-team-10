@@ -7,18 +7,20 @@ public class ObjectManager : MonoBehaviour
 {
     protected GameObject player;
     protected MainStagePlayer playerControl;
+    protected Rigidbody objectRb;
     protected float speed = 22.0f;
 
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player");
         playerControl = player.GetComponent<MainStagePlayer>();
+        objectRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        transform.Translate(new Vector3(0, 0, -1) * speed * Time.deltaTime, Space.World);
+        objectRb.velocity = Vector3.back * speed;
 
         if (transform.position.z < -100)
         {
@@ -34,7 +36,8 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    protected virtual void OnPlayerCollision(GameObject player) {
+    protected virtual void OnPlayerCollision(GameObject player)
+    {
         throw new NotImplementedException();
     }
 }

@@ -174,7 +174,7 @@ MonoBehaviour:
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
   stageDuration: 183
-  boss: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  boss: {fileID: 2918174079348635216, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &40871804
 MonoBehaviour:
