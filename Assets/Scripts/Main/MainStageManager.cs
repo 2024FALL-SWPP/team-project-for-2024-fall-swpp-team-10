@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MainStageManager : StageManager
 {
     [Header("MainStage End Condition Settings")]
-    public float stageDuration = 3.0f;
+    public float stageDuration = 180.0f;
     private float currentStageTime = 0f;
     private bool isSpawnStopped = false;
     public GameObject boss;
@@ -122,5 +122,10 @@ public class MainStageManager : StageManager
     public bool IsStageComplete()
     {
         return isStageComplete;
+    }
+
+    public float CurrentStageTime()
+    {
+        return currentStageTime;
     }
 }

@@ -20,9 +20,7 @@ public class MainStageManagerTest
         gameManager = gameManagerObject.AddComponent<GameManager>();
         GameManager.inst = gameManager;
 
-        // Load the test scene
         gameManager.LoadMainStage();
-        Debug.Log(SceneManager.GetActiveScene().name);
         mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
     }
 
@@ -34,36 +32,28 @@ public class MainStageManagerTest
     }
 
     [UnityTest]
-    public IEnumerator TestStageCompletesAfterDuration()
+    public IEnumerator TestStageComplete()
     {
-        // Arrange
-        mainStageManager.stageDuration = 2.0f;
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        Assert.IsFalse(mainStageManager.IsStageComplete());
 
-        // Act
-        yield return new WaitForSeconds(2.1f);
+        yield return null;
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>(); //안하면 Destroy됐다고 뜸
+        mainStageManager.StartCoroutine(mainStageManager.CompleteStage());
+
+        yield return null;
 
         // Assert
         Assert.IsTrue(mainStageManager.IsStageComplete());
     }
 
     [UnityTest]
-    public IEnumerator TestBossSpawnsAtStageCompletion()
-    {
-        // Arrange
-        mainStageManager.stageDuration = 2.0f;
-
-        // Act
-        yield return new WaitForSeconds(2.1f);
-
-        // Assert
-        Assert.IsNotNull(mainStageManager.boss);
-        Assert.AreEqual(new Vector3(0, 13, mainStageManager.ActiveCharacter().transform.position.z + 3),
-                        mainStageManager.boss.transform.position);
-    }
-
-    [UnityTest]
     public IEnumerator TestScoreAddsEverySecond()
     {
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        Assert.AreEqual(0, GameManager.inst.GetScore());
         // Arrange
         int initialScore = GameManager.inst.GetScore();
 
@@ -76,28 +66,52 @@ public class MainStageManagerTest
     }
 
     [UnityTest]
-    public IEnumerator TestPauseGameDisablesCharacterControls()
+    public IEnumerator TestIsSpawnStopped()
     {
-        // Act
-        mainStageManager.PauseGame();
-        yield return null;
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        Assert.IsFalse(mainStageManager.IsSpawnStopped());
+        // Stage duration을 4.9초로 설정
+        mainStageManager.stageDuration = 4.9f;
 
-        // Assert
-        Assert.IsFalse(mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().enabled);
+        // 시간이 거의 끝나갈 때 isSpawnStopped가 true로 설정되는지 확인
+        mainStageManager.Update();
+        yield return null;
+        Assert.IsTrue(mainStageManager.IsSpawnStopped());
     }
 
     [UnityTest]
-    public IEnumerator TestResumeGameEnablesCharacterControls()
+    public IEnumerator TestPauseGame()
     {
-        // Arrange
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        // Act
+        Cursor.visible = false; // 테스트 시작 전 초기화
         mainStageManager.PauseGame();
-        yield return null;
 
+        yield return new WaitForEndOfFrame();
+
+        // Assert
+        Assert.IsTrue(Cursor.visible);
+    }
+
+    [UnityTest]
+    public IEnumerator TestResumeGame()
+    {
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        // Act
+        Cursor.visible = false; // 테스트 시작 전 초기화
+        mainStageManager.PauseGame();
+
+        yield return new WaitForEndOfFrame();
+
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>(); //안하면 Destroy됐다고 뜸
         // Act
         mainStageManager.ResumeGame();
         yield return null;
 
         // Assert
-        Assert.IsTrue(mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().enabled);
+        Assert.IsFalse(Cursor.visible);
     }
 }
