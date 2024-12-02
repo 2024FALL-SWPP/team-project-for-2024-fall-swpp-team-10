@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
+// with GPT
 public class MainStageManagerTest
 {
     private MainStageManager mainStageManager;
