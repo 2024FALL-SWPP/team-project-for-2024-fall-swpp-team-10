@@ -41,7 +41,8 @@ public class BossStageManager : StageManager
         {
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
-        musicManager.ChangeSpeed(1.25f);
+        if (musicManager != null)
+            musicManager.ChangeSpeed(1.25f);
         if (transitionManager != null)
         {
             Debug.Log("Playing boss ani");
@@ -62,7 +63,7 @@ public class BossStageManager : StageManager
         }
 
         // "Obstacle" 태그 오브젝트 비활성화
-        if (isStageComplete) 
+        if (isStageComplete)
         {
             GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject obstacle in obstacleObjects)
