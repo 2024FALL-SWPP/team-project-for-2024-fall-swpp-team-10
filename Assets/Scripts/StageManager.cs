@@ -27,13 +27,15 @@ public abstract class StageManager : MonoBehaviour
     public AudioClip heartDeactivateSound;
     public float soundVolume = 0.7f;
 
-    protected virtual void Awake()
+    public virtual void Awake()
     {
-        scoreText = score.GetComponent<TextMeshProUGUI>();
-        musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        if (scoreText != null)
+            scoreText = score.GetComponent<TextMeshProUGUI>();
+        if (musicManager != null)
+            musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
@@ -41,20 +43,22 @@ public abstract class StageManager : MonoBehaviour
         }
 
         // Update score
-        scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
+        if (scoreText != null)
+            scoreText.text = "score\n" + GameManager.inst.GetScore().ToString();
 
         // Update Hearts UI
         if (!isStageComplete)
             UpdateHeartsUI();
 
         // Check for game over
-        if (GameManager.inst.GetLife() <= 0 && !isGameOver)
-        {
-            HandleGameOver();
-        }
+        if (GameManager.inst != null)
+            if (GameManager.inst.GetLife() <= 0 && !isGameOver)
+            {
+                HandleGameOver();
+            }
     }
 
-    protected virtual void UpdateHeartsUI()
+    public virtual void UpdateHeartsUI()
     {
         if (hearts != null)
         {
@@ -63,17 +67,17 @@ public abstract class StageManager : MonoBehaviour
         }
     }
 
-    protected virtual void OnEnable()
+    public virtual void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    protected virtual void OnDisable()
+    public virtual void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         int characterIndex = (int)GameManager.inst.GetCharacter();
         characters[characterIndex].SetActive(true);
@@ -82,27 +86,30 @@ public abstract class StageManager : MonoBehaviour
         Time.timeScale = 1;
         isGameOver = false;
     }
-    public virtual GameObject ActiveCharacter() 
+    public virtual GameObject ActiveCharacter()
     {
         return activeCharacter;
     }
-    protected virtual void PauseGame()
+    public virtual void PauseGame()
     {
-        pauseMenu.SetActive(true);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(true);
         Time.timeScale = 0;
         musicManager?.PauseMusic();
     }
 
     public virtual void ResumeGame()
     {
-        pauseMenu.SetActive(false);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
         Time.timeScale = 1;
         musicManager?.ResumeMusic();
-        EventSystem.current.SetSelectedGameObject(null);
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     // Handle game over
-    protected virtual void HandleGameOver()
+    public virtual void HandleGameOver()
     {
         Time.timeScale = 0;
         gameOverScreen.SetActive(true);
@@ -111,7 +118,7 @@ public abstract class StageManager : MonoBehaviour
     }
 
     // Add score based on remaining lives
-    protected virtual IEnumerator AddScoreBasedOnLives()
+    public virtual IEnumerator AddScoreBasedOnLives()
     {
         if (hearts != null)
         {

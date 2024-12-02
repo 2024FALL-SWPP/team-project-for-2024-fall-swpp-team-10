@@ -22,7 +22,7 @@ public class BossStageManager : StageManager
     private int currentPhase;
     [SerializeField] Animator transitionAnimator;
 
-    protected override void Awake()
+    public override void Awake()
     {
         base.Awake();
         transitionManager = FindObjectOfType<StageTransitionManager>();
@@ -33,7 +33,7 @@ public class BossStageManager : StageManager
         gameClearLight = GetComponent<GameClearLight>();
     }
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         playerScript = activeCharacter.GetComponent<BossStagePlayer>();
 
@@ -50,7 +50,7 @@ public class BossStageManager : StageManager
         }
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
 
@@ -72,7 +72,7 @@ public class BossStageManager : StageManager
         }
     }
 
-    protected override void HandleGameOver()
+    public override void HandleGameOver()
     {
         base.HandleGameOver();
         AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);

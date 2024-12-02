@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MainStageManager : StageManager
 {
     [Header("MainStage End Condition Settings")]
-    [SerializeField] float stageDuration = 3.0f;
+    public float stageDuration = 180.0f;
     private float currentStageTime = 0f;
     private bool isSpawnStopped = false;
     public GameObject boss;
@@ -16,7 +16,7 @@ public class MainStageManager : StageManager
     float bossDropSpeed = 10f;
 
     // Start is called before the first frame update
-    protected override void Awake()
+    public override void Awake()
     {
         base.Awake();
         maxLife = GameManager.inst.maxLife;
@@ -26,7 +26,7 @@ public class MainStageManager : StageManager
         StartCoroutine(AddScoreEverySecond());
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
 
@@ -46,17 +46,22 @@ public class MainStageManager : StageManager
         }
     }
 
-    private IEnumerator CompleteStage()
+    public IEnumerator CompleteStage()
     {
         isStageComplete = true;
 
-        boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
-        while (boss.transform.position.y >= 2)
+        if (boss != null)
         {
-            boss.transform.Translate(Vector3.down * bossDropSpeed * Time.deltaTime, Space.World);
-            yield return null;
+            if (activeCharacter != null)
+                boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
+            while (boss.transform.position.y >= 2)
+            {
+                boss.transform.Translate(Vector3.down * bossDropSpeed * Time.deltaTime, Space.World);
+                yield return null;
+            }
+            if (bossLandingParticle != null)
+                Instantiate(bossLandingParticle, boss.transform.position - new Vector3(0, 0, 0.6f), boss.transform.rotation);
         }
-        Instantiate(bossLandingParticle, boss.transform.position - new Vector3(0, 0, 0.6f), boss.transform.rotation);
         yield return new WaitForSecondsRealtime(2.5f);
         if (musicManager != null)
         {
@@ -76,14 +81,14 @@ public class MainStageManager : StageManager
         }
     }
 
-    protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         base.OnSceneLoaded(scene, mode);
         transitionManager.SetCurrentCharacter(activeCharacter);
         activeCharacter.GetComponent<MainStagePlayer>().ChangeColorOriginal();
     }
 
-    protected override void PauseGame()
+    public override void PauseGame()
     {
         base.PauseGame();
         GameManager.inst.CursorActive(true);
@@ -96,12 +101,12 @@ public class MainStageManager : StageManager
     }
 
     // ���� ���� ó��
-    protected override void HandleGameOver()
+    public override void HandleGameOver()
     {
         base.HandleGameOver();
         GameManager.inst.CursorActive(true);
     }
-    private IEnumerator AddScoreEverySecond()
+    public IEnumerator AddScoreEverySecond()
     {
         while (GameManager.inst.GetLife() > 0 && !isStageComplete)
         {
@@ -118,5 +123,10 @@ public class MainStageManager : StageManager
     public bool IsStageComplete()
     {
         return isStageComplete;
+    }
+
+    public float GetCurrentStageTime()
+    {
+        return currentStageTime;
     }
 }
