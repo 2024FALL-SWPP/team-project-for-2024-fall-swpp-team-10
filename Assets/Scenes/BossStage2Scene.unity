@@ -6118,7 +6118,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &256224079
 GameObject:
@@ -6405,53 +6405,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358595470}
   m_CullTransparentMesh: 1
---- !u!1 &371002390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 371002392}
-  - component: {fileID: 371002391}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &371002391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371002390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c19ad06774dd347ae85f768223667c0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLife: 3
-  bossStageMaxLife: 5
-  selected: 0
---- !u!4 &371002392
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371002390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 641.68005, y: 647.0274, z: -2.9714425}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &383501731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6668,7 +6621,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &490164415
 GameObject:
@@ -8089,7 +8042,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878545208
 GameObject:
@@ -8247,7 +8200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cd0a884df54fd4142ae94593f1eaa1d5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cd0a884df54fd4142ae94593f1eaa1d5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8329,6 +8282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -8338,8 +8293,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 922855649}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &922855652
@@ -8364,7 +8317,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7efd85ac0cb5543aaae3a372c0f2a17c, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7efd85ac0cb5543aaae3a372c0f2a17c, type: 3}
       propertyPath: m_LocalScale.x
@@ -9332,7 +9285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1252641342
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9376,7 +9329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ddda4bc09f4e54877b60c768491ce6db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ddda4bc09f4e54877b60c768491ce6db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9458,6 +9411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -9467,8 +9422,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 1283838796}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1283838799
@@ -9835,7 +9788,7 @@ RectTransform:
   - {fileID: 1948494710}
   - {fileID: 327084140}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9908,7 +9861,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1424859022
 PrefabInstance:
@@ -9931,7 +9884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d16e0b016651b46bf8545122cd801be1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d16e0b016651b46bf8545122cd801be1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10013,6 +9966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -10022,8 +9977,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1424859024}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1424859027
@@ -10347,6 +10300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -10356,8 +10311,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 1431771570}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1431771575
@@ -10405,7 +10358,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1474742877
 MonoBehaviour:
@@ -10420,40 +10373,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1424859023}
+  - {fileID: 1924334493}
+  - {fileID: 922855648}
   - {fileID: 1431771568}
-  - {fileID: 0}
+  - {fileID: 1283838795}
   characterUI:
   - {fileID: 736295309}
   - {fileID: 411612365}
   - {fileID: 111231835}
   - {fileID: 1252641341}
   - {fileID: 2066124953}
+  pauseMenu: {fileID: 1617246193}
+  gameOverScreen: {fileID: 1190581245}
   score: {fileID: 1583997663}
-  gameOver: {fileID: 1190581245}
-  gameClear: {fileID: 1390848906}
-  cameraScript: {fileID: 659597871}
-  playerScript: {fileID: 1431771574}
-  bossControlScript: {fileID: 1163737305}
   hearts:
   - {fileID: 490164415}
   - {fileID: 134332179}
   - {fileID: 358595470}
   - {fileID: 1880908856}
   - {fileID: 14207239}
-  Darkhearts:
+  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  soundVolume: 0.7
+  darkHearts:
   - {fileID: 2127547025}
   - {fileID: 1680471478}
   - {fileID: 1894462152}
-  pause: {fileID: 1617246193}
-  mainCamera: {fileID: 659597869}
-  heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
+  gameClear: {fileID: 1390848906}
+  cameraScript: {fileID: 659597871}
+  bossControlScript: {fileID: 1163737305}
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
-  soundVolume: 0.7
-  player: {fileID: 1431771570}
+  transitionAnimator: {fileID: 0}
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10486,7 +10437,6 @@ MonoBehaviour:
   areaMax: {x: 10, y: 1.5, z: 10}
   warningDuration: 1
   dropHeight: 15
-  playerTransform: {fileID: 1431771570}
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10560,7 +10510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54741a467ed992d48b0d3bb9cb4d7f0e, type: 3}
@@ -11929,7 +11879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f7e84cd6a0646b444911602dff6cf6fc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12011,6 +11961,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b26bab8d2b9d4dae8380b2346b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
+  laserVolume: 0.7
   speed: 10
   rotationSpeed: 5
   areaMin: {x: -10, y: 2, z: -10}
@@ -12020,8 +11972,6 @@ MonoBehaviour:
   projectileSpeed: 50
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 1924334494}
-  laserFireSound: {fileID: 8300000, guid: 18d6f96f295624f1886437770db6cebc, type: 3}
-  laserVolume: 0.7
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
   collisionVolume: 0.5
 --- !u!65 &1924334497

@@ -14,7 +14,7 @@ public class BossControl : MonoBehaviour
     [Header("Carrot Shooting variables")]
     [SerializeField] Transform carrotSpawnOffset;
     [SerializeField] GameObject carrotPf;
-    [SerializeField] Transform carrotTargetPos;
+    private Transform carrotTargetPos;
     [SerializeField] float carrotDelayTime; // Time between each carrot throw
     [SerializeField] float carrotSpeed;
 
@@ -96,7 +96,10 @@ public class BossControl : MonoBehaviour
 
         //BossDeath(); // Used to test boss death in scene
     }
-
+    void Start() 
+    {
+        carrotTargetPos = bossStageManager.ActiveCharacter().transform;
+    }
     // Update is called once per frame
     void Update()
     {

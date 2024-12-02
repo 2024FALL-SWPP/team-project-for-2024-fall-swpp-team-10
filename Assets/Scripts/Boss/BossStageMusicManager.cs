@@ -25,7 +25,7 @@ public class BossStageMusicManager : MusicManager
             }
         }
     }
-    public new void StopMusic()
+    public override void StopMusic()
     {
         base.StopMusic();
         if (fires != null)
@@ -36,7 +36,7 @@ public class BossStageMusicManager : MusicManager
             }
         }
     }
-    public new void PauseMusic()
+    public override void PauseMusic()
     {
         base.PauseMusic();
         if (fires != null)
@@ -48,7 +48,7 @@ public class BossStageMusicManager : MusicManager
         }
     }
 
-    public new void ResumeMusic()
+    public override void ResumeMusic()
     {
         base.ResumeMusic();
         if (fires != null)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class BossStagePlayer : MonoBehaviour
+public class BossStagePlayer : PlayerBase
 {
     [Header("Movement Settings")]
     public float speed = 10f;
@@ -11,7 +11,7 @@ public class BossStagePlayer : MonoBehaviour
 
     [Header("Movement Constraints")]
     public Vector3 areaMin = new Vector3(-10f, 0.8f, -10f);
-    public Vector3 areaMax = new Vector3(10f, 0.8f,10f);
+    public Vector3 areaMax = new Vector3(10f, 0.8f, 10f);
     public float minDistanceFromBoss = 2f; // 원점으로부터 최소 거리 설정
 
     [Header("Boss Settings")]
@@ -27,44 +27,15 @@ public class BossStagePlayer : MonoBehaviour
     private Camera mainCamera;
 
     [Header("Audio Settings")]
-    [SerializeField] public AudioClip laserFireSound;
-    [SerializeField][Range(0f, 1f)] public float laserVolume = 0.7f;
-    [SerializeField] public AudioClip obstacleCollisionSound;
-    [SerializeField][Range(0f, 1f)] public float collisionVolume = 0.5f;
+    public AudioClip obstacleCollisionSound;
+    [Range(0f, 1f)] public float collisionVolume = 0.5f;
 
-    // On Collision variables
-    private bool isInvincible = false;
-    private int blinkCount = 3;
-    private Renderer[] childRenderers; //Renderer of characters
-    private Color[,] originColors; // Origin color of characters
-
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rb = GetComponent<Rigidbody>();
-
-        childRenderers = GetComponentsInChildren<Renderer>();
-
-        int maxSharedMaterialsLength = 0;
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            maxSharedMaterialsLength = Mathf.Max(maxSharedMaterialsLength, childRenderers[i].sharedMaterials.Length);
-        }
-        originColors = new Color[childRenderers.Length, maxSharedMaterialsLength];
-
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                if (childRenderers[i].sharedMaterials[j].HasProperty("_Color"))
-                    originColors[i, j] = childRenderers[i].sharedMaterials[j].color;
-            }
-        }
-
-        if (GameManager.inst.originColorSave == null) // Singleton Game Manager will handle this on scene transitions (Refer to : https://github.com/2024FALL-SWPP/team-project-for-2024-fall-swpp-team-10/pull/125#discussion_r1852641260)
-            GameManager.inst.originColorSave = originColors;
     }
-
     private void Start()
     {
         mainCamera = Camera.main;
@@ -201,7 +172,7 @@ public class BossStagePlayer : MonoBehaviour
     }
 
     // Player Attack
-    void FireLaser()
+    protected override void FireLaser()
     {
         if (laserFireSound != null)
         {
@@ -244,12 +215,12 @@ public class BossStagePlayer : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Destroy(other.gameObject);
-            if (isInvincible) return;
+            if (isBlinking) return;
             if (obstacleCollisionSound != null)
             {
                 AudioSource.PlayClipAtPoint(obstacleCollisionSound, gameObject.transform.position, collisionVolume);
@@ -257,43 +228,6 @@ public class BossStagePlayer : MonoBehaviour
             GameManager.inst.RemoveLife();
             if (GameManager.inst.GetLife() > 0)
                 StartCoroutine(Blink());
-        }
-    }
-
-    // Blink on damage
-    IEnumerator Blink()
-    {
-        isInvincible = true;
-        for (int i = 0; i < blinkCount; i++)
-        {
-            ChangeColor(Color.red);
-            yield return new WaitForSeconds(0.2f);
-
-            ChangeColorOriginal();
-            yield return new WaitForSeconds(0.2f);
-        }
-        isInvincible = false;
-    }
-
-    // 캐릭터 색 전체 변환
-    private void ChangeColor(Color _color)
-    {
-        foreach (Renderer renderer in childRenderers)
-        {
-            foreach (Material material in renderer.sharedMaterials)
-                material.color = _color;
-        }
-    }
-
-    // 캐릭터 색 원래 색으로
-    public void ChangeColorOriginal()
-    {
-        for (int i = 0; i < childRenderers.Length; i++)
-        {
-            for (int j = 0; j < childRenderers[i].sharedMaterials.Length; j++)
-            {
-                childRenderers[i].sharedMaterials[j].color = GameManager.inst.originColorSave[i, j];
-            }
         }
     }
 
