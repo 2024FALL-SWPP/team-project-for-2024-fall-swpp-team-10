@@ -3064,7 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687f7a3ccfce75b49bb79ea1b4385f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 2.5, z: -5.5}
+  offset: {x: 0, y: 2.5, z: -8}
   followSpeed: 10
   pitch: 30
   bossTransform: {fileID: 1163737299}
@@ -11312,6 +11312,7 @@ MonoBehaviour:
   bossControlScript: {fileID: 1163737305}
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
+  carrotSpeed: 10
   transitionAnimator: {fileID: 945322147}
   introAnimationDuration: 0
 --- !u!114 &1474742878
@@ -13609,7 +13610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 185579822364805374, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13689,7 +13690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: carrotSpeed
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
       propertyPath: weakSpotSound
