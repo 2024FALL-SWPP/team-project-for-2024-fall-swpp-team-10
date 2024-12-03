@@ -27,6 +27,8 @@ public abstract class StageManager : MonoBehaviour
     public AudioClip heartDeactivateSound;
     public float soundVolume = 0.7f;
 
+    public bool isPausable = true;
+
     protected virtual void Awake()
     {
         scoreText = score.GetComponent<TextMeshProUGUI>();
@@ -35,7 +37,7 @@ public abstract class StageManager : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver && isPausable)
         {
             PauseGame();
         }
@@ -75,6 +77,7 @@ public abstract class StageManager : MonoBehaviour
 
     protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        isPausable = true;
         int characterIndex = (int)GameManager.inst.GetCharacter();
         characters[characterIndex].SetActive(true);
         characterUI[characterIndex].SetActive(true);
@@ -104,6 +107,7 @@ public abstract class StageManager : MonoBehaviour
     // Handle game over
     protected virtual void HandleGameOver()
     {
+        isPausable = false;
         Time.timeScale = 0;
         gameOverScreen.SetActive(true);
         isGameOver = true;
