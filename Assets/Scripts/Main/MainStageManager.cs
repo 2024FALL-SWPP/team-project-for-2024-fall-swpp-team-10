@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MainStageManager : StageManager
 {
     [Header("MainStage End Condition Settings")]
-    [SerializeField] float stageDuration = 3.0f;
+    public float stageDuration = 180.0f;
     private float currentStageTime = 0f;
     private bool isSpawnStopped = false;
     public GameObject boss;
@@ -26,7 +26,7 @@ public class MainStageManager : StageManager
         StartCoroutine(AddScoreEverySecond());
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
 
@@ -46,7 +46,7 @@ public class MainStageManager : StageManager
         }
     }
 
-    private IEnumerator CompleteStage()
+    public IEnumerator CompleteStage()
     {
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         isStageComplete = true;
@@ -84,7 +84,7 @@ public class MainStageManager : StageManager
         activeCharacter.GetComponent<MainStagePlayer>().ChangeColorOriginal();
     }
 
-    protected override void PauseGame()
+    public override void PauseGame()
     {
         base.PauseGame();
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
@@ -105,7 +105,7 @@ public class MainStageManager : StageManager
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         GameManager.inst.CursorActive(true);
     }
-    private IEnumerator AddScoreEverySecond()
+    public IEnumerator AddScoreEverySecond()
     {
         while (GameManager.inst.GetLife() > 0 && !isStageComplete)
         {

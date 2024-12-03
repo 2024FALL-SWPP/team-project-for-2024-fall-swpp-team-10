@@ -53,7 +53,7 @@ public class BossStageManager : StageManager
         musicManager.ChangeSpeed(1.25f);
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
 
