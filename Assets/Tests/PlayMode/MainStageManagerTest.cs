@@ -82,32 +82,20 @@ public class MainStageManagerTest
     }
 
     [UnityTest]
-    public IEnumerator TestPauseGame()
+    public IEnumerator TestPauseAndResumeGame()
     {
         gameManager.LoadMainStage();
         mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
-        // Act
-        Cursor.visible = false; // 테스트 시작 전 초기화
-        mainStageManager.PauseGame();
 
-        yield return new WaitForEndOfFrame();
+        // 시작 시 확인
+        Assert.IsFalse(Cursor.visible);
+
+        // Act
+        mainStageManager.PauseGame();
 
         // Assert
         Assert.IsTrue(Cursor.visible);
-    }
 
-    [UnityTest]
-    public IEnumerator TestResumeGame()
-    {
-        gameManager.LoadMainStage();
-        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
-        // Act
-        Cursor.visible = false; // 테스트 시작 전 초기화
-        mainStageManager.PauseGame();
-
-        yield return new WaitForEndOfFrame();
-
-        mainStageManager = GameObject.FindObjectOfType<MainStageManager>(); //안하면 Destroy됐다고 뜸
         // Act
         mainStageManager.ResumeGame();
         yield return null;
