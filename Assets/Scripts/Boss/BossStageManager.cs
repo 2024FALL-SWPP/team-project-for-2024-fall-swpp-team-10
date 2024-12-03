@@ -156,7 +156,6 @@ public class BossStageManager : StageManager
     private void StartLevel()
     {
         gameObject.GetComponent<DropAttackManager>().enabled = true;
-        GameManager.inst.GetCharacter();
         characters[(int)GameManager.inst.GetCharacter()].GetComponent<BossStagePlayer>().enabled = true;
         bossControlScript.enabled = true;
     }
