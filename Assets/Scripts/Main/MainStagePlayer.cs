@@ -41,10 +41,7 @@ public class MainStagePlayer : PlayerBase
         SyncCenterPosition();
 
         // 라이트스틱 초기화
-        if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(isTripleShot);
-        if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(isTripleShot);
+        ControlLightsticks();
     }
 
     void Update()
