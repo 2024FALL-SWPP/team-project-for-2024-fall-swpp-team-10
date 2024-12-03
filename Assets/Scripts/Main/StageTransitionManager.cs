@@ -53,9 +53,13 @@ public class StageTransitionManager : MonoBehaviour
         if (isTransitioning) yield break;
         isTransitioning = true;
 
-        pointLight.SetActive(true);
-        Vector3 characterPos = activeCharacter.transform.position;
-        pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
+        if (pointLight != null) // Supernatural stage does not assign any point lights. 
+        {
+            pointLight.SetActive(true);
+            Vector3 characterPos = activeCharacter.transform.position;
+            pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
+        }
+
 
         // Make sure time is not scaled
         float originalTimeScale = Time.timeScale;
