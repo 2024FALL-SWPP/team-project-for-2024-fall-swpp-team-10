@@ -32,7 +32,7 @@ public class BossStageManager : StageManager
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
         gameClearLight = GetComponent<GameClearLight>();
-        if (transitionManager != null)
+        if (transitionManager != null && transitionAnimator != null)
         {
             transitionAnimator.gameObject.SetActive(true);
             introAnimationDuration = transitionManager.BossStageTransition();
