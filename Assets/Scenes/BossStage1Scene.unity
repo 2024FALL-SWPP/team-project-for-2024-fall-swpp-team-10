@@ -11312,6 +11312,7 @@ MonoBehaviour:
   bossControlScript: {fileID: 1163737305}
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
+  carrotSpeed: 10
   transitionAnimator: {fileID: 945322147}
   introAnimationDuration: 0
 --- !u!114 &1474742878
