@@ -59,11 +59,11 @@ public class MainStageManagerTest
         int initialScore = GameManager.inst.GetScore();
 
         // Act
-        yield return new WaitForSeconds(3.1f);
+        yield return new WaitForSeconds(1.1f);
 
         // Assert
         Assert.Greater(GameManager.inst.GetScore(), initialScore);
-        Assert.AreEqual(initialScore + 300, GameManager.inst.GetScore());
+        Assert.AreEqual(initialScore + 100, GameManager.inst.GetScore());
     }
 
     [UnityTest]
