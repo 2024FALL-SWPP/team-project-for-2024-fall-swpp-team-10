@@ -123,9 +123,4 @@ public class MainStageManager : StageManager
     {
         return isStageComplete;
     }
-
-    public float CurrentStageTime()
-    {
-        return currentStageTime;
-    }
 }
