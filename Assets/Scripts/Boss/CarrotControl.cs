@@ -33,7 +33,6 @@ public class CarrotControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.layer);
         if (collision.gameObject.layer == 10)
             Destroy(gameObject);
     }

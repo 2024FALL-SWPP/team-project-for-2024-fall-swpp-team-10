@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,18 +81,19 @@ public class BossControl : MonoBehaviour
             { 3, WeakSpotCols3 },
         };
 
-        GetWeakSpots();
-
-        StartShootInterval();
-
         bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
 
         //BossDeath(); // Used to test boss death in scene
     }
+
     void Start()
     {
         carrotTargetPos = bossStageManager.ActiveCharacter().transform;
+
+        GetWeakSpots();
+        StartShootInterval();
     }
+
     // Update is called once per frame
     void Update()
     {

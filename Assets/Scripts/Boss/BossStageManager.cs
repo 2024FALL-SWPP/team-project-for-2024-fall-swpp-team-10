@@ -21,6 +21,7 @@ public class BossStageManager : StageManager
     private int bossMaxLife = 3;
     private int currentPhase;
     [SerializeField] Animator transitionAnimator;
+    [SerializeField] float introAnimationDuration;
 
     protected override void Awake()
     {
@@ -31,6 +32,13 @@ public class BossStageManager : StageManager
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
         gameClearLight = GetComponent<GameClearLight>();
+        if (transitionManager != null)
+        {
+            transitionAnimator.gameObject.SetActive(true);
+            introAnimationDuration = transitionManager.BossStageTransition();
+            StartCoroutine("WaitForIntro");
+            StartCoroutine(transitionManager.Countdown());
+        }
     }
 
     protected virtual void Start()
@@ -42,12 +50,6 @@ public class BossStageManager : StageManager
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
         musicManager.ChangeSpeed(1.25f);
-        if (transitionManager != null)
-        {
-            Debug.Log("Playing boss ani");
-            transitionAnimator.gameObject.SetActive(true);
-            StartCoroutine(transitionManager.BossStageTransition());
-        }
     }
 
     protected override void Update()
@@ -140,5 +142,21 @@ public class BossStageManager : StageManager
         currentPhase += 1;
         for (int i = 0; i < bossMaxLife; i++)
             darkHearts[i].SetActive(i < GetBossLife());
+    }
+
+    private IEnumerator WaitForIntro()
+    {
+        if (introAnimationDuration < transitionManager.countdownDuration)
+            Debug.LogError("Countdown finishes before animation");
+        yield return new WaitForSecondsRealtime(transitionManager.countdownDuration);
+
+        StartLevel();
+    }
+
+    private void StartLevel()
+    {
+        gameObject.GetComponent<DropAttackManager>().enabled = true;
+        playerScript.enabled = true;
+        bossControlScript.enabled = true;
     }
 }
