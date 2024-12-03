@@ -98,7 +98,7 @@ public abstract class StageManager : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         musicManager?.ResumeMusic();
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current?.SetSelectedGameObject(null);
     }
 
     // Handle game over
