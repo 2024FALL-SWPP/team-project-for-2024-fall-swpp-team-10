@@ -144,7 +144,7 @@ public class BossStageManagerTest
     [Test]
     public void TestPauseGame()
     {
-        InvokeNonPublicMethod(bossStageManager, "PauseGame");
+        bossStageManager.PauseGame();
 
         Assert.IsTrue(bossStageManager.pauseMenu.activeSelf);
         Assert.AreEqual(0f, Time.timeScale);
@@ -156,7 +156,7 @@ public class BossStageManagerTest
     [Test]
     public void TestResumeGame()
     {
-        InvokeNonPublicMethod(bossStageManager, "PauseGame");
+        bossStageManager.PauseGame();
         bossStageManager.ResumeGame();
 
         Assert.AreEqual(1f, Time.timeScale);
