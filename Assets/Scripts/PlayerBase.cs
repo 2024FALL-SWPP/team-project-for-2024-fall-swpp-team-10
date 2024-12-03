@@ -85,5 +85,5 @@ public abstract class PlayerBase : MonoBehaviour
 
     protected abstract void FireLaser();
 
-    protected abstract void OnCollisionEnter(Collision other);
+    protected virtual void OnCollisionEnter(Collision other) {}
 }

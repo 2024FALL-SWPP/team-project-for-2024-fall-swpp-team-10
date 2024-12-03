@@ -24,15 +24,13 @@ public class MainStagePlayer : PlayerBase
     private float projectileSpeed = 30.0f;
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
-    private bool hasTripleShot = false;  // Flag for triple shot power-up
 
     [Header("Lightstick Settings")]
     public GameObject leftLightstickPrefab;   // Assign in inspector
     public GameObject rightLightstickPrefab;  // Assign in inspector
     public float lightstickOffset = 1.0f;
-    public float lightStickDuration = 5.0f;
-    private float powerUpEndTime; // Track when the power-up should end
-    private Coroutine tripleShotCoroutine;
+    public float lightstickEndTime;
+    private bool isTripleShot = false;
 
     protected override void Awake()
     {
@@ -43,10 +41,7 @@ public class MainStagePlayer : PlayerBase
         SyncCenterPosition();
 
         // 라이트스틱 초기화
-        if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(false);
-        if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(false);
+        ControlLightsticks();
     }
 
     void Update()
@@ -90,7 +85,7 @@ public class MainStagePlayer : PlayerBase
         {
             isMoving = true;
             transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
-            DisableLightsticks();
+            SetTripleShot(false);
         }
         if (transform.position.y < 0)
         {
@@ -112,7 +107,7 @@ public class MainStagePlayer : PlayerBase
         SpawnProjectile(projectileSpawnPoint.position);
 
         // Side shots if lightsticks are active
-        if (hasTripleShot)
+        if (isTripleShot)
         {
             if (leftLightstickPrefab != null && leftLightstickPrefab.activeSelf)
             {
@@ -132,45 +127,6 @@ public class MainStagePlayer : PlayerBase
         if (projectileRb != null)
         {
             projectileRb.velocity = Vector3.forward * projectileSpeed;
-        }
-    }
-
-    private void UpdateLightstickPositions(Vector3 playerPosition)
-    {
-        if (!hasTripleShot) return;
-
-        float spawnHeight = projectileSpawnPoint.position.y;
-
-        // Update left lightstick
-        if (leftLightstickPrefab != null)
-        {
-            bool shouldBeActive = currentGridPosition.x > 0;
-            leftLightstickPrefab.SetActive(shouldBeActive);
-            if (shouldBeActive)
-            {
-                Vector3 leftPosition = new Vector3(
-                    playerPosition.x - lightstickOffset,
-                    spawnHeight,  // Use spawn point height
-                    playerPosition.z
-                );
-                leftLightstickPrefab.transform.position = leftPosition;
-            }
-        }
-
-        // Update right lightstick
-        if (rightLightstickPrefab != null)
-        {
-            bool shouldBeActive = currentGridPosition.x < gridSize.x - 1;
-            rightLightstickPrefab.SetActive(shouldBeActive);
-            if (shouldBeActive)
-            {
-                Vector3 rightPosition = new Vector3(
-                    playerPosition.x + lightstickOffset,
-                    spawnHeight,  // Use spawn point height
-                    playerPosition.z
-                );
-                rightLightstickPrefab.transform.position = rightPosition;
-            }
         }
     }
 
@@ -202,9 +158,6 @@ public class MainStagePlayer : PlayerBase
 
             // 캐릭터 중앙 위치 수정
             SyncCenterPosition();
-
-            // Update lightstick positions to maintain relative positioning
-            UpdateLightstickPositions(transform.position);
             yield return null;
         }
 
@@ -220,46 +173,12 @@ public class MainStagePlayer : PlayerBase
         );
     }
 
-    void DisableLightsticks()
+    public void ControlLightsticks()
     {
         if (leftLightstickPrefab != null)
-            leftLightstickPrefab.SetActive(false);
+            leftLightstickPrefab.SetActive(isTripleShot);
         if (rightLightstickPrefab != null)
-            rightLightstickPrefab.SetActive(false);
-    }
-
-    protected override void OnCollisionEnter(Collision other)
-    {
-
-        if (other.gameObject.CompareTag("Lightstick"))
-        {
-            if (tripleShotCoroutine != null)
-            {
-                StopCoroutine(tripleShotCoroutine);
-                tripleShotCoroutine = null;
-            }
-
-            hasTripleShot = true;
-            powerUpEndTime = Time.time + lightStickDuration;
-
-            UpdateLightstickPositions(transform.position);
-            tripleShotCoroutine = StartCoroutine(TripleShotPowerUpTimer());
-
-            Destroy(other.gameObject);
-        }
-    }
-
-    IEnumerator TripleShotPowerUpTimer()
-    {
-
-        while (Time.time < powerUpEndTime)
-        {
-            float remainingTime = powerUpEndTime - Time.time;
-            yield return new WaitForSeconds(0.1f);
-        }
-        hasTripleShot = false;
-        DisableLightsticks();
-        tripleShotCoroutine = null;
+            rightLightstickPrefab.SetActive(isTripleShot);
     }
 
     public void SetIsInvincible(bool _isInvincible)
@@ -269,5 +188,26 @@ public class MainStagePlayer : PlayerBase
     public bool GetIsInvincible()
     {
         return isInvincible;
+    }
+
+    public bool GetIsTripleShot()
+    {
+        return isTripleShot;
+    }
+
+    public void SetTripleShot(bool _isTripleShot)
+    {
+        isTripleShot = _isTripleShot;
+        ControlLightsticks();
+    }
+
+    public Vector2Int GetCurrentGridPosition()
+    {
+        return currentGridPosition;
+    }
+
+    public Vector2Int GetGridSize()
+    {
+        return gridSize;
     }
 }
