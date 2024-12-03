@@ -18,6 +18,7 @@ public class StageTransitionManager : MonoBehaviour
     [SerializeField] float cameraTransitionDuration = 2.0f;
     [SerializeField] float countdownDuration = 5.0f;
     [SerializeField] Animator transitionAnimator;  // Reference to the Animator component
+    [SerializeField] GameObject pointLight;
 
     private bool isTransitioning = false;
     private Camera mainCamera;
@@ -29,6 +30,7 @@ public class StageTransitionManager : MonoBehaviour
 
         // Hide UI elements initially
         transitionCanvas.gameObject.SetActive(false);
+        pointLight.SetActive(false);
     }
 
     public void SetCurrentCharacter(GameObject _character)
@@ -51,7 +53,9 @@ public class StageTransitionManager : MonoBehaviour
         if (isTransitioning) yield break;
         isTransitioning = true;
 
-        activeCharacter.transform.Find("PointLight").gameObject.SetActive(true);
+        pointLight.SetActive(true);
+        Vector3 characterPos = activeCharacter.transform.position;
+        pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
 
         // Make sure time is not scaled
         float originalTimeScale = Time.timeScale;
