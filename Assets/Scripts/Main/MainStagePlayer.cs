@@ -88,7 +88,7 @@ public class MainStagePlayer : PlayerBase
         {
             isMoving = true;
             transform.Translate(Vector3.down * moveSpeed * 0.005f, Space.World);
-            ControlLightsticks();
+            SetTripleShot(false);
         }
         if (transform.position.y < 0)
         {
