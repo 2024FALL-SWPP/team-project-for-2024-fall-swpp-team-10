@@ -20,6 +20,7 @@ public class BossStageManager : StageManager
     private GameClearLight gameClearLight;
     private int bossMaxLife = 3;
     private int currentPhase;
+    public float carrotSpeed = 10f;
     [SerializeField] Animator transitionAnimator;
     [SerializeField] float introAnimationDuration;
 
@@ -139,6 +140,7 @@ public class BossStageManager : StageManager
 
     public void IncrementPhase()
     {
+        carrotSpeed += 5f;
         currentPhase += 1;
         for (int i = 0; i < bossMaxLife; i++)
             darkHearts[i].SetActive(i < GetBossLife());

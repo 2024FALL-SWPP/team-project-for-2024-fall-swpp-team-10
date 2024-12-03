@@ -16,7 +16,6 @@ public class BossControl : MonoBehaviour
     [SerializeField] GameObject carrotPf;
     private Transform carrotTargetPos;
     [SerializeField] float carrotDelayTime; // Time between each carrot throw
-    [SerializeField] float carrotSpeed;
 
     [Header("Boss movement variables")]
     [SerializeField] Transform bossTransform;
@@ -139,7 +138,7 @@ public class BossControl : MonoBehaviour
         GameObject projectile = Instantiate(carrotPf, carrotSpawnPos, Quaternion.Euler(orientation));
         projectile.gameObject.transform.LookAt(carrotTargetPos);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-        projectileRb.velocity = orientation.normalized * carrotSpeed;
+        projectileRb.velocity = orientation.normalized * bossStageManager.carrotSpeed;
 
         yield return new WaitForSeconds(0.5f);
 
