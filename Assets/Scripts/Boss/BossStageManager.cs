@@ -45,6 +45,7 @@ public class BossStageManager : StageManager
     protected virtual void Start()
     {
         playerScript = activeCharacter.GetComponent<BossStagePlayer>();
+        base.isPausable = false;
 
         while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
         {
@@ -157,6 +158,7 @@ public class BossStageManager : StageManager
 
     private void StartLevel()
     {
+        base.isPausable = true;
         gameObject.GetComponent<DropAttackManager>().enabled = true;
         playerScript.enabled = true;
         bossControlScript.enabled = true;

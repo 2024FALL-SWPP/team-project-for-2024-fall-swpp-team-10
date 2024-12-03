@@ -48,6 +48,7 @@ public class MainStageManager : StageManager
 
     public IEnumerator CompleteStage()
     {
+        base.isPausable = false;
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         isStageComplete = true;
 
