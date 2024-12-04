@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6425864469339993223}
   - component: {fileID: 2380142132980168655}
   - component: {fileID: 6312795094801635100}
+  - component: {fileID: -4404652297274894941}
   m_Layer: 7
   m_Name: WeakSpotPf
   m_TagString: WeakSpot
@@ -115,3 +116,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.79, y: 2.79, z: 0.001}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4404652297274894941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453732741328588661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eeb96102065347958a9f66bbe8f3a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weakSpotSound: {fileID: 8300000, guid: 65c53739decc14696af98d5cf59f9738, type: 3}
+  weakSpotVolume: 0.7

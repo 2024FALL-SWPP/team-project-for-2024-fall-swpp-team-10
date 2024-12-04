@@ -14,6 +14,8 @@ public class BossStageManager : StageManager
     public BossStageCamera cameraScript;
     private BossStagePlayer playerScript;
     public BossControl bossControlScript;
+    public WeakspotManager weakspotManagerScript;
+    public int weakspotHitCount = 0; // Number of total hits on weakspot
     public AudioClip gameOverMusic; //게임오버 효과음
     public AudioClip victoryMusic; //게임클리어 효과음
     private GameObject[] fires;
@@ -86,6 +88,7 @@ public class BossStageManager : StageManager
     private IEnumerator HandleBossDeath()
     {
         gameObject.GetComponent<CarrotManager>().StopShooting();
+        weakspotManagerScript.RemoveAllWeakSpots();
 
         // 1. 슬로우 모션 적용
         Time.timeScale = 0.2f;
@@ -146,6 +149,7 @@ public class BossStageManager : StageManager
     {
         carrotSpeed += 5f;
         currentPhase += 1;
+        if (currentPhase < 3) weakspotManagerScript.NewWeakSpots();
         for (int i = 0; i < bossMaxLife; i++)
             darkHearts[i].SetActive(i < GetBossLife());
     }
@@ -166,5 +170,6 @@ public class BossStageManager : StageManager
         playerScript.enabled = true;
         bossControlScript.enabled = true;
         gameObject.GetComponent<CarrotManager>().enabled = true;
+        weakspotManagerScript.enabled = true;
     }
 }
