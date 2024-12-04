@@ -61,6 +61,8 @@ public class BossStageManager : StageManager
         // End condition
         if (!bossControlScript.IsDead() && GetBossLife() <= 0 && !isStageComplete)
         {
+            base.isPausable = false;
+            activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
             isStageComplete = true;
             StartCoroutine(HandleBossDeath());
         }
@@ -79,9 +81,20 @@ public class BossStageManager : StageManager
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
+        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
         AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
     }
+    public override void PauseGame()
+    {
+        base.PauseGame();
+        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(true);
+    }
 
+    public override void ResumeGame()
+    {
+        base.ResumeGame();
+        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
+    }
     private IEnumerator HandleBossDeath()
     {
         // 1. 슬로우 모션 적용
