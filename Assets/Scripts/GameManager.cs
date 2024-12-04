@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int maxLife = 3;
     private int stage = 1;
     private Character character;
+    public bool[] characterUnlocked = { true, false, false, false, false };
     private int score = 0;
     public Color[,] originColorSave = null;
     public int bossStageMaxLife = 5;
@@ -44,6 +45,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+    public string PlayerPrefsCharacterUnlock(int characterNum)
+    {
+        return (Character)characterNum + "Unlock";
     }
 
     public void LoadMainMenu()
