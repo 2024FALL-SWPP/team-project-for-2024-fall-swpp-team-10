@@ -93,6 +93,14 @@ public class LeaderBoardManager : MonoBehaviour
             savedRankID[i] = PlayerPrefs.GetString(PlayerPrefsIDKey(i + 1));
         }
         myScore.text = GameManager.inst.GetScore().ToString();
+        if (GameManager.inst.GetScore() >= 150000)
+        {
+            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(1), 1);
+        }
+        if (GameManager.inst.enemyKill > 20)
+            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(2), 2);
+        if (GameManager.inst.invincibleKill > 7)
+            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(3), 3);
         myID.text = GameManager.inst.GetPlayerName();
     }
 
