@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class BossControl : MonoBehaviour
 {
-    public Animator animator;
 
     [Header("Color related variables")]
     [SerializeField] Color bossStartColor;
     [SerializeField] Color myColorRed = new Color(203f / 255f, 83f / 255f, 83f / 255f, 1);
     Dictionary<Color, Color> myColorDict;
-
-    [Header("Carrot Shooting variables")]
-    [SerializeField] Transform carrotSpawnOffset;
-    [SerializeField] GameObject carrotPf;
-    private Transform carrotTargetPos;
-    [SerializeField] float carrotDelayTime; // Time between each carrot throw
 
     [Header("Boss movement variables")]
     [SerializeField] Transform bossTransform;
@@ -23,6 +16,7 @@ public class BossControl : MonoBehaviour
     [SerializeField] float bossHorizontalSpeed;
     bool bossDead = false;
     float bossHorizontalPos;    // Position boss is to move to
+    Transform playerTransform;
 
     [Header("Boss Death animation variables")]
     [SerializeField] ParticleSystem bossSmoke;
@@ -87,10 +81,9 @@ public class BossControl : MonoBehaviour
 
     void Start()
     {
-        carrotTargetPos = bossStageManager.ActiveCharacter().transform;
+        playerTransform = bossStageManager.ActiveCharacter().transform;
 
         GetWeakSpots();
-        StartShootInterval();
     }
 
     // Update is called once per frame
@@ -99,7 +92,7 @@ public class BossControl : MonoBehaviour
         if (!bossDead)
         {
             // Rotate to look at player (+ height adjustment to rotate only y axis)
-            bossTransform.LookAt(carrotTargetPos.position + Vector3.up * (bossTransform.position.y - carrotTargetPos.position.y));
+            bossTransform.LookAt(playerTransform.position + Vector3.up * (bossTransform.position.y - playerTransform.position.y));
             // Generate new boss target position once in close enough proximity
             if (Mathf.Abs(bossHorizontalPos - bossTransform.position.x) < 0.1)
             {
@@ -113,52 +106,9 @@ public class BossControl : MonoBehaviour
             }
             if (bossHorizontalPos > bossTransform.position.x)
                 bossTransform.position += new Vector3(bossHorizontalSpeed * Time.deltaTime, 0, 0);
-
         }
-        // Finish condition for one shooting interval
-        if (bossDead)
-            StopShooting();
     }
 
-    // Shoot one carrot
-    public void ShootProjectile()
-    {
-        StartCoroutine("ShootProjectileCoroutine");
-    }
-
-    IEnumerator ShootProjectileCoroutine()
-    {
-        animator.SetBool("mouthOpen_b", true);
-
-        yield return new WaitForSeconds(0.2f);
-
-        Vector3 carrotSpawnPos = carrotSpawnOffset.position;
-
-        Vector3 orientation = carrotTargetPos.position - carrotSpawnPos;
-        GameObject projectile = Instantiate(carrotPf, carrotSpawnPos, Quaternion.Euler(orientation));
-        projectile.gameObject.transform.LookAt(carrotTargetPos);
-        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-        projectileRb.velocity = orientation.normalized * bossStageManager.carrotSpeed;
-
-        yield return new WaitForSeconds(0.5f);
-
-        animator.SetBool("mouthOpen_b", false);
-    }
-
-    // Stop shooting and close mouth
-    public void StopShooting()
-    {
-        CancelInvoke("ShootProjectile");
-        animator.SetBool("mouthOpen_b", false);
-    }
-
-    // Start shoot interval
-    public void StartShootInterval()
-    {
-        InvokeRepeating("ShootProjectile", 0f, Mathf.Max(carrotDelayTime, 1f)); // Appropriate delay time based on testing: 1f ~ 1.6f
-    }
-
-    // Change color function to keep
     public void ChangeColor(Color bossColorKey)
     {
         Color bossColorValue = (myColorDict.GetValueOrDefault(bossColorKey, bossColorKey)); // If dict contains key, extract value. Otherwise, pass color as is.

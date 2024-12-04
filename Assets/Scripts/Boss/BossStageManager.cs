@@ -85,6 +85,8 @@ public class BossStageManager : StageManager
 
     private IEnumerator HandleBossDeath()
     {
+        gameObject.GetComponent<CarrotManager>().StopShooting();
+
         // 1. 슬로우 모션 적용
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -163,5 +165,6 @@ public class BossStageManager : StageManager
         gameObject.GetComponent<DropAttackManager>().enabled = true;
         playerScript.enabled = true;
         bossControlScript.enabled = true;
+        gameObject.GetComponent<CarrotManager>().enabled = true;
     }
 }

@@ -11180,6 +11180,7 @@ GameObject:
   - component: {fileID: 1474742877}
   - component: {fileID: 1474742878}
   - component: {fileID: 1474742879}
+  - component: {fileID: 1474742880}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -11282,6 +11283,22 @@ MonoBehaviour:
   areaMax: {x: 10, y: 1.5, z: 10}
   warningDuration: 1
   dropHeight: 15
+--- !u!114 &1474742880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474742874}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0943a64c1ae0946e98a4bfadba8af765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2039046445}
+  carrotSpawnOffset: {fileID: 2039046444}
+  carrotPf: {fileID: 5649900439809378948, guid: 1eecc96bfe961436396ca41d4ed49458, type: 3}
+  carrotDelayTime: 1.6
 --- !u!1 &1483756986
 GameObject:
   m_ObjectHideFlags: 0
@@ -13515,6 +13532,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+--- !u!4 &2039046444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 367596013244964437, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2039046445 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 367596013406301719, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2045720548
 PrefabInstance:
   m_ObjectHideFlags: 0
