@@ -30,7 +30,7 @@ public class StageTransitionManager : MonoBehaviour
 
         // Hide UI elements initially
         transitionCanvas.gameObject.SetActive(false);
-        pointLight.SetActive(false);
+        pointLight?.SetActive(false);
     }
 
     public void SetCurrentCharacter(GameObject _character)
