@@ -97,7 +97,7 @@ public class MainStagePlayer : PlayerBase
     {
         centerPosition = transform.position + new Vector3(0f, 0.25f, 0.2f);
     }
-    protected override void FireLaser()
+    public override void FireLaser()
     {
         if (laserFireSound != null)
         {
@@ -130,7 +130,7 @@ public class MainStagePlayer : PlayerBase
         }
     }
 
-    IEnumerator SmoothMove()
+    public IEnumerator SmoothMove()
     {
         isMoving = true;
 
@@ -204,6 +204,11 @@ public class MainStagePlayer : PlayerBase
     public Vector2Int GetCurrentGridPosition()
     {
         return currentGridPosition;
+    }
+
+    public void SetCurrentGridPosition(Vector2Int _currentGridPosition)
+    {
+        currentGridPosition = _currentGridPosition;
     }
 
     public Vector2Int GetGridSize()

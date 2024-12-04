@@ -83,7 +83,7 @@ public abstract class PlayerBase : MonoBehaviour
         enableKeys = _enableKeys;
     }
 
-    protected abstract void FireLaser();
+    public abstract void FireLaser();
 
     protected virtual void OnCollisionEnter(Collision other) {}
 }

@@ -172,7 +172,7 @@ public class BossStagePlayer : PlayerBase
     }
 
     // Player Attack
-    protected override void FireLaser()
+    public override void FireLaser()
     {
         if (laserFireSound != null)
         {
