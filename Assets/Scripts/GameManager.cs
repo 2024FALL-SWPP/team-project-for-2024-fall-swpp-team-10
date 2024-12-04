@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public int bossStageMaxLife = 5;
 
     public bool selected = false;
+    public int invincibleKill = 0;
+    public int enemyKill = 0;
 
     private void Awake()
     {

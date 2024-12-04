@@ -66,7 +66,7 @@ public class BossStageManager : StageManager
         }
 
         // "Obstacle" 태그 오브젝트 비활성화
-        if (isStageComplete) 
+        if (isStageComplete)
         {
             GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject obstacle in obstacleObjects)
@@ -162,5 +162,15 @@ public class BossStageManager : StageManager
         gameObject.GetComponent<DropAttackManager>().enabled = true;
         playerScript.enabled = true;
         bossControlScript.enabled = true;
+    }
+
+    protected override IEnumerator AddScoreBasedOnLives()
+    {
+        base.AddScoreBasedOnLives();
+        if (hearts.Length > 3)
+        {
+            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(4), 4);
+        }
+        yield return null;
     }
 }
