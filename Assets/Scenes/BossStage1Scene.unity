@@ -3345,6 +3345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionAnimator: {fileID: 945322147}
+  countdownDuration: 5
+  countdownText: {fileID: 820537154}
 --- !u!1 &820537153
 GameObject:
   m_ObjectHideFlags: 0
@@ -11298,6 +11300,7 @@ MonoBehaviour:
   - {fileID: 14207239}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
+  isPausable: 1
   darkHearts:
   - {fileID: 2127547025}
   - {fileID: 1680471478}

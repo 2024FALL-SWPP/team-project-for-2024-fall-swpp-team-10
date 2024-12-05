@@ -17,7 +17,6 @@ public class MainStageTransitionManager : StageTransitionManager
 
     [Header("Transition Settings")]
     [SerializeField] float cameraTransitionDuration = 2.0f;
-    [SerializeField] public float countdownDuration = 5.0f;
     [SerializeField] GameObject pointLight;
 
     private bool isTransitioning = false;
@@ -121,43 +120,5 @@ public class MainStageTransitionManager : StageTransitionManager
 
         // Load boss scene
         GameManager.inst.LoadBossStage();
-    }
-
-    public IEnumerator Countdown()
-    {
-        // Start countdown
-        countdownText.gameObject.SetActive(true);
-        for (int i = (int)countdownDuration; i > 0; i--)
-        {
-            countdownText.text = $"Boss Stage Starting in {i}...";
-            yield return new WaitForSecondsRealtime(1f);
-        }
-
-        countdownText.gameObject.SetActive(false);
-    }
-
-    public float BossStageTransition()
-    {
-        StartCoroutine("BossStageTransitionCoroutine");
-        AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = stateInfo.length / stateInfo.speed;
-        return animationDuration;
-    }
-
-    private IEnumerator BossStageTransitionCoroutine()
-    {
-        if (transitionAnimator != null)
-        {
-            // Play the animation
-            transitionAnimator.Play("BossStageStart");
-
-            // Get animation length
-            AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            while (!stateInfo.IsName("BossStageStart"))
-            {
-                yield return null;
-                stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            }
-        }
     }
 }

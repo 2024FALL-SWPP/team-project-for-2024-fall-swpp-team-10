@@ -27,7 +27,7 @@ public class BossStageManager : StageManager
     protected override void Awake()
     {
         base.Awake();
-        transitionManager = FindObjectOfType<StageTransitionManager>();
+        transitionManager = FindObjectOfType<BossStageTransitionManager>();
         GameManager.inst.CursorActive(true);
         maxLife = GameManager.inst.bossStageMaxLife;
         currentPhase = 0;

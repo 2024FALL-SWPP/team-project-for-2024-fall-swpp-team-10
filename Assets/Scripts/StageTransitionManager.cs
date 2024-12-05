@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class StageTransitionManager : MonoBehaviour
 {
     [SerializeField] protected Animator transitionAnimator;  // Reference to the Animator component
+    [SerializeField] public float countdownDuration = 5;
 
     public virtual IEnumerator StartMainStageTransition()
     {
@@ -20,7 +21,17 @@ public class StageTransitionManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public virtual IEnumerator BossStageTransition()
+    public virtual IEnumerator Countdown()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual float BossStageTransition()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual IEnumerator BossStageTransitionCoroutine()
     {
         throw new NotImplementedException();
     }

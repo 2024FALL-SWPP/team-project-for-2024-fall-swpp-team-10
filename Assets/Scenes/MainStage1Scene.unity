@@ -4587,6 +4587,7 @@ MonoBehaviour:
   - {fileID: 798267248}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
+  isPausable: 1
   stageDuration: 187
   boss: {fileID: 2918174079348635216, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
@@ -6052,11 +6053,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionAnimator: {fileID: 634446462}
+  countdownDuration: 5
   transitionCanvas: {fileID: 634446465}
   stageCleared: {fileID: 1162051220}
   countdownText: {fileID: 958978796}
   cameraTransitionDuration: 2
-  countdownDuration: 5
   pointLight: {fileID: 1631127528}
 --- !u!4 &1953811075
 Transform:
