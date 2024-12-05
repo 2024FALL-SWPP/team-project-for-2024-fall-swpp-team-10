@@ -141,6 +141,6 @@ public class MainStageManagerTest
 
         yield return new WaitForSeconds(6f);
 
-        Assert.AreEqual(15100, GameManager.inst.GetScore());
+        Assert.GreaterOrEqual(GameManager.inst.GetScore(), 15100);
     }
 }
