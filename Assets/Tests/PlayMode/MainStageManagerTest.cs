@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using UnityEditor.SceneManagement;
 using UnityEditor.SearchService;
@@ -102,5 +103,44 @@ public class MainStageManagerTest
 
         // Assert
         Assert.IsFalse(Cursor.visible);
+    }
+
+    [UnityTest]
+    public IEnumerator TestGameOver()
+    {
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+
+        GameObject gameOverScreen = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "GameOver");
+        Assert.IsFalse(gameOverScreen.activeSelf);
+        Assert.AreNotEqual(0f, Time.timeScale);
+        while (gameManager.GetLife() > 0)
+        {
+            gameManager.RemoveLife();
+            yield return null;
+        }
+        yield return null;
+
+        gameOverScreen = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "GameOver");
+
+        Assert.IsNotNull(gameOverScreen);
+        Assert.IsTrue(gameOverScreen.activeSelf);
+        Assert.AreEqual(0f, Time.timeScale);
+    }
+
+    [UnityTest]
+    public IEnumerator TestAddScoreBasedOnLives()
+    {
+        gameManager.LoadMainStage();
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+
+        Assert.AreEqual(0, GameManager.inst.GetScore());
+        yield return null;
+        mainStageManager = GameObject.FindObjectOfType<MainStageManager>();
+        mainStageManager.StartCoroutine(mainStageManager.CompleteStage());
+
+        yield return new WaitForSeconds(6f);
+
+        Assert.AreEqual(15100, GameManager.inst.GetScore());
     }
 }
