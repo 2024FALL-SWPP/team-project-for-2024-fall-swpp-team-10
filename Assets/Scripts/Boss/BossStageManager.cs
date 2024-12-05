@@ -66,7 +66,7 @@ public class BossStageManager : StageManager
         }
 
         // "Obstacle" 태그 오브젝트 비활성화
-        if (isStageComplete) 
+        if (isStageComplete)
         {
             GameObject[] obstacleObjects = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject obstacle in obstacleObjects)

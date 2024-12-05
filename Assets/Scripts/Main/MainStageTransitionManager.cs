@@ -4,7 +4,8 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class StageTransitionManager : MonoBehaviour
+
+public class MainStageTransitionManager : StageTransitionManager
 {
     [Header("UI Elements")]
     [SerializeField] Canvas transitionCanvas;
@@ -17,7 +18,6 @@ public class StageTransitionManager : MonoBehaviour
     [Header("Transition Settings")]
     [SerializeField] float cameraTransitionDuration = 2.0f;
     [SerializeField] public float countdownDuration = 5.0f;
-    [SerializeField] Animator transitionAnimator;  // Reference to the Animator component
     [SerializeField] GameObject pointLight;
 
     private bool isTransitioning = false;
@@ -27,13 +27,12 @@ public class StageTransitionManager : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-
         // Hide UI elements initially
         transitionCanvas.gameObject.SetActive(false);
         pointLight?.SetActive(false);
     }
 
-    public void SetCurrentCharacter(GameObject _character)
+    public override void SetCurrentCharacter(GameObject _character)
     {
         activeCharacter = _character;
     }
@@ -48,7 +47,7 @@ public class StageTransitionManager : MonoBehaviour
         return false;
     }
 
-    public IEnumerator StartStageTransition()
+    public override IEnumerator StartMainStageTransition()
     {
         if (isTransitioning) yield break;
         isTransitioning = true;

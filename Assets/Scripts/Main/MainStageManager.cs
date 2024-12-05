@@ -74,7 +74,7 @@ public class MainStageManager : StageManager
         // Start the transition sequence
         if (transitionManager != null)
         {
-            yield return StartCoroutine(transitionManager.StartStageTransition());
+            yield return StartCoroutine(transitionManager.StartMainStageTransition());
         }
     }
 
