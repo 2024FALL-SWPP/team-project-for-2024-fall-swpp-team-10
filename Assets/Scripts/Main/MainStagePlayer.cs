@@ -206,11 +206,6 @@ public class MainStagePlayer : PlayerBase
         return currentGridPosition;
     }
 
-    public void SetCurrentGridPosition(Vector2Int _currentGridPosition)
-    {
-        currentGridPosition = _currentGridPosition;
-    }
-
     public Vector2Int GetGridSize()
     {
         return gridSize;

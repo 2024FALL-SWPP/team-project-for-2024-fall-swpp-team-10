@@ -1,8 +1,9 @@
+using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class MainStagePlayerTests
+public class MainStagePlayerTest
 {
     private GameObject playerGameObject;
     private MainStagePlayer mainStagePlayer;
@@ -38,7 +39,9 @@ public class MainStagePlayerTests
     {
         // 움직임 가능 범위 내에서 동작 확인
         mainStagePlayer.SetEnableKeys(true);
-        mainStagePlayer.SetCurrentGridPosition(new Vector2Int(1, 0));
+        // set value of a private variable 
+        FieldInfo lifeField = typeof(MainStagePlayer).GetField("currentGridPosition", BindingFlags.NonPublic | BindingFlags.Instance);
+        lifeField.SetValue(mainStagePlayer, new Vector2Int(1, 0));
 
         mainStagePlayer.StartCoroutine(mainStagePlayer.SmoothMove());
         Assert.AreEqual(new Vector2Int(1, 0), mainStagePlayer.GetCurrentGridPosition());
