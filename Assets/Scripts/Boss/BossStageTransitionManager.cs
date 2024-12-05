@@ -3,11 +3,13 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossStageTransitionManager : StageTransitionManager
+public class BossStageTransitionManager : MonoBehaviour
 {
     [Header("Transition Settings")]
     [SerializeField] TextMeshProUGUI countdownText;
-    public override float BossStageTransition()
+    [SerializeField] protected Animator transitionAnimator;
+    [SerializeField] public float countdownDuration = 5;
+    public float BossStageTransition()
     {
         StartCoroutine("BossStageTransitionCoroutine");
         AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
@@ -15,7 +17,7 @@ public class BossStageTransitionManager : StageTransitionManager
         return animationDuration;
     }
 
-    public override IEnumerator BossStageTransitionCoroutine()
+    public IEnumerator BossStageTransitionCoroutine()
     {
         if (transitionAnimator != null)
         {
@@ -32,7 +34,7 @@ public class BossStageTransitionManager : StageTransitionManager
         }
     }
 
-    public override IEnumerator Countdown()
+    public IEnumerator Countdown()
     {
         // Start countdown
         countdownText.gameObject.SetActive(true);

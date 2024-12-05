@@ -3563,11 +3563,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad3830b55efb4b199a25770bbac7947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionAnimator: {fileID: 643988686}
-  countdownDuration: 5
   transitionCanvas: {fileID: 643988689}
   stageCleared: {fileID: 936577737}
   countdownText: {fileID: 173473634}
+  transitionAnimator: {fileID: 643988686}
   cameraTransitionDuration: 2
   pointLight: {fileID: 390711529}
 --- !u!4 &1072130118

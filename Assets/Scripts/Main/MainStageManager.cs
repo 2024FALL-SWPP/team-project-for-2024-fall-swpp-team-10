@@ -14,6 +14,7 @@ public class MainStageManager : StageManager
     public GameObject boss;
     public GameObject bossLandingParticle;
     float bossDropSpeed = 10f;
+    protected MainStageTransitionManager transitionManager;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -21,7 +22,7 @@ public class MainStageManager : StageManager
         base.Awake();
         maxLife = GameManager.inst.maxLife;
         GameManager.inst.ResetStats();
-        transitionManager = FindObjectOfType<StageTransitionManager>();
+        transitionManager = FindObjectOfType<MainStageTransitionManager>();
         GameManager.inst.CursorActive(false);
         StartCoroutine(AddScoreEverySecond());
     }

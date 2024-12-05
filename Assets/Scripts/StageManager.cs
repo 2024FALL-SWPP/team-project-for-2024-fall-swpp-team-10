@@ -16,7 +16,6 @@ public abstract class StageManager : MonoBehaviour
     private TextMeshProUGUI scoreText;
     protected bool isGameOver = false;
     protected MusicManager musicManager;
-    protected StageTransitionManager transitionManager;
 
     // Variables related to Hearts UI
     public GameObject[] hearts;
@@ -85,7 +84,7 @@ public abstract class StageManager : MonoBehaviour
         Time.timeScale = 1;
         isGameOver = false;
     }
-    public virtual GameObject ActiveCharacter() 
+    public virtual GameObject ActiveCharacter()
     {
         return activeCharacter;
     }

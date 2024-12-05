@@ -23,6 +23,7 @@ public class BossStageManager : StageManager
     public float carrotSpeed = 10f;
     [SerializeField] Animator transitionAnimator;
     [SerializeField] float introAnimationDuration;
+    protected BossStageTransitionManager transitionManager;
 
     protected override void Awake()
     {

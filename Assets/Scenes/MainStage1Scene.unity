@@ -6052,11 +6052,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad3830b55efb4b199a25770bbac7947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionAnimator: {fileID: 634446462}
-  countdownDuration: 5
   transitionCanvas: {fileID: 634446465}
   stageCleared: {fileID: 1162051220}
   countdownText: {fileID: 958978796}
+  transitionAnimator: {fileID: 634446462}
   cameraTransitionDuration: 2
   pointLight: {fileID: 1631127528}
 --- !u!4 &1953811075

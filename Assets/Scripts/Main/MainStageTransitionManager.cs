@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 
-public class MainStageTransitionManager : StageTransitionManager
+public class MainStageTransitionManager : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] Canvas transitionCanvas;
@@ -16,6 +16,7 @@ public class MainStageTransitionManager : StageTransitionManager
     private GameObject activeCharacter;
 
     [Header("Transition Settings")]
+    [SerializeField] protected Animator transitionAnimator;
     [SerializeField] float cameraTransitionDuration = 2.0f;
     [SerializeField] GameObject pointLight;
 
@@ -31,7 +32,7 @@ public class MainStageTransitionManager : StageTransitionManager
         pointLight?.SetActive(false);
     }
 
-    public override void SetCurrentCharacter(GameObject _character)
+    public void SetCurrentCharacter(GameObject _character)
     {
         activeCharacter = _character;
     }
@@ -46,7 +47,7 @@ public class MainStageTransitionManager : StageTransitionManager
         return false;
     }
 
-    public override IEnumerator StartMainStageTransition()
+    public IEnumerator StartMainStageTransition()
     {
         if (isTransitioning) yield break;
         isTransitioning = true;

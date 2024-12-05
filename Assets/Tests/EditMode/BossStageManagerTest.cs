@@ -72,7 +72,7 @@ public class BossStageManagerTest
         }
 
         MusicManager musicManager = new GameObject("MusicManager").AddComponent<MusicManager>();
-        StageTransitionManager transitionManager = new GameObject("StageTransitionManager").AddComponent<StageTransitionManager>();
+        BossStageTransitionManager transitionManager = new GameObject("BossStageTransitionManager").AddComponent<BossStageTransitionManager>();
     }
 
     private void InitializeBossStageManagerFields()
