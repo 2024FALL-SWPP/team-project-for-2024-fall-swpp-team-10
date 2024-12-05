@@ -1147,7 +1147,7 @@ GameObject:
   - component: {fileID: 634446463}
   - component: {fileID: 634446462}
   m_Layer: 0
-  m_Name: StageTransitionAnimator
+  m_Name: MainStageTransitionAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4587,6 +4587,7 @@ MonoBehaviour:
   - {fileID: 798267248}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
+  isPausable: 1
   stageDuration: 187
   boss: {fileID: 2918174079348635216, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
@@ -6033,7 +6034,7 @@ GameObject:
   - component: {fileID: 1953811075}
   - component: {fileID: 1953811074}
   m_Layer: 0
-  m_Name: StageTransitionManager
+  m_Name: MainStageTransitionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6048,15 +6049,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1953811073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe892d125dd444cf8495ad02f004512, type: 3}
+  m_Script: {fileID: 11500000, guid: bad3830b55efb4b199a25770bbac7947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transitionCanvas: {fileID: 634446465}
   stageCleared: {fileID: 1162051220}
   countdownText: {fileID: 958978796}
-  cameraTransitionDuration: 2
-  countdownDuration: 5
   transitionAnimator: {fileID: 634446462}
+  cameraTransitionDuration: 2
   pointLight: {fileID: 1631127528}
 --- !u!4 &1953811075
 Transform:

@@ -4,7 +4,8 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class StageTransitionManager : MonoBehaviour
+
+public class MainStageTransitionManager : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] Canvas transitionCanvas;
@@ -15,9 +16,8 @@ public class StageTransitionManager : MonoBehaviour
     private GameObject activeCharacter;
 
     [Header("Transition Settings")]
+    [SerializeField] protected Animator transitionAnimator;
     [SerializeField] float cameraTransitionDuration = 2.0f;
-    [SerializeField] public float countdownDuration = 5.0f;
-    [SerializeField] Animator transitionAnimator;  // Reference to the Animator component
     [SerializeField] GameObject pointLight;
 
     private bool isTransitioning = false;
@@ -27,7 +27,6 @@ public class StageTransitionManager : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-
         // Hide UI elements initially
         transitionCanvas.gameObject.SetActive(false);
         pointLight?.SetActive(false);
@@ -48,7 +47,7 @@ public class StageTransitionManager : MonoBehaviour
         return false;
     }
 
-    public IEnumerator StartStageTransition()
+    public IEnumerator StartMainStageTransition()
     {
         if (isTransitioning) yield break;
         isTransitioning = true;
@@ -122,43 +121,5 @@ public class StageTransitionManager : MonoBehaviour
 
         // Load boss scene
         GameManager.inst.LoadBossStage();
-    }
-
-    public IEnumerator Countdown()
-    {
-        // Start countdown
-        countdownText.gameObject.SetActive(true);
-        for (int i = (int)countdownDuration; i > 0; i--)
-        {
-            countdownText.text = $"Boss Stage Starting in {i}...";
-            yield return new WaitForSecondsRealtime(1f);
-        }
-
-        countdownText.gameObject.SetActive(false);
-    }
-
-    public float BossStageTransition()
-    {
-        StartCoroutine("BossStageTransitionCoroutine");
-        AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = stateInfo.length / stateInfo.speed;
-        return animationDuration;
-    }
-
-    private IEnumerator BossStageTransitionCoroutine()
-    {
-        if (transitionAnimator != null)
-        {
-            // Play the animation
-            transitionAnimator.Play("BossStageStart");
-
-            // Get animation length
-            AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            while (!stateInfo.IsName("BossStageStart"))
-            {
-                yield return null;
-                stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-            }
-        }
     }
 }

@@ -3309,7 +3309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 808526296}
-  - component: {fileID: 808526295}
+  - component: {fileID: 808526297}
   m_Layer: 0
   m_Name: BossStageTransitionManager
   m_TagString: Untagged
@@ -3317,24 +3317,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &808526295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808526294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe892d125dd444cf8495ad02f004512, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionCanvas: {fileID: 945322150}
-  stageCleared: {fileID: 0}
-  countdownText: {fileID: 820537154}
-  cameraTransitionDuration: 2
-  countdownDuration: 3
-  transitionAnimator: {fileID: 945322147}
 --- !u!4 &808526296
 Transform:
   m_ObjectHideFlags: 0
@@ -3350,6 +3332,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &808526297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808526294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30790bb0ab25c4d1a8d06e44a2964a1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionAnimator: {fileID: 945322147}
+  countdownDuration: 5
+  countdownText: {fileID: 820537154}
 --- !u!1 &820537153
 GameObject:
   m_ObjectHideFlags: 0
@@ -11303,6 +11300,7 @@ MonoBehaviour:
   - {fileID: 14207239}
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
+  isPausable: 1
   darkHearts:
   - {fileID: 2127547025}
   - {fileID: 1680471478}
