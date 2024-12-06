@@ -16,6 +16,7 @@ TagManager:
   - WeakSpot
   - Fire
   - Laser
+  - BossMesh
   layers:
   - Default
   - TransparentFX

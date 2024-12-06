@@ -2268,7 +2268,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 2
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -8830,6 +8830,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7efd85ac0cb5543aaae3a372c0f2a17c, type: 3}
+--- !u!114 &967685337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5986442692889961551, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90d792ddfabd42bcbb39d5370814918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &970171746
 GameObject:
   m_ObjectHideFlags: 0
@@ -11180,6 +11191,7 @@ GameObject:
   - component: {fileID: 1474742877}
   - component: {fileID: 1474742878}
   - component: {fileID: 1474742879}
+  - component: {fileID: 1474742880}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -11245,6 +11257,8 @@ MonoBehaviour:
   gameClear: {fileID: 1390848906}
   cameraScript: {fileID: 659597871}
   bossControlScript: {fileID: 1163737305}
+  weakspotsManagerScript: {fileID: 967685337}
+  weakspotHitCount: 0
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
   carrotSpeed: 10
@@ -11282,6 +11296,22 @@ MonoBehaviour:
   areaMax: {x: 10, y: 1.5, z: 10}
   warningDuration: 1
   dropHeight: 15
+--- !u!114 &1474742880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474742874}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0943a64c1ae0946e98a4bfadba8af765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2039046445}
+  carrotSpawnOffset: {fileID: 2039046444}
+  carrotPf: {fileID: 5649900439809378948, guid: 1eecc96bfe961436396ca41d4ed49458, type: 3}
+  carrotDelayTime: 1.6
 --- !u!1 &1483756986
 GameObject:
   m_ObjectHideFlags: 0
@@ -13513,8 +13543,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 3042987600192495292, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+      propertyPath: m_TagString
+      value: BossMesh
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+--- !u!4 &2039046444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 367596013244964437, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2039046445 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 367596013406301719, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2045720548
 PrefabInstance:
   m_ObjectHideFlags: 0
