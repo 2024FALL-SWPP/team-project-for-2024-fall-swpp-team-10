@@ -135,9 +135,10 @@ public class WeakspotsManager : MonoBehaviour
 
 
     // Removes old and produces new weakspots.
-    public void NewWeakSpots()
+    public IEnumerator NewWeakSpots()
     {
-        Invoke("RemoveAllWeakSpots", 0.2f);
-        Invoke("GetWeakSpots", 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        RemoveAllWeakSpots();
+        GetWeakSpots();
     }
 }

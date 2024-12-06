@@ -149,7 +149,7 @@ public class BossStageManager : StageManager
     {
         carrotSpeed += 5f;
         currentPhase += 1;
-        if (currentPhase < 3) weakspotsManagerScript.NewWeakSpots();
+        if (currentPhase < 3) StartCoroutine(weakspotsManagerScript.NewWeakSpots());
         for (int i = 0; i < bossMaxLife; i++)
             darkHearts[i].SetActive(i < GetBossLife());
     }
