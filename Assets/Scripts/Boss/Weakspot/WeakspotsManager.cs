@@ -81,12 +81,14 @@ public class WeakspotsManager : MonoBehaviour
         // Choose three random regions and select one random point from each
         List<int> chosenIndices = new List<int>();
 
+        int count = 0;
 
         while (chosenIndices.Count < 3)
         {
             int randomIndex = Random.Range(0, 8);
 
-            if (!chosenIndices.Contains(randomIndex) && regions[randomIndex].Count > 0)
+            // 각각 다른 구역의 weakspot 생성을 16번 시도하고, 16번의 시도 끝에도 3개의 weakspot이 생성되지 않았다면 같은 구역의 weakspot도 허용한다.
+            if ((!chosenIndices.Contains(randomIndex) || count > 16) && regions[randomIndex].Count > 0)
             {
                 chosenIndices.Add(randomIndex);
                 Vector3 randomPoint = regions[randomIndex][Random.Range(0, regions[randomIndex].Count)];
@@ -100,6 +102,7 @@ public class WeakspotsManager : MonoBehaviour
 
                 Instantiate(weakSpotPf, randomPoint, Quaternion.LookRotation(worldNormal), gameObject.transform);
             }
+            count += 1;
         }
     }
 
