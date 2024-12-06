@@ -136,4 +136,10 @@ public class BossStageCamera : MonoBehaviour
         cameraFixed = false;
     }
 
+    // 카메라 고정을 외부에서 설정할 수 있는 메서드
+    public void SetCameraFixed(bool fixedStatus)
+    {
+        cameraFixed = fixedStatus;
+    }
+
 }

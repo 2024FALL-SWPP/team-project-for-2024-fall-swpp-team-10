@@ -27,22 +27,49 @@ public class BossStageManager : StageManager
     [SerializeField] float introAnimationDuration;
     protected BossStageTransitionManager transitionManager;
 
+    [Header("Intro Settings")]
+    public Transform stadiumTransform; // 경기장 위치
+    private Transform bossTransform; // 보스 위치
+    public float cameraMoveDuration = 3f; // 카메라 이동 시간
+    public float cameraOrbitDuration = 2f; // 카메라 회전 시간
+    private GameObject bossObject; // 보스 객체
+    private Transform gameplayCameraTransform; // 게임 플레이 시점의 카메라 Transform
+    private AudioSource[] fireAudioSources;
+    private Animator fadeImageAnimator;
     protected override void Awake()
     {
         base.Awake();
+        bossObject = GameObject.Find("Boss");
+        cameraScript.SetCameraFixed(true); // 카메라 움직임 중지
+        fadeImageAnimator = GameObject.Find("FadeImage").GetComponent<Animator>();
+        bossTransform = bossObject.transform;
+        gameplayCameraTransform = cameraScript.transform;
         transitionManager = FindObjectOfType<BossStageTransitionManager>();
         GameManager.inst.CursorActive(true);
         maxLife = GameManager.inst.bossStageMaxLife;
         currentPhase = 0;
         fires = GameObject.FindGameObjectsWithTag("Fire");
+        if (fires != null)
+        {
+            fireAudioSources = new AudioSource[fires.Length];
+            for (int i = 0; i < fires.Length; i++)
+            {
+                fireAudioSources[i] = fires[i].GetComponent<AudioSource>();
+                fireAudioSources[i]?.Stop();
+                fires[i].SetActive(false);
+            }
+        }
         gameClearLight = GetComponent<GameClearLight>();
         if (transitionManager != null && transitionAnimator != null)
         {
             transitionAnimator.gameObject.SetActive(true);
             introAnimationDuration = transitionManager.BossStageTransition();
-            StartCoroutine("WaitForIntro");
-            StartCoroutine(transitionManager.Countdown());
+            //StartCoroutine("WaitForIntro");
+            //StartCoroutine(transitionManager.Countdown());
+            StartCoroutine(IntroSequence());
+
         }
+
     }
 
     protected virtual void Start()
@@ -184,5 +211,122 @@ public class BossStageManager : StageManager
         bossControlScript.enabled = true;
         gameObject.GetComponent<CarrotAttackManager>().enabled = true;
         weakspotsManagerScript.enabled = true;
+    }
+
+    // ** 인트로 시퀀스 Coroutine 수정 **
+    private IEnumerator IntroSequence()
+    {
+        // 카메라를 경기장 위치로 즉시 이동
+        cameraScript.transform.position = stadiumTransform.position + new Vector3(0, 5, 10); // 적절한 오프셋 적용
+        cameraScript.transform.LookAt(stadiumTransform);
+        // 1. 페이드 인 시작 (경기장 보여주기)
+        //fadeImageAnimator.SetTrigger("FadeIn");
+        yield return new WaitForSecondsRealtime(1f); // 페이드 인 시간
+
+
+
+        // 불 기둥 활성화 및 소리 재생
+        StartCoroutine(ActivateFiresInPhases());
+
+        // 불 기둥 연출 시간 대기
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 2. 페이드 아웃
+        fadeImageAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 카메라를 보스 위치로 즉시 이동
+        cameraScript.transform.position = bossTransform.position;
+        cameraScript.transform.LookAt(bossTransform);
+
+        // 3. 페이드 인 (보스 보여주기)
+        fadeImageAnimator.SetTrigger("FadeIn");
+        //yield return new WaitForSecondsRealtime(1f);
+
+        // 보스 주위를 도는 카메라 연출 (동적 움직임)
+        yield return StartCoroutine(DynamicCameraMovement(bossTransform));
+
+        // 보스 연출 시간 대기
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 4. 페이드 아웃
+        fadeImageAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 카메라를 플레이어 캐릭터 위치로 즉시 이동
+        cameraScript.transform.position = activeCharacter.transform.position;
+        cameraScript.transform.LookAt(activeCharacter.transform);
+
+        // 5. 페이드 인 (캐릭터 보여주기)
+        fadeImageAnimator.SetTrigger("FadeIn");
+        //yield return new WaitForSecondsRealtime(1f);
+
+        // 캐릭터 주위를 도는 카메라 연출 (동적 움직임)
+        yield return StartCoroutine(DynamicCameraMovement(activeCharacter.transform));
+
+        // 캐릭터 연출 시간 대기
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 6. 페이드 아웃
+        fadeImageAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSecondsRealtime(1f);
+
+        // 카메라를 게임 플레이 시점으로 즉시 이동
+        cameraScript.transform.position = gameplayCameraTransform.position;
+        cameraScript.transform.rotation = gameplayCameraTransform.rotation;
+
+        // 7. 페이드 인 (게임 플레이 시작)
+        fadeImageAnimator.SetTrigger("FadeIn");
+        cameraScript.SetCameraFixed(false); // 카메라 움직임 중지
+        yield return new WaitForSecondsRealtime(0.5f);
+
+
+        // 8. 카운트다운 시작
+        StartCoroutine("WaitForIntro");
+        StartCoroutine(transitionManager.Countdown());
+    }
+
+    private IEnumerator DynamicCameraMovement(Transform target)
+    {
+        float duration = cameraOrbitDuration;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            // ���� ���
+            float angle = (elapsed / duration) * 20f; // 360�� ��ȸ
+            Vector3 orbitPosition = target.position + new Vector3(
+                Mathf.Cos(Mathf.Deg2Rad * angle) * (-8),
+                15,
+                Mathf.Sin(Mathf.Deg2Rad * angle) * (-8)
+            );
+
+            // ī�޶� ��ġ �� ���� �ٶ󺸱�
+            cameraScript.transform.position = orbitPosition;
+            transform.LookAt(target); // �׻� ������ �ٶ�
+
+            elapsed += Time.unscaledDeltaTime; // ���ο� ��ǿ����� ���������� ����ǵ��� unscaledDeltaTime ���
+            yield return null;
+        }
+    }
+
+    private IEnumerator ActivateFiresInPhases()
+    {
+        // 첫 번째 절반 활성화
+        for (int i = 0; i < fires.Length; i+=2)
+        {
+            fires[i].SetActive(true);
+            fireAudioSources[i]?.Pause();
+        }
+        yield return new WaitForSecondsRealtime(1f); // 첫 번째 단계 대기
+
+        // 두 번째 절반 활성화
+        for (int i = 1; i < fires.Length; i+=2)
+        {
+            fires[i].SetActive(true);
+            fireAudioSources[i]?.Pause();
+        }
+        yield return new WaitForSecondsRealtime(1f); // 첫 번째 단계 대기
+
     }
 }
