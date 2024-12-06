@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LaserProjectile : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class LaserProjectile : MonoBehaviour
             trail.material.SetColor("_Color", materialColor);
         }
 
+        if (SceneManager.GetActiveScene().name.Contains("BossStage"))
+            projectileDurationTime = 1f;
         // Destroy the projectile after some time
         Destroy(gameObject, projectileDurationTime);
     }
