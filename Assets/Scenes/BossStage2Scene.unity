@@ -2268,7 +2268,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 2
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -8830,6 +8830,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7efd85ac0cb5543aaae3a372c0f2a17c, type: 3}
+--- !u!114 &967685337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5986442692889961551, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
+  m_PrefabInstance: {fileID: 2039046443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90d792ddfabd42bcbb39d5370814918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &970171746
 GameObject:
   m_ObjectHideFlags: 0
@@ -9587,7 +9598,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 367596013406301716, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   m_PrefabInstance: {fileID: 2039046443}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039046447}
+  m_GameObject: {fileID: 0}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d886e5e2aeca74bb1b740eb723715091, type: 3}
@@ -11246,7 +11257,7 @@ MonoBehaviour:
   gameClear: {fileID: 1390848906}
   cameraScript: {fileID: 659597871}
   bossControlScript: {fileID: 1163737305}
-  weakspotManagerScript: {fileID: 2039046448}
+  weakspotsManagerScript: {fileID: 967685337}
   weakspotHitCount: 0
   gameOverMusic: {fileID: 8300000, guid: 7b84bae215e13dd48a72c6975becfd36, type: 3}
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
@@ -13548,34 +13559,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 367596013406301719, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
   m_PrefabInstance: {fileID: 2039046443}
   m_PrefabAsset: {fileID: 0}
---- !u!33 &2039046446 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 8250444173253038291, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
-  m_PrefabInstance: {fileID: 2039046443}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2039046447 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 709492252870218308, guid: 2aa73c6bbedca41769b8a7d9e6630c26, type: 3}
-  m_PrefabInstance: {fileID: 2039046443}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2039046448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039046447}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b90d792ddfabd42bcbb39d5370814918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weakSpotPf: {fileID: 6453732741328588661, guid: a102f0d914b174bf6930588c3c1628fd, type: 3}
-  bossMesh: {fileID: 2534964839176971238, guid: 169224d39859543e19c5277c072237d7, type: 3}
-  meshFilter: {fileID: 2039046446}
-  occlusionMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!1001 &2045720548
 PrefabInstance:
   m_ObjectHideFlags: 0

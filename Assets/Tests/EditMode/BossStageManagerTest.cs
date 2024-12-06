@@ -89,6 +89,7 @@ public class BossStageManagerTest
 
         bossStageManager.bossControlScript = new BossControl();
         bossStageManager.cameraScript = new BossStageCamera();
+        bossStageManager.weakspotsManagerScript = new WeakspotsManager();
 
         GameObject fire1 = new GameObject("Fire1") { tag = "Fire" };
         GameObject fire2 = new GameObject("Fire2") { tag = "Fire" };

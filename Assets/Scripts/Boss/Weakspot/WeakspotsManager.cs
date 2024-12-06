@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeakspotManager : MonoBehaviour
+public class WeakspotsManager : MonoBehaviour
 {
     [Header("Boss weak spot variables")]
     [SerializeField] GameObject weakSpotPf;
@@ -131,7 +131,7 @@ public class WeakspotManager : MonoBehaviour
     }
 
 
-    // Testing only. Removes old and produces new weakspots.
+    // Removes old and produces new weakspots.
     public void NewWeakSpots()
     {
         Invoke("RemoveAllWeakSpots", 0.2f);

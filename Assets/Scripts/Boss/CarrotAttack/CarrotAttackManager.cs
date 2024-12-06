@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GLTF.Schema;
 using UnityEngine;
 
-public class CarrotManager : MonoBehaviour
+public class CarrotAttackManager : MonoBehaviour
 {
     public Animator animator;
 
@@ -18,7 +18,7 @@ public class CarrotManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bossStageManager = GameObject.Find("BossStageManager").GetComponent<BossStageManager>();
+        bossStageManager = gameObject.GetComponent<BossStageManager>();
         carrotTargetPos = bossStageManager.ActiveCharacter().transform;
 
         StartShootInterval();

@@ -30,26 +30,6 @@ TagManager:
   - Player
   - DropObjectMesh
   - DropObjectBox
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

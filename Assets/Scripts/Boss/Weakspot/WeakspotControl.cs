@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformWeakspot : MonoBehaviour
+public class WeakspotControl : MonoBehaviour
 {
     Dictionary<int, Color> WeakSpotStatCol = new Dictionary<int, Color>();
     Color WeakSpotCols0 = new(51f / 255f, 1f, 0f, 156f / 255f);  // Initial spot color
