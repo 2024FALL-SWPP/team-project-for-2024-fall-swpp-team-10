@@ -62,7 +62,7 @@ public class BossStageManager : StageManager
         if (!bossControlScript.IsDead() && GetBossLife() <= 0 && !isStageComplete)
         {
             base.isPausable = false;
-            activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
+            playerScript.SetEnableKeys(false);
             isStageComplete = true;
             StartCoroutine(HandleBossDeath());
         }
@@ -81,19 +81,19 @@ public class BossStageManager : StageManager
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
-        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
+        playerScript.SetEnableKeys(false);
         AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
     }
     public override void PauseGame()
     {
         base.PauseGame();
-        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(true);
+        playerScript.SetEnableKeys(false);
     }
 
     public override void ResumeGame()
     {
         base.ResumeGame();
-        activeCharacter.GetComponent<BossStagePlayer>().SetEnableKeys(false);
+        playerScript.SetEnableKeys(true);
     }
     private IEnumerator HandleBossDeath()
     {
