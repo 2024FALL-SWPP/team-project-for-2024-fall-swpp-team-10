@@ -58,22 +58,27 @@ public class BossControl : MonoBehaviour
     {
         if (!bossDead)
         {
-            // Rotate to look at player (+ height adjustment to rotate only y axis)
-            bossTransform.LookAt(playerTransform.position + Vector3.up * (bossTransform.position.y - playerTransform.position.y));
-            // Generate new boss target position once in close enough proximity
-            if (Mathf.Abs(bossHorizontalPos - bossTransform.position.x) < 0.1)
-            {
-                bossHorizontalPos = Random.Range(-bossHorizontalRange, bossHorizontalRange);
-            }
-
-            // Boss side to side movement
-            if (bossHorizontalPos < bossTransform.position.x)
-            {
-                bossTransform.position -= new Vector3(bossHorizontalSpeed * Time.deltaTime, 0, 0);
-            }
-            if (bossHorizontalPos > bossTransform.position.x)
-                bossTransform.position += new Vector3(bossHorizontalSpeed * Time.deltaTime, 0, 0);
+            HandleBossMovement();
         }
+    }
+
+    public void HandleBossMovement()
+    {
+        // Rotate to look at player (+ height adjustment to rotate only y axis)
+        bossTransform.LookAt(playerTransform.position + Vector3.up * (bossTransform.position.y - playerTransform.position.y));
+        // Generate new boss target position once in close enough proximity
+        if (Mathf.Abs(bossHorizontalPos - bossTransform.position.x) < 0.1)
+        {
+            bossHorizontalPos = Random.Range(-bossHorizontalRange, bossHorizontalRange);
+        }
+
+        // Boss side to side movement
+        if (bossHorizontalPos < bossTransform.position.x)
+        {
+            bossTransform.position -= new Vector3(bossHorizontalSpeed * Time.deltaTime, 0, 0);
+        }
+        if (bossHorizontalPos > bossTransform.position.x)
+            bossTransform.position += new Vector3(bossHorizontalSpeed * Time.deltaTime, 0, 0);
     }
 
     public void ChangeColor(Color bossColorKey)
