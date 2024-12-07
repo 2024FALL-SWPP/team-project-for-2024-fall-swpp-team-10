@@ -19,7 +19,8 @@ public class CharacterButtonHandler : MonoBehaviour
     public int characterNum;
 
     private int blinkcount = 3;
-    KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+    // KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,12 +30,10 @@ public class CharacterButtonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCodes[characterNum]))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.L))
         {
             if (PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlock(characterNum)))
                 PlayerPrefs.DeleteKey(GameManager.inst.PlayerPrefsCharacterUnlock(characterNum));
-            else
-                PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(characterNum), characterNum);
         }
 
         if (PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlock(characterNum)))
