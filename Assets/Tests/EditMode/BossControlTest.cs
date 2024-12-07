@@ -193,8 +193,8 @@ public class BossControlTest
         Assert.AreEqual(new Color(203f / 255f, 83f / 255f, 83f / 255f, 1), actualColor);
     }
 
-    [UnityTest]
-    public IEnumerator Test_BossMovement()
+    [Test]
+    public void Test_BossMovement()
     {
         SetPrivateField(bossControl, "bossHorizontalPos", 5f);
 
@@ -208,7 +208,6 @@ public class BossControlTest
         {
             bossControl.HandleBossMovement();
             elapsedTime += 0.02f;
-            yield return null;
         }
 
         var bossTransform = (Transform)GetPrivateField(bossControl, "bossTransform");
