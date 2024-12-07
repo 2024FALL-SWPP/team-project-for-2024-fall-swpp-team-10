@@ -172,4 +172,14 @@ public class BossStageManager : StageManager
         gameObject.GetComponent<CarrotAttackManager>().enabled = true;
         weakspotsManagerScript.enabled = true;
     }
+
+    protected override IEnumerator AddScoreBasedOnLives()
+    {
+        base.AddScoreBasedOnLives();
+        if (hearts.Length > 4)
+        {
+            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(4), 4);
+        }
+        yield return null;
+    }
 }

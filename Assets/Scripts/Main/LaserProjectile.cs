@@ -84,6 +84,8 @@ public class LaserProjectile : MonoBehaviour
                 GameManager.inst.AddScore(1000);
                 Instantiate(hitParticle, transform.position, new Quaternion(0, 0, 0, 0));
                 Destroy(other.gameObject);
+                if (!PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlock(2)))
+                    GameManager.inst.enemyKill++;
             }
             Destroy(gameObject);
         }
