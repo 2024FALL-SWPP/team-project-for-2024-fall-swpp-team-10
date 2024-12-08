@@ -64,6 +64,8 @@ public class BossStageManager : StageManager
         // End condition
         if (!bossControlScript.IsDead() && GetBossLife() <= 0 && !isStageComplete)
         {
+            base.isPausable = false;
+            playerScript.SetEnableKeys(false);
             isStageComplete = true;
             StartCoroutine(HandleBossDeath());
         }
@@ -82,9 +84,20 @@ public class BossStageManager : StageManager
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
+        playerScript.SetEnableKeys(false);
         AudioSource.PlayClipAtPoint(gameOverMusic, Camera.main.transform.position, soundVolume);
     }
+    public override void PauseGame()
+    {
+        base.PauseGame();
+        playerScript.SetEnableKeys(false);
+    }
 
+    public override void ResumeGame()
+    {
+        base.ResumeGame();
+        playerScript.SetEnableKeys(true);
+    }
     private IEnumerator HandleBossDeath()
     {
         gameObject.GetComponent<CarrotAttackManager>().StopShooting();

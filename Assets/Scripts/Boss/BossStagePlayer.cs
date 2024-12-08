@@ -50,7 +50,7 @@ public class BossStagePlayer : PlayerBase
 
     private void FixedUpdate()
     {
-        if (!isSpinning)
+        if (!isSpinning && enableKeys)
         {
             MovePlayer();
             RotatePlayer();
@@ -60,7 +60,7 @@ public class BossStagePlayer : PlayerBase
     private void Update()
     {
         // Fire Laser
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && enableKeys)
         {
             FireLaser();
         }
