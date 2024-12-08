@@ -11651,8 +11651,7 @@ MonoBehaviour:
   carrotSpeed: 10
   transitionAnimator: {fileID: 945322147}
   introAnimationDuration: 0
-  stadiumTransform: {fileID: 709343200}
-  cameraMoveDuration: 3
+  stadiumTransform: {fileID: 1873577568}
   cameraOrbitDuration: 2
 --- !u!114 &1474742878
 MonoBehaviour:

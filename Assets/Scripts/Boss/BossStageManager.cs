@@ -29,20 +29,19 @@ public class BossStageManager : StageManager
 
     [Header("Intro Settings")]
     public Transform stadiumTransform; // 경기장 위치
-    private Transform bossTransform; // 보스 위치
-    public float cameraMoveDuration = 3f; // 카메라 이동 시간
-    public float cameraOrbitDuration = 2f; // 카메라 회전 시간
-    private GameObject bossObject; // 보스 객체
+    //private Transform bossTransform; // 보스 위치
+    public float cameraOrbitDuration = 3f; // 카메라 회전 시간
+    //private GameObject bossObject; // 보스 객체
     private Transform gameplayCameraTransform; // 게임 플레이 시점의 카메라 Transform
     private AudioSource[] fireAudioSources;
     private Animator fadeImageAnimator;
     protected override void Awake()
     {
         base.Awake();
-        bossObject = GameObject.Find("Boss");
+        //bossObject = GameObject.Find("Boss");
         cameraScript.SetCameraFixed(true); // 카메라 움직임 중지
         fadeImageAnimator = GameObject.Find("FadeImage").GetComponent<Animator>();
-        bossTransform = bossObject.transform;
+        //bossTransform = bossObject.transform;
         gameplayCameraTransform = cameraScript.transform;
         transitionManager = FindObjectOfType<BossStageTransitionManager>();
         GameManager.inst.CursorActive(true);
@@ -213,11 +212,11 @@ public class BossStageManager : StageManager
         weakspotsManagerScript.enabled = true;
     }
 
-    // ** 인트로 시퀀스 Coroutine 수정 **
+    // 인트로 시퀀스 Coroutine 수정
     private IEnumerator IntroSequence()
     {
         // 카메라를 경기장 위치로 즉시 이동
-        cameraScript.transform.position = stadiumTransform.position + new Vector3(0, 5, 10); // 적절한 오프셋 적용
+        cameraScript.transform.position = stadiumTransform.position + new Vector3(-8, 5, -10); // 적절한 오프셋 적용
         cameraScript.transform.LookAt(stadiumTransform);
         // 1. 페이드 인 시작 (경기장 보여주기)
         //fadeImageAnimator.SetTrigger("FadeIn");
@@ -232,43 +231,43 @@ public class BossStageManager : StageManager
         yield return new WaitForSecondsRealtime(1f);
 
         // 2. 페이드 아웃
-        fadeImageAnimator.SetTrigger("FadeOut");
+        fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
         // 카메라를 보스 위치로 즉시 이동
-        cameraScript.transform.position = bossTransform.position;
-        cameraScript.transform.LookAt(bossTransform);
+        //cameraScript.transform.position = bossTransform.position;
+        //cameraScript.transform.LookAt(bossTransform);
 
         // 3. 페이드 인 (보스 보여주기)
-        fadeImageAnimator.SetTrigger("FadeIn");
+        fadeImageAnimator?.SetTrigger("FadeIn");
         //yield return new WaitForSecondsRealtime(1f);
 
         // 보스 주위를 도는 카메라 연출 (동적 움직임)
-        yield return StartCoroutine(DynamicCameraMovement(bossTransform));
+        yield return StartCoroutine(DynamicCameraMovement(bossControlScript.transform, 10,8,new Vector3(0,0,0)));
 
         // 보스 연출 시간 대기
-        yield return new WaitForSecondsRealtime(1f);
+        //yield return new WaitForSecondsRealtime(1f);
 
         // 4. 페이드 아웃
-        fadeImageAnimator.SetTrigger("FadeOut");
+        fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
         // 카메라를 플레이어 캐릭터 위치로 즉시 이동
-        cameraScript.transform.position = activeCharacter.transform.position;
-        cameraScript.transform.LookAt(activeCharacter.transform);
+        //cameraScript.transform.position = activeCharacter.transform.position;
+        //cameraScript.transform.LookAt(activeCharacter.transform);
 
         // 5. 페이드 인 (캐릭터 보여주기)
-        fadeImageAnimator.SetTrigger("FadeIn");
+        fadeImageAnimator?.SetTrigger("FadeIn");
         //yield return new WaitForSecondsRealtime(1f);
 
         // 캐릭터 주위를 도는 카메라 연출 (동적 움직임)
-        yield return StartCoroutine(DynamicCameraMovement(activeCharacter.transform));
+        yield return StartCoroutine(DynamicCameraMovement(activeCharacter.transform, 1,2,new Vector3(0, 0,-5)));
 
         // 캐릭터 연출 시간 대기
-        yield return new WaitForSecondsRealtime(1f);
+        //yield return new WaitForSecondsRealtime(0.5f);
 
         // 6. 페이드 아웃
-        fadeImageAnimator.SetTrigger("FadeOut");
+        fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
         // 카메라를 게임 플레이 시점으로 즉시 이동
@@ -276,7 +275,7 @@ public class BossStageManager : StageManager
         cameraScript.transform.rotation = gameplayCameraTransform.rotation;
 
         // 7. 페이드 인 (게임 플레이 시작)
-        fadeImageAnimator.SetTrigger("FadeIn");
+        fadeImageAnimator?.SetTrigger("FadeIn");
         cameraScript.SetCameraFixed(false); // 카메라 움직임 중지
         yield return new WaitForSecondsRealtime(0.5f);
 
@@ -286,7 +285,7 @@ public class BossStageManager : StageManager
         StartCoroutine(transitionManager.Countdown());
     }
 
-    private IEnumerator DynamicCameraMovement(Transform target)
+    private IEnumerator DynamicCameraMovement(Transform target, int h, int radius, Vector3 offset)
     {
         float duration = cameraOrbitDuration;
         float elapsed = 0f;
@@ -294,15 +293,15 @@ public class BossStageManager : StageManager
         while (elapsed < duration)
         {
             // ���� ���
-            float angle = (elapsed / duration) * 20f; // 360�� ��ȸ
+            float angle = (elapsed / duration) * 30f; 
             Vector3 orbitPosition = target.position + new Vector3(
-                Mathf.Cos(Mathf.Deg2Rad * angle) * (-8),
-                15,
-                Mathf.Sin(Mathf.Deg2Rad * angle) * (-8)
+                Mathf.Cos(Mathf.Deg2Rad * angle) * (-radius),
+                h,
+                Mathf.Sin(Mathf.Deg2Rad * angle) * (-radius)
             );
 
             // ī�޶� ��ġ �� ���� �ٶ󺸱�
-            cameraScript.transform.position = orbitPosition;
+            cameraScript.transform.position = orbitPosition + offset;
             transform.LookAt(target); // �׻� ������ �ٶ�
 
             elapsed += Time.unscaledDeltaTime; // ���ο� ��ǿ����� ���������� ����ǵ��� unscaledDeltaTime ���
