@@ -93,18 +93,33 @@ public class LeaderBoardManager : MonoBehaviour
             savedRankID[i] = PlayerPrefs.GetString(PlayerPrefsIDKey(i + 1));
         }
         myScore.text = GameManager.inst.GetScore().ToString();
-        Debug.Log("Enemy Killed : " + GameManager.inst.enemyKill);
-        if (GameManager.inst.enemyKill > 30)
-            GameManager.inst.SetPlayerUnlockPrefs(2);
-        Debug.Log("Score : " + GameManager.inst.GetScore());
-        if (GameManager.inst.GetScore() > 250000)
-            GameManager.inst.SetPlayerUnlockPrefs(3);
-        Debug.Log("Life : " + GameManager.inst.GetLife());
-        if (GameManager.inst.GetLife() > 4)
-            GameManager.inst.SetPlayerUnlockPrefs(4);
-        // if (GameManager.inst.invincibleKill > 7)
-        //     PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(3), 3);
+        StartCoroutine(ShowCharacterUnlock());
         myID.text = GameManager.inst.GetPlayerName();
+    }
+
+    IEnumerator ShowCharacterUnlock()
+    {
+        Debug.Log("Enemy Killed : " + GameManager.inst.enemyKill);
+        if (GameManager.inst.enemyKill > 30 && !GameManager.inst.IsUnlocked(2))
+        {
+            GameManager.inst.SetPlayerUnlockPrefs(2);
+            yield return new WaitForSeconds(2f);
+        }
+
+        Debug.Log("Score : " + GameManager.inst.GetScore());
+        if (GameManager.inst.GetScore() > 250000 && !GameManager.inst.IsUnlocked(3))
+        {
+            GameManager.inst.SetPlayerUnlockPrefs(3);
+            yield return new WaitForSeconds(2f);
+        }
+
+        Debug.Log("Life : " + GameManager.inst.GetLife());
+        if (GameManager.inst.GetLife() > 4 && !GameManager.inst.IsUnlocked(4))
+        {
+            GameManager.inst.SetPlayerUnlockPrefs(4);
+            yield return new WaitForSeconds(2f);
+        }
+        yield return null;
     }
 
     void RankSort()   //현재점수와 랭킹점수 비교 및 정렬
