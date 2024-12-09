@@ -99,6 +99,9 @@ public class LeaderBoardManager : MonoBehaviour
         Debug.Log("Score : " + GameManager.inst.GetScore());
         if (GameManager.inst.GetScore() > 250000)
             GameManager.inst.SetPlayerUnlockPrefs(3);
+        Debug.Log("Life : " + GameManager.inst.GetLife());
+        if (GameManager.inst.GetLife() > 4)
+            GameManager.inst.SetPlayerUnlockPrefs(4);
         // if (GameManager.inst.invincibleKill > 7)
         //     PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(3), 3);
         myID.text = GameManager.inst.GetPlayerName();
