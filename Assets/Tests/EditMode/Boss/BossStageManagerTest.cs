@@ -29,6 +29,7 @@ public class BossStageManagerTest
 
         bossStageManagerObject = new GameObject("BossStageManager");
         bossStageManager = bossStageManagerObject.AddComponent<BossStageManager>();
+        bossStageManagerObject.AddComponent<BossIntroManager>();
 
         InitializeStageManagerFields();
         InitializeBossStageManagerFields();
@@ -74,8 +75,6 @@ public class BossStageManagerTest
         }
 
         MusicManager musicManager = new GameObject("MusicManager").AddComponent<MusicManager>();
-        BossStageTransitionManager transitionManager = new GameObject("BossStageTransitionManager").AddComponent<BossStageTransitionManager>();
-
     }
 
     private void InitializeBossStageManagerFields()
@@ -103,11 +102,11 @@ public class BossStageManagerTest
         fire1.AddComponent<AudioSource>();
         fire2.AddComponent<AudioSource>();
         GameClearLight gameClearLight = bossStageManagerObject.AddComponent<GameClearLight>();
-        bossStageManager.stadiumTransform = new GameObject("stadium").transform;
         // fadeImageAnimator �ʱ�ȭ
         GameObject fadeImage = new GameObject("FadeImage");
         Animator animator = fadeImage.AddComponent<Animator>();
-        SetPrivateField(bossStageManager, "fadeImageAnimator", animator);
+        BossStageTransitionManager transitionManager = new GameObject("BossStageTransitionManager").AddComponent<BossStageTransitionManager>();
+
     }
 
     private void SetPrivateField(object obj, string fieldName, object value)

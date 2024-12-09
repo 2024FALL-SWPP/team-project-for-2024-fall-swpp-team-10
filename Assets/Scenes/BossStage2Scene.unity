@@ -772,6 +772,7 @@ GameObject:
   - component: {fileID: 124840035}
   - component: {fileID: 124840034}
   - component: {fileID: 124840033}
+  - component: {fileID: 124840036}
   m_Layer: 5
   m_Name: FadeImage
   m_TagString: Untagged
@@ -858,6 +859,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124840031}
   m_CullTransparentMesh: 1
+--- !u!114 &124840036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124840031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a2745d82118b44e854d8b07ab7d020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &134332179
 GameObject:
   m_ObjectHideFlags: 0
@@ -11604,8 +11617,6 @@ MonoBehaviour:
   carrotSpeed: 10
   transitionAnimator: {fileID: 704552374}
   introAnimationDuration: 0
-  stadiumTransform: {fileID: 1873577568}
-  cameraOrbitDuration: 3
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0

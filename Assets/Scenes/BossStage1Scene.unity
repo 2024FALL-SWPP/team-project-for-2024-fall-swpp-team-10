@@ -11579,6 +11579,7 @@ GameObject:
   - component: {fileID: 1474742878}
   - component: {fileID: 1474742880}
   - component: {fileID: 1474742879}
+  - component: {fileID: 1474742880}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -11651,8 +11652,6 @@ MonoBehaviour:
   carrotSpeed: 10
   transitionAnimator: {fileID: 945322147}
   introAnimationDuration: 0
-  stadiumTransform: {fileID: 1873577568}
-  cameraOrbitDuration: 2
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11701,6 +11700,18 @@ MonoBehaviour:
   carrotSpawnOffset: {fileID: 2039046445}
   carrotPf: {fileID: 5649900439809378948, guid: 1eecc96bfe961436396ca41d4ed49458, type: 3}
   carrotDelayTime: 1.6
+--- !u!114 &1474742880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474742874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a2745d82118b44e854d8b07ab7d020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1495427503
 PrefabInstance:
   m_ObjectHideFlags: 0
