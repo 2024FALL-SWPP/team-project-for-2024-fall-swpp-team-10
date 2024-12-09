@@ -59,7 +59,7 @@ public class LeaderBoardManager : MonoBehaviour
     void Update()
     {
         // 디버그용
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.R))
         {
             RemoveRank();
             ImportRank();
