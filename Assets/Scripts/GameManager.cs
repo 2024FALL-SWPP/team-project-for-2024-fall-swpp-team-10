@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     {
         life = maxLife;
         score = 0;
+        enemyKill = 0;
     }
 
     public string GetPlayerName()
@@ -149,5 +150,10 @@ public class GameManager : MonoBehaviour
     public void PlayerUnlockPrefs(int num)
     {
         PlayerPrefs.SetInt(PlayerPrefsCharacterUnlockKey((Character)num), num);
+    }
+
+    public bool IsUnlocked(int num)
+    {
+        return PlayerPrefs.HasKey(PlayerPrefsCharacterUnlockKey((Character)num));
     }
 }

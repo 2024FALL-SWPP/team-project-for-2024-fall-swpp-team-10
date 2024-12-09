@@ -14,8 +14,8 @@ public class CharacterButtonHandler : MonoBehaviour
     [Header("Hover")]
     public GameObject hover;
 
-    [Header("Unlock")]
-    public GameObject unlock;
+    [Header("Lock Image")]
+    public GameObject lockImage;
     public int characterNum;
 
     private int blinkcount = 3;
@@ -30,21 +30,21 @@ public class CharacterButtonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.L)) //mac의 경우 shift + option + L
         {
-            if (PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlockKey((Character)characterNum)))
+            if (GameManager.inst.IsUnlocked(characterNum))
                 PlayerPrefs.DeleteKey(GameManager.inst.PlayerPrefsCharacterUnlockKey((Character)characterNum));
         }
 
-        if (PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlockKey((Character)characterNum)))
+        if (GameManager.inst.IsUnlocked(characterNum))
         {
-            if (unlock != null)
-                unlock.SetActive(false);
+            if (lockImage != null)
+                lockImage.SetActive(false);
         }
         else
         {
-            if (unlock != null)
-                unlock.SetActive(true);
+            if (lockImage != null)
+                lockImage.SetActive(true);
         }
     }
 
