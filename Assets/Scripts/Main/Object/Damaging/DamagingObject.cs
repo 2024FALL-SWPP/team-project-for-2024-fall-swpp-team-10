@@ -27,8 +27,6 @@ public class DamagingObject : ObjectManager // enemy, obstacle
             if (playerControl.GetIsInvincible())
             {
                 GameManager.inst.AddScore(score);
-                if (!PlayerPrefs.HasKey(GameManager.inst.PlayerPrefsCharacterUnlock(3)))
-                    GameManager.inst.invincibleKill++;
             }
             CollisionSoundPlay();
             Destroy(gameObject);
