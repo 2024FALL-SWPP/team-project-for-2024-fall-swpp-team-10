@@ -189,7 +189,7 @@ public class BossStageManager : StageManager
     protected override IEnumerator AddScoreBasedOnLives()
     {
         base.AddScoreBasedOnLives();
-        if (hearts.Length > 4)
+        if (GameManager.inst.GetLife() > 4)
         {
             PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(4), 4);
         }
