@@ -35,6 +35,10 @@ public class LeaderBoardManager : MonoBehaviour
     public string m_FilePrefix = "PowerpuffBuns";
     private string m_FilePath;
 
+    [Header("Unlock Character")]
+    public GameObject HanniUnlock;
+    public GameObject HyeinUnlock;
+    public GameObject MinjiUnlock;
 
     // Start is called before the first frame update
     void Awake()
@@ -99,25 +103,36 @@ public class LeaderBoardManager : MonoBehaviour
 
     IEnumerator ShowCharacterUnlock()
     {
+        yield return new WaitForSeconds(1f);
+        
         Debug.Log("Enemy Killed : " + GameManager.inst.enemyKill);
         if (GameManager.inst.enemyKill > 30 && !GameManager.inst.IsUnlocked(2))
         {
             GameManager.inst.SetPlayerUnlockPrefs(2);
+            HanniUnlock.SetActive(true);
             yield return new WaitForSeconds(2f);
+            HanniUnlock.SetActive(false);
+            yield return new WaitForSeconds(1f);
         }
 
         Debug.Log("Score : " + GameManager.inst.GetScore());
         if (GameManager.inst.GetScore() > 250000 && !GameManager.inst.IsUnlocked(3))
         {
             GameManager.inst.SetPlayerUnlockPrefs(3);
+            HyeinUnlock.SetActive(true);
             yield return new WaitForSeconds(2f);
+            HyeinUnlock.SetActive(false);
+            yield return new WaitForSeconds(1f);
         }
 
         Debug.Log("Life : " + GameManager.inst.GetLife());
         if (GameManager.inst.GetLife() > 4 && !GameManager.inst.IsUnlocked(4))
         {
             GameManager.inst.SetPlayerUnlockPrefs(4);
+            MinjiUnlock.SetActive(true);
             yield return new WaitForSeconds(2f);
+            MinjiUnlock.SetActive(false);
+            yield return new WaitForSeconds(1f);
         }
         yield return null;
     }
