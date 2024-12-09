@@ -1276,11 +1276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480902787771362996, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Resume
+      value: ResumeGame
       objectReference: {fileID: 0}
     - target: {fileID: 4480902787771362996, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BossStageManager, Assembly-CSharp
+      value: StageManager, Scripts
       objectReference: {fileID: 0}
     - target: {fileID: 4480902787771362996, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
