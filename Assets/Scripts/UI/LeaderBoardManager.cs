@@ -59,7 +59,7 @@ public class LeaderBoardManager : MonoBehaviour
     void Update()
     {
         // 디버그용
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.R))  //mac의 경우 shift + option + R
         {
             RemoveRank();
             ImportRank();
@@ -95,7 +95,7 @@ public class LeaderBoardManager : MonoBehaviour
         myScore.text = GameManager.inst.GetScore().ToString();
         if (GameManager.inst.enemyKill > 30)
             GameManager.inst.PlayerUnlockPrefs(2);
-        if (GameManager.inst.GetScore() >= 250000)
+        if (GameManager.inst.GetScore() > 250000)
             GameManager.inst.PlayerUnlockPrefs(3);
         // if (GameManager.inst.invincibleKill > 7)
         //     PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(3), 3);

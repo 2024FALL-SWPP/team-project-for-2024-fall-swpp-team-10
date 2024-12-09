@@ -84,8 +84,6 @@ public class MainStageManager : StageManager
         base.OnSceneLoaded(scene, mode);
         transitionManager.SetCurrentCharacter(activeCharacter);
         activeCharacter.GetComponent<MainStagePlayer>().ChangeColorOriginal();
-
-        GameManager.inst.enemyKill = 0;
     }
 
     public override void PauseGame()
