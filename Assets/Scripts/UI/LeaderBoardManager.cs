@@ -93,8 +93,10 @@ public class LeaderBoardManager : MonoBehaviour
             savedRankID[i] = PlayerPrefs.GetString(PlayerPrefsIDKey(i + 1));
         }
         myScore.text = GameManager.inst.GetScore().ToString();
+        Debug.Log("Enemy Killed : " + GameManager.inst.enemyKill);
         if (GameManager.inst.enemyKill > 30)
             GameManager.inst.PlayerUnlockPrefs(2);
+        Debug.Log("Score : " + GameManager.inst.GetScore());
         if (GameManager.inst.GetScore() > 250000)
             GameManager.inst.PlayerUnlockPrefs(3);
         // if (GameManager.inst.invincibleKill > 7)
