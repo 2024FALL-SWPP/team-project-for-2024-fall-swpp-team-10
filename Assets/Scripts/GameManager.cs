@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         Cursor.visible = toVisible;
     }
 
-    public void PlayerUnlockPrefs(int num)
+    public void SetPlayerUnlockPrefs(int num)
     {
         PlayerPrefs.SetInt(PlayerPrefsCharacterUnlockKey((Character)num), num);
     }
