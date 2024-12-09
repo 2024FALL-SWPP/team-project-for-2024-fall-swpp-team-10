@@ -34,6 +34,8 @@ public class BossStageManagerTest
         InitializeBossStageManagerFields();
 
         InvokeNonPublicMethod(bossStageManager, "Awake");
+
+        SetPrivateField(bossStageManager, "playerScript", new BossStagePlayer());
     }
 
     [TearDown]
