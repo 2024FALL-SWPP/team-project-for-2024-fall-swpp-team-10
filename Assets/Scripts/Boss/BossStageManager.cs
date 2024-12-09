@@ -191,7 +191,7 @@ public class BossStageManager : StageManager
         base.AddScoreBasedOnLives();
         if (GameManager.inst.GetLife() > 4)
         {
-            PlayerPrefs.SetInt(GameManager.inst.PlayerPrefsCharacterUnlock(4), 4);
+            GameManager.inst.PlayerUnlockPrefs(4);
         }
         yield return null;
     }
