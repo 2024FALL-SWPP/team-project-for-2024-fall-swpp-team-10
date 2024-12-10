@@ -3276,7 +3276,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '* You are not allowed to get characters if you restart the stage'
+  m_text: '* Characters will not be unlocked if you exit now'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
@@ -6160,7 +6160,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
 --- !u!224 &1939696973 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4480902787329779299, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4480902787511083863, guid: eecfee4687bacce4fb560285d85df16e, type: 3}
   m_PrefabInstance: {fileID: 1939696972}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1953811073

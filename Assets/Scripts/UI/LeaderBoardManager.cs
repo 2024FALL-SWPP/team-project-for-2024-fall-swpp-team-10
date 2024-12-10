@@ -106,7 +106,7 @@ public class LeaderBoardManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         
         Debug.Log("Enemy Killed : " + GameManager.inst.enemyKill);
-        if (GameManager.inst.enemyKill > 30 && !GameManager.inst.IsUnlocked(2))
+        if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(2))
         {
             GameManager.inst.SetPlayerUnlockPrefs(2);
             HanniUnlock.SetActive(true);
@@ -116,7 +116,7 @@ public class LeaderBoardManager : MonoBehaviour
         }
 
         Debug.Log("Score : " + GameManager.inst.GetScore());
-        if (GameManager.inst.GetScore() > 250000 && !GameManager.inst.IsUnlocked(3))
+        if (GameManager.inst.GetScore() > 200000 && !GameManager.inst.IsUnlocked(3))
         {
             GameManager.inst.SetPlayerUnlockPrefs(3);
             HyeinUnlock.SetActive(true);
@@ -126,7 +126,7 @@ public class LeaderBoardManager : MonoBehaviour
         }
 
         Debug.Log("Life : " + GameManager.inst.GetLife());
-        if (GameManager.inst.GetLife() > 4 && !GameManager.inst.IsUnlocked(4))
+        if (GameManager.inst.GetLife() > 3 && !GameManager.inst.IsUnlocked(4))
         {
             GameManager.inst.SetPlayerUnlockPrefs(4);
             MinjiUnlock.SetActive(true);

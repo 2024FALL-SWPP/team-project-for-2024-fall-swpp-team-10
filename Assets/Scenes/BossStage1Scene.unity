@@ -1918,7 +1918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '* You are not allowed to get characters if you restart the stage'
+  m_text: '* Characters will not be unlocked if you exit now'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}

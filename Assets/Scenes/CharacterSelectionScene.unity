@@ -7517,7 +7517,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clear boss with 5 hearts
+  m_text: Clear boss with more than 3 hearts
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
@@ -7544,8 +7544,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8132,7 +8132,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Get more score than 250,000
+  m_text: Get more score than 200,000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
@@ -16692,7 +16692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kill more than 30 enemies
+  m_text: Kill more than 35 enemies
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
