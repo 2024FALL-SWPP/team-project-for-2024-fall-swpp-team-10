@@ -189,7 +189,9 @@ public class LeaderBoardManager : MonoBehaviour
         for (int i = 0; i < rankExpressions.Length; i++)
         {
             PlayerPrefs.SetInt(PlayerPrefsScoreKey(i + 1), savedRankScore[i]);
+            PlayerPrefs.Save();
             PlayerPrefs.SetString(PlayerPrefsIDKey(i + 1), savedRankID[i]);
+            PlayerPrefs.Save();
         }
     }
 
