@@ -16,7 +16,7 @@ public class CharacterButtonHandler : MonoBehaviour
 
     [Header("Lock Image")]
     public GameObject lockImage;
-    public int characterNum;
+    public Character character;
 
     private int blinkcount = 3;
     // KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
@@ -32,11 +32,11 @@ public class CharacterButtonHandler : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.L)) //mac의 경우 shift + option + L
         {
-            if (GameManager.inst.IsUnlocked(characterNum))
-                PlayerPrefs.DeleteKey(GameManager.inst.PlayerPrefsCharacterUnlockKey((Character)characterNum));
+            if (GameManager.inst.IsUnlocked(character))
+                PlayerPrefs.DeleteKey(GameManager.inst.PlayerPrefsCharacterUnlockKey(character));
         }
 
-        if (GameManager.inst.IsUnlocked(characterNum))
+        if (GameManager.inst.IsUnlocked(character))
         {
             if (lockImage != null)
                 lockImage.SetActive(false);

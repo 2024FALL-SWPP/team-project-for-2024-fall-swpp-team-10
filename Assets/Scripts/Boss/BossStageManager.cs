@@ -185,10 +185,4 @@ public class BossStageManager : StageManager
         gameObject.GetComponent<CarrotAttackManager>().enabled = true;
         weakspotsManagerScript.enabled = true;
     }
-
-    protected override IEnumerator AddScoreBasedOnLives()
-    {
-        StartCoroutine(base.AddScoreBasedOnLives());
-        yield return null;
-    }
 }

@@ -147,13 +147,13 @@ public class GameManager : MonoBehaviour
         Cursor.visible = toVisible;
     }
 
-    public void SetPlayerUnlockPrefs(int num)
+    public void SetPlayerUnlockPrefs(Character character)  //0이나 1은 다루지 않음
     {
-        PlayerPrefs.SetInt(PlayerPrefsCharacterUnlockKey((Character)num), num);
+        PlayerPrefs.SetInt(PlayerPrefsCharacterUnlockKey(character), 0);
     }
 
-    public bool IsUnlocked(int num)
+    public bool IsUnlocked(Character character)
     {
-        return PlayerPrefs.HasKey(PlayerPrefsCharacterUnlockKey((Character)num));
+        return PlayerPrefs.HasKey(PlayerPrefsCharacterUnlockKey(character));
     }
 }

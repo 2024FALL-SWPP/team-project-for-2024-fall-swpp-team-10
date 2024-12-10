@@ -2735,7 +2735,7 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: f0a33dca6f532a643bb29602bd9e378e, type: 3}
   hover: {fileID: 338824778}
   lockImage: {fileID: 0}
-  characterNum: 0
+  character: 0
 --- !u!114 &367730822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,7 +2952,7 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: 1c15de45445975f43a7e000f9479ac72, type: 3}
   hover: {fileID: 591860900}
   lockImage: {fileID: 1142517684}
-  characterNum: 4
+  character: 4
 --- !u!114 &388217123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5971,7 +5971,7 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: 01d030f862a282942ad2fb6e0288e5e5, type: 3}
   hover: {fileID: 2125099782}
   lockImage: {fileID: 697624086}
-  characterNum: 3
+  character: 3
 --- !u!114 &663272393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9630,7 +9630,7 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: 1d16890611bfe0a44a4b80e3ba1e3779, type: 3}
   hover: {fileID: 131050731}
   lockImage: {fileID: 0}
-  characterNum: 1
+  character: 1
 --- !u!114 &1064097487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17272,7 +17272,7 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: 4e83b1d4755987043ae047b9150504b6, type: 3}
   hover: {fileID: 402296454}
   lockImage: {fileID: 2081438369}
-  characterNum: 2
+  character: 2
 --- !u!114 &2080824953
 MonoBehaviour:
   m_ObjectHideFlags: 0

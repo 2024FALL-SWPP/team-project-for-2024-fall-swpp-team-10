@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.IO;
+using EnumManager;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class LeaderBoardManager : MonoBehaviour
     public string m_FilePrefix = "PowerpuffBuns";
     private string m_FilePath;
 
-    [Header("Unlock Character")]
+    [Header("Image to be shown when character gets unlocked")]
     public GameObject HanniUnlock;
     public GameObject HyeinUnlock;
     public GameObject MinjiUnlock;
@@ -57,6 +58,7 @@ public class LeaderBoardManager : MonoBehaviour
         RankSort();
         ShowRank();
         RankSave();
+        StartCoroutine(ShowCharacterUnlock());
     }
 
     // Update is called once per frame
@@ -97,41 +99,39 @@ public class LeaderBoardManager : MonoBehaviour
             savedRankID[i] = PlayerPrefs.GetString(PlayerPrefsIDKey(i + 1));
         }
         myScore.text = GameManager.inst.GetScore().ToString();
-        StartCoroutine(ShowCharacterUnlock());
         myID.text = GameManager.inst.GetPlayerName();
     }
 
     IEnumerator ShowCharacterUnlock()
     {
         yield return new WaitForSeconds(1f);
-        
-        if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(2))
+
+        if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(Character.Hanni))
         {
-            GameManager.inst.SetPlayerUnlockPrefs(2);
-            HanniUnlock.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            HanniUnlock.SetActive(false);
-            yield return new WaitForSeconds(1f);
+            StartCoroutine(ShowUnlock(Character.Hanni, HanniUnlock));
+            yield return new WaitForSeconds(3f);
         }
 
-        if (GameManager.inst.GetScore() > 200000 && !GameManager.inst.IsUnlocked(3))
+        if (GameManager.inst.GetScore() > 200000 && !GameManager.inst.IsUnlocked(Character.Hyein))
         {
-            GameManager.inst.SetPlayerUnlockPrefs(3);
-            HyeinUnlock.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            HyeinUnlock.SetActive(false);
-            yield return new WaitForSeconds(1f);
+            StartCoroutine(ShowUnlock(Character.Hyein, HyeinUnlock));
+            yield return new WaitForSeconds(3f);
         }
 
-        if (GameManager.inst.GetLife() > 3 && !GameManager.inst.IsUnlocked(4))
+        if (GameManager.inst.GetLife() > 3 && !GameManager.inst.IsUnlocked(Character.Minji)) //Main Stage는 Life가 최대 3개기 때문에 확인 불필요
         {
-            GameManager.inst.SetPlayerUnlockPrefs(4);
-            MinjiUnlock.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            MinjiUnlock.SetActive(false);
-            yield return new WaitForSeconds(1f);
+            StartCoroutine(ShowUnlock(Character.Minji, MinjiUnlock));
+            yield return new WaitForSeconds(3f);
         }
         yield return null;
+    }
+
+    IEnumerator ShowUnlock(Character _character, GameObject _gameObject)
+    {
+        GameManager.inst.SetPlayerUnlockPrefs(_character);
+        _gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        _gameObject.SetActive(false);
     }
 
     void RankSort()   //현재점수와 랭킹점수 비교 및 정렬
