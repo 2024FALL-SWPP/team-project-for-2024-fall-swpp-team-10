@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.IO;
+using System.Runtime.InteropServices;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -31,9 +32,7 @@ public class LeaderBoardManager : MonoBehaviour
     private string[] savedRankID = new string[6]; //저장된 ID
 
     [Header("Export")]
-    private string m_Path = "Exports/";
     public string m_FilePrefix = "PowerpuffBuns";
-    private string m_FilePath;
 
 
     // Start is called before the first frame update
@@ -137,20 +136,35 @@ public class LeaderBoardManager : MonoBehaviour
 
     public void Export()
     {
-        m_FilePath = m_Path + m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
-        StartCoroutine(SaveScreenJpg(m_FilePath));
+        string fileName = m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
+        StartCoroutine(SaveScreenJpg(fileName));
     }
 
-    IEnumerator SaveScreenJpg(string filePath)
+    IEnumerator SaveScreenJpg(string fileName)
     {
         yield return new WaitForEndOfFrame();
 
-        Texture2D texture = new Texture2D(Screen.width, Screen.height);
+        // 스크린샷 캡처
+        Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         texture.Apply();
         byte[] bytes = texture.EncodeToJPG();
-        File.WriteAllBytes(filePath, bytes);
+
+        // WebGL 환경 확인
+#if UNITY_WEBGL && !UNITY_EDITOR
+        DownloadScreenshot(fileName, bytes);
+#else
+        string filePath = Application.persistentDataPath + "/" + fileName;
+        System.IO.File.WriteAllBytes(filePath, bytes);
+        Debug.Log("Screenshot saved to: " + filePath);
+#endif
+
         DestroyImmediate(texture);
     }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern void DownloadScreenshot(string fileName, byte[] imageData);
+#endif
 
 }
