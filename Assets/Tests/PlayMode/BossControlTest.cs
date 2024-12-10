@@ -106,10 +106,12 @@ public class BossControlTest
         BossStageManager bossStageManager = Object.FindObjectOfType<BossStageManager>();
         float timeToWait = (float)GetPrivateField(bossStageManager, "introAnimationDuration") + 0.001f;
         yield return new WaitForSeconds(timeToWait);
-
         float targetPos = (float)GetPrivateField(bossControl, "bossHorizontalPos");
+        float initialDistance = Mathf.Abs(targetPos - bossObject.transform.position.x);
 
-        Assert.Less(Mathf.Abs(bossObject.transform.position.x - targetPos), Mathf.Abs(targetPos));
+        yield return new WaitForSeconds(0.1f);
+
+        Assert.Less(Mathf.Abs(bossObject.transform.position.x - targetPos), initialDistance);
     }
 
     [UnityTest]

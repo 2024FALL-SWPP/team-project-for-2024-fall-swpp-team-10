@@ -37,7 +37,6 @@ public class BossControlTest
         InitializeBossStageManagerFields();
         InitializeBossControlFields();
 
-        Debug.Log(GetProtectedField(bossStageManager, "activeCharacter"));
         bossStageManager.bossControlScript = bossControl;
 
         InvokeNonPublicMethod(bossControl, "Awake");
@@ -198,10 +197,13 @@ public class BossControlTest
     {
         SetPrivateField(bossControl, "bossHorizontalPos", 5f);
 
+        var bossTransform = (Transform)GetPrivateField(bossControl, "bossTransform");
+
+        float initialBossX = bossTransform.position.x;
+
         Time.timeScale = 1f;
 
         InvokeNonPublicMethod(bossControl, "Start");
-        Debug.Log(GetPrivateField(bossControl, "playerTransform"));
 
         float elapsedTime = 0f;
         while (elapsedTime < 1f)
@@ -210,9 +212,8 @@ public class BossControlTest
             elapsedTime += 0.02f;
         }
 
-        var bossTransform = (Transform)GetPrivateField(bossControl, "bossTransform");
 
-        Assert.AreNotEqual(1f, bossTransform.position.x);
+        Assert.AreNotEqual(initialBossX, bossTransform.position.x);
     }
 
     [Test]
