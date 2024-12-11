@@ -14,10 +14,10 @@ public class EnemyManager : DamagingObject
 
     protected override void OnPlayerCollision(GameObject player)
     {
-        base.OnPlayerCollision(player);
         if (playerControl.GetIsInvincible())
         {
             GameManager.inst.enemyKill++;
         }
+        base.OnPlayerCollision(player);
     }
 }
