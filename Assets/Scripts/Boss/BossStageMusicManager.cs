@@ -9,12 +9,12 @@ public class BossStageMusicManager : MusicManager
 
     protected override void Awake()
     {
-        // ºÎ¸ð Å¬·¡½º(MusicManager)ÀÇ Awake ½ÇÇà
+        // ï¿½Î¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½(MusicManager)ï¿½ï¿½ Awake ï¿½ï¿½ï¿½ï¿½
         base.Awake();
 
         base.audioSource.loop = true;
 
-        // º¸½º ½ºÅ×ÀÌÁö Àü¿ë ÃÊ±âÈ­ ÀÛ¾÷
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½
         fires = FindGameObjectsWithTagIncludingInactive("Fire");
         if (fires != null)
         {
@@ -45,7 +45,6 @@ public class BossStageMusicManager : MusicManager
         base.PauseMusic();
         if (fires != null)
         {
-            Debug.Log(fires.Length);
             for (int i = 0; i < fires.Length; i++)
             {
                 fireAudioSources[i]?.Pause();
