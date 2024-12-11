@@ -11579,7 +11579,7 @@ GameObject:
   - component: {fileID: 1474742878}
   - component: {fileID: 1474742880}
   - component: {fileID: 1474742879}
-  - component: {fileID: 1474742880}
+  - component: {fileID: 1474742881}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -11700,7 +11700,7 @@ MonoBehaviour:
   carrotSpawnOffset: {fileID: 2039046445}
   carrotPf: {fileID: 5649900439809378948, guid: 1eecc96bfe961436396ca41d4ed49458, type: 3}
   carrotDelayTime: 1.6
---- !u!114 &1474742880
+--- !u!114 &1474742881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
