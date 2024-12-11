@@ -91,6 +91,7 @@ public abstract class StageManager : MonoBehaviour
     }
     public virtual void PauseGame()
     {
+        isPausable = false;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         musicManager?.PauseMusic();
@@ -98,6 +99,7 @@ public abstract class StageManager : MonoBehaviour
 
     public virtual void ResumeGame()
     {
+        isPausable = true;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         musicManager?.ResumeMusic();

@@ -9,13 +9,13 @@ public class BossStageMusicManager : MusicManager
 
     protected override void Awake()
     {
-        // ºÎ¸ð Å¬·¡½º(MusicManager)ÀÇ Awake ½ÇÇà
+        // ï¿½Î¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½(MusicManager)ï¿½ï¿½ Awake ï¿½ï¿½ï¿½ï¿½
         base.Awake();
 
         base.audioSource.loop = true;
 
-        // º¸½º ½ºÅ×ÀÌÁö Àü¿ë ÃÊ±âÈ­ ÀÛ¾÷
-        fires = GameObject.FindGameObjectsWithTag("Fire");
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½
+        fires = FindGameObjectsWithTagIncludingInactive("Fire");
         if (fires != null)
         {
             fireAudioSources = new AudioSource[fires.Length];
@@ -24,6 +24,10 @@ public class BossStageMusicManager : MusicManager
                 fireAudioSources[i] = fires[i].GetComponent<AudioSource>();
             }
         }
+    }
+    void Start() 
+    { 
+    
     }
     public override void StopMusic()
     {
@@ -58,5 +62,20 @@ public class BossStageMusicManager : MusicManager
                 fireAudioSources[i]?.UnPause();
             }
         }
+    }
+    public static GameObject[] FindGameObjectsWithTagIncludingInactive(string tag)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        List<GameObject> taggedObjects = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.hideFlags == HideFlags.None && obj.CompareTag(tag))
+            {
+                taggedObjects.Add(obj);
+            }
+        }
+
+        return taggedObjects.ToArray();
     }
 }

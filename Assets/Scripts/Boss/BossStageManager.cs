@@ -19,6 +19,7 @@ public class BossStageManager : StageManager
     public AudioClip gameOverMusic; //게임오버 효과음
     public AudioClip victoryMusic; //게임클리어 효과음
     private GameObject[] fires;
+    private AudioSource[] fireAudioSources;
     private GameClearLight gameClearLight;
     private int bossMaxLife = 3;
     private int currentPhase;
@@ -26,23 +27,31 @@ public class BossStageManager : StageManager
     [SerializeField] Animator transitionAnimator;
     [SerializeField] float introAnimationDuration;
     protected BossStageTransitionManager transitionManager;
+    protected BossIntroManager introManager; // 새로 만든 BossIntroManager를 참조할 변수
 
     protected override void Awake()
     {
         base.Awake();
+        //bossObject = GameObject.Find("Boss");
+        cameraScript.SetCameraFixed(true); // 카메라 움직임 중지
+        //fadeImageAnimator = GameObject.Find("FadeImage").GetComponent<Animator>();
         transitionManager = FindObjectOfType<BossStageTransitionManager>();
         GameManager.inst.CursorActive(true);
         maxLife = GameManager.inst.bossStageMaxLife;
         currentPhase = 0;
-        fires = GameObject.FindGameObjectsWithTag("Fire");
+        InitializeFires(); // 불기둥 관련 초기화 로직 별도 함수로 분리
         gameClearLight = GetComponent<GameClearLight>();
-        if (transitionManager != null && transitionAnimator != null)
+        // BossIntroManager를 동적으로 생성하거나, Scene 상에 미리 배치해두고 Find로 가져올 수 있음
+        introManager = FindObjectOfType<BossIntroManager>();
+        if(introManager == null)
         {
-            transitionAnimator.gameObject.SetActive(true);
-            introAnimationDuration = transitionManager.BossStageTransition();
-            StartCoroutine("WaitForIntro");
-            StartCoroutine(transitionManager.Countdown());
+            // 혹은 AddComponent로 생성도 가능
+            // introManager = gameObject.AddComponent<BossIntroManager>();
+            // 여기서는 scene 상에 있다고 가정
+            Debug.LogError("BossIntroManager가 씬에 없습니다.");
         }
+
+
     }
 
     protected virtual void Start()
@@ -55,6 +64,27 @@ public class BossStageManager : StageManager
             GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
         }
         musicManager.ChangeSpeed(1.25f);
+        if (transitionManager != null && transitionAnimator != null)
+        {
+            transitionAnimator.gameObject.SetActive(true);
+            introAnimationDuration = transitionManager.BossStageTransition();
+            // IntroManager에 필요한 리소스 초기화
+            introManager.Initialize(
+                cameraScript: cameraScript,
+                fadeImageAnimator: GameObject.Find("FadeImage").GetComponent<Animator>(),
+                transitionManager: transitionManager,
+                bossControl: bossControlScript,
+                playerTransform: activeCharacter.transform,
+                gameplayCameraTransform: cameraScript.transform,
+                introAnimationDuration: introAnimationDuration,
+                onIntroEnd: StartLevel,
+                fires: fires,
+                fireAudioSources: fireAudioSources
+            );
+
+            // 인트로 시작
+            StartCoroutine(introManager.RunIntroSequence());
+        }
     }
 
     public override void Update()
@@ -80,7 +110,6 @@ public class BossStageManager : StageManager
             }
         }
     }
-
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
@@ -184,5 +213,19 @@ public class BossStageManager : StageManager
         bossControlScript.enabled = true;
         gameObject.GetComponent<CarrotAttackManager>().enabled = true;
         weakspotsManagerScript.enabled = true;
+    }
+
+    private void InitializeFires()
+    {
+        fires = GameObject.FindGameObjectsWithTag("Fire");
+        if (fires != null)
+        {
+            fireAudioSources = new AudioSource[fires.Length];
+            for (int i = 0; i < fires.Length; i++)
+            {
+                fireAudioSources[i] = fires[i].GetComponent<AudioSource>();
+                fires[i].SetActive(false);
+            }
+        }
     }
 }
