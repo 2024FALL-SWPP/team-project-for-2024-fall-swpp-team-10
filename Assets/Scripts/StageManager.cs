@@ -72,6 +72,7 @@ public abstract class StageManager : MonoBehaviour
     protected virtual void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        Time.timeScale = 1;
     }
 
     protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)

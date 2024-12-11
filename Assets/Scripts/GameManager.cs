@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int bossStageMaxLife = 5;
 
     public bool selected = false;
+    public int enemyKill = 0;
 
     private void Awake()
     {
@@ -44,6 +45,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+    public string PlayerPrefsCharacterUnlockKey(Character _character)
+    {
+        return _character + "Unlock";
     }
 
     public void LoadMainMenu()
@@ -80,6 +85,7 @@ public class GameManager : MonoBehaviour
     {
         life = maxLife;
         score = 0;
+        enemyKill = 0;
     }
 
     public string GetPlayerName()
@@ -139,5 +145,15 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = toVisible ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = toVisible;
+    }
+
+    public void SetPlayerUnlockPrefs(Character character)  //0이나 1은 다루지 않음
+    {
+        PlayerPrefs.SetInt(PlayerPrefsCharacterUnlockKey(character), 0);
+    }
+
+    public bool IsUnlocked(Character character)
+    {
+        return PlayerPrefs.HasKey(PlayerPrefsCharacterUnlockKey(character));
     }
 }

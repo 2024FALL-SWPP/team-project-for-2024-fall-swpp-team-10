@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using EnumManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,13 @@ public class CharacterButtonHandler : MonoBehaviour
     [Header("Hover")]
     public GameObject hover;
 
+    [Header("Lock Image")]
+    public GameObject lockImage;
+    public Character character;
+
     private int blinkcount = 3;
+    // KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,6 +30,22 @@ public class CharacterButtonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.L)) //mac의 경우 shift + option + L
+        {
+            if (GameManager.inst.IsUnlocked(character))
+                PlayerPrefs.DeleteKey(GameManager.inst.PlayerPrefsCharacterUnlockKey(character));
+        }
+
+        if (GameManager.inst.IsUnlocked(character))
+        {
+            if (lockImage != null)
+                lockImage.SetActive(false);
+        }
+        else
+        {
+            if (lockImage != null)
+                lockImage.SetActive(true);
+        }
     }
 
     public void OnPointerClick()
