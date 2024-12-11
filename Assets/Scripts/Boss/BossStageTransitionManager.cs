@@ -9,12 +9,10 @@ public class BossStageTransitionManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI countdownText;
     [SerializeField] protected Animator transitionAnimator;
     [SerializeField] public float countdownDuration = 5;
-    public float BossStageTransition()
+
+    public void BossStageTransition()
     {
         StartCoroutine("BossStageTransitionCoroutine");
-        AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = stateInfo.length / stateInfo.speed;
-        return animationDuration;
     }
 
     public IEnumerator BossStageTransitionCoroutine()

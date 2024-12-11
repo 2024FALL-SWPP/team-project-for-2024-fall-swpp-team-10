@@ -25,7 +25,6 @@ public class BossStageManager : StageManager
     private int currentPhase;
     public float carrotSpeed = 10f;
     [SerializeField] Animator transitionAnimator;
-    [SerializeField] float introAnimationDuration;
     protected BossStageTransitionManager transitionManager;
     protected BossIntroManager introManager; // 새로 만든 BossIntroManager를 참조할 변수
 
@@ -50,8 +49,6 @@ public class BossStageManager : StageManager
             // 여기서는 scene 상에 있다고 가정
             Debug.LogError("BossIntroManager가 씬에 없습니다.");
         }
-
-
     }
 
     protected virtual void Start()
@@ -67,7 +64,7 @@ public class BossStageManager : StageManager
         if (transitionManager != null && transitionAnimator != null)
         {
             transitionAnimator.gameObject.SetActive(true);
-            introAnimationDuration = transitionManager.BossStageTransition();
+            transitionManager.BossStageTransition();
             // IntroManager에 필요한 리소스 초기화
             introManager.Initialize(
                 cameraScript: cameraScript,
@@ -76,7 +73,6 @@ public class BossStageManager : StageManager
                 bossControl: bossControlScript,
                 playerTransform: activeCharacter.transform,
                 gameplayCameraTransform: cameraScript.transform,
-                introAnimationDuration: introAnimationDuration,
                 onIntroEnd: StartLevel,
                 fires: fires,
                 fireAudioSources: fireAudioSources
@@ -194,15 +190,6 @@ public class BossStageManager : StageManager
         if (currentPhase < 3) StartCoroutine(weakspotsManagerScript.NewWeakSpots());
         for (int i = 0; i < bossMaxLife; i++)
             darkHearts[i].SetActive(i < GetBossLife());
-    }
-
-    private IEnumerator WaitForIntro()
-    {
-        if (introAnimationDuration < transitionManager.countdownDuration)
-            Debug.LogError("Countdown finishes before animation");
-        yield return new WaitForSecondsRealtime(transitionManager.countdownDuration);
-
-        StartLevel();
     }
 
     private void StartLevel()
