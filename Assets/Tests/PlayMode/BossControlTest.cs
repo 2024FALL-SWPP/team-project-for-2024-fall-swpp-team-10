@@ -103,9 +103,9 @@ public class BossControlTest
         bossObject.transform.position = Vector3.zero;
 
         Assert.IsNotNull(bossObject.transform);
-        BossStageManager bossStageManager = Object.FindObjectOfType<BossStageManager>();
-        float timeToWait = (float)GetPrivateField(bossStageManager, "introAnimationDuration") + 0.001f;
-        yield return new WaitForSeconds(timeToWait);
+
+        yield return new WaitForSeconds(18f); // a value that is large enough to wait until start of the stage
+
         float targetPos = (float)GetPrivateField(bossControl, "bossHorizontalPos");
         float initialDistance = Mathf.Abs(targetPos - bossObject.transform.position.x);
 
