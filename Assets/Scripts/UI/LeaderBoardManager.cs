@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using System.IO;
 using EnumManager;
+using UnityEngine.UI;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -40,6 +41,16 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject HanniUnlock;
     public GameObject HyeinUnlock;
     public GameObject MinjiUnlock;
+
+    [Header("Sound Effects")]
+    public AudioClip tadaF;
+    public AudioClip tadaG;
+    public AudioClip tadaA;
+
+    [Header("Buttons")]
+    public Button selectStage;
+    public Button restartGame;
+    public Button exitGame;
 
     // Start is called before the first frame update
     void Awake()
@@ -104,32 +115,42 @@ public class LeaderBoardManager : MonoBehaviour
 
     IEnumerator ShowCharacterUnlock()
     {
+        ButtonInteractable(false);
         yield return new WaitForSeconds(1f);
 
         if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(Character.Hanni))
         {
-            StartCoroutine(ShowUnlock(Character.Hanni, HanniUnlock));
-            yield return new WaitForSeconds(3f);
+            StartCoroutine(ShowUnlock(Character.Hanni, HanniUnlock, tadaF));
+            yield return new WaitForSeconds(2.5f);
         }
 
         if (GameManager.inst.GetScore() > 200000 && !GameManager.inst.IsUnlocked(Character.Hyein))
         {
-            StartCoroutine(ShowUnlock(Character.Hyein, HyeinUnlock));
-            yield return new WaitForSeconds(3f);
+            StartCoroutine(ShowUnlock(Character.Hyein, HyeinUnlock, tadaG));
+            yield return new WaitForSeconds(2.5f);
         }
 
         if (GameManager.inst.GetLife() > 3 && !GameManager.inst.IsUnlocked(Character.Minji)) //Main Stage는 Life가 최대 3개기 때문에 확인 불필요
         {
-            StartCoroutine(ShowUnlock(Character.Minji, MinjiUnlock));
-            yield return new WaitForSeconds(3f);
+            StartCoroutine(ShowUnlock(Character.Minji, MinjiUnlock, tadaA));
+            yield return new WaitForSeconds(2.5f);
         }
         yield return null;
+        ButtonInteractable(true);
     }
 
-    IEnumerator ShowUnlock(Character _character, GameObject _gameObject)
+    void ButtonInteractable(bool buttonInteractable)
+    {
+        selectStage.interactable = buttonInteractable;
+        restartGame.interactable = buttonInteractable;
+        exitGame.interactable = buttonInteractable;
+    }
+
+    IEnumerator ShowUnlock(Character _character, GameObject _gameObject, AudioClip tada)
     {
         GameManager.inst.SetPlayerUnlockPrefs(_character);
         _gameObject.SetActive(true);
+        AudioSource.PlayClipAtPoint(tada, transform.position);
         yield return new WaitForSeconds(2f);
         _gameObject.SetActive(false);
     }
