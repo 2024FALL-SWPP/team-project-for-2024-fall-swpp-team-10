@@ -15,7 +15,7 @@ public class BossStageMusicManager : MusicManager
         base.audioSource.loop = true;
 
         // 보스 스테이지 전용 초기화 작업
-        fires = GameObject.FindGameObjectsWithTag("Fire");
+        fires = FindGameObjectsWithTagIncludingInactive("Fire");
         if (fires != null)
         {
             fireAudioSources = new AudioSource[fires.Length];
@@ -24,6 +24,10 @@ public class BossStageMusicManager : MusicManager
                 fireAudioSources[i] = fires[i].GetComponent<AudioSource>();
             }
         }
+    }
+    void Start() 
+    { 
+    
     }
     public override void StopMusic()
     {
@@ -41,6 +45,7 @@ public class BossStageMusicManager : MusicManager
         base.PauseMusic();
         if (fires != null)
         {
+            Debug.Log(fires.Length);
             for (int i = 0; i < fires.Length; i++)
             {
                 fireAudioSources[i]?.Pause();
@@ -58,5 +63,20 @@ public class BossStageMusicManager : MusicManager
                 fireAudioSources[i]?.UnPause();
             }
         }
+    }
+    public static GameObject[] FindGameObjectsWithTagIncludingInactive(string tag)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        List<GameObject> taggedObjects = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.hideFlags == HideFlags.None && obj.CompareTag(tag))
+            {
+                taggedObjects.Add(obj);
+            }
+        }
+
+        return taggedObjects.ToArray();
     }
 }

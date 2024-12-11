@@ -134,6 +134,7 @@ public class BossIntroManager : MonoBehaviour
         {
             fires[i].SetActive(true);
             AudioSource.PlayClipAtPoint(fireAudioSources[i].clip, cameraScript.transform.position, 0.03f);
+            yield return null;
         }
         yield return new WaitForSecondsRealtime(1f); // 첫 번째 단계 대기
 
@@ -142,6 +143,7 @@ public class BossIntroManager : MonoBehaviour
         {
             fires[i].SetActive(true);
             AudioSource.PlayClipAtPoint(fireAudioSources[i].clip, cameraScript.transform.position, 0.03f);
+            yield return null;
         }
         yield return new WaitForSecondsRealtime(1f); // 두 번째 단계 대기
     }

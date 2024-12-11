@@ -110,7 +110,6 @@ public class BossStageManager : StageManager
             }
         }
     }
-
     protected override void HandleGameOver()
     {
         base.HandleGameOver();

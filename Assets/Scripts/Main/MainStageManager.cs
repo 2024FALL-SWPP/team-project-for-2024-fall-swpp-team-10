@@ -9,7 +9,7 @@ public class MainStageManager : StageManager
 {
     [Header("MainStage End Condition Settings")]
     public float stageDuration = 180.0f;
-    private float currentStageTime = 180f;
+    private float currentStageTime = 0.0f;
     private bool isSpawnStopped = false;
     public GameObject boss;
     public GameObject bossLandingParticle;
