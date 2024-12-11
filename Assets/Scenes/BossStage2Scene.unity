@@ -10249,7 +10249,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -39.94995, y: -39.94995}
-  m_SizeDelta: {x: 79.899994, y: 79.899994}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1285712503
 MonoBehaviour:
@@ -10315,7 +10315,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f3822a1304273e4890c9238ea71166d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d256fa41fd9e07442afd2d530d0a8024, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12965,9 +12965,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30790bb0ab25c4d1a8d06e44a2964a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdownText: {fileID: 1313728095}
   transitionAnimator: {fileID: 704552374}
   countdownDuration: 5
-  countdownText: {fileID: 1313728095}
 --- !u!4 &1870685030
 Transform:
   m_ObjectHideFlags: 0
