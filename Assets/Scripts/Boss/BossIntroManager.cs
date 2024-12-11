@@ -10,11 +10,10 @@ public class BossIntroManager : MonoBehaviour
     private BossControl bossControl;
     private Transform playerTransform;
     private Transform gameplayCameraTransform;
-    private float introAnimationDuration;
     private System.Action onIntroEnd;
     private GameObject[] fires;
     private AudioSource[] fireAudioSources;
-    private float cameraOrbitDuration = 3f; // Ä«¸Þ¶ó ¿¬Ãâ ½Ã°£
+    private float cameraOrbitDuration = 3f; // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
     public void Initialize(
         BossStageCamera cameraScript,
@@ -23,7 +22,6 @@ public class BossIntroManager : MonoBehaviour
         BossControl bossControl,
         Transform playerTransform,
         Transform gameplayCameraTransform,
-        float introAnimationDuration,
         System.Action onIntroEnd,
         GameObject[] fires,
         AudioSource[] fireAudioSources
@@ -35,7 +33,6 @@ public class BossIntroManager : MonoBehaviour
         this.bossControl = bossControl;
         this.playerTransform = playerTransform;
         this.gameplayCameraTransform = gameplayCameraTransform;
-        this.introAnimationDuration = introAnimationDuration;
         this.onIntroEnd = onIntroEnd;
         this.fires = fires;
         this.fireAudioSources = fireAudioSources;
@@ -43,53 +40,51 @@ public class BossIntroManager : MonoBehaviour
 
     public IEnumerator RunIntroSequence()
     {
-        // °æ±âÀå º¸¿©ÁÖ±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
         cameraScript.transform.position = new Vector3(15, 15, 0);
         cameraScript.transform.LookAt(new Vector3(0, 1, 0));
 
         yield return new WaitForSecondsRealtime(1f);
 
-        // ºÒ±âµÕ ¿¬Ãâ
+        // ï¿½Ò±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         yield return StartCoroutine(ActivateFiresInPhases());
 
-        // ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
-        // º¸½º º¸¿©ÁÖ±â
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
         fadeImageAnimator?.SetTrigger("FadeIn");
         yield return StartCoroutine(DynamicCameraMovement(bossControl.transform, 15, 4, Vector3.zero));
 
-        // ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
-        // Ä³¸¯ÅÍ º¸¿©ÁÖ±â
+        // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
         fadeImageAnimator?.SetTrigger("FadeIn");
         yield return StartCoroutine(DynamicCameraMovement(playerTransform, 1, 1, new Vector3(0, 0, -5)));
 
-        // ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         fadeImageAnimator?.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(1f);
 
-        // °ÔÀÓ ÇÃ·¹ÀÌ ½ÃÁ¡À¸·Î º¹±Í
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         cameraScript.transform.position = gameplayCameraTransform.position;
         cameraScript.transform.rotation = gameplayCameraTransform.rotation;
 
-        // ÆäÀÌµå ÀÎ (°ÔÀÓ ½ÃÀÛ)
+        // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         fadeImageAnimator?.SetTrigger("FadeIn");
         cameraScript.SetCameraFixed(false);
         yield return new WaitForSecondsRealtime(0.5f);
 
-        // Ä«¿îÆ®´Ù¿î
+        // Ä«ï¿½ï¿½Æ®ï¿½Ù¿ï¿½
         StartCoroutine(WaitForIntro());
         StartCoroutine(transitionManager.Countdown());
     }
 
     private IEnumerator WaitForIntro()
     {
-        if (introAnimationDuration < transitionManager.countdownDuration)
-            Debug.LogError("Countdown finishes before animation");
         yield return new WaitForSecondsRealtime(transitionManager.countdownDuration);
 
         onIntroEnd?.Invoke();
@@ -120,8 +115,8 @@ public class BossIntroManager : MonoBehaviour
 
     private IEnumerator ActivateFiresInPhases()
     {
-        // BossStageManager¿¡¼­ ¸ðµç ºÒ±âµÕ ºñÈ°¼ºÈ­¸¦ ¸¶Ä£ »óÅÂ¶ó°í °¡Á¤.
-        // ÇÊ¿äÇÏ´Ù¸é BossStageManager¿¡¼­ public ¸Þ¼Òµå·Î ºÒ±âµÕ ¹è¿­À» ÁÖÀÔ¹ÞÀ» ¼öµµ ÀÖÀ½.
+        // BossStageManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò±ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½Ä£ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        // ï¿½Ê¿ï¿½ï¿½Ï´Ù¸ï¿½ BossStageManagerï¿½ï¿½ï¿½ï¿½ public ï¿½Þ¼Òµï¿½ï¿½ ï¿½Ò±ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         BossStageManager stageManager = FindObjectOfType<BossStageManager>();
         if (stageManager == null)
         {
@@ -129,22 +124,22 @@ public class BossIntroManager : MonoBehaviour
             yield break;
         }
 
-        // Ã¹ ¹øÂ° Àý¹Ý È°¼ºÈ­
+        // Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         for (int i = 0; i < fires.Length; i += 2)
         {
             fires[i].SetActive(true);
             AudioSource.PlayClipAtPoint(fireAudioSources[i].clip, cameraScript.transform.position, 0.03f);
             yield return null;
         }
-        yield return new WaitForSecondsRealtime(1f); // Ã¹ ¹øÂ° ´Ü°è ´ë±â
+        yield return new WaitForSecondsRealtime(1f); // Ã¹ ï¿½ï¿½Â° ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½
 
-        // µÎ ¹øÂ° Àý¹Ý È°¼ºÈ­
+        // ï¿½ï¿½ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         for (int i = 1; i < fires.Length; i += 2)
         {
             fires[i].SetActive(true);
             AudioSource.PlayClipAtPoint(fireAudioSources[i].clip, cameraScript.transform.position, 0.03f);
             yield return null;
         }
-        yield return new WaitForSecondsRealtime(1f); // µÎ ¹øÂ° ´Ü°è ´ë±â
+        yield return new WaitForSecondsRealtime(1f); // ï¿½ï¿½ ï¿½ï¿½Â° ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½
     }
 }

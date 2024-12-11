@@ -11617,7 +11617,6 @@ MonoBehaviour:
   victoryMusic: {fileID: 8300000, guid: f33733bac932cfd4c974bfc5d37c9e2d, type: 3}
   carrotSpeed: 10
   transitionAnimator: {fileID: 704552374}
-  introAnimationDuration: 0
 --- !u!114 &1474742878
 MonoBehaviour:
   m_ObjectHideFlags: 0
