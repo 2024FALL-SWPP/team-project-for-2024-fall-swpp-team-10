@@ -1153,6 +1153,7 @@ MonoBehaviour:
   tadaF: {fileID: 8300000, guid: 14647a835f5731242b63bc0b76c307ba, type: 3}
   tadaG: {fileID: 8300000, guid: a349dde780b21ef45a4111fa17e4d5fa, type: 3}
   tadaA: {fileID: 8300000, guid: 254ecb5c2198dc44e90af74723280832, type: 3}
+  screenshot: {fileID: 8300000, guid: b8128b54e96bbca47899f4bce37231f0, type: 3}
   selectStage: {fileID: 747837559}
   restartGame: {fileID: 1314393580}
   exitGame: {fileID: 1823109171}

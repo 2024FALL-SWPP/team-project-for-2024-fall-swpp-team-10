@@ -46,6 +46,7 @@ public class LeaderBoardManager : MonoBehaviour
     public AudioClip tadaF;
     public AudioClip tadaG;
     public AudioClip tadaA;
+    public AudioClip screenshot;
 
     [Header("Buttons")]
     public Button selectStage;
@@ -195,6 +196,7 @@ public class LeaderBoardManager : MonoBehaviour
     public void Export()
     {
         m_FilePath = m_Path + m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
+        AudioSource.PlayClipAtPoint(screenshot, transform.position);
         StartCoroutine(SaveScreenJpg(m_FilePath));
     }
 
