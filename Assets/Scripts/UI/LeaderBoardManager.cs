@@ -117,7 +117,7 @@ public class LeaderBoardManager : MonoBehaviour
     IEnumerator ShowCharacterUnlock()
     {
         ButtonInteractable(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(Character.Hanni))
         {

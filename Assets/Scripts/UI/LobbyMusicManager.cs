@@ -27,7 +27,7 @@ public class LobbyMusicManager : MusicManager
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name.Contains("Selection") || scene.name.Contains("MainMenu"))
+        if (scene.name.Contains("Selection") || scene.name.Contains("MainMenu") || scene.name.Contains("Leader"))
             PlayMusic();
     }
 
