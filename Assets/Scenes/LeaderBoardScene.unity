@@ -966,7 +966,7 @@ GameObject:
   - component: {fileID: 426419042}
   - component: {fileID: 426419041}
   m_Layer: 5
-  m_Name: Download Button
+  m_Name: Screenshot Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3172,7 +3172,7 @@ GameObject:
   - component: {fileID: 936013630}
   - component: {fileID: 936013629}
   m_Layer: 5
-  m_Name: DownloadImage
+  m_Name: ScreenshotImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4918,7 +4918,7 @@ GameObject:
   - component: {fileID: 1275057317}
   - component: {fileID: 1275057316}
   m_Layer: 5
-  m_Name: DownloadButtonMask
+  m_Name: ScreenshotButtonMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6660,7 +6660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Download
+  m_text: Screenshot
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
   m_sharedMaterial: {fileID: -2851794610077115882, guid: 3b1cd0b0746ad4e64bdaf7e86f18fa02, type: 2}
