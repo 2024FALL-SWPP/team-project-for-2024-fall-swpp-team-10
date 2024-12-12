@@ -188,7 +188,6 @@ public class LeaderBoardManager : MonoBehaviour
         for (int i = 0; i < rankExpressions.Length; i++)
         {
             PlayerPrefs.SetInt(PlayerPrefsScoreKey(i + 1), savedRankScore[i]);
-            PlayerPrefs.Save();
             PlayerPrefs.SetString(PlayerPrefsIDKey(i + 1), savedRankID[i]);
             PlayerPrefs.Save();
         }
@@ -205,22 +204,26 @@ public class LeaderBoardManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        // 스크린샷 캡처
-        Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        texture.Apply();
-        byte[] bytes = texture.EncodeToJPG();
+        // 원본 텍스처 생성
+        Texture2D originalTexture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        originalTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        originalTexture.Apply();
+
+        // 리사이즈된 텍스처 생성 (해상도 50%)
+        Texture2D resizedTexture = TextureScale.Bilinear(originalTexture, Screen.width / 2, Screen.height / 2);
+
+        // JPG로 저장
+        byte[] bytes = resizedTexture.EncodeToJPG(75); // JPG 품질 조정
+        Debug.Log($"Screenshot size: {bytes.Length / 1024} KB");
 
         // WebGL 환경 확인
 #if UNITY_WEBGL && !UNITY_EDITOR
-        DownloadScreenshot(fileName, bytes);
-#else
-        string filePath = Application.persistentDataPath + "/" + fileName;
-        System.IO.File.WriteAllBytes(filePath, bytes);
-        Debug.Log("Screenshot saved to: " + filePath);
+    DownloadScreenshot(fileName, bytes);
 #endif
 
-        DestroyImmediate(texture);
+        // 메모리 정리
+        DestroyImmediate(originalTexture);
+        DestroyImmediate(resizedTexture);
     }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
