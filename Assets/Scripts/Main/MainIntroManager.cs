@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-
 public class MainIntroManager : MonoBehaviour
 {
     Vector3 FinalCameraPos = new Vector3(0, 4, -10);
@@ -18,7 +17,6 @@ public class MainIntroManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject boss;
     public GameObject[] fires;
-    Camera camera;
 
     float transformationDuration = 2f;
 
@@ -28,9 +26,9 @@ public class MainIntroManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mainStageManager.isPausable = false;
         Time.timeScale = 0;
-        camera = Camera.main;
-        camera.transform.position = InitialCameraPos;
+        Camera.main.transform.position = InitialCameraPos;
         boss.transform.position = InitialBossPos;
         boss.transform.localScale = Vector3.one * 0.4f;
         ChangeColorHelper(boss.transform, finalBossColor);
@@ -46,7 +44,6 @@ public class MainIntroManager : MonoBehaviour
     // Recursively change color of all children
     public void ChangeColorHelper(Transform transform, Color bossColor)
     {
-        //Debug.Log("Color Change Called");
         foreach (Transform childTransform in transform)
         {
             GameObject child = childTransform.gameObject;
@@ -61,10 +58,8 @@ public class MainIntroManager : MonoBehaviour
 
     IEnumerator gradualColorChange(Renderer sr, Color startCol, Color endCol)
     {
-        //Debug.Log("Color change called");
         float elapsedTime = 0f;
-        float duration = 2f;
-        //float duration = frameCount + ;
+        float duration = transformationDuration;
 
         while (elapsedTime < duration)
         {
@@ -96,13 +91,13 @@ public class MainIntroManager : MonoBehaviour
             Vector3 newScale = Vector3.Slerp(Vector3.one * 0.4f, Vector3.one, t);
             Vector3 newPosition = Vector3.Slerp(InitialCameraPos, FinalCameraPos, t);
             boss.transform.localScale = newScale;
-            camera.transform.position = newPosition;
+            Camera.main.transform.position = newPosition;
 
             yield return null;
         }
 
         boss.transform.localScale = Vector3.one;
-        camera.transform.position = FinalCameraPos;
+        Camera.main.transform.position = FinalCameraPos;
 
         Time.timeScale = 1;
         GuideUI[0].SetActive(true);
@@ -110,8 +105,6 @@ public class MainIntroManager : MonoBehaviour
 
         foreach (GameObject fire in fires)
             fire.SetActive(true);
-
-        yield return new WaitForSecondsRealtime(1f);
 
         elapsedTime = 0f;
         duration = 2f;
@@ -156,8 +149,6 @@ public class MainIntroManager : MonoBehaviour
 
             Color newCol = new(1, 1, 1, currAlpha);
 
-            Debug.Log(newCol);
-
             text.color = newCol;
             image1.color = newCol;
             image2.color = newCol;
@@ -169,5 +160,7 @@ public class MainIntroManager : MonoBehaviour
         {
             Destroy(UIObj);
         }
+
+        mainStageManager.isPausable = true;
     }
 }
