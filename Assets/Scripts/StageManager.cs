@@ -36,7 +36,7 @@ public abstract class StageManager : MonoBehaviour
 
     public virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver && isPausable)
+        if (Input.GetKeyDown(KeyCode.P) && !isGameOver && isPausable)
         {
             PauseGame();
         }
