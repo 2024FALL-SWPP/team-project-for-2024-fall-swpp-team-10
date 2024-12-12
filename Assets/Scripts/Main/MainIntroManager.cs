@@ -1,0 +1,173 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
+
+public class MainIntroManager : MonoBehaviour
+{
+    Vector3 FinalCameraPos = new Vector3(0, 4, -10);
+    Vector3 InitialCameraPos = new Vector3(0, 1, -4);
+
+    Vector3 InitialBossPos = new Vector3(0, 0, -2);
+    Vector3 FinalBossPos = new Vector3(0, 6, -2);
+
+    public Color finalBossColor;
+    public MainStageManager mainStageManager;
+    public GameObject gameUI;
+    public GameObject boss;
+    public GameObject[] fires;
+    Camera camera;
+
+    float transformationDuration = 2f;
+
+    public GameObject[] GuideUI;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Time.timeScale = 0;
+        camera = Camera.main;
+        camera.transform.position = InitialCameraPos;
+        boss.transform.position = InitialBossPos;
+        boss.transform.localScale = Vector3.one * 0.4f;
+        ChangeColorHelper(boss.transform, finalBossColor);
+        StartCoroutine(changeScale());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+       
+    }
+
+    // Recursively change color of all children
+    public void ChangeColorHelper(Transform transform, Color bossColor)
+    {
+        //Debug.Log("Color Change Called");
+        foreach (Transform childTransform in transform)
+        {
+            GameObject child = childTransform.gameObject;
+            SkinnedMeshRenderer smr = child.GetComponent<SkinnedMeshRenderer>();
+            if (smr != null) StartCoroutine(gradualColorChange(smr, Color.white, bossColor));
+            MeshRenderer mr = child.GetComponent<MeshRenderer>();
+            if (mr != null) StartCoroutine(gradualColorChange(mr, Color.white, bossColor));
+
+            if (childTransform.childCount > 0) ChangeColorHelper(childTransform, bossColor);
+        }
+    }
+
+    IEnumerator gradualColorChange(Renderer sr, Color startCol, Color endCol)
+    {
+        //Debug.Log("Color change called");
+        float elapsedTime = 0f;
+        float duration = 2f;
+        //float duration = frameCount + ;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            if (sr != null)
+                sr.material.color = Color.Lerp(startCol, endCol, elapsedTime / duration);
+
+
+            yield return null;
+        }
+
+        if (sr != null) sr.material.color = endCol;
+    }
+
+    IEnumerator changeScale()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
+        float elapsedTime = 0f;
+        float duration = transformationDuration;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            float t = elapsedTime / duration;
+
+            // Perform spherical interpolation on scales
+            Vector3 newScale = Vector3.Slerp(Vector3.one * 0.4f, Vector3.one, t);
+            Vector3 newPosition = Vector3.Slerp(InitialCameraPos, FinalCameraPos, t);
+            boss.transform.localScale = newScale;
+            camera.transform.position = newPosition;
+
+            yield return null;
+        }
+
+        boss.transform.localScale = Vector3.one;
+        camera.transform.position = FinalCameraPos;
+
+        Time.timeScale = 1;
+        GuideUI[0].SetActive(true);
+        StartCoroutine(fadeTextOut());
+
+        foreach (GameObject fire in fires)
+            fire.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        elapsedTime = 0f;
+        duration = 2f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            float t = elapsedTime / duration;
+
+            // Perform spherical interpolation on scales
+            Vector3 newPosition = Vector3.Slerp(InitialBossPos, FinalBossPos, t);
+            boss.transform.position = newPosition;
+
+            yield return null;
+        }
+
+        boss.transform.position = FinalBossPos;
+
+        Destroy(boss);
+        gameUI.SetActive(true);
+
+    }
+
+    IEnumerator fadeTextOut()
+    {
+        yield return new WaitForSeconds(1f);
+        float elapsedTime = 0f;
+        float duration = 1f;
+
+        TextMeshProUGUI text = GuideUI[0].GetComponent<TextMeshProUGUI>();
+        Image image1 = GuideUI[1].GetComponent<Image>();
+        Image image2 = GuideUI[2].GetComponent<Image>();
+
+        float alphaDiff = 1 / duration;
+        float currAlpha = 1;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            currAlpha -= alphaDiff * Time.deltaTime;
+
+            Color newCol = new(1, 1, 1, currAlpha);
+
+            Debug.Log(newCol);
+
+            text.color = newCol;
+            image1.color = newCol;
+            image2.color = newCol;
+
+            yield return null;
+        }
+
+        foreach (GameObject UIObj in GuideUI)
+        {
+            Destroy(UIObj);
+        }
+    }
+}
