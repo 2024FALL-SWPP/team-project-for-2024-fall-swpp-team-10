@@ -53,7 +53,10 @@ public class MainStageManager : StageManager
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         isStageComplete = true;
 
-        boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
+        //boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
+        boss.SetActive(true);
+        boss.transform.position = new Vector3(0, 13, activeCharacter.transform.position.z + 3);
+        boss.transform.rotation = Quaternion.Euler(0, 180, 0);
         while (boss.transform.position.y >= 2)
         {
             boss.transform.Translate(Vector3.down * bossDropSpeed * Time.deltaTime, Space.World);
