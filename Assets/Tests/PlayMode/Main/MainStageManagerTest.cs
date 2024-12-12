@@ -113,6 +113,9 @@ public class MainStageManagerTest
 
         GameObject gameOverScreen = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "GameOver");
         Assert.IsFalse(gameOverScreen.activeSelf);
+
+        yield return new WaitForSeconds(0.1f);
+
         Assert.AreNotEqual(0f, Time.timeScale);
         while (gameManager.GetLife() > 0)
         {
