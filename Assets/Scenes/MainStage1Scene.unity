@@ -4891,6 +4891,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b898383be4148b4bfa6281693b8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinalCameraPos: {x: 0, y: 4, z: -10}
+  InitialCameraPos: {x: 0, y: 1, z: -4}
+  InitialBossPos: {x: 0, y: 0, z: -2}
+  FinalBossPos: {x: 0, y: 6, z: 100}
   finalBossColor: {r: 0.79607844, g: 0.3254902, b: 0.3254902, a: 0}
   mainStageManager: {fileID: 1694800666}
   gameUI: {fileID: 2103823156}
@@ -5100,7 +5104,7 @@ MonoBehaviour:
   soundVolume: 0.7
   isPausable: 1
   stageDuration: 181
-  boss: {fileID: 2918174079348635216, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
+  boss: {fileID: 1913548026}
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &1694800667
 MonoBehaviour:
@@ -6196,14 +6200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1649480073}
     m_Modifications:
-    - target: {fileID: 1533094058639283540, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1594559780486278052, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2536862985035689194, guid: f6beae2f50e31f543ab360f76f965c61, type: 3}
       propertyPath: m_RootOrder
       value: 0

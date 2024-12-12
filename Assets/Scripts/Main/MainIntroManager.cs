@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class MainIntroManager : MonoBehaviour
 {
-    Vector3 FinalCameraPos = new Vector3(0, 4, -10);
-    Vector3 InitialCameraPos = new Vector3(0, 1, -4);
+    public Vector3 FinalCameraPos = new Vector3(0, 4, -10);
+    public Vector3 InitialCameraPos = new Vector3(0, 1, -4);
 
-    Vector3 InitialBossPos = new Vector3(0, 0, -2);
-    Vector3 FinalBossPos = new Vector3(0, 6, -2);
+    public Vector3 InitialBossPos = new Vector3(0, 0, -2);
+    public Vector3 FinalBossPos = new Vector3(0, 6, -2);
 
     public Color finalBossColor;
     public MainStageManager mainStageManager;
@@ -89,9 +89,13 @@ public class MainIntroManager : MonoBehaviour
 
             // Perform spherical interpolation on scales
             Vector3 newScale = Vector3.Slerp(Vector3.one * 0.4f, Vector3.one, t);
-            Vector3 newPosition = Vector3.Slerp(InitialCameraPos, FinalCameraPos, t);
             boss.transform.localScale = newScale;
-            Camera.main.transform.position = newPosition;
+            if (elapsedTime > (duration / 3))
+            {
+                //float t2 = (elapsedTime - (duration / 3))
+                Vector3 newPosition = Vector3.Slerp(InitialCameraPos, FinalCameraPos, t * 3 - 1);
+                Camera.main.transform.position = newPosition;
+            }
 
             yield return null;
         }
@@ -99,15 +103,18 @@ public class MainIntroManager : MonoBehaviour
         boss.transform.localScale = Vector3.one;
         Camera.main.transform.position = FinalCameraPos;
 
-        Time.timeScale = 1;
-        GuideUI[0].SetActive(true);
-        StartCoroutine(fadeTextOut());
 
         foreach (GameObject fire in fires)
             fire.SetActive(true);
 
+        yield return new WaitForSecondsRealtime(1f);
+
+        //foreach (GameObject fire in fires)
+        //    fire.SetActive(false);
+
         elapsedTime = 0f;
-        duration = 2f;
+        duration = 1f;
+
 
         while (elapsedTime < duration)
         {
@@ -115,16 +122,25 @@ public class MainIntroManager : MonoBehaviour
 
             float t = elapsedTime / duration;
 
+            Vector3 posDiff = (FinalBossPos - InitialBossPos) * t;
+
             // Perform spherical interpolation on scales
-            Vector3 newPosition = Vector3.Slerp(InitialBossPos, FinalBossPos, t);
+            Vector3 newPosition = InitialBossPos + posDiff;
             boss.transform.position = newPosition;
 
             yield return null;
         }
 
+        Time.timeScale = 1;
+        GuideUI[0].SetActive(true);
+        StartCoroutine(fadeTextOut());
+
         boss.transform.position = FinalBossPos;
 
-        Destroy(boss);
+        foreach (GameObject fire in fires)
+            fire.SetActive(true);
+
+        boss.SetActive(false);
         gameUI.SetActive(true);
 
     }
