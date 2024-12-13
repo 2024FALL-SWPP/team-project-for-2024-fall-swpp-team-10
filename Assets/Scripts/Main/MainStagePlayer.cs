@@ -74,6 +74,7 @@ public class MainStagePlayer : PlayerBase
                 StartCoroutine(SmoothMove());
             }
         }
+
         // Fire Laser
         if (Input.GetMouseButtonDown(0) && enableKeys)
         {
