@@ -29,6 +29,8 @@ public class LobbyMusicManager : MusicManager
     {
         if (scene.name.Contains("Selection") || scene.name.Contains("MainMenu") || scene.name.Contains("Leader"))
             PlayMusic();
+        else if (scene.name.Contains("MainStage") && audioSource.isPlaying)
+            StopMusic();
     }
 
     private void OnDisable()
