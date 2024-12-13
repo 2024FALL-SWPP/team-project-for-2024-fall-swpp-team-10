@@ -279,7 +279,7 @@ MonoBehaviour:
   heartDeactivateSound: {fileID: 8300000, guid: 49b417a0f567648bbb81c12f25628f8e, type: 3}
   soundVolume: 0.7
   isPausable: 1
-  stageDuration: 180
+  stageDuration: 176
   boss: {fileID: 24506984}
   bossLandingParticle: {fileID: 5797428246745224015, guid: 24fa55c4f1386e04ea2800527f88c4e1, type: 3}
 --- !u!114 &40871804
@@ -4881,7 +4881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1366416882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6904,10 +6904,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b898383be4148b4bfa6281693b8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FinalCameraPos: {x: 0, y: 4, z: 5}
-  InitialCameraPos: {x: 0, y: 1, z: 11}
-  InitialBossPos: {x: 0, y: 0, z: 13}
-  FinalBossPos: {x: 0, y: 1.5, z: 110}
+  finalCameraPos: {x: 0, y: 4, z: 5}
+  initialCameraPos: {x: 0, y: 1, z: 11}
+  initialBossPos: {x: 0, y: 0, z: 13}
+  finalBossPos: {x: 0, y: 1.5, z: 110}
   finalBossColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   mainStageManager: {fileID: 40871803}
   gameUI: {fileID: 1366416881}
@@ -6915,7 +6915,7 @@ MonoBehaviour:
   fires:
   - {fileID: 24506983}
   - {fileID: 24506981}
-  GuideUI:
+  guideUI:
   - {fileID: 1018271567}
   - {fileID: 318349734}
   - {fileID: 1237778318}

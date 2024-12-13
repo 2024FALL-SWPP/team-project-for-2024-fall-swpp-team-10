@@ -73,13 +73,13 @@ public class MainStagePlayer : PlayerBase
                 currentGridPosition.y--;
                 StartCoroutine(SmoothMove());
             }
+        }
 
             // Fire Laser
             if (Input.GetMouseButtonDown(0) && enableKeys)
             {
                 FireLaser();
             }
-        }
 
         // Handle death
         if (GameManager.inst.GetLife() <= 0)

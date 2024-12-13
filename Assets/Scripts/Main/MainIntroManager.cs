@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class MainIntroManager : MonoBehaviour
 {
-    public Vector3 FinalCameraPos = new Vector3(0, 4, -10);
-    public Vector3 InitialCameraPos = new Vector3(0, 1, -4);
+    public Vector3 finalCameraPos = new Vector3(0, 4, -10);
+    public Vector3 initialCameraPos = new Vector3(0, 1, -4);
 
-    public Vector3 InitialBossPos = new Vector3(0, 0, -2);
-    public Vector3 FinalBossPos = new Vector3(0, 6, -2);
+    public Vector3 initialBossPos = new Vector3(0, 0, -2);
+    public Vector3 finalBossPos = new Vector3(0, 6, -2);
 
     public Color finalBossColor;
     public MainStageManager mainStageManager;
@@ -20,19 +20,20 @@ public class MainIntroManager : MonoBehaviour
 
     float transformationDuration = 2f;
 
-    public GameObject[] GuideUI;
+    public GameObject[] guideUI;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().SetEnableKeys(false);
         mainStageManager.isPausable = false;
         Time.timeScale = 0;
-        Camera.main.transform.position = InitialCameraPos;
-        boss.transform.position = InitialBossPos;
+        Camera.main.transform.position = initialCameraPos;
+        boss.transform.position = initialBossPos;
         boss.transform.localScale = Vector3.one * 0.4f;
         ChangeColorHelper(boss.transform, finalBossColor);
-        StartCoroutine(changeScale());
+        StartCoroutine(ChangeScale());
     }
 
     // Update is called once per frame
@@ -48,15 +49,15 @@ public class MainIntroManager : MonoBehaviour
         {
             GameObject child = childTransform.gameObject;
             SkinnedMeshRenderer smr = child.GetComponent<SkinnedMeshRenderer>();
-            if (smr != null) StartCoroutine(gradualColorChange(smr, Color.white, bossColor));
+            if (smr != null) StartCoroutine(GradualColorChange(smr, Color.white, bossColor));
             MeshRenderer mr = child.GetComponent<MeshRenderer>();
-            if (mr != null) StartCoroutine(gradualColorChange(mr, Color.white, bossColor));
+            if (mr != null) StartCoroutine(GradualColorChange(mr, Color.white, bossColor));
 
             if (childTransform.childCount > 0) ChangeColorHelper(childTransform, bossColor);
         }
     }
 
-    IEnumerator gradualColorChange(Renderer sr, Color startCol, Color endCol)
+    IEnumerator GradualColorChange(Renderer sr, Color startCol, Color endCol)
     {
         float elapsedTime = 0f;
         float duration = transformationDuration;
@@ -74,7 +75,7 @@ public class MainIntroManager : MonoBehaviour
         if (sr != null) sr.material.color = endCol;
     }
 
-    IEnumerator changeScale()
+    IEnumerator ChangeScale()
     {
         yield return new WaitForSecondsRealtime(1f);
 
@@ -93,7 +94,7 @@ public class MainIntroManager : MonoBehaviour
             if (elapsedTime > (duration / 3))
             {
                 //float t2 = (elapsedTime - (duration / 3))
-                Vector3 newPosition = Vector3.Slerp(InitialCameraPos, FinalCameraPos, t * 3 - 1);
+                Vector3 newPosition = Vector3.Slerp(initialCameraPos, finalCameraPos, t * 3 - 1);
                 Camera.main.transform.position = newPosition;
             }
 
@@ -101,20 +102,20 @@ public class MainIntroManager : MonoBehaviour
         }
 
         boss.transform.localScale = Vector3.one;
-        Camera.main.transform.position = FinalCameraPos;
+        Camera.main.transform.position = finalCameraPos;
 
+        StartCoroutine(BossMovement());
+    }
+
+    IEnumerator BossMovement()
+    {
+        float elapsedTime = 0f;
+        float duration = 1f;
 
         foreach (GameObject fire in fires)
             fire.SetActive(true);
 
         yield return new WaitForSecondsRealtime(1f);
-
-        //foreach (GameObject fire in fires)
-        //    fire.SetActive(false);
-
-        elapsedTime = 0f;
-        duration = 1f;
-
 
         while (elapsedTime < duration)
         {
@@ -122,38 +123,36 @@ public class MainIntroManager : MonoBehaviour
 
             float t = elapsedTime / duration;
 
-            Vector3 posDiff = (FinalBossPos - InitialBossPos) * t;
+            Vector3 posDiff = (finalBossPos - initialBossPos) * t;
 
             // Perform spherical interpolation on scales
-            Vector3 newPosition = InitialBossPos + posDiff;
+            Vector3 newPosition = initialBossPos + posDiff;
             boss.transform.position = newPosition;
 
             yield return null;
         }
 
         Time.timeScale = 1;
-        GuideUI[0].SetActive(true);
-        StartCoroutine(fadeTextOut());
+        guideUI[0].SetActive(true);
+        StartCoroutine(FadeTextOut());
 
-        boss.transform.position = FinalBossPos;
-
-        foreach (GameObject fire in fires)
-            fire.SetActive(true);
+        boss.transform.position = finalBossPos;
 
         boss.SetActive(false);
         gameUI.SetActive(true);
-
     }
 
-    IEnumerator fadeTextOut()
+    IEnumerator FadeTextOut()
     {
+        mainStageManager.isPausable = true;
+        mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().SetEnableKeys(true);
         yield return new WaitForSeconds(1f);
         float elapsedTime = 0f;
-        float duration = 1f;
+        float duration = 3f;
 
-        TextMeshProUGUI text = GuideUI[0].GetComponent<TextMeshProUGUI>();
-        Image image1 = GuideUI[1].GetComponent<Image>();
-        Image image2 = GuideUI[2].GetComponent<Image>();
+        TextMeshProUGUI text = guideUI[0].GetComponent<TextMeshProUGUI>();
+        Image image1 = guideUI[1].GetComponent<Image>();
+        Image image2 = guideUI[2].GetComponent<Image>();
 
         float alphaDiff = 1 / duration;
         float currAlpha = 1;
@@ -172,11 +171,10 @@ public class MainIntroManager : MonoBehaviour
             yield return null;
         }
 
-        foreach (GameObject UIObj in GuideUI)
+        foreach (GameObject UIObj in guideUI)
         {
             Destroy(UIObj);
         }
 
-        mainStageManager.isPausable = true;
     }
 }
