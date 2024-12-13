@@ -6,6 +6,7 @@ using UnityEngine;
 using System.IO;
 using EnumManager;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -33,9 +34,7 @@ public class LeaderBoardManager : MonoBehaviour
     private string[] savedRankID = new string[6]; //저장된 ID
 
     [Header("Export")]
-    private string m_Path = "Exports/";
     public string m_FilePrefix = "PowerpuffBuns";
-    private string m_FilePath;
 
     [Header("Image to be shown when character gets unlocked")]
     public GameObject HanniUnlock;
@@ -189,27 +188,44 @@ public class LeaderBoardManager : MonoBehaviour
         for (int i = 0; i < rankExpressions.Length; i++)
         {
             PlayerPrefs.SetInt(PlayerPrefsScoreKey(i + 1), savedRankScore[i]);
+            PlayerPrefs.Save();
             PlayerPrefs.SetString(PlayerPrefsIDKey(i + 1), savedRankID[i]);
+            PlayerPrefs.Save();
         }
     }
 
     public void Export()
     {
-        m_FilePath = m_Path + m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
+        string fileName = m_FilePrefix + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".jpg";
         AudioSource.PlayClipAtPoint(screenshot, transform.position);
-        StartCoroutine(SaveScreenJpg(m_FilePath));
+        StartCoroutine(SaveScreenJpg(fileName));
     }
 
-    IEnumerator SaveScreenJpg(string filePath)
+    IEnumerator SaveScreenJpg(string fileName)
     {
         yield return new WaitForEndOfFrame();
 
-        Texture2D texture = new Texture2D(Screen.width, Screen.height);
+        // 스크린샷 캡처
+        Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         texture.Apply();
         byte[] bytes = texture.EncodeToJPG();
-        File.WriteAllBytes(filePath, bytes);
+
+        // WebGL 환경 확인
+#if UNITY_WEBGL && !UNITY_EDITOR
+        DownloadScreenshot(fileName, bytes);
+#else
+        string filePath = Application.persistentDataPath + "/" + fileName;
+        System.IO.File.WriteAllBytes(filePath, bytes);
+        Debug.Log("Screenshot saved to: " + filePath);
+#endif
+
         DestroyImmediate(texture);
     }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern void DownloadScreenshot(string fileName, byte[] imageData);
+#endif
 
 }
