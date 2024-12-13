@@ -118,40 +118,33 @@ public class BossControl : MonoBehaviour
                 if (rb)
                 {
                     rb.isKinematic = false;
-                    rb.AddForce(Vector3.forward * 500 + Vector3.up * 100f, ForceMode.Impulse);
-                    if (child.transform.position.y < 1.0f) 
-                    {
-                        Debug.Log("child y position is under 1.0f");
-                        Vector3 currentVelocity = rb.velocity;
-
-                        rb.velocity = new Vector3(-currentVelocity.x, -currentVelocity.y, -currentVelocity.z);
-                    }
+                    rb.AddForce(Vector3.forward * 500 + Vector3.up * 1000f,ForceMode.Impulse);
                 }
+                StartCoroutine(CheckAndAdjustFallenPartsCoroutine());
+
             }
             Invoke("BossDeathHelper", 2f);
         }
     }
-    /*IEnumerator CheckAndRemoveFallenPartsCoroutine()
+    IEnumerator CheckAndAdjustFallenPartsCoroutine()
     {
-        while (bossTransform.childCount > 0)
+        while (bossTransform.childCount > 0 && bossDead)
         {
-            List<Transform> partsToRemove = new List<Transform>();
-
-            foreach (Transform child in bossTransform)
+            foreach (Transform childTransform in bossTransform)
             {
-                // 파츠의 y 위치가 임계값 이하인지 확인
-                
+                Rigidbody rb = childTransform.GetComponent<Rigidbody>();
+
+                if (rb && childTransform.position.y < 2.0f)
+                {
+                    // Y 좌표가 1 미만인 경우 튀어오르도록 수정
+                    childTransform.position = new Vector3(childTransform.position.x, 1.0f, childTransform.position.z);
+                    rb.velocity = new Vector3(rb.velocity.x ,-rb.velocity.y , rb.velocity.z);
+                }
             }
 
-            // 임계값 이하인 파츠 제거
-            foreach (Transform part in partsToRemove)
-            {
-               
-            }
-            // 다음 체크까지 대기
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.01f);
         }
-    }*/
+    }
     // Called by BossDeath()
     public void BossDeathHelper()
     {
