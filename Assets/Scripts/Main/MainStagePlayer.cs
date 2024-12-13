@@ -75,11 +75,11 @@ public class MainStagePlayer : PlayerBase
             }
         }
 
-            // Fire Laser
-            if (Input.GetMouseButtonDown(0) && enableKeys)
-            {
-                FireLaser();
-            }
+        // Fire Laser
+        if (Input.GetMouseButtonDown(0) && enableKeys)
+        {
+            FireLaser();
+        }
 
         // Handle death
         if (GameManager.inst.GetLife() <= 0)
