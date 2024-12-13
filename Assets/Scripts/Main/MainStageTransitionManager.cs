@@ -52,16 +52,9 @@ public class MainStageTransitionManager : MonoBehaviour
         if (isTransitioning) yield break;
         isTransitioning = true;
 
-        if (pointLight != null) // Supernatural stage does not assign any point lights. 
-        {
-            pointLight.SetActive(true);
-            Vector3 characterPos = activeCharacter.transform.position;
-            pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
-        }
-
+        pointLight?.SetActive(true);
 
         // Make sure time is not scaled
-        float originalTimeScale = Time.timeScale;
         Time.timeScale = 1f;
 
         if (!GetFinalCameraAngle())
@@ -106,15 +99,8 @@ public class MainStageTransitionManager : MonoBehaviour
             yield return null;
         }
 
-        // Play animation - Uncompleted
-        if (transitionAnimator != null)
-        {
-            // Play the animation
-            transitionAnimator.Play("MainStageEnd");
-
-            // Get animation length
-            AnimatorStateInfo stateInfo = transitionAnimator.GetCurrentAnimatorStateInfo(0);
-        }
+        // Play the animation
+        transitionAnimator?.Play("MainStageEnd");
 
         // Reset time scale before scene change
         Time.timeScale = 1;
