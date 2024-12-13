@@ -134,10 +134,10 @@ public class BossControl : MonoBehaviour
             {
                 Rigidbody rb = childTransform.GetComponent<Rigidbody>();
 
-                if (rb && childTransform.position.y < 2.0f)
+                if (rb && childTransform.position.y < 1.5f)
                 {
                     // Y 좌표가 1 미만인 경우 튀어오르도록 수정
-                    childTransform.position = new Vector3(childTransform.position.x, 1.0f, childTransform.position.z);
+                    childTransform.position = new Vector3(childTransform.position.x, 1.5f, childTransform.position.z);
                     rb.velocity = new Vector3(rb.velocity.x ,-rb.velocity.y , rb.velocity.z);
                 }
             }
