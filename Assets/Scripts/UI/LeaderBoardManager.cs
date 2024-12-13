@@ -214,7 +214,6 @@ public class LeaderBoardManager : MonoBehaviour
 
         // JPG로 저장
         byte[] bytes = resizedTexture.EncodeToJPG(75); // JPG 품질 조정
-        Debug.Log($"Screenshot size: {bytes.Length / 1024} KB");
 
         // WebGL 환경 확인
 #if UNITY_WEBGL && !UNITY_EDITOR
