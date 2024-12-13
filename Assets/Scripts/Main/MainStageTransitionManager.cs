@@ -55,8 +55,8 @@ public class MainStageTransitionManager : MonoBehaviour
         if (pointLight != null) // Supernatural stage does not assign any point lights. 
         {
             pointLight.SetActive(true);
-            Vector3 characterPos = activeCharacter.transform.position;
-            pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
+            // Vector3 characterPos = activeCharacter.transform.position;
+            // pointLight.transform.position = new Vector3(characterPos.x, characterPos.y + 0.02f, characterPos.z + 1.85f);
         }
 
 
