@@ -13236,7 +13236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownText: {fileID: 1313728095}
   transitionAnimator: {fileID: 704552374}
-  countdownDuration: 5
+  countdownDuration: 3
 --- !u!4 &1870685030
 Transform:
   m_ObjectHideFlags: 0

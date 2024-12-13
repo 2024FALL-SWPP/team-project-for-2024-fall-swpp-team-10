@@ -3579,7 +3579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownText: {fileID: 820537154}
   transitionAnimator: {fileID: 945322147}
-  countdownDuration: 5
+  countdownDuration: 3
 --- !u!1 &820537153
 GameObject:
   m_ObjectHideFlags: 0
