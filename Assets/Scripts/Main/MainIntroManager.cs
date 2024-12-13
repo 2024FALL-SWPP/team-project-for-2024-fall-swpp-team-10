@@ -14,6 +14,7 @@ public class MainIntroManager : MonoBehaviour
 
     public Color finalBossColor;
     public MainStageManager mainStageManager;
+    private MainStagePlayer mainStagePlayer;
     public GameObject gameUI;
     public GameObject boss;
     public GameObject[] fires;
@@ -26,7 +27,8 @@ public class MainIntroManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().SetEnableKeys(false);
+        mainStagePlayer = mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>();
+        mainStagePlayer.SetEnableKeys(false);
         mainStageManager.isPausable = false;
         Time.timeScale = 0;
         Camera.main.transform.position = initialCameraPos;
@@ -145,7 +147,7 @@ public class MainIntroManager : MonoBehaviour
     IEnumerator FadeTextOut()
     {
         mainStageManager.isPausable = true;
-        mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>().SetEnableKeys(true);
+        mainStagePlayer.SetEnableKeys(true);
         yield return new WaitForSeconds(1f);
         float elapsedTime = 0f;
         float duration = 3f;
