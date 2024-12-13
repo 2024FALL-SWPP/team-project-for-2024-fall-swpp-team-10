@@ -118,14 +118,40 @@ public class BossControl : MonoBehaviour
                 if (rb)
                 {
                     rb.isKinematic = false;
-                    rb.AddForce(Vector3.forward * 50 + Vector3.up * 10f, ForceMode.Impulse);
+                    rb.AddForce(Vector3.forward * 500 + Vector3.up * 100f, ForceMode.Impulse);
+                    if (child.transform.position.y < 1.0f) 
+                    {
+                        Debug.Log("child y position is under 1.0f");
+                        Vector3 currentVelocity = rb.velocity;
+
+                        rb.velocity = new Vector3(-currentVelocity.x, -currentVelocity.y, -currentVelocity.z);
+                    }
                 }
             }
-
             Invoke("BossDeathHelper", 2f);
         }
     }
+    /*IEnumerator CheckAndRemoveFallenPartsCoroutine()
+    {
+        while (bossTransform.childCount > 0)
+        {
+            List<Transform> partsToRemove = new List<Transform>();
 
+            foreach (Transform child in bossTransform)
+            {
+                // 파츠의 y 위치가 임계값 이하인지 확인
+                
+            }
+
+            // 임계값 이하인 파츠 제거
+            foreach (Transform part in partsToRemove)
+            {
+               
+            }
+            // 다음 체크까지 대기
+            yield return new WaitForSeconds(0.2f);
+        }
+    }*/
     // Called by BossDeath()
     public void BossDeathHelper()
     {
