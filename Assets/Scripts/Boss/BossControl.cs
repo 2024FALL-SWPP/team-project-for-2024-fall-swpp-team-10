@@ -15,6 +15,7 @@ public class BossControl : MonoBehaviour
     [SerializeField] float bossHorizontalRange; // x range of boss
     [SerializeField] float bossHorizontalSpeed;
     bool bossDead = false;
+    bool bossRevive = false;
     float bossHorizontalPos;    // Position boss is to move to
     Transform playerTransform;
 
@@ -128,7 +129,7 @@ public class BossControl : MonoBehaviour
     }
     IEnumerator CheckAndAdjustFallenPartsCoroutine()
     {
-        while (bossTransform.childCount > 0 && bossDead)
+        while (!bossRevive && bossDead)
         {
             foreach (Transform childTransform in bossTransform)
             {
@@ -136,7 +137,7 @@ public class BossControl : MonoBehaviour
 
                 if (rb && childTransform.position.y < 1.5f)
                 {
-                    // Y 좌표가 1 미만인 경우 튀어오르도록 수정
+                    // Y 좌표가 1.5 미만인 경우 튀어오르도록 수정
                     childTransform.position = new Vector3(childTransform.position.x, 1.5f, childTransform.position.z);
                     rb.velocity = new Vector3(rb.velocity.x ,-rb.velocity.y , rb.velocity.z);
                 }
@@ -156,6 +157,7 @@ public class BossControl : MonoBehaviour
     // Called by BossDeathHelper()
     void BossDeathTransform()
     {
+        bossRevive = true;
         // Transform boss into small white rabbit
         ChangeColor(Color.white); // Pass the color key: Color.red or Color.black. Colors that are not defined as keys will be passed as is to the helper function.
         foreach (Transform childTransform in bossTransform)
