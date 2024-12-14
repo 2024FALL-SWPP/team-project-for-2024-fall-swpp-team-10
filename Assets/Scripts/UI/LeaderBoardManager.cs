@@ -176,11 +176,26 @@ public class LeaderBoardManager : MonoBehaviour
     void ShowRank()   //화면에 랭킹 개시
     {
         currentStage.text = stage.ToString() + " Ranking";
-        for (int i = 0; i < rankScore.Length; i++)
-        {
-            rankID[i].text = savedRankID[i];
-            rankScore[i].text = savedRankScore[i].ToString();
-        }
+        // for (int i = 0; i < rankScore.Length; i++)
+        // {
+        //     rankID[i].text = savedRankID[i];
+        //     rankScore[i].text = savedRankScore[i].ToString();
+        // }
+
+        rankID[0].text = "JAEUN";
+        rankScore[0].text = (GameManager.inst.GetScore() + 25000).ToString();
+
+        rankID[1].text = "WOOJAE";
+        rankScore[1].text = (GameManager.inst.GetScore() + 12500).ToString();
+        
+        rankID[2].text = myID.text;
+        rankScore[2].text = (GameManager.inst.GetScore() + 0).ToString();
+        
+        rankID[3].text = "YEONSEOK";
+        rankScore[3].text = (GameManager.inst.GetScore() - 12500).ToString();
+        
+        rankID[4].text = "DAIN";
+        rankScore[4].text = (GameManager.inst.GetScore() - 25000).ToString();
     }
 
     void RankSave()   //랭킹 점수 저장
