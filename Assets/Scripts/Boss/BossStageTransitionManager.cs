@@ -8,7 +8,7 @@ public class BossStageTransitionManager : MonoBehaviour
     [Header("Transition Settings")]
     [SerializeField] TextMeshProUGUI countdownText;
     [SerializeField] protected Animator transitionAnimator;
-    [SerializeField] public float countdownDuration = 5;
+    [SerializeField] public float countdownDuration = 3;
 
     public void BossStageTransition()
     {

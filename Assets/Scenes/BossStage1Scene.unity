@@ -3579,7 +3579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownText: {fileID: 820537154}
   transitionAnimator: {fileID: 945322147}
-  countdownDuration: 5
+  countdownDuration: 3
 --- !u!1 &820537153
 GameObject:
   m_ObjectHideFlags: 0
@@ -4289,7 +4289,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3073437721776699173, guid: ed121113bd9ea484abfe48628dad5a01, type: 3}
   projectileSpawnPoint: {fileID: 922855649}
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  collisionVolume: 0.5
+  collisionVolume: 1
 --- !u!65 &922855652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5913,7 +5913,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 9046865428104514395, guid: 2c86cff8d171a427c8255e5dc490f175, type: 3}
   projectileSpawnPoint: {fileID: 1283838796}
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  collisionVolume: 0.5
+  collisionVolume: 1
 --- !u!65 &1283838799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11270,7 +11270,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 165201708433417185, guid: a15a49446b018432cb16cced764059cc, type: 3}
   projectileSpawnPoint: {fileID: 1424859024}
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  collisionVolume: 0.5
+  collisionVolume: 1
 --- !u!65 &1424859027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11469,7 +11469,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 719389096071306395, guid: 870d81c6e1ce74b189304727a1335a33, type: 3}
   projectileSpawnPoint: {fileID: 1431771570}
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  collisionVolume: 0.5
+  collisionVolume: 1
 --- !u!65 &1431771575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13520,7 +13520,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 323784003746120299, guid: e33064796f4af493eaa57a0e0770d7f2, type: 3}
   projectileSpawnPoint: {fileID: 1924334494}
   obstacleCollisionSound: {fileID: 8300000, guid: 94f06cea8cfd54162bd3ceb77a041bd0, type: 3}
-  collisionVolume: 0.5
+  collisionVolume: 1
 --- !u!65 &1924334497
 BoxCollider:
   m_ObjectHideFlags: 0
