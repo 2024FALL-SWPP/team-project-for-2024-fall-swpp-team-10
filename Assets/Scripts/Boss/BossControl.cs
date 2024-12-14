@@ -121,9 +121,9 @@ public class BossControl : MonoBehaviour
                     rb.isKinematic = false;
                     rb.AddForce(Vector3.forward * 500 + Vector3.up * 1000f,ForceMode.Impulse);
                 }
-                StartCoroutine(CheckAndAdjustFallenPartsCoroutine());
 
             }
+            StartCoroutine(CheckAndAdjustFallenPartsCoroutine());
             Invoke("BossDeathHelper", 2f);
         }
     }
