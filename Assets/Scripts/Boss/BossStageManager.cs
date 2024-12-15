@@ -54,6 +54,7 @@ public class BossStageManager : StageManager
     protected virtual void Start()
     {
         playerScript = activeCharacter.GetComponent<BossStagePlayer>();
+        playerScript.ChangeColorOriginal();
         base.isPausable = false;
 
         while (GameManager.inst.GetLife() < GameManager.inst.GetBossStageMaxLife())
