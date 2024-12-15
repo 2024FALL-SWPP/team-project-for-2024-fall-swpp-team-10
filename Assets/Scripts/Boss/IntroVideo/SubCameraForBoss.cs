@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//"게임 플레이 로직에는 사용되지 않고, Game Intro 녹화를 위해 사용된 스크립트"
 public class SubCameraForBoss : MonoBehaviour
 {
     public Transform boss;    // 추적할 플레이어 Transform

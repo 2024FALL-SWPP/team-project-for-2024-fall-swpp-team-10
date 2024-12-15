@@ -13,6 +13,7 @@ public class StartIntroManager : MonoBehaviour
 
     private bool isVideoFinished = false;
     private bool hasFadedIn = false;
+    private bool startable = false;
     private Coroutine blinkCoroutine;
 
     void Start()
@@ -51,6 +52,8 @@ public class StartIntroManager : MonoBehaviour
         {
             Debug.LogError("VideoPlayer not assigned.");
         }
+        if(!startable)
+            StartCoroutine(ShowPressAnyKeyAfterDelay(10f)); //10초 후부터 시작 가능
     }
 
     void Update()
@@ -60,7 +63,7 @@ public class StartIntroManager : MonoBehaviour
             StartCoroutine(FadeInTitle());
         }
 
-        if (hasFadedIn)
+        if (startable)
         {
             if (Input.anyKeyDown)
             {
@@ -105,11 +108,11 @@ public class StartIntroManager : MonoBehaviour
         {
             title.SetActive(true);
         }
-        if (pressAnyKeyText != null)
+        /*if (pressAnyKeyText != null)
         {
             pressAnyKeyText.gameObject.SetActive(true);
             blinkCoroutine = StartCoroutine(BlinkPressAnyKey());
-        }
+        }*/
     }
 
     IEnumerator BlinkPressAnyKey()
@@ -119,9 +122,9 @@ public class StartIntroManager : MonoBehaviour
             if (pressAnyKeyText != null)
             {
                 pressAnyKeyText.enabled = true;
-                yield return new WaitForSecondsRealtime(1f);
+                yield return new WaitForSecondsRealtime(0.6f);
                 pressAnyKeyText.enabled = false;
-                yield return new WaitForSecondsRealtime(1f);
+                yield return new WaitForSecondsRealtime(0.6f);
             }
             else
             {
@@ -129,7 +132,16 @@ public class StartIntroManager : MonoBehaviour
             }
         }
     }
-
+    IEnumerator ShowPressAnyKeyAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        startable = true;
+        if (pressAnyKeyText != null)
+        {
+            pressAnyKeyText.gameObject.SetActive(true);
+            blinkCoroutine = StartCoroutine(BlinkPressAnyKey());
+        }
+    }
     void OnDestroy()
     {
         if (videoPlayer != null)

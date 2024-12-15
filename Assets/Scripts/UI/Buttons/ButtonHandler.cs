@@ -16,7 +16,10 @@ public class ButtonHandler : MonoBehaviour
     {
 
     }
-
+    public void LoadIntro() 
+    { 
+        GameManager.inst.LoadIntro();
+    }
     public void LoadMainMenu()
     {
         GameManager.inst.LoadMainMenu();  // GameManager의 메서드 호출
