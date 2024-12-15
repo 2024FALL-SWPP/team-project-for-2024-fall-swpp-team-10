@@ -49,7 +49,7 @@ public class MainStageManager : StageManager
 
     public IEnumerator CompleteStage()
     {
-        base.isPausable = false;
+        isPausable = false;
         activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
         isStageComplete = true;
 
