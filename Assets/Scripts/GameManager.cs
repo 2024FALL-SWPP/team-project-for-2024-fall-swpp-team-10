@@ -50,7 +50,10 @@ public class GameManager : MonoBehaviour
     {
         return _character + "Unlock";
     }
-
+    public void LoadIntro()
+    {
+        SceneManager.LoadScene("IntroScene");
+    }
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenuScene");
