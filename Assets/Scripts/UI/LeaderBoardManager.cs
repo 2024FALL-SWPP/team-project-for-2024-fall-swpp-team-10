@@ -118,7 +118,7 @@ public class LeaderBoardManager : MonoBehaviour
         ButtonInteractable(false);
         yield return new WaitForSeconds(0.5f);
 
-        if (GameManager.inst.enemyKill > 35 && !GameManager.inst.IsUnlocked(Character.Hanni))
+        if (GameManager.inst.GetEnemyKill() > 35 && !GameManager.inst.IsUnlocked(Character.Hanni))
         {
             StartCoroutine(ShowUnlock(Character.Hanni, HanniUnlock, tadaF));
             yield return new WaitForSeconds(2.5f);

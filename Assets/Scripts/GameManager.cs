@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private int bossStageMaxLife = 5;
 
     public bool selected = false;
-    public int enemyKill = 0;
+    private int enemyKill = 0;
 
     private void Awake()
     {
@@ -155,6 +155,18 @@ public class GameManager : MonoBehaviour
     public void SetBossStageMaxLife(int _bossStageMaxLife)
     {
         bossStageMaxLife = _bossStageMaxLife;
+    }
+    public int GetEnemyKill()
+    {
+        return enemyKill;
+    }
+    public void AddEnemyKill()
+    {
+        enemyKill++;
+    }
+    public void SetEnemyKillToZero()
+    {
+        enemyKill = 0;
     }
 
     public void CursorActive(bool toVisible)
