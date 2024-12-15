@@ -40,7 +40,7 @@ public class LobbyMusicManager : MusicManager
 
     private void Update()
     {
-        if (GameManager.inst.selected && audioSource.isPlaying)
+        if (GameManager.inst.IsSelected() && audioSource.isPlaying)
         {
             StopMusic();
         }

@@ -50,9 +50,9 @@ public class CharacterButtonHandler : MonoBehaviour
 
     public void OnPointerClick()
     {
-        if (!GameManager.inst.selected)
+        if (!GameManager.inst.IsSelected())
         {
-            GameManager.inst.selected = true;
+            GameManager.inst.SetSelected(true);
             if (selectSound != null)
             {
                 audioSource.PlayOneShot(selectSound, 3f);
@@ -63,7 +63,7 @@ public class CharacterButtonHandler : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        if (!GameManager.inst.selected)
+        if (!GameManager.inst.IsSelected())
         {
             hover.SetActive(true);
             if (hoverSound != null)
@@ -75,7 +75,7 @@ public class CharacterButtonHandler : MonoBehaviour
 
     public void OnPointerExit()
     {
-        if (!GameManager.inst.selected)
+        if (!GameManager.inst.IsSelected())
             hover.SetActive(false);
     }
 
@@ -89,7 +89,7 @@ public class CharacterButtonHandler : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
             hover.SetActive(true);
         }
-        GameManager.inst.selected = false;
+        GameManager.inst.SetSelected(false);
         GameManager.inst.LoadMainStage();
     }
 }

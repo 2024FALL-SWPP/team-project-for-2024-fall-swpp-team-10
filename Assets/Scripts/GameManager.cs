@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public Color[,] originColorSave = null;
     private int bossStageMaxLife = 5;
 
-    public bool selected = false;
+    private bool selected = false;
     private int enemyKill = 0;
 
     private void Awake()
@@ -167,6 +167,14 @@ public class GameManager : MonoBehaviour
     public void SetEnemyKillToZero()
     {
         enemyKill = 0;
+    }
+    public bool IsSelected()
+    {
+        return selected;
+    }
+    public void SetSelected(bool _selected)
+    {
+        selected = _selected;
     }
 
     public void CursorActive(bool toVisible)
