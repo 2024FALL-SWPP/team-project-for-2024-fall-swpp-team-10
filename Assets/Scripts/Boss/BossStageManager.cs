@@ -61,7 +61,6 @@ public class BossStageManager : StageManager
         {
             GameManager.inst.AddLife(GameManager.inst.GetBossStageMaxLife());
         }
-        musicManager.ChangeSpeed(1.25f);
         if (transitionManager != null && transitionAnimator != null)
         {
             transitionAnimator.gameObject.SetActive(true);
