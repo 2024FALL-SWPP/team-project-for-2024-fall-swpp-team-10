@@ -52,6 +52,7 @@ public class MainStageManager : StageManager
     {
         isPausable = false;
         playerScript.SetEnableKeys(false);
+        playerScript.ChangeColorOriginal();
         isStageComplete = true;
 
         //boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
