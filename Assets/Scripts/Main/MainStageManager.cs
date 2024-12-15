@@ -15,6 +15,7 @@ public class MainStageManager : StageManager
     public GameObject bossLandingParticle;
     float bossDropSpeed = 10f;
     protected MainStageTransitionManager transitionManager;
+    private MainStagePlayer playerScript;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -50,7 +51,7 @@ public class MainStageManager : StageManager
     public IEnumerator CompleteStage()
     {
         isPausable = false;
-        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
+        playerScript.SetEnableKeys(false);
         isStageComplete = true;
 
         //boss = Instantiate(boss, new Vector3(0, 13, activeCharacter.transform.position.z + 3), Quaternion.Euler(0, 180, 0));
@@ -86,20 +87,21 @@ public class MainStageManager : StageManager
     {
         base.OnSceneLoaded(scene, mode);
         transitionManager.SetCurrentCharacter(activeCharacter);
-        activeCharacter.GetComponent<MainStagePlayer>().ChangeColorOriginal();
+        playerScript = activeCharacter.GetComponent<MainStagePlayer>();
+        playerScript.ChangeColorOriginal();
     }
 
     public override void PauseGame()
     {
         base.PauseGame();
-        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
+        playerScript.SetEnableKeys(false);
         GameManager.inst.CursorActive(true);
     }
 
     public override void ResumeGame()
     {
         base.ResumeGame();
-        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(true);
+        playerScript.SetEnableKeys(true);
         GameManager.inst.CursorActive(false);
     }
 
@@ -107,7 +109,7 @@ public class MainStageManager : StageManager
     protected override void HandleGameOver()
     {
         base.HandleGameOver();
-        activeCharacter.GetComponent<MainStagePlayer>().SetEnableKeys(false);
+        playerScript.SetEnableKeys(false);
         GameManager.inst.CursorActive(true);
     }
     public IEnumerator AddScoreEverySecond()
