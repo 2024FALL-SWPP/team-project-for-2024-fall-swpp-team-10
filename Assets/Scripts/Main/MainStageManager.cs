@@ -20,7 +20,7 @@ public class MainStageManager : StageManager
     protected override void Awake()
     {
         base.Awake();
-        maxLife = GameManager.inst.maxLife;
+        maxLife = GameManager.inst.GetMaxLife();
         GameManager.inst.ResetStats();
         transitionManager = FindObjectOfType<MainStageTransitionManager>();
         GameManager.inst.CursorActive(false);

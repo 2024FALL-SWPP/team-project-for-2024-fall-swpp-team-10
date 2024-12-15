@@ -14,7 +14,7 @@ public class HeartManager : BeneficialObject
         {
             AudioSource.PlayClipAtPoint(healSound, transform.position, volume);
         }
-        GameManager.inst.AddLife(GameManager.inst.maxLife);
+        GameManager.inst.AddLife(GameManager.inst.GetMaxLife());
         Destroy(gameObject);
     }
 }

@@ -13,12 +13,12 @@ public class GameManager : MonoBehaviour
     private string playerName;
 
     private int life;
-    public int maxLife = 3;
+    private int maxLife = 3;
     private int stage = 1;
     private Character character;
     private int score = 0;
     public Color[,] originColorSave = null;
-    public int bossStageMaxLife = 5;
+    private int bossStageMaxLife = 5;
 
     public bool selected = false;
     public int enemyKill = 0;
@@ -139,6 +139,22 @@ public class GameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+    public int GetMaxLife()
+    {
+        return maxLife;
+    }
+    public void SetMaxLife(int _maxLife)
+    {
+        maxLife = _maxLife;
+    }
+    public int GetBossStageMaxLife()
+    {
+        return bossStageMaxLife;
+    }
+    public void SetBossStageMaxLife(int _bossStageMaxLife)
+    {
+        bossStageMaxLife = _bossStageMaxLife;
     }
 
     public void CursorActive(bool toVisible)
