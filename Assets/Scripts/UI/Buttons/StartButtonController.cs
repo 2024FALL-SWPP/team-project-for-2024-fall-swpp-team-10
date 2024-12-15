@@ -12,6 +12,8 @@ public class StartButtonController : MonoBehaviour
     [SerializeField] TMP_InputField playerName;
     Button btnStart;
     string validPrev;
+    float elapsedTimeSinceLastMotion;
+    float timeToPlayIntro = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class StartButtonController : MonoBehaviour
         btnStart = gameObject.GetComponent<Button>();
         playerName.onValueChanged.AddListener(delegate { ValidatePlayerName(); });
         validPrev = "";
+        elapsedTimeSinceLastMotion = 0;
     }
 
     // Update is called once per frame
@@ -28,6 +31,22 @@ public class StartButtonController : MonoBehaviour
         {
             GameManager.inst.SetPlayerName();
             GameManager.inst.LoadStageSelection();
+        }
+
+        // if any key pressed or mouse moved, reset the elapsed time
+        if (Input.anyKeyDown || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+        {
+            elapsedTimeSinceLastMotion = 0;
+        }
+        else
+        {
+            elapsedTimeSinceLastMotion += Time.deltaTime;
+        }
+
+        // if user motion not detected for a long time, play the intro
+        if (elapsedTimeSinceLastMotion >= timeToPlayIntro)
+        {
+            GameManager.inst.LoadIntro();
         }
     }
 
