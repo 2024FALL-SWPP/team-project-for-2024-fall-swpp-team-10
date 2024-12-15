@@ -13,21 +13,11 @@ public class BossStageCamera : MonoBehaviour
     private bool isOrbiting = false;
     public float transitionAroundPlayerSpinDuration = 1f; // ī�޶� �÷��̾� ���� ���ߴ� ��ġ�� �̵��ϴ� �� �ɸ��� �ð�
     private bool cameraFixed = false;
-    public GameObject[] characters;  //���� ���� ����
     private BossStagePlayer playerScript;
     public BossStageManager managerScript;
 
     void Start() 
     {
-        /*for (int i = 0; i < characters.Length; i++)
-        {
-            if (characters[i].activeSelf)
-            {
-                playerScript = characters[i].GetComponent<BossStagePlayer>();
-                player = characters[i].transform;
-                break;
-            }
-        }*/
         playerScript = managerScript.ActiveCharacter().GetComponent<BossStagePlayer>();
         player = managerScript.ActiveCharacter().transform;
 
