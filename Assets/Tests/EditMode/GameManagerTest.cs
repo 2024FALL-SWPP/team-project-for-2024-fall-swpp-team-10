@@ -34,7 +34,7 @@ public class GameManagerTest
         gameManager.ResetStats();
 
         // check
-        Assert.AreEqual(gameManager.maxLife, gameManager.GetLife());
+        Assert.AreEqual(gameManager.GetMaxLife(), gameManager.GetLife());
         Assert.AreEqual(0, gameManager.GetScore());
     }
 

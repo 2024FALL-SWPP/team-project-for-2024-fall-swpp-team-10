@@ -36,7 +36,7 @@ public class BossStageManager : StageManager
         //fadeImageAnimator = GameObject.Find("FadeImage").GetComponent<Animator>();
         transitionManager = FindObjectOfType<BossStageTransitionManager>();
         GameManager.inst.CursorActive(true);
-        maxLife = GameManager.inst.bossStageMaxLife;
+        maxLife = GameManager.inst.GetBossStageMaxLife();
         currentPhase = 0;
         InitializeFires(); // 불기둥 관련 초기화 로직 별도 함수로 분리
         gameClearLight = GetComponent<GameClearLight>();
@@ -56,9 +56,9 @@ public class BossStageManager : StageManager
         playerScript = activeCharacter.GetComponent<BossStagePlayer>();
         base.isPausable = false;
 
-        while (GameManager.inst.GetLife() < GameManager.inst.bossStageMaxLife)
+        while (GameManager.inst.GetLife() < GameManager.inst.GetBossStageMaxLife())
         {
-            GameManager.inst.AddLife(GameManager.inst.bossStageMaxLife);
+            GameManager.inst.AddLife(GameManager.inst.GetBossStageMaxLife());
         }
         musicManager.ChangeSpeed(1.25f);
         if (transitionManager != null && transitionAnimator != null)

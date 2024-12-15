@@ -29,7 +29,7 @@ public class MainIntroManager : MonoBehaviour
     {
         mainStagePlayer = mainStageManager.ActiveCharacter().GetComponent<MainStagePlayer>();
         mainStagePlayer.SetEnableKeys(false);
-        mainStageManager.isPausable = false;
+        mainStageManager.SetPausable(false);
         Time.timeScale = 0;
         Camera.main.transform.position = initialCameraPos;
         boss.transform.position = initialBossPos;
@@ -41,7 +41,7 @@ public class MainIntroManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     // Recursively change color of all children
@@ -146,7 +146,7 @@ public class MainIntroManager : MonoBehaviour
 
     IEnumerator FadeTextOut()
     {
-        mainStageManager.isPausable = true;
+        mainStageManager.SetPausable(true);
         mainStagePlayer.SetEnableKeys(true);
         yield return new WaitForSeconds(1f);
         float elapsedTime = 0f;

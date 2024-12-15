@@ -19,8 +19,8 @@ public class BossStageManagerTest
         gameManager = gameManagerObject.AddComponent<GameManager>();
         GameManager.inst = gameManager;
 
-        gameManager.maxLife = 3;
-        gameManager.bossStageMaxLife = 5;
+        gameManager.SetMaxLife(3);
+        gameManager.SetBossStageMaxLife(5);
         gameManager.SetCharacter(Character.Minji);
         gameManager.SetStage(1);
     }
@@ -75,7 +75,7 @@ public class BossStageManagerTest
         yield return new WaitUntil(() => SceneManager.GetActiveScene().name == $"BossStage{gameManager.GetStage()}Scene");
 
         int playerLife = gameManager.GetLife();
-        int bossStageMaxLife = gameManager.bossStageMaxLife;
+        int bossStageMaxLife = gameManager.GetBossStageMaxLife();
 
         Assert.AreEqual(bossStageMaxLife, playerLife);
 

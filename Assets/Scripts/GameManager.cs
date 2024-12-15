@@ -13,15 +13,15 @@ public class GameManager : MonoBehaviour
     private string playerName;
 
     private int life;
-    public int maxLife = 3;
+    private int maxLife = 3;
     private int stage = 1;
     private Character character;
     private int score = 0;
     public Color[,] originColorSave = null;
-    public int bossStageMaxLife = 5;
+    private int bossStageMaxLife = 5;
 
-    public bool selected = false;
-    public int enemyKill = 0;
+    private bool selected = false;
+    private int enemyKill = 0;
 
     private void Awake()
     {
@@ -139,6 +139,42 @@ public class GameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+    public int GetMaxLife()
+    {
+        return maxLife;
+    }
+    public void SetMaxLife(int _maxLife)
+    {
+        maxLife = _maxLife;
+    }
+    public int GetBossStageMaxLife()
+    {
+        return bossStageMaxLife;
+    }
+    public void SetBossStageMaxLife(int _bossStageMaxLife)
+    {
+        bossStageMaxLife = _bossStageMaxLife;
+    }
+    public int GetEnemyKill()
+    {
+        return enemyKill;
+    }
+    public void AddEnemyKill()
+    {
+        enemyKill++;
+    }
+    public void SetEnemyKillToZero()
+    {
+        enemyKill = 0;
+    }
+    public bool IsSelected()
+    {
+        return selected;
+    }
+    public void SetSelected(bool _selected)
+    {
+        selected = _selected;
     }
 
     public void CursorActive(bool toVisible)

@@ -22,10 +22,10 @@ public class BossStageManagerTest
         gameManager = gameManagerObject.AddComponent<GameManager>();
         GameManager.inst = gameManager;
 
-        gameManager.maxLife = 3;
-        gameManager.bossStageMaxLife = 5;
+        gameManager.SetMaxLife(3);
+        gameManager.SetBossStageMaxLife(5);
         gameManager.ResetStats();
-        gameManager.AddLife(gameManager.bossStageMaxLife);
+        gameManager.AddLife(gameManager.GetBossStageMaxLife());
 
         bossStageManagerObject = new GameObject("BossStageManager");
         bossStageManager = bossStageManagerObject.AddComponent<BossStageManager>();
@@ -67,7 +67,7 @@ public class BossStageManagerTest
         bossStageManager.score = new GameObject("Score");
         bossStageManager.score.AddComponent<TextMeshProUGUI>();
 
-        bossStageManager.hearts = new GameObject[gameManager.bossStageMaxLife];
+        bossStageManager.hearts = new GameObject[gameManager.GetBossStageMaxLife()];
         for (int i = 0; i < bossStageManager.hearts.Length; i++)
         {
             bossStageManager.hearts[i] = new GameObject($"Heart{i}");

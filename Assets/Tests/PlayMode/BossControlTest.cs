@@ -22,8 +22,8 @@ public class BossControlTest
         gameManager = gameManagerObject.AddComponent<GameManager>();
         GameManager.inst = gameManager;
 
-        gameManager.maxLife = 3;
-        gameManager.bossStageMaxLife = 5;
+        gameManager.SetMaxLife(3);
+        gameManager.SetBossStageMaxLife(5);
         gameManager.SetCharacter(Character.Minji);
         gameManager.SetStage(1);
     }

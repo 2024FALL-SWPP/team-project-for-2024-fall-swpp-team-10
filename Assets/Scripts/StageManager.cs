@@ -26,7 +26,15 @@ public abstract class StageManager : MonoBehaviour
     public AudioClip heartDeactivateSound;
     public float soundVolume = 0.7f;
 
-    public bool isPausable = true;
+    protected bool isPausable = true;
+    public bool IsPausable()
+    {
+        return isPausable;
+    }
+    public void SetPausable(bool _isPausable)
+    {
+        isPausable = _isPausable;
+    }
 
     protected virtual void Awake()
     {

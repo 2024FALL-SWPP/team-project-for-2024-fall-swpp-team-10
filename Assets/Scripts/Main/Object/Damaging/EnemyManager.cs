@@ -16,7 +16,7 @@ public class EnemyManager : DamagingObject
     {
         if (playerControl.GetIsInvincible())
         {
-            GameManager.inst.enemyKill++;
+            GameManager.inst.AddEnemyKill();
         }
         base.OnPlayerCollision(player);
     }
