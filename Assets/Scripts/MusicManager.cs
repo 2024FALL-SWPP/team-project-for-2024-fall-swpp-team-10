@@ -63,12 +63,4 @@ public class MusicManager : MonoBehaviour
         }
 
     }
-
-    public virtual void ChangeSpeed(float v)
-    {
-        if (audioSource != null)
-        {
-            audioSource.pitch = v;
-        }
-    }
 }
