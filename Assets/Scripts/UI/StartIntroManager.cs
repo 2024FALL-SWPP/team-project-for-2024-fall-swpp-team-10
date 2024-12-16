@@ -46,13 +46,24 @@ public class StartIntroManager : MonoBehaviour
 
         if (videoPlayer != null)
         {
-            videoPlayer.loopPointReached += OnVideoFinished;
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, "IntroVideo.mp4");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            
+            videoPlayer.url = videoPath;
+#else
+            videoPlayer.url = videoPath;
+#endif
+
+            videoPlayer.isLooping = false; 
+            videoPlayer.loopPointReached += OnVideoFinished; 
+            videoPlayer.Play(); 
         }
         else
         {
-            Debug.LogError("VideoPlayer not assigned.");
+            Debug.LogError("VideoPlayer가 할당되지 않았습니다.");
         }
-        if(!startable)
+        if (!startable)
             StartCoroutine(ShowPressAnyKeyAfterDelay(10f)); //10초 후부터 시작 가능
     }
 
