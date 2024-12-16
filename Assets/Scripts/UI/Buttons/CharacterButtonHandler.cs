@@ -19,7 +19,7 @@ public class CharacterButtonHandler : MonoBehaviour
     public Character character;
 
     private int blinkcount = 3;
-    // KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+    private bool actionEnabled = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,11 +46,13 @@ public class CharacterButtonHandler : MonoBehaviour
             if (lockImage != null)
                 lockImage.SetActive(true);
         }
+
+        actionEnabled = GameManager.inst.IsUnlocked(character) || lockImage == null;
     }
 
     public void OnPointerClick()
     {
-        if (!GameManager.inst.IsSelected())
+        if (!GameManager.inst.IsSelected() && actionEnabled)
         {
             GameManager.inst.SetSelected(true);
             if (selectSound != null)
@@ -63,7 +65,7 @@ public class CharacterButtonHandler : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        if (!GameManager.inst.IsSelected())
+        if (!GameManager.inst.IsSelected() && actionEnabled)
         {
             hover.SetActive(true);
             if (hoverSound != null)
@@ -75,7 +77,7 @@ public class CharacterButtonHandler : MonoBehaviour
 
     public void OnPointerExit()
     {
-        if (!GameManager.inst.IsSelected())
+        if (!GameManager.inst.IsSelected() && actionEnabled)
             hover.SetActive(false);
     }
 
