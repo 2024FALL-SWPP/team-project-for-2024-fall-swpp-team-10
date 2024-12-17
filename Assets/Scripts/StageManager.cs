@@ -75,12 +75,22 @@ public abstract class StageManager : MonoBehaviour
     protected virtual void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Application.focusChanged += OnFocusChanged;
     }
 
     protected virtual void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        Application.focusChanged -= OnFocusChanged;
         Time.timeScale = 1;
+    }
+
+    private void OnFocusChanged(bool hasFocus)
+    {
+        if (!hasFocus && isPausable)
+        {
+            PauseGame(); // 창을 떠날 때 Pause
+        }
     }
 
     protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
